@@ -1,0 +1,78 @@
+
+################## START  Update todo ################    
+@goal.route('/goal_todo_update', methods=['GET', 'POST'])
+def goal_todo_update():
+
+            
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+        
+   
+    todo = Todo.query.filter(Todo.selected==True).first()
+    if todo == None:
+        flash("Please select a todo first ")
+        return redirect(url_for('goals.edit_goal_todos'))		
+ 
+    print ("In  goal_todo_update goal: ",goal, todo )
+
+
+    form = Todo_form()
+
+    form.title = todo.title
+    form.body =  todo.body
+    
+    form.who.choices=[]
+    form.status.choices=[]
+    
+    form.who.choices = [(acc.id, acc.title) for acc in Accupation.query.all()]
+    form.who.default = todo.who_id
+    
+    form.status.choices = [(sts.id, sts.title) for sts in Status.query.all()]
+    form.status.default = todo.status_id
+    
+    sts = Status.query.filter(Status.id==todo.status_id).first()   
+    
+    sts_color =  '#ffffcc'
+    if sts != None:
+        if sts.color != None:
+            sts_color = sts.color
+            
+    if request.method == 'GET': 
+        return render_template('update_todo.html', form=form, sts_color=sts_color)  
+        
+    if request.method == 'POST': 
+        ### FROM https://stackoverflow.com/questions/28209131/wtforms-post-with-selectfield-not-working
+        print ("form.validate_on_submit", form.validate_on_submit)
+
+        if not form.validate_on_submit:
+            flash("יש לבחור קטגוריה")
+            return render_template('dsply_todo_form.html', form=form)
+            
+        ##################  Fill todo fields 
+        #import pdb;pdb.set_trace()
+        test = request.args.get('title')     
+        todo.goal_id = goal.id
+        todo.title = form.title
+        todo.body =  form.body
+        
+        status = Status.query.filter(Status.id==form.status.data).first()
+        todo.status_id = status.id        
+        todo.status_title = status.title
+        todo.status_color = status.color
+      
+        
+        acc = Accupation.query.filter(Accupation.id==form.who.data).first()
+        todo.who_id =  acc.id
+        todo.who_title = acc.title
+
+        ##################  Fill todo fields   
+                    
+        db.session.commit()  
+        db.session.refresh(todo)
+        
+    return redirect(url_for('goals.edit_goal_todos' ))   
+                                                        
+################## START  Update todo ################    
+

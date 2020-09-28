@@ -1,0 +1,69 @@
+{% block edit_std_dst_line %}
+		
+	<td>{{ std_dst.id }}</td>
+			
+	<td>{{ std_dst.title }}</td>
+	
+	<td>{{ std_dst.body }}</td> 
+
+	<td>	
+		<button type="button" class="accordion" style="color:gray; width:auto;"
+			 onclick="dstFunction('{{std_dst.id}}')">יעדים 
+		</button>	
+	</td>
+						
+	<td>
+		<div id="ar_div">			
+			{% for st in std_txts %}
+				{% if st.general_txt_id==std_dst.id %}
+					<input type="date" style="text-align:center" id="due_date" name="due_date{{ std_dst.id }}" value="{{ st.due_date }}">					
+				{% endif %}
+			{% endfor %}
+		</div>   <!-- ar_div -->
+	</td>	
+
+	<td>
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ std_dst.id }}" id="selected_status">	
+			{% for sts in statuss %}
+				{% if std_dst.is_parent_of(sts) %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+				{% else %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+	<td>	
+		<button type="button" class="accordion" style="color:gray; width:auto;"
+			 onclick="dstFunction('{{std_dst.id}}')">הוסף יעד 
+		</button>	
+	</td>
+		
+	<td>
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ std_dst.id }}">שמור</button>
+	</td>
+					
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock edit_std_dst_line %}

@@ -1,0 +1,21 @@
+{% block dst_goals_table %}		
+
+				<tr>
+				
+					<td>{{ std_goal.goal_id }}</td>
+					
+					<td>{{ std_goal.goal_title }}</td>
+					
+					<td>{{ std_goal.goal_body }}</td> 
+					
+					<td>{{ std_goal.due_date.data }}</td>
+					
+					<td>{{ std_goal.status.data }}</td>
+										
+					<td>
+						<button class="btn btn-success btn-xs" type="submit" value="הוסף יעד זה לתלמיד"></button>
+					</td>
+					
+				</tr>
+
+{% endblock dst_goals_table %}

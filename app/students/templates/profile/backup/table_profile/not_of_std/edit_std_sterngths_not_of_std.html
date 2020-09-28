@@ -1,0 +1,65 @@
+{% block edit_std_dsts_not_of_std %}
+
+	</br>
+	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+						
+	<a href="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=3) }}">הוסף מטרה חדשה</a>
+
+	<strong></h5></button>
+		
+	{% for tag in tags %}
+	
+		</br></br>
+		
+		<th><h4><strong> נושא:   {{ tag.title }}</strong></h4></th>
+
+		<table id="dst_tbl_id" style="width:100%">
+
+		<tr id="header_row">							
+			<th>נושא</th>
+			<th>קבוצת גיל</th>
+			<th>מטרות</th> 
+			<th>פעולות</th>
+		</tr>
+		
+		{% for ar in age_ranges %}  <!-- ars -->
+			{%for std_dst in destinations_not_of_student if (std_dst.is_parent_of(ar) and std_dst.is_parent_of(tag)) %}
+				<tr>
+					<td>{{ tag.title }}</td>
+					<td>{{ ar.title }}</td>
+					<td>{{ std_dst.title }}</td> 							
+
+				<table class="gray_table">	
+						
+					<tr>
+						<th style="background:#ffffff" colspan="5"></th>
+					</tr>
+					
+					<tr style="width:100%">
+						<th style="background:#c7e9eb; color:#2c5ca3" colspan="6">עדכן את מטרות התלמיד:</th>
+					</tr>
+						
+					<tr>	
+						<th> מספר המטרה </th>				
+						<th> כותרת המטרה </th>
+						<th> תאור המטרה </th>
+						<th> תאריך להשלמת המטרה </th>
+						<th> סטאטוס המטרה </th>
+
+					</tr>
+								
+						{% include "./destinations/table_destinations/not_of_std/edit_std_dst_line_not_of_std.html" %}
+															
+				</table>
+	
+				</tr>
+			
+			{% endfor %} <!-- for.. if.. if  --> 
+		{% endfor %}  <!-- ars -->			
+		
+		</table>
+	{% endfor %}  <!-- tags -->
+	</br></br>	
+
+{% endblock edit_std_dsts_not_of_std %}

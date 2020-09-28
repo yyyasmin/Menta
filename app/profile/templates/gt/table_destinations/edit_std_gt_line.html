@@ -1,0 +1,55 @@
+{% block edit_std_gt_line %}		
+	<tr>
+	
+		<td>{{ std_gt.id }}</td>
+				
+		<td>{{ std_gt.title }}</td>
+		
+		<td>{{ std_gt.body }}</td> 
+		
+			
+		<td>נושא:
+			<select class="select" name="tag{{ std_gt.id }}" id="selected_tag">	
+				{% for tag in tags %}	
+						{% if tag.body=='default' %}
+							<option value="{{ tag.id }}" selected="selected">{{ tag.title }}</option>
+						{% else %}
+							<option value="{{ tag.id }}">{{ tag.title }}</option>
+						{% endif %}
+				{% endfor %}
+			</select>					
+		</td>
+	
+		<td>
+			{% set gt_num = std_gt.id * 3 %}	
+			<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt_num }}">שמור</button>
+		</td>
+	</tr>
+	
+<!------------------------------
+	<tr>	
+		{% for goal in student_goals %}
+			{% if goal in std_gt.children.all() %}
+				{% include "./destinations/goals/edit_one_std_gt_goal.html" %}
+			{% endif %}
+		{% endfor %}
+	</tr>
+	
+	
+	<tr>				
+		{% for goal in goals_not_of_student %}
+			{% include "./destinations/goals/edit_one_std_gt_goal_not_of_std.html" %}
+		{% endfor %}
+	</tr>	
+---------------------------------------->
+
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock edit_std_gt_line %}

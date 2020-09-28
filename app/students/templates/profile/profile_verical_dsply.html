@@ -1,0 +1,45 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='red']    {color:red;}
+select[data-chosen='green']  {color:green;}
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='lred']  {color:#ff9999;}    // light-red
+
+select[data-chosen='Not assigned yet'] {color:#ff9999;}   // light red
+select[data-chosen='Not achieved yet'] {color:red;}
+select[data-chosen='Partially achieved'] {color:orange;}
+select[data-chosen='Achieved'] {color:green;}
+
+</style>
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+	
+	</br>
+	
+	<h3><strong><div>ערוך פרופיל</div></strong></h3>
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.std_edit_profile', dsply_direction=1) }}">תצוגה אופקית</a>
+	<strong></h5></button>
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.std_edit_profile', dsply_direction=0) }}">תצוגה אנכית</a>
+	<strong></h5></button>
+		
+	</br>
+		
+	{% include "./profile/vertical_dsply/std_edit_profile2_by_tag.html" %}
+
+	</br>
+
+
+
+{% endblock %}

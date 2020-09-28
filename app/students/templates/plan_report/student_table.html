@@ -1,0 +1,51 @@
+{% block student_table %}
+
+<style>
+
+</style>
+	
+	</br>
+	
+	{% for std_tag in student.tags %}
+		
+		<div><h4><strong><u> נושא: {{ std_tag.tag.title }} </u></strong></h4></div>
+		
+		<table style="width:100%">
+			<tr>
+			
+			{% for dst in std_tag.tag.destinations %}
+				{% for std_dst in student.destinations %}
+					{% if dst.destination_id == std_dst.destination_id %} 
+					<div>
+						{% include "plan_report/student_destinations_table_for_plan_report.html" %}
+					</div>		
+					{% endif %}
+				{% endfor %}	
+			{% endfor %}
+			
+			</tr>
+		</table>
+		
+		</br>			
+	{% endfor %}  <!-- tags -->
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+	
+{% endblock %}    <!-- layout block  -->

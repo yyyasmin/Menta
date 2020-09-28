@@ -1,0 +1,40 @@
+{% block edit_std_actions %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+</style>
+
+<button class="btn btn-warning btn-xs" style="background-color:#ff9966;"><a style="color:black;" href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">פרטים אישיים</a></button>
+<button class="btn btn-success btn-xs" style="background-color:#cbcbb3;"><a style="color:black;" href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">מסמכים</a></button>
+<button class="btn btn-success btn-xs" style="background-color:#00ffcc;"><a style="color:black;" href="{{ url_for('students.edit_std_profile2', selected_student_id=student.id) }}">פרופיל</a></button>
+<button class="btn btn-warning btn-xs" style="background-color:#ffd966;"><a style="color:black;" href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">צוות חינוכי</a></button>
+<button class="btn btn-success btn-xs" style="background-color:#ffff66;"><a style="color:black;" href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">מטרות</a></button>										
+<button class="btn btn-warning btn-xs" style="background-color:plum;"><a style="color:black;" href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">הצג עץ מטרות</a></button>			
+<button class="btn btn-success btn-xs" style="background-color:#9999ff;" ><a style="color:black;" href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">תוכנית אישית</a></button>										
+<button class="btn btn-danger btn-xs"  style="background-color:#ff5050;"><a style="color:black;" href="{{ url_for('students.student_delete2', selected_student_id=student.id) }}">מחק</a></button>
+
+<!--
+<button class="btn btn-danger btn-xs"  style="background-color: #ff0000"><a href="{{ url_for('students.student_delete_for_good2', selected_student_id=student.id) }}">מחק לתמיד</a></button>
+-->
+{% endblock %}						

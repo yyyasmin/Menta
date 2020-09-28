@@ -1,0 +1,106 @@
+{% block student_destinations_for_plan_report %}
+
+<style>
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+</style>
+
+
+	<button onclick="myFunction('Std_destinations')" class="w3-button w3-block w3-right-align">
+		<h3><strong>מטרות:</strong></h3>
+	</button>		
+	
+			{% for std_dst in student.destinations %}  <!-- Student destinations  -->	
+				<li>
+					<button onclick="myFunction('{{ std_dst.id }}')" class="w3-button w3-block w3-right-align">
+						<button class="accordion" id="header_panel"> שם מטרה: {{ std_dst.title }}</button>
+						<div class="panel">
+						  <p class="ppp"> תאור מטרה: {{ std_dst.body }}</p>				
+						</div>
+						</br>
+					</button>					
+							{% for goal in std_dst.goals %}  <!-- dst goals -->	
+								<li>
+									</br>
+									<button onclick="myFunction('{{ goal.id }}')" class="w3-button w3-block w3-right-align">
+										<button class="accordion" id="blue_header"> שם יעד: {{ goal.title }} </button>
+										<div class="panel">
+											<p class="blue_ppp"> תאור היעד: {{ goal.body }} </p>				
+										</div>
+										
+										
+										{% for todo in goal.todos %}  <!-- Goal todos -->	
+											<li style="margin-right: 3%">
+												<button class="accordion"> שם משימה: {{ todo.title }} </button>
+												<div class="panel">
+													<p class="white_ppp" style="background-color:#ffffcc"> 
+														<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+														<div>תאור משימה:  {{ todo.body }}</div>
+													</p>
+												</div>"
+											</li>
+										{% endfor %}  <!-- Destination Goals -->
+									</button>
+									
+								</li>
+							{% endfor %}  <!-- Tag Destinations -->
+				</li>
+			{% endfor %}  <!-- Tags -->	
+
+
+<!-- FROM https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_accordion_lists   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

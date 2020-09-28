@@ -1,0 +1,29 @@
+{% block layout_2 %}
+
+	<body>
+	
+		<header>
+		
+			<nav>
+				<ul>
+					{% include "layout_options.html" %}
+				</ul>
+			</nav>
+			
+			<div class="menu">
+			   <a href="#" class="menu-trigger">Меню</a>
+			</div>
+			
+			<div class="logo">
+				<img src="{{ url_for('static', filename='img/idanim.PNG') }}"> 
+			</div>
+			
+			<div class="logo">
+				<img src="{{ url_for('static', filename='img/eitan.PNG') }}"> 
+			</div>	        
+
+		</header>
+		
+    </body>
+	
+{% endblock layout_2 %}

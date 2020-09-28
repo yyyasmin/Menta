@@ -1,0 +1,157 @@
+<!-- FROM https://stackoverflow.com/questions/25978879/how-to-create-chained-selectfield-in-flask-without-refreshing-the-page  -->
+
+{% block st1 %} 
+
+<style>
+
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+input {
+	width: 100%;
+}
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+
+<!----------------------------------------------------------------->
+
+.container {
+  background: black;
+  padding: 25px;
+  margin: 0 auto;
+  width: 500px;
+  color: white;
+}
+
+.select2-container {
+  width: 150px;
+}
+
+select {
+  width: 150px;
+}
+
+.select2-selection__rendered {
+  display: none;
+}
+
+/* FROM https://stackoverflow.com/questions/24631924/how-to-modify-selectfield-width-in-jinja2-template */
+option {
+    width: 18em;
+	background-color:#F8F8FF;
+}
+
+select {
+    width: 18em;
+	background-color:#E0EEEE;
+}
+
+
+</style>
+		
+		<!-- DEBUG -->
+		<!-- DEBUG -->
+		
+<form action="{{ url_for('students.get_sub_tag_profile') }}" method="POST">
+	
+	<div style = "text-align:center; align:center; width:100%">
+				
+		<ul class="tabs">
+		
+			{{ form.csrf_token }}
+		
+			<li class="tab" id="tab-2">
+				<label for="tag">בחר נושא</label>
+				<div>{{form.tag}}</div>
+				{% if form.tag.errors %}
+					<ul class=errors>
+						{% for error in form.tag.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</li>			
+
+			<li class="tab" id="tab-2"><span class="tab-title">
+				<label for="sub_tag">בחר תת נושא</label>				
+				<div>{{form.sub_tag}}</div>
+				{% if form.sub_tag.errors %}
+					<ul class=errors>
+						{% for error in form.sub_tag.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</li>					
+							
+			<li class="tab" id="tab-3">
+				<label for="get_sub_tag_profile"></label>				
+				<div>
+					<button class="w3-button w3-border" type="submit" style="background:Lavender;" 
+							id="get_sub_tag_profile" name="get_sub_tag_profile" value="get_sub_tag_profile">
+						הצג פרופיל מקטגוריה זו
+					</button>
+				</div>				
+			</li>
+											
+		</ul>
+												
+	</div>
+</form>
+
+
+<script>
+
+// FROM https://youtu.be/I2dJuNwlIH0?t=717	
+	let tag_select = document.getElementById('tag');
+	let sub_tag_select = document.getElementById('sub_tag');
+
+
+	tag_select.onchange = function(){
+		tag_id = tag_select.value;
+		console.log(tag_id);
+		
+		fetch('/sub_tag/' + tag_id).then(function(response)  {
+			response.json().then(function(data) {
+				
+				// FROM https://stackoverflow.com/questions/2738254/javascript-innerhtml-not-working-with-html-select-menus
+				while ( sub_tag_select.childNodes.length >= 1 )   {
+					sub_tag_select.removeChild(sub_tag_select.firstChild);       
+				}
+
+				for(let sub_tag of data.sub_tags)  {
+					newOption = document.createElement('option');
+					newOption.value=sub_tag.id;
+					newOption.text=sub_tag.title;
+					sub_tag_select.appendChild(newOption);
+				}	
+
+			console.log("sub_tag_select");
+			console.log(sub_tag_select);
+			})
+		});
+	}
+
+</script>
+
+
+{% endblock st1 %}

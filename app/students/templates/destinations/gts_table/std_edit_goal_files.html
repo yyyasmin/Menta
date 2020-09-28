@@ -1,0 +1,76 @@
+{% block todo_files %}
+
+
+<style>
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  #text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+	
+	<div>			
+		{% for file in files if goal.is_parent_of(file) %}
+			
+			<button class="btn btn-warning btn-xs" style="background-color: #ffff66" ><a href="{{ url_for('goals.download_goal_file2', selected_file_id=file.id) }}">הורד קובץ</a></button>		
+			<button class="btn btn-warning btn-xs" id="edit_sub_list_id"><a href="{{ url_for('goals.replace_uploaded_file2', selected_replaced_file_id=file.id) }}">ערוך</a>			
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('goals.uploaded_file_from_goal_remove2', selected_file_id=file.id) }}">מחק</a></button>		
+			
+			</br>
+			
+			<button class="accordion">שם הקובץ: {{ file.name }}</button>			
+			<div class="panel">
+			  <p class="white_ppp">תאור הקובץ: {{ file.body }} </p>
+			</div>
+			
+			</br>
+
+		{% endfor %}
+				
+		</br>
+
+	</div>
+</div>   <!-- container -->
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock todo_files %}

@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for student in students %}
+    <div><p>student team_member: {{ student.team_members.title }} user{{ user.username }} -  says: <b>{{student.title }}:  {{ student.body }}</b></p></div>
+    {% endfor %}
+{% endblock %}

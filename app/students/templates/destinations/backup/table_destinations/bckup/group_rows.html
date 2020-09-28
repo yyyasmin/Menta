@@ -1,0 +1,164 @@
+{% block std_dsts_6 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'מטרות - ';
+}
+
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרה +';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הוסף מטרה - ';
+}
+
+
+
+.collapsed .goals-icon-class:before {
+    content: 'יעדים +';
+}
+.goals-icon-class:before {
+    content: 'יעדים -';
+}
+
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעד +';
+
+}
+.add-goals-icon-class:before {
+	content: 'הוסף יעד -';
+	layout: fixed;
+}
+
+#td_id {
+	width: 5% 
+}
+#td_title {
+	width: 15% 
+}
+#td_body {
+	width: 35% 
+}
+#td_sub_list {
+	width: 10% 
+}
+#td_date {
+	width: 20% 
+}
+#td_sts {
+	width: 17% 
+}
+#td_add {
+	width: 10% 
+}
+#td_save {
+	width: 10% 
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+
+</script>
+
+
+</head>
+
+<body>
+	
+
+
+	</br></br>
+			
+	{% include "destinations/table_destinations/tag_and_ar_dropdown.html" %}
+
+		
+	{% for tag in tags %}
+		{% for ar in age_ranges %}  <!-- ars -->
+						
+			{% if (tag.id == default_tag.id) and (ar.id == default_ar.id) %}  <!-- Open content only the part that was updated by the user -->
+								
+					</br> 
+					
+						<div type="button" class="accordion" style="color:green; width:auto"
+							 onclick="myFunction('{{ tag.id }}{{ar.id}}')">מטרות +
+						</div>
+						
+						<div style="width:auto; height: auto;" class="panel">
+						<p> 
+						
+							<table class="green_table">	
+							
+								{% include "./destinations/table_destinations/dst_header_6.html" %}
+										
+									{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+										<tr>
+											{% include "./destinations/table_destinations/dst_line_6.html" %}
+										</tr>
+									{% endfor %}	
+							</table>
+																		
+						 </p>								 
+						</div>
+							
+
+																								
+			{% endif %}
+						
+		{% endfor %}
+	{% endfor %}
+	
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_dsts_6 %}

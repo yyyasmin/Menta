@@ -1,0 +1,36 @@
+{% block plan_report_todos %}
+
+<td>
+	{% if w_ns.who_printed == False %}
+		<strong>{{ who.title }}</strong>
+		{% set w_ns.who_printed = True %}
+	{% endif %}	
+			
+	<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+		משימה: {{ todo.title }} 
+																			
+		{% for sts in statuss %}	
+			{% for st in std_txts %}
+				{% if st.general_txt_id==todo.id %}
+					{% if st.status_id==sts.id %}
+						<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}				
+	</div>
+			
+	<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+		<div></div>{{todo.body}}
+	</div>
+	{% set t_ns.todo_printed = True %}
+
+
+</td>
+				
+{% if t_ns.todo_printed == False %}
+	<td></td>
+{% endif %}
+
+
+{% block plan_report_todos %}

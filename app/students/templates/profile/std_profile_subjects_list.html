@@ -1,0 +1,39 @@
+{% block profile_subject_list %}
+
+{% include "./profile/profile_style.html" %}
+
+				{% for sbj in profile.subjects %}	
+				
+					<button style="background-color:green; color:white" class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.subject_from_std_profile_delete2', selected_subject_id=sbj.id) }}">הסר תחום עיניין זה מפרופיל התלמיד</a></button>			
+					<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('subjectes.subject_update', selected_subject_id=sbj.id) }}">ערוך</a></button>			
+					
+					<button class="accordion">כותרת תחום עיניין:  sbj.title </button>
+					<div class="panel">
+					  <button>תאור תחום עיניין:  sbj.body </button>				
+					</div>
+					
+				{% endfor %}
+	
+				<tr><td>
+					<center><button class="btn btn-warning btn-xs" ><a style="background-color:lightblue; color:black" href="{{ url_for('students.subject_to_std_profile_add') }}">הוסף תחום עיניין לתלמיד מתוך רשימה</a></button></center>			
+				</tr></td>				
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

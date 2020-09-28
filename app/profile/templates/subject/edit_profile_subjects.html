@@ -1,0 +1,46 @@
+
+{% block edit_profile_subjects %}
+
+	<div> 			
+	{% for subject in profile.children.all() if (subject.type=='subject') %}
+			<br><br>						
+			
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a style="color: black" href="{{ url_for('subjects.subject_update', selected_subject_id=subject.id) }}">ערוך</a></button>			
+						
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a style="color: black" href="{{ url_for('students.show_student_tree2', selected_student_id=0) }}">הצג עץ מטרות</a></button>
+			
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a style="color: black" href="{{ url_for('profile.subject_from_profile_delete2', selected_profile_id=profile.id, selected_subject_id=subject.id) }}">מחק</a></button>		
+			
+			<button class="accordion">יעד: {{ subject.id }}:     {{ subject.title }}</button>
+			
+			<div class="panel">
+				<p class="white_ppp">תאור תחום העיניין {{ subject.title }}</p>
+			</div>
+	{% endfor %}
+	
+  </div>
+  
+  </br>
+  
+ </div>   <!-- container -->
+ 
+  	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock edit_profile_subjects %}

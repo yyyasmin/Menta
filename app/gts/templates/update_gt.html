@@ -1,0 +1,91 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="h_name">שם ה gt  בעיברית</label>
+		  <input type="title" class="form-control" id="h_name"  name="h_name" value="{{ gt.h_name }}">
+		</div> 
+		
+		<div class="form-group">
+		  <label for="e_name">Gt Txt Name</label>
+		  <input type="title" class="form-control" id="e_name"  name="e_name" value="{{ gt.e_name }}">
+		</div>  
+			
+		<div class="form-group">
+		  <label for="class_name">Class name</label>
+		  <input type="title" class="form-control" id="class_name"  name="class_name" value="{{ gt.class_name }}">
+		</div>  
+			
+		<div class="form-group">
+			<label for="default">Default</label>
+				{% if gt.default == True %}
+					<input type="checkbox" class="form-control" id="default" name="default" checked>
+				{% else %}
+					<input type="checkbox" class="form-control" id="default" name="default">
+				{% endif %}
+
+		</div>  
+						
+		<div class="form-group">
+		  <label for="title">Title</label>
+		  <input type="title" class="form-control" id="title"  name="title" value="{{ gt.title }}">
+		</div>  
+								
+		<div class="form-group">
+		  <label for="body">Body</label>
+		  <input type="title" class="form-control" id="body"  name="body" value="{{ gt.body }}">
+		</div>  
+				
+		<div class="form-group">
+		  <label for="from_age">From age</label>
+		  <input type="title" class="form-control" id="from_age"  name="from_age" value="{{ gt.from_age }}">
+		</div> 
+		
+		<div class="form-group">
+		  <label for="to_age">To age</label>
+		  <input type="title" class="form-control" id="to_age"  name="to_age" value="{{ gt.to_age }}">
+		</div>  
+			
+		<div class="form-group">
+			<label for="parent">Parent title</label>
+			<input type="title" class="form-control" name="parent">
+		</div>	
+		
+		<div class="form-group">
+			<label for="parent_class_name">Parent class name</label>
+			<input type="title" class="form-control" name="parent_class_name">
+		</div>	
+		
+		<div class="form-group">
+			<label for="child">Child title</label>
+			<input type="title" class="form-control" name="child">
+		</div>	
+							
+		<div class="form-group">
+			<label for="child_class_name">Child class nmae</label>
+			<input type="title" class="form-control" name="child_class_name">
+		</div>	
+			
+				
+		<div class="form-group">
+		  <label for="color_name_txt">color name Txt</label>
+		  <input type="title" class="form-control" id="color_name_txt"  name="color_name_txt" value="{{ gt.color_txt }}">
+		</div>  
+			
+		<div class="form-group">
+		  <label for="color_hexa_string">Color hexa string</label>
+		  <input type="title" class="form-control" id="color_hexa_string"  name="color_hexa_string" value="{{ gt.color }}">
+		</div>  
+		
+		</br>		 
+		<button type="submit" class="btn btn-default">Save gt</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

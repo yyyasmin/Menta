@@ -1,0 +1,147 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+<div> IN C:\Users\yasmi\Documents\מנטא\app\goals\templates\update_todo.html </div>
+
+	<div class="container">	
+
+		<form role="form" method="POST" destination='' enctype="multipart/form-data">  
+		
+			<div class="form-group">
+				<label for="title">כותרת המשימה:  </label>
+				<input type="title" class="form-control" name="title" value="{{ form.title }}">
+			</div>
+			 
+			<div class="form-group">
+				<label for="body">תאור המשימה:  </label>
+				<input type="textarea" class="form-control" name="body" value="{{ form.body }}">
+			</div>
+
+			</br>		
+
+				<ul class="tabs">
+				
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div> {{form.who.label}}: {{form.who}} </div>
+							{% if form.who.errors %}
+								<ul class=errors>
+									{% for error in form.who.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   
+					</li>
+					
+					
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div style="color:{{ sts_color }}"> {{form.status.label}}: {{form.status}} </div>
+							{% if form.status.errors %}
+								<ul class=errors>
+									{% for error in form.status.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- ar_div -->
+					</li>
+					
+					<!-- Only when matched to student 
+					<li class="tab " id="tab-2"><span class="tab-title">
+						<div id="ar_div">
+							<input type="date" class="form-control" id="due_date" name="due_date" value="{{ form.due_date }}">
+						</div>   
+					</li>
+					--->
+	
+				</ul>
+			<br>
+				
+			<button type="submit" class="btn btn-default">שמור</button>		
+		</form>
+	</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

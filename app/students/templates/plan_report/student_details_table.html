@@ -1,0 +1,26 @@
+{% block student_details %}
+
+	<h3><strong><div>פרטי התלמיד</div></strong></h3>
+	
+	<table>
+	
+		<th>
+			<th>תז</th>
+			<th>שם</th>
+			<th>כיתה</th>
+			<th>תאריך לידה</th>
+			<th>נוצר בתאריך</th>
+
+		</th>	
+
+		<tr>
+			<th>{{ student.id }}</th>
+			<th>{{ student.first_name }}  {{ student.last_name }}</th>
+			<th>{{ student.grade }}</th>
+			<th>{{ student.birth_date }}</th>
+			<th>{{ student.registered_on }}</th>
+		</tr>	
+		
+	</table>
+	
+{% endblock %}

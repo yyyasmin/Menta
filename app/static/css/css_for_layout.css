@@ -1,0 +1,119 @@
+button.accordion {
+	font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    outline: none;
+    font-size: 15px;
+    <!-- transition: 0.4s;  -->
+    cursor: pointer;	
+	align:center;
+	lang:he;
+	dir:rtl;
+    text-align: right;
+}
+
+div.panel {
+	font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-size: 15px;
+	
+	align:center;
+	lang:he;
+	dir:rtl;
+    text-align: right;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+#std_dst_list_container  {
+	lang: he;
+	dir: rtl; 
+	width: 85%
+	align: center;
+	text-align:center;
+	background-color: snow;	
+}
+
+
+#edit_list_id  {
+	background-color: #ffcc66;
+}
+
+#show_tree_id  {
+ background-color: plum;
+}
+
+#edit_sub_list_id {
+	background-color: #00ffcc;
+}
+
+#delete_id  {
+	background-color: #ff9999;
+}
+
+h1, h2, h3, h4, h5  {
+align: center;
+lang: he;
+dir: rtl;
+text-align:right;
+}
+
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+	text_align: right;
+	lang: he;
+	dir: rtl;
+	width: 85%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.st_table tr:nth-child(even){
+        background: #dae5f4;
+}
+
+table#subjects_table tr:nth-child(even) { background-color:#0088cc;  }
+table#subjects_table tr:nth-child(odd)  { background-color:#cceeff;  }
+
+table#strengthes_table tr:nth-child(even) { background-color:#00ff00;  }
+table#strengthes_table tr:nth-child(odd)  { background-color:#ccffcc;  }
+
+table#weaknesses_table tr:nth-child(even) { background-color:#ff0000; }
+table#weaknesses_table tr:nth-child(odd)  { background-color:#ffb3b3; }
+
+div {
+	lang: he;
+	dir: rtl;
+	text-align: right;
+}
+
+#container_id  {
+	lang: he;
+	dir: rtl; 
+	align: center;
+	width: 85%
+	text-align:right;
+	background-color: snow;	
+}

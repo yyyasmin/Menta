@@ -1,0 +1,58 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block add_tag_line %}
+
+<style>
+
+</style>
+
+</br>
+
+			<tr>
+			
+				<td>  
+					<label for="tag"> הוסף נושא </label>
+					<select id="tag" style="max-width:100%;">
+						<option value="selection_msg">
+							בחר נושא
+						</option>					
+						{% for tag in tags %}
+							<!-- IN CASE TAG is IN PROFILE BUT NOT ALL ITS SUBS -->
+							{% if profile.is_parent_of(tag) %}
+								{% for sub_tag in sub_tags if  not profile.is_parent_of(sub_tag) %}
+									<option value="{{ tag.id }}">
+										{{tag.id}} {{ tag.title|replace("-", "\n") }}  
+									</option>
+									{% break %}
+								{% endfor %}
+							{% else %}
+								<option value="{{ tag.id }}">
+									{{tag.id}} {{ tag.title|replace("-", "\n") }}  
+								</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</td>
+
+				<td>
+					<label for="tag"> הוסף תת נושא </label>
+					<select disabled id="sub_tag" style="max-width:100%">	
+						<option value="selection_msg">
+							בחר תת נושא
+						</option>	
+						{% for sub_tag in sub_tags if not (profile.is_parent_of(sub_tag)) %}
+							<option value="{{ sub_tag.id }}">
+								{{sub_tag.id}} {{sub_tag.title}}  
+							</option>
+						{% endfor %}
+					</select>			
+				</td>
+				
+				<td></td>
+				<td></td>
+				<td></td>
+					
+			</tr>
+			
+				
+{% endblock add_tag_line %}

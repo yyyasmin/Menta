@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% with from_dst_sort_order=3 %} 
+	{% include "dst_title.html" %} 
+{% endwith %} 
+
+<style>
+
+</style>
+
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('goals.resource_to_goal_add2', selected_goal_id=goal.id) }}">הוסף משאב חדש</a>
+	<strong></h5></button>
+	</br></br>
+
+	<h3>		
+		<button class="accordion" id="header_panel"> רשימת משאבים ליעד:  {{ goal.title }} </button>
+		<div class="panel">
+		  <p class="ppp"> תאור היעד: {{ goal.body }}  </p>
+		</div>
+	</h3>
+	
+	<br>
+	
+	<p></p>
+	
+	<div>			
+		{% for resource in goal.resources %}
+
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a href="{{ url_for('resources.resource_update', selected_resource_id=resource.id) }}">ערוך</a></button>			
+			<button class="btn btn-warning btn-xs" id="edit_sub_list_id"><a href="{{ url_for('resources.edit_resource_uploaded_files2', selected_resource_id=resource.id) }}">ערוך קבצים</a></button>						
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('goals.resource_from_goal_delete2', selected_goal_id=goal.id, selected_resource_id=resource.id) }}">מחק</a></button>		
+			
+			</br>
+			
+			<button class="accordion">{{ resource.title }} </button>			
+			<div class="panel">
+			  <p class="white_ppp"> תאור המשאב: {{ resource .body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+		
+		</br>
+
+	</div>
+ 
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

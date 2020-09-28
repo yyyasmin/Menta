@@ -1,0 +1,36 @@
+{% block std_title %}
+
+<style>
+
+</style>
+
+
+</br>
+
+	
+	<center><table class="std_table">
+		<tr>			
+			<th>תז</th>
+			<th>שם פרטי</th>
+			<th>שם משפחה</th> 
+			<th>כיתה</th>
+			<th>עריכה</th>
+		</tr>
+			
+		<tr>
+		
+			<td style="font-size:0.9em">
+			{{ student.id }}
+			</td>
+			
+			<td>{{ student.first_name }}</td>
+			<td>{{ student.last_name }}</td> 
+			<td>{{ student.grade }}</td>
+			<td>
+				{% include "std_actions.html" %}
+			</td>
+		</tr>
+	</table></center>
+	
+
+{% endblock std_title %}

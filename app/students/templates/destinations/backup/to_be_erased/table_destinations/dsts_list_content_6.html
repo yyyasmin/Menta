@@ -1,0 +1,31 @@
+{% block dsts_list_content_6 %}				
+		
+	<tr>											
+													
+		{% include "./destinations/table_destinations/dst_line_6.html" %}
+						
+		<tr></tr>
+		
+		<tr class="collapse" id="{{std_dst.id}}Content">
+			<td colspan="7">
+				{% include "./destinations/table_destinations/goals_list_6.html" %}								
+			</td>
+		</tr>
+
+		<tr></tr>
+							
+		<tr></tr>
+		
+		<tr class="collapse" id="not_of_std{{std_dst.id}}Content">
+			<td colspan="7">
+			{% include "./destinations/table_destinations/goals_not_of_std_list_7.html" %}								
+			</td>
+		</tr>
+
+		<tr></tr>
+
+		
+	</tr>
+					
+{% endblock dsts_list_content_6 %}				
+					

@@ -1,0 +1,174 @@
+{% block round %}
+
+<!-- FROM https://codepen.io/Nosenation/pen/pGoDc -->
+<style>
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:600&display=swap");
+@-webkit-keyframes active {
+  from {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 10px 0px rgba(0, 0, 250, 0.6);
+  }
+  to {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+  }
+}
+@keyframes active {
+  from {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 10px 0px rgba(0, 0, 250, 0.6);
+  }
+  to {
+    box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+  }
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px;
+  background: #f8f8f8;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.grid {
+  max-width: 400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 150px 150px 50px;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  grid-gap: 40px 25px;
+}
+
+button,
+[role="button"] {
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  outline: none;
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#D8D9DB), color-stop(80%, #fff), to(#FDFDFD));
+  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+  border-radius: 30px;
+  border: 1px solid #8F9092;
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 0 #CECFD1;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #606060;
+  text-shadow: 0 1px #fff;
+}
+button::-moz-focus-inner,
+[role="button"]::-moz-focus-inner {
+  border: 0;
+}
+button > *,
+[role="button"] > * {
+  -webkit-transition: -webkit-transform 0.2s ease;
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+button:hover:not([disabled]),
+[role="button"]:hover:not([disabled]) {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+}
+button:hover:not([disabled]) > *,
+[role="button"]:hover:not([disabled]) > * {
+  -webkit-transform: scale(0.975);
+          transform: scale(0.975);
+}
+button:focus:not(:active),
+[role="button"]:focus:not(:active) {
+  -webkit-animation: active 0.9s alternate infinite;
+          animation: active 0.9s alternate infinite;
+  outline: none;
+}
+button:active:not([disabled]),
+[role="button"]:active:not([disabled]) {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+button:active:not([disabled]) > *,
+[role="button"]:active:not([disabled]) > * {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+button:disabled,
+[role="button"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+button.icon,
+[role="button"].icon {
+  width: 50px;
+}
+button.icon svg,
+[role="button"].icon svg {
+  margin-top: 3px;
+  width: 30px;
+  height: 30px;
+}
+
+</style>
+
+
+.grid
+  button: span Normal
+  button
+  button.icon
+    svg(width="626" height="512" viewBox="0 0 626 512" xmlns="http://www.w3.org/2000/svg")
+      path(fill="currentColor" d="M64 166Q115 115 180 89 244 63 313 63 382 63 447 89 511 115 562 166L528 200Q484 156 429 134 373 111 313 111 253 111 197 134 141 156 98 200L64 166ZM132 234Q169 197 216 178 263 159 313 159 363 159 410 178 457 197 494 234L460 268Q430 238 392 223 354 207 313 207 272 207 234 223 195 238 166 268L132 234ZM200 302Q223 279 252 267 281 255 313 255 345 255 374 267 403 279 426 302L392 335Q376 319 355 311 334 303 313 303 291 303 271 311 250 319 234 335L200 302ZM267 369Q287 351 313 351 339 351 358 369L313 415 267 369Z")
+      
+  .button(role="button"): span Not focusable
+  .button(role="button")
+  .button(role="button").icon
+    svg(width="626" height="512" viewBox="0 0 626 512" xmlns="http://www.w3.org/2000/svg")
+      path(fill="currentColor" d="M64 166Q115 115 180 89 244 63 313 63 382 63 447 89 511 115 562 166L528 200Q484 156 429 134 373 111 313 111 253 111 197 134 141 156 98 200L64 166ZM132 234Q169 197 216 178 263 159 313 159 363 159 410 178 457 197 494 234L460 268Q430 238 392 223 354 207 313 207 272 207 234 223 195 238 166 268L132 234ZM200 302Q223 279 252 267 281 255 313 255 345 255 374 267 403 279 426 302L392 335Q376 319 355 311 334 303 313 303 291 303 271 311 250 319 234 335L200 302ZM267 369Q287 351 313 351 339 351 358 369L313 415 267 369Z")
+
+  button(disabled): span Disabled
+  button(disabled)
+  button(disabled).icon
+    svg(width="626" height="512" viewBox="0 0 626 512" xmlns="http://www.w3.org/2000/svg")
+      path(fill="currentColor" d="M64 166Q115 115 180 89 244 63 313 63 382 63 447 89 511 115 562 166L528 200Q484 156 429 134 373 111 313 111 253 111 197 134 141 156 98 200L64 166ZM132 234Q169 197 216 178 263 159 313 159 363 159 410 178 457 197 494 234L460 268Q430 238 392 223 354 207 313 207 272 207 234 223 195 238 166 268L132 234ZM200 302Q223 279 252 267 281 255 313 255 345 255 374 267 403 279 426 302L392 335Q376 319 355 311 334 303 313 303 291 303 271 311 250 319 234 335L200 302ZM267 369Q287 351 313 351 339 351 358 369L313 415 267 369Z")
+	  
+<footer>
+
+	<span style="align: left; adding:50px;">
+			
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">תוכנית אישית</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">ערוך פרטים</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">הצג עץ מטרות</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">מסמכים</a></button>							
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_std_profile2', selected_student_id=student.id, selected_profile_id=0) }}">פרופיל</a></button>							
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">מטרות</a></button>										
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">צוות חינוכי</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.student_delete2', selected_student_id=student.id) }}">מחק</a></button>
+
+	</span>
+	
+</footer>
+
+{% endblock round %}
+ 

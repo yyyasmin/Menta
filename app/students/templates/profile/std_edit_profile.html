@@ -1,0 +1,34 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+</style>
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+	
+	</br>
+	
+	<h3><strong><div>ערוך פרופיל</div></strong></h3>
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.std_edit_profile', dsply_direction=1) }}">תצוגה אופקית</a>
+	<strong></h5></button>
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.std_edit_profile', dsply_direction=0) }}">תצוגה אנכית</a>
+	<strong></h5></button>
+		
+	</br>
+		
+	{% include "./profile/show_std_profile_by_tag.html" %}
+
+	</br>
+
+
+
+{% endblock %}

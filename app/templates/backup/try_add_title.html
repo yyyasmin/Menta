@@ -1,0 +1,36 @@
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+</style>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('students.student_add') }}">הוסף תלמיד חדש</a>
+<strong></h5></button>
+
+</br>

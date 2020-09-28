@@ -1,0 +1,48 @@
+{% block std_plan_report_destinations %}
+			
+<table>
+								
+	<tr>
+	
+		<td>		
+			<h2>
+				<button onclick="myFunction('{{ dst.id }}')" class="w3-button w3-block w3-right-align">
+					<button class="accordion" id="header_panel"> שם מטרה: {{ dst.destination.title }}</button>
+					<div class="panel">
+					  <p class="ppp"> תאור מטרה: {{ dst.destination.body }}</p>				
+					</div>
+					</br>
+				</button>
+			</h2> 
+		</td>
+
+		<td>
+			<div>
+				{% include "plan_report/student_goals_for_plan_report.html" %}
+			</div>			
+		</td>
+		
+	</tr>
+
+</table>		
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+ 
+ }
+}
+</script>
+
+{% endblock %}  <!-- std_plan_report_todos -->

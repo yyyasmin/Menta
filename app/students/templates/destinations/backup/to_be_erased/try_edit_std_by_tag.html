@@ -1,0 +1,143 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+{% block edit_std_dst_by_tag %} 
+
+<style>
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 80%;
+    border: 10;
+    outline: solid;
+    font-size: 15px;
+    transition: 0.4s;
+	
+	lang: "he";
+	dir: "rtl";
+
+	align: center;
+		background-color: yellow;
+	
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+<!--
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;	
+		background-color:red; 
+}
+
+#student_header.accordion {      
+	color: #fff;
+	color: white;
+	border-color: #EEEEEE;
+	background-color: #346767;
+	font-size: 18px;
+
+	lang: "he";
+	dir: "rtl";
+
+	margin-right:5%;
+	margin-left:20%;
+	align: center;
+	
+		background-color:yellow;  
+
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+	
+			background-color:pink; 
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-right: 10%;
+}
+
+
+
+.button{
+	background-color:yellow;
+}
+
+-->
+
+h1, h2, h3, h4, h5  {
+	-webkit-font-smoothing:subpixel-antialiased;
+
+	lang: he;
+	dir:  rtl;
+	
+	margin-right: 10%;
+	margin-left:10%;
+	
+	}
+
+
+</style>
+
+<div>>>>>>>>>>>>>>>  I am In std/dst/edit_std_by_tag.html</div>
+
+<button class="btn btn-info btn-xs" id="add_button">
+	<h5><strong>	
+		<a href="{{ url_for('students.destination_to_student_add2', selected_student_id=std.id) }}">הוסף מטרה</a>
+	<strong></h5>
+</button>
+
+
+<center>
+<h2>
+	<button class="accordion" id="student_header"> 
+		{{ std.first_name }} {{ std.last_name }} רשימת מטרות של התלמיד 
+	</button>
+
+
+	<div class="student_panel" >
+		<p class="ppp">{{ std.id }}  GRADE: {{ std.grade }} פרטי התלמיד:</p>
+	</div>
+	</br>
+</h2>
+</center>
+
+	
+	{% for tag in tags %}
+		</br></br>	
+		<div><h4><strong>{{ tag.title }} נושא: </strong></h4></div>
+		{% for dst in tag.destinations %}
+			{% if dst.destination_id in std_dst_ids %}
+				{% include "./destinations/std_edit_one_dst.html" %}
+			{% endif %}
+		{% endfor %}	
+		
+	{% endfor %}  <!-- tags -->
+
+{% endblock  edit_std_dst_by_tag %}
+{% endblock %}

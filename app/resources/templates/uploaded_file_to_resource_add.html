@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+
+{% with student=student, std=student  %} 
+{% include "dst_title.html" %} 
+{% endwith %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    uploaded_filetent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    uploaded_filetent: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#resource_header.accordion {
+		color: #fff;
+		background-color: #346767;
+		border-color: #EEEEEE;
+		font-size: 18px;
+}
+
+#uploaded_file_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+#uploaded_file_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+	font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+	<h4>
+		<button class="accordion" id="resource_header" >Uploaded_files list for Resource: {{ resource.title }}</button>
+		<div class="panel" id="resource_decription">
+			<p class="ppp">Resource description: {{ resource.body }}.</p>
+		</div>
+	</h4>
+	<p></p>
+				
+	{% for uploaded_file in resource.files %}
+			<br><br>						
+			<button class="btn btn-danger btn-xs"  ><a href="{{ url_for('resources.uploaded_file_from_resource_delete2', selected_resource_id=resource.id, selected_uploaded_file_id=uploaded_file.id) }}">Remove file from resource</a></button>		
+			
+			<button class="accordion" id="uploaded_file_header" >Uploaded_file's title: {{ uploaded_file.title }}</button>
+			<div class="panel" id="uploaded_file_decription">
+				<p class="ppp" id="uploaded_file_ppp">Uploaded_file description: {{ uploaded_file.body }}.</p>
+			</div>
+	{% endfor %}
+	
+		<center><h2><button class="btn btn-info btn-xs"  ><a href="{{ url_for('resources.upload_new_file2', selected_resource_id=resource.id) }}">Upload a new file</a></button></h2></center>
+  </div>
+  <br><br><br>
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+
+
+</style>
+
+<div class="w3-container" id="container_id">
+
+</br>
+
+<center><h3><div><h4><strong><u>רשימת מטרות לתלמיד {{std.first_name }} {{ std.last_name }}</u></strong></h4></div></h3></center>
+	<div>	
+	
+		{% for tag in tags %}
+
+			<div><h4><strong><u> נושא: {{ tag.title }} </u></strong></h4></div>
+			{% for dst in tag.general_txts %}
+			
+				<div> DEBUG 1: dst in tag.general_txts dst is: {{ dst }} </div>
+				<div> DEBUG 1: tag.general_txts is: {{ tag.general_txts }} </div>
+				
+				<div> DEBUG 2: if dst in std.general_txts    dst: {{ dst }} </div>
+				<div> DEBUG 2: std.general_choices is: {{std.general_choices }} </div>
+				
+				{% if dst in std.general_choices %} 
+				
+				
+				
+					<div><h4><strong><u> נושא: {{ tag.title }}</u></strong></h4></div>						
+						<button class="btn btn-danger btn-xs" id="edit_list_id"><a href="{{ url_for('students.match_destination_to_student2', selected_destination_id=dst.id) }}">הוסף מטרה זו לתלמיד</a></button>
+				
+						<button class="accordion">Destination's title: {{ dst.title }}</button>
+						<div class="panel">
+							<button>Destination's description: {{ dst.body }}.</button>				
+						</div>	
+				{% endif %}
+			{% endfor %}
+			</br>			
+		{% endfor %}  <!-- tags -->
+			
+	</div>
+	
+</div>   <!-- container -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

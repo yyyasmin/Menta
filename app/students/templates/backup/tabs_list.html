@@ -1,0 +1,13 @@
+
+<ul class="tabrow">
+
+	<li><a href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">פרטים אישיים</a></li>
+	<li><a href="{{ url_for('students.edit_std_profile2', selected_student_id=student.id, selected_student_id=0) }}">פרופיל</a></li>
+	<li><a href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">צוות חינוכי</a></li>
+	<li><a href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">דוחות</a></li>
+	<li><a href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">מטרות</a></li>										
+	<li><a href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">הצג עץ מטרות</a></li>			
+	<li><a href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">תוכנית אישית</a></li>										
+	<li><a href="{{ url_for('students.student_delete2', selected_student_id=student.id) }}">מחק</a></li>
+
+</ul>

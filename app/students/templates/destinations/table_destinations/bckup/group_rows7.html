@@ -1,0 +1,146 @@
+{% block group_rows7 %}
+
+<style>
+table { 
+	width: 750px; 
+	border-collapse: collapse; 
+	margin:50px auto;
+	}
+
+th { 
+	background: #3498db; 
+	color: white; 
+	font-weight: bold; 
+	}
+
+td, th { 
+	padding: 10px; 
+	border: 1px solid #ccc; 
+	text-align: left; 
+	font-size: 18px;
+	}
+
+.labels tr td {
+	background-color: #2cc16a;
+	font-weight: bold;
+	color: #fff;
+}
+
+.label tr td label {
+	display: block;
+}
+
+
+[data-toggle="toggle"] {
+	display: none;
+}
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+	
+	
+	{% for tag in tags %}
+	{% for ar in age_ranges %}  <!-- ars -->			
+	{% if (tag.id == default_tag.id) and (ar.id == default_ar.id) %}  <!-- Open content only the part that was updated by the user -->
+						
+		<table>
+			
+			<tbody>
+			
+				<thead>
+					<tbody class="labels">
+						<tr>
+							<td colspan="5">
+								<label for="accounting">מטרות</label>
+								<input type="checkbox" name="accounting" id="accounting" data-toggle="toggle">
+							</td>
+						</tr>
+					</tbody>
+				</thead>	
+									
+				<tbody class="hide">
+								
+					<table class="green_table">	
+					
+						{% include "./destinations/table_destinations/dst_header_6.html" %}
+								
+							{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+								<tr>
+									{% include "./destinations/table_destinations/dst_line_6.html" %}
+								</tr>
+							{% endfor %}	
+					</table>
+							
+				</tbody>
+				
+				<tbody class="labels">
+					<tr>
+						<td colspan="5">
+							<label for="management">Management</label>
+							<input type="checkbox" name="management" id="management" data-toggle="toggle">
+						</td>
+					</tr>
+				</tbody>
+				
+				<tbody class="hide">
+					<tr>
+						<td>Australia</td>
+						<td>$7,685.00</td>
+						<td>$3,544.00</td>
+						<td>$5,834.00</td>
+						<td>$10,583.00</td>
+					</tr>
+					<tr>
+						<td>Central America</td>
+						<td>$7,685.00</td>
+						<td>$3,544.00</td>
+						<td>$5,834.00</td>
+						<td>$10,583.00</td>
+					</tr>
+					<tr>
+						<td>Europe</td>
+						<td>$7,685.00</td>
+						<td>$3,544.00</td>
+						<td>$5,834.00</td>
+						<td>$10,583.00</td>
+					</tr>
+					<tr>
+						<td>Middle East</td>
+						<td>$7,685.00</td>
+						<td>$3,544.00</td>
+						<td>$5,834.00</td>
+						<td>$10,583.00</td>
+					</tr>
+				</tbody>
+				
+			</tbody>
+		</table>	
+																						
+	{% endif %}			
+	{% endfor %}
+	{% endfor %}
+		
+
+
+</body>
+
+</html>
+
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+$(document).ready(function() {
+	$('[data-toggle="toggle"]').change(function(){
+		$(this).parents().next('.hide').toggle();
+	});
+});
+</script>
+
+{% endblock group_rows7 %}

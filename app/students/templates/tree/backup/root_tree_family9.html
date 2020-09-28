@@ -1,0 +1,128 @@
+<!-- FROM https://gojs.net/latest/learn/index.html -->
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% with student = std %} 
+{% include "dst_title.html" %} 
+{% endwith %} 
+
+<!DOCTYPE html>  <!-- HTML5 document type -->
+<html>
+<head>
+	<!-- use go-debug.js when developing and go.js when deploying -->
+	<!---
+	<script src="go-debug.js"></script>
+	<script src="https://unpkg.com/gojs/release/go-debug.js"></script>  
+	-->
+ 
+ <script id="code">
+ 
+
+	function init() {
+		if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+		var $ = go.GraphObject.make;  // for conciseness in defining templates
+	  
+
+
+	myFullDiagram =
+		$(go.Diagram, "fullDiagram",  // each diagram refers to its DIV HTML element by id
+		{
+			initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            maxScale: 1,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+			"undoManager.isEnabled": true,
+			layout: $(go.TreeLayout,
+				{ angle: 90, layerSpacing: 35 })
+		});
+
+			  
+
+	// the template we defined earlier
+	myFullDiagram.nodeTemplate =
+		$(go.Node, "Horizontal", 
+		{ background: "#44CCFF" },
+		$(go.Picture,
+		  { margin: 10, width: 50, height: 50, background: "red" },
+		  new go.Binding("source")),
+		$(go.TextBlock, "Default Text",
+		  { margin: 12, stroke: "white", font: "bold 16px sans-serif", width: 100 },
+		  new go.Binding("text", "name")),
+
+		//$(go.Shape, "Rectangle",
+			//{ fill: "orange", width: 100, }),
+			
+			 
+	);
+
+
+	// define a Link template that routes orthogonally, with no arrowhead
+	myFullDiagram.linkTemplate =
+		$(go.Link,
+		{ routing: go.Link.Orthogonal, corner: 5 },
+		$(go.Shape, // the link's path shape
+		  { strokeWidth: 3, stroke: "#555" }));
+		  
+		  
+	var model = $(go.TreeModel);
+
+/*****************************/
+	
+	var dstArray = [];
+	
+	<!-- FROM https://stackoverflow.com/questions/41339423/how-to-fill-array-content-using-for-loop-in-javascript -->	
+	dstArray.push({ key: "{{ dest.id }}",  
+					name: "{{ dest.title }}", 
+					source: "{{ url_for('static', filename='img/goal.png') }}"    } );//DEST
+						
+	{% for goal in dst_goals %}  // GOALS
+		
+			dstArray.push( { key: "{{ goal.id }}",  
+			parent: "{{ dest.id }}", 
+			name: "{{ goal.title }}", 
+			source: "{{ url_for('static', filename='img/goal3.PNG') }}"   } ); 								
+
+			{% for todo in dst_todos if (goal.is_parent_of(todo)) %}  // TODOS		
+				dstArray.push( { key: "{{ todo.id }}",  
+				parent: "{{ goal.id }}", 
+				name: "{{ todo.title}}", 	
+				source: "{{ url_for('static', filename='img/mission1.PNG') }}"   } ); 								
+				
+			{% endfor %}  // TODOS
+
+	{% endfor %}  // GOALS
+		
+
+
+	model.nodeDataArray = dstArray;
+/*****************************************/	
+	
+	
+	for ( i=0; i<3;  i++) {
+	
+		console.log( "array no. i -  1111111111111111111111111111" , i);
+		console.log( model.nodeDataArray[i]  );	
+		console.log( "\n\n" );
+
+	}
+
+	myFullDiagram.model = model;
+	
+	}	
+	
+</script>
+  
+  
+</head>
+
+<body onload="init()">
+
+<div id="sample">
+  <div id="fullDiagram" style="height:100%;width:100%;border:5px solid black;margin:2px;"></div>
+</div>
+
+</body
+
+</html>
+{% endblock %}

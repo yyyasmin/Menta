@@ -1,0 +1,46 @@
+
+{% block edit_profile_gts %}
+
+	<div> 			
+	{% for gt in profile.children.all() if (gt.type==gt_type) %}
+			<br><br>						
+			
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a style="color: black" href="{{ url_for('gts.gt_update', selected_gt_id=gt.id) }}">ערוך</a></button>			
+						
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a style="color: black" href="{{ url_for('students.show_student_tree2', selected_student_id=0) }}">הצג עץ מטרות</a></button>
+			
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a style="color: black" href="{{ url_for('profile.gt_from_profile_delete2', selected_profile_id=profile.id, selected_gt_id=gt.id) }}">מחק</a></button>		
+			
+			<button class="accordion">{ gt_type }}: מס {{ gt.id }}:     {{ gt.title }}</button>
+			
+			<div class="panel">
+				<p class="white_ppp">{{ gt_type }} תאור  {{ gt.body }}</p>
+			</div>
+	{% endfor %}
+	
+  </div>
+  
+  </br>
+  
+ </div>   <!-- container -->
+ 
+  	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock edit_profile_gts %}

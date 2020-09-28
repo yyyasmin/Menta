@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.item3 { grid-column: auto / span 2; }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-gap: 100px;
+  background-color: #2196F3;
+  /*padding: 10px;*/
+}
+.grid-container>div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  /*padding:20px 0;*/
+  padding: 100px;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+
+	<h2>grid-auto-flow: row</h2>
+	<div class="grid-container" style="grid-auto-flow: row;">
+	  <div class="item1"><img src="{{ url_for('static', filename='img/school.png') }}">school</div>
+	  <div class="item2"><img src="{{ url_for('static', filename='img/teacher.png') }}">team member</div>
+	  <div class="item3"><img src="{{ url_for('static', filename='img/kid.png') }}">student</div>
+	</div>
+	<h2>grid-auto-flow: row dense</h2>
+	<p>The "dense" value fills holes in the grid:</p>
+	<div class="grid-container" style="grid-auto-flow: row ;">
+	  <div class="item1"><img src="{{ url_for('static', filename='img/form.png') }}">form</div>
+	  <div class="item2"><img src="{{ url_for('static', filename='img/profile.png') }}">profile</div>
+	  <div class="item3"><img src="{{ url_for('static', filename='img/statistics.png') }}">statistics</div>
+	  <div class="item4">4</div>
+	</div>
+</div>
+</body>
+</html>

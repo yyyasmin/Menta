@@ -1,0 +1,126 @@
+
+{% extends "layout.html" %}
+
+	
+{% block content %}
+
+<!-- from http://gojs.net/latest/samples/localView.html  -->
+<!-- add a textbox for status from https://gojs.net/latest/intro/groups.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local View</title>
+  <meta name="description" content="In one diagram show the whole tree and in a second diagram show a subset that is logically near a selected node." />
+  <!-- Copyright 1998-2017 by Northwoods Software Corporation. -->
+  <meta charset="UTF-8">
+  <script src="../release/go.js"></script>
+    <script src="../assets/js/goSamples.js"></script>  <!-- this is only for the GoJS Samples framework -->
+  
+  
+  <!-- FROM https://gojs.net/latest/learn/index.html -->
+  <script src="go-debug.js"></script>
+  <!-- FROM https://gojs.net/latest/learn/index.html -->
+  
+
+{% with from_dst_sort_order=3 %} 
+	{% include "dst_title.html" %} 
+{% endwith %} 
+ 
+
+ <script id="code">
+
+    function init() {
+      if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+      var $ = go.GraphObject.make;  // for conciseness in defining templates
+      
+	  myFullDiagram =
+        $(go.Diagram, "fullDiagram",  // each diagram refers to its DIV HTML element by id
+          {
+            initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            //maxScale: 1.00,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+            layout: $(go.TreeLayout,
+                      { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            maxSelectionCount: 1,  // only one node may be selected at a time in each diagram
+          });
+
+
+      var myNodeTemplate =
+			$(go.Node, "Auto",
+			  { locationSpot: go.Spot.Center, },
+			  new go.Binding("text", "key", go.Binding.toString),  // for sorting
+			  
+	<!-- FROM https://forum.nwoods.com/t/centering-textblocks-in-panels/7941/9  -->	
+	
+			$(go.Panel, "Vertical",
+				new go.Binding("background", "color"),
+
+						
+					$(go.Picture,
+						{ margin: 10, width: 60, height: 60, background: "red", alignment: go.Spot.Left, },
+						new go.Binding("source")),
+								
+					$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "16pt sans-serif" }, 
+						new go.Binding("text", "name")),
+						
+					$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "16pt sans-serif" }, 
+						new go.Binding("text", "status"),
+						new go.Binding("fill", "color2"),
+						new go.Binding("stroke", "text_color")),
+						
+			)
+		
+        );
+
+      myFullDiagram.nodeTemplate = myNodeTemplate;
+
+      var myLinkTemplate =
+        $(go.Link,
+          { routing: go.Link.Normal, selectable: false },
+          $(go.Shape,
+            { strokeWidth: 2 })
+        );
+		
+
+      myFullDiagram.linkTemplate = myLinkTemplate;
+      // Create the full tree diagram
+      setupDiagram();
+
+    }
+			
+    // Create the tree model containing TOTAL nodes, with each node having a variable number of children
+    function setupDiagram() {
+
+		var nodeDataArray = [];
+		
+	    {% for dest in student_dsts  %}  // DESTINATIONS
+							
+			{% include './tree/dst_tree_dst_data.js' %}
+
+			{% for goal in dst_goals %}  // GOALS	
+
+				{% include './tree/dst_tree_goal_data.js' %}
+				
+				{% for todo in dst_todos %}  // TODOS	
+					{% include 'tree/dst_tree_todo_data.js' %}
+				{% endfor %}  //TODOS	
+				
+			{% endfor %}  //GOALS		
+			
+        {% endfor %}  // DESTINATIONS
+		
+		myFullDiagram.model = new go.TreeModel(nodeDataArray);
+    }
+	
+  </script>
+</head>
+
+
+<body onload="init()">
+	<div id="fullDiagram" style="height:900px; width:100%; border:1px solid black;"></div>
+</body>
+
+</html>
+{% endblock %}

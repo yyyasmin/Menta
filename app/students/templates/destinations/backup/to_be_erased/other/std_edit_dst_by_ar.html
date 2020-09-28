@@ -1,0 +1,113 @@
+
+{% block edit_std_dst_by_ar %} 
+
+<style>
+
+.w3-container  {
+	margin-right: 10%;
+    text-align: right;
+	
+	lang: he;
+	dir:  rtl;	
+}
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    border: none;
+    outline: solid;
+    font-size: 15px;
+    transition: 0.4s;	
+	width: 90%;
+	
+    padding: 18px;
+    border: 5;
+    text-align: right;
+	
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;	
+}
+
+#student_header.accordion {
+	color: #fff;
+	background-color: #346767;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+ 
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+}
+
+</style>
+
+<div class="w3-container">
+
+	<button class="btn btn-info btn-xs" id="add_button">
+		<h5><strong>	
+			<a href="{{ url_for('students.destination_to_student_add2', selected_student_id=std.id) }}">הוסף מטרה</a>
+		<strong></h5>
+	</button>
+
+
+	<h2>
+		<button class="accordion" id="student_header"> 
+			רשימת מטרות של התלמיד  {{ std.first_name }} {{ std.last_name }} 
+		</button>
+
+		<div class="panel" >
+			<p class="ppp">תז: {{ std.id }}     כיתה: {{ std.grade }} </p>
+		</div>
+		</br>
+	</h2>
+
+	</br>
+	{% for ar in age_ranges %}
+		</br></br>
+		<div><h4><strong><u>קבוצת גיל {{ ar.title }}</u></strong></h4></div>
+		{% for tag in tags %}
+			{% for dst in ar.destinations %}	
+				{% for dt in dst.tags %}
+					{% if dt.tag_id == tag.id %}
+						<div><h4><strong><u> נושא: {{ tag.title }}</u></strong></h4></div>
+						{% include "./destinations/std_edit_one_dst.html" %}
+					{% endif %}  <!-- dst.tags  -->
+					</br>					
+				{% endfor %}  <!-- dt in dst.tags -->
+			{% endfor %}  <!-- dst in ar.destinations -->
+		{% endfor %}  <!-- tag in tags -->
+	{% endfor %}  <!-- ar in age_ranges -->
+</div>   <!-- container -->
+
+{% endblock  edit_std_dst_by_ar %}

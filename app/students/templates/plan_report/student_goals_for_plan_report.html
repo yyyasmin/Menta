@@ -1,0 +1,80 @@
+{% block std_plan_report_goals %}
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+	background: #f5f5f0;
+}
+
+tr:nth-child(odd) {
+	background: #ccccb3;
+}
+</style>
+
+<div style="background: orange"> IN C:\Users\yasmi\Documents\מנטא\app\students\templates\plan_report\student_goals_for_plan_report.html </div>
+		
+<table style="width:100%">
+
+	{% for goal in dst.destination.goals %}  <!-- dst goals -->
+				
+		<tr>
+			
+			<td style="background-color:gray">
+			
+				<button class="accordion" id="blue_header"> שם יעד: {{ goal.title }} </button>
+				<div class="panel">
+					<p class="blue_ppp"> תאור היעד: {{ goal.body }} </p>
+					<p class="blue_ppp"> סטאטוס {{ goal.body }} </p>
+				</div>
+				
+			</td>
+
+			<td>
+				<div>
+					{% include "plan_report/student_todos_for_plan_report.html" %}
+				</div>				
+			</td>
+					
+		</tr>																			
+						
+	{% endfor %}  <!-- dst goals -->
+
+</table>		
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+ 
+ }
+}
+</script>
+
+{% endblock %}  <!-- std_plan_report_todos -->
+	

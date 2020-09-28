@@ -1,0 +1,74 @@
+{% block ex_13 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+	<table class="table gray_table">
+
+		{% include "./destinations/table_destinations/todos_header_6.html" %}
+
+
+		<tbody>
+			{% for todo in todos_not_of_std if (goal.is_parent_of(todo)) %}
+				<tr class="collapsed" data-toggle="collapse" data-target=".not_of_std{{todo.id}}Content">
+					{% include "./destinations/table_destinations/todo_line_6.html" %}					
+				</tr>
+			{% endfor %}  
+		</tbody>
+
+		</table>
+
+{% endblock ex_13 %}

@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div> In GGGGGGGGGG C:\Users\yasmi\Documents\מנטא\app\goals\templates\edit_goal_todos.html </div>
+
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('goals.todo_to_goal_add2', selected_goal_id=goal.id) }}">הוסף משימה חדשה</a>
+	<strong></h5></button>
+	</br></br>
+
+	<h3>		
+		<button class="accordion" id="header_panel"> רשימת משימות ליעד {{ goal.title }} </button>
+		<div class="panel">
+		  <p class="ppp"> תאור היעד {{ goal.body }} </p>
+		</div>
+	</h3>
+	
+	<br>
+	
+	<p></p>
+	
+	<div>			
+		{% for todo in goal.todos %}
+
+			<div> todo is {{ todo.id }}		{{ 	todo.title }} </div>
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a href="{{ url_for('todos.todo_update', selected_todo_id=todo.id) }}">ערוך</a></button>			
+			<button class="btn btn-warning btn-xs" id="edit_sub_list_id"><a href="{{ url_for('todos.edit_todo_uploaded_files2', selected_todo_id=todo.id) }}">ערוך קבצים</a></button>						
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('goals.todo_from_goal_delete2', selected_goal_id=goal.id, selected_todo_id=todo.id) }}">מחק</a></button>		
+			
+			</br>
+			
+			<button class="accordion">כותרת המשימה  {{ todo.title }}</button>			
+			<div class="panel">
+			  <p class="white_ppp"> תאור המשימה: {{ todo .body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+		
+		</br>
+
+	</div>
+</div>   <!-- container -->
+ 
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

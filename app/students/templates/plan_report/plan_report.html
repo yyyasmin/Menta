@@ -1,0 +1,73 @@
+
+{% extends "layout.html" %} 
+
+
+{% block content %}
+
+
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+</br>
+
+<div class="container" style="width:80%; margin-right:10%;"> <!-- span dst on all screen width -->
+	
+	<h2><center><strong><div>תוכנית חינוכית אישית לתלמיד</div></strong></center></h2>
+	
+	</br>
+	
+	<!-- Student's details -->
+	{% include "plan_report/student_details_for_plan_report.html" %}
+	<!-- Student's details -->
+	
+	</br>
+			 
+	<!-- BackGround -->
+	{% include "plan_report/student_background_for_plan_report.html" %}
+	<!-- BackGround -->
+	
+	</br>
+
+	<!-- Teachers -->
+	{% include "plan_report/student_teachers_for_plan_report.html" %}
+	<!-- Teachers -->
+	
+	</br>		 
+			
+	<!-- Profile -- TO MAKE IT WIDER PUT IT OUT OF DIV GLOBAL CONTAINER -->  
+		{% include "./plan_report/show_profile/show_std_profile_by_tag.html" %}
+	<!-- Profile -->
+	
+	</br>		 
+	
+</div>
+
+	<div class="container" id="container_id" style="width:98%;"> <!-- span dst on all screen width -->
+		{% include "plan_report/show_destinations/show_std_dsts_by_tag.html" %}	
+	</div>
+	
+	</br>		 
+	
+
+<!-- Goals by Destination -->
+<!-- From https://www.w3schools.com/w3css/w3css_accordions.asp   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+	x.className += " w3-show";
+  } else { 
+	x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+<!-- From https://www.w3schools.com/w3css/w3css_accordions.asp   -->
+<!-- Goals by Destination -->
+
+{% endblock %}
+

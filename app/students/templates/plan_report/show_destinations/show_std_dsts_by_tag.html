@@ -1,0 +1,35 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<h3><strong><div>מטרות</div></strong></h3>
+	
+	<table class="gray_table profile_table">	
+	
+		<thead>
+			<tr>			
+				<th style="width:12%"><strong>נושא</strong></th>
+				<th style="width:12%"><strong>קטגוריה</strong></th>
+				<th style="background-color:mediumseagreen; color:#ffffcc; width:32%;"><strong>מטרות</strong></th>
+				<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>יעדים להשגת המטרה</strong></th>
+				<th style="background-color:orange; color:#ffffcc; width:32%;"><strong>משימות להשגת היעד</strong></th> 
+			</tr>
+		</thead>
+	
+		
+		<tbody>
+			{% include "./plan_report/show_destinations/show_std_dsts.html" %} 
+		</tbody>
+	
+	</table>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

@@ -1,0 +1,151 @@
+{% extends "layout.html" %} 
+
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.destination_accordion {
+    background-color: red;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    goaltent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+
+div.panel {
+    padding: 0 18px;
+    background-color: #eff5ef;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#student_header.accordion {
+		color: #fff;
+		border-color: #EEEEEE;
+		background-color: #346767;
+		font-size: 18px;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+.destination_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB9;
+	font-size: 16px;
+}
+
+#destination_header.accordion {
+		background-color: #bfd9bf;
+		border-color: #afcfaf;
+		font-size: 16px;
+}
+
+
+div.student_panel {
+    padding: 0 18px;
+    background-color: #346767;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+div.destination_panel {
+    padding: 0 18px;
+    background-color: #bfd9bf;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+<h2>
+	<button class="accordion" id="student_header">Student's {{ student.first_name }} {{ student.last_name }} list of destinations:</button>
+	<div class="student_panel" >
+		<p class="ppp">students details: ID: {{ student.id }}  GRADE: {{ student.grade }} .</p>
+	</div>
+</h2>
+	
+<div class="container">	
+
+	<h3>Edit destination:</h3>
+	</br>
+	
+	{% include "./sub_forms/ar/ar_update_form.html" %}
+
+	</br>
+	
+	{% include "./sub_forms/tag/tag_update_form.html" %}
+	
+	</br>
+	
+	{% include "./sub_forms/scrt/scrt_update_form.html" %}
+
+	</br>
+	{% block edit_dst_in_table %}
+	{% include "edit_dst_in_tbl.html" %}
+	{% endblock %}
+	</br>
+
+</div>  <!-- class="container -->
+
+{% endblock %}
+

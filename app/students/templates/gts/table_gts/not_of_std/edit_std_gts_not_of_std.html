@@ -1,0 +1,58 @@
+{% block edit_std_gts_not_of_std %}
+
+	</br>
+		
+	{% for tag in tags %}
+	
+		</br></br>
+		
+		<th><h4><strong> נושא:   {{ tag.title }}</strong></h4></th>
+
+		<table id="gt_tbl_id" style="width:100%">
+
+		<tr id="header_row">							
+			<th>נושא</th>
+			<th>קבוצת גיל</th>
+			<th>מטרות</th> 
+			<th>פעולות</th>
+		</tr>
+		
+		{% for ar in age_ranges %}  <!-- ars -->
+			{%for std_gt in destinations_not_of_student if (std_gt.is_parent_of(ar) and std_gt.is_parent_of(tag)) %}
+				<tr>
+					<td>{{ tag.title }}</td>
+					<td>{{ std_gt.title }}</td> 							
+
+				<table class="gray_table">	
+						
+					<tr>
+						<th style="background:#ffffff" colspan="5"></th>
+					</tr>
+					
+					<tr style="width:100%">
+						<th style="background:#c7e9eb; color:#2c5ca3" colspan="6">עדכן את מטרות התלמיד:</th>
+					</tr>
+						
+					<tr>	
+						<th> מס {{std_gt.gt_type_txt}}</th>				
+						<th> כותרת {{std_gt.gt_type_txt}} </th>
+						<th> תאור {{std_gt.gt_type_txt}}</th>
+						<th> תאריך להשלמת המטרה </th>
+						<th> סטאטוס המטרה </th>
+
+					</tr>
+								
+						{% include "./gts/table_gts/not_of_std/edit_std_gt_line_not_of_std.html" %}
+															
+				</table>
+	
+				</tr>
+			
+			{% endfor %} <!-- for.. if.. if  --> 
+		{% endfor %}  <!-- ars -->			
+		
+		</table>
+	{% endfor %}  <!-- tags -->
+	</br></br>	
+
+{% endblock edit_std_gts_not_of_std %}

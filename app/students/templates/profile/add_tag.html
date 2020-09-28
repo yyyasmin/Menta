@@ -1,0 +1,34 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+{% block edit_prf_gt_parts12 %}
+
+<style>
+.global_table span {
+  table-layout: inherit;
+}
+</style>
+
+	<!-- Modal Add Tag -->
+	<div id="Tag_modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">		
+					<form method="post" action="{{ url_for('students.std_part_to_prf_add2') }}">
+					
+									<input hidden type="title" class="form-control" name="gt_tag" value="{{tag_id}}">
+									<input hidden type="title" class="form-control" name="gt_sub_tag" value="{{sub_tag_id}}">
+									
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="class_name" value="{{part.class_name}}">שמור</button>
+									</div>
+					</form>
+				</div>
+					
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock edit_prf_gt_parts12 %}

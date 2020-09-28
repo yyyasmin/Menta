@@ -1,0 +1,19 @@
+{% block std_prf_parts_table %}
+
+		
+		{% if tp_ns.tag_printed == False %}
+			<td>{{ tag.title|replace("-", "\n") }}</td>
+			{% set tp_ns.tag_printed = True %}
+		{% else %}
+			<td style="border:0;"></td>
+		{% endif %}			
+			<td>{{gt.id}}</td> 				
+			<td>{{gt.title}}</td> 				
+			<td>{{gt.body}}</td> 				
+		
+			<td>
+				<a href="{{url_for('students.attach_prf_part_to_std2', selected_gt_id=gt.id, tag_id=tag.id, sub_tag_id=sub_tag.id, dsply_direction=1)}}" class="btn btn-default btn-xs">הוסף לפרופיל התלמיד</a> 
+			</td>
+		</tr>
+
+{% endblock std_prf_parts_table %}

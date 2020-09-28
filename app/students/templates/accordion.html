@@ -1,0 +1,30 @@
+{% block accordion %}		
+
+	<button class="accordion">level_1</button>
+	
+	<div class="panel">
+		<p class="white_ppp">level_2</p>
+	</div>
+
+  	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock accordion %}		

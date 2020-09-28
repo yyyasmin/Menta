@@ -1,0 +1,128 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+
+{% block edit_prf_gt_parts12 %}
+
+<style>
+
+</style>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+ 
+				<strong>
+					<div style="margin: 0 0;">			
+						<div style="background:{{ part.color_title }}; padding-bottom:4%; width:100%; height:10px; display:inline-block;">
+							<h4><center><strong>{{part.h_plural_name}}</strong></center></h4>
+						</div>
+					</div>
+				</strong>
+				
+				<button type="button"  class="btn btn-success float-right"
+						data-toggle="modal" data-target="#mymodal" id="add_button" style="color:{{part.color_txt}}">הוסף {{part.h_name}}
+				</button> 
+ 
+                <table class="table table-hover {{part.table_color}}">
+
+					<tr>
+						<th>מספר</th> 				
+						<th>{{part.h_name}}</th> 				
+						<th>תאור</th> 				
+						<th>פעולות עריכה</th>
+					</tr> 
+	
+					{% for gt in prf_parts_list if ( (gt.is_parent_of(default_tag)) and (gt.is_parent_of(default_sub_tag)) ) %}	
+							
+						<tr>
+							<td>{{gt.id}}</td> 				
+							<td>{{gt.title}}</td> 				
+							<td>{{gt.body}}</td> 				
+							
+							<td>
+								<a href="/update/{{gt.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{gt.id}}">ערוך</a>
+								<a href="{{url_for('profile.gt_from_profile_delete2', selected_profile_id=profile.id, selected_gt_id=gt.id)}}" class="btn btn-danger btn-xs" onclick="return confirm('בטוח למחוק?')" data-target="#modaldelete{{gt.id}}">מחק</a> 
+							</td>
+						</tr>
+ 
+						<!-- Modal Edit Employee-->
+						<div id="modaledit{{gt.id}}" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								
+									<div class="modal-header">
+										<h4 class="modal-title">עדכן נתונים</h4>
+									</div>
+									
+									<div class="modal-body">
+									
+										<form action="{{ url_for('profile.profile_gt_update2', selected_gt_id=gt.id) }}" method="POST">
+
+											<div class="form-group">
+												<label>{{part.h_name}}</label>
+												<input type="hidden" name="id" value="{{gt.id}}">
+												<input type="text" class="form-control" name="gt_title" value="{{gt.title}}">
+											</div>
+											
+											<div class="form-group">
+												<label>תאור</label>
+												<input type="text" class="form-control" name="gt_body" value="{{gt.body}}">
+											</div>
+											
+											<div class="form-group">
+												<button class="btn btn-primary" type="submit" name="class_name" value="{{part.class_name}}">עדכן נתונים</button>
+											</div>
+										
+										</form>
+										
+									</div>
+									
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+						
+					{% endfor %}
+				</table>
+
+			</div>
+  
+			<!-- Modal Add Employee-->
+			<div id="mymodal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						
+							
+					<div class="modal-body">		
+					<form method="post" action="{{ url_for('profile.gt_to_profile_add2') }}">
+									<div class="form-group">
+										<label>{{part.h_name}}</label>
+										<input type="title" class="form-control" name="gt_title" required="1">
+									</div>
+									
+									<div class="form-group">
+										<label>תאור</label>
+										<input type="text" class="form-control" name="gt_body" required="1">
+									</div>
+									
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="class_name" value="{{part.class_name}}">שמור</button>
+									</div>
+					</form>
+					</div>
+							
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+						</div>
+							
+					</div>
+				</div>
+			</div>
+			
+        </div>
+    </div>
+
+ 
+{% endblock edit_prf_gt_parts12 %}

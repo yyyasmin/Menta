@@ -1,0 +1,25 @@
+			
+			{% if current_user.school_logo_name == None %}
+				
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+'idanim'+'.PNG') }}">	
+					
+			{% else %}	 
+				<div> current_user.school_logo_name {{ current_user.school_logo_name }} </div>
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+current_user.school_logo_name+'.PNG') }}">	
+			
+			{% endif %}
+			  
+			{% if current_user.matya_logo_name == None %}
+				
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+'eitan'+'.PNG') }}">	
+					
+			{% else %}	 
+			
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+current_user.matya_logo_name+'.PNG') }}">	
+			
+			{% endif %}
+		

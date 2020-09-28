@@ -1,0 +1,54 @@
+
+{% block edit_std_gt_line_not_of_std %}
+	<tr>
+	
+		<td>{{ gt.id }}</td>
+				
+		<td>{{ gt.title }}</td>
+		
+		<td>{{ gt.body }}</td> 
+
+				
+		<td>
+			<div id="ar_div">			
+				<input type="date" style="text-align:center" id="due_date" name="title{{ gt.id }}" value="{{ gt.title }}">					
+			</div>   <!-- ar_div -->
+		</td>	
+
+
+			
+		<td>
+			<select class="select" name="tag{{ gt.id }}" id="selected_tag">	
+				{% for tag in tags %}									
+					{% if tag.default %}
+						<option value="{{ tag.id }}" selected="selected">{{ tag.title }}</option>
+					{% else %}
+						<option value="{{ tag.id }}">{{ tag.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>					
+		</td>
+		
+		<td>
+			<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt.id }}">הוסף לתלמיד</button>
+		</td>
+	</tr>
+	
+	<tr>				
+		{% for gt_sub1 in gt.children.all() %}
+			{% if (gt_sub1 in all_gt_sub1s) and (gt_sub1 not in student_gt_sub1s) %}
+				{% include "./gts/gt_sub1s/edit_one_std_gt_sub1_not_of_std.html" %}
+			{% endif %}
+		{% endfor %}
+	</tr>
+	
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+{% endblock edit_std_gt_line_not_of_std %}

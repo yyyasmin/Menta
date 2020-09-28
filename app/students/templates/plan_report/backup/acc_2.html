@@ -1,0 +1,69 @@
+{% block student_destinations_for_plan_report %}
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+
+</style>
+
+
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<div class="w3-container" style="background-color:green text-align:right" lang="he" dir="rtl" >
+	<div> i in acc_2 is {{ i }} </div>		
+	
+	<button onclick="myFunction('{{ goal.id }}')" class="w3-button w3-block w3-black w3-left-align">
+		<button class="accordion"style="background-color:green text-align:right" lang="he" dir="rtl" > {{ goal.title }} יעד </button>
+		<div class="panel" style="background-color:green text-align:right" lang="he" dir="rtl">
+		  <button> {{ goal.body }} :תאור יעד </button>				
+		</div>
+		</br>
+	</button>
+
+	<div id="{{ goal.id }}" class="w3-hide w3-border">			  
+		<ul class="w3-ul">
+			<li> יעדים </li>
+			<li>
+				{% with i=i %}					
+					<button> 
+						{% include "./plan_report/backup/acc_3.html" %}
+					</button>
+				{% endwith %}
+			</li>
+		</ul>  
+	</div>
+
+</div>
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

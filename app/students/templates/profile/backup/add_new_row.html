@@ -1,0 +1,109 @@
+<!-- FROM https://codepen.io/Bhavanaditya/pen/bRVaMP  -->
+
+<style>
+body {
+  background: #C891FF;
+}
+
+#addScnt {
+  color: #fff;
+}
+
+.form-control {
+  border-radius: 0px;
+}
+
+#addScnt, #remScnt {
+  text-decoration: none;
+  padding: 5px 25px;
+}
+
+#addScnt {
+  color: #fff;
+}
+
+#remScnt {
+  color: #c23f44;
+}
+
+.tx-md {
+  width: 175px !important;
+}
+
+.tx-sm {
+  width: 125px !important;
+}
+
+</style>
+
+<h2>Create Multiple Dynamic Input with dynamic ID</h2>
+<div class="container">
+  <form class="form-inline" role="form" id="frm_scents">
+    <div class="row" id="p_scents">
+      <div class="form-group">
+        <input type="text" class="form-control tx-sm" id="Fld_Alias" placeholder="Field Alias" />
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control tx-sm" id="Fld_Name" placeholder="Field Name" />
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control tx-md" id="Fld_Value" placeholder="Field Value" />
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control tx-md" id="Fld_Dflt_Val" placeholder="Field Default Value" />
+      </div>
+      <div class="form-group">
+        <select class="form-control tx-md" id="Field_Type">
+          <option value="0">Field Type</option>
+          <option value="1">Text Box </option>
+          <option value="2">Combo Box </option>
+          <option value="3">Date </option>
+      </select>
+      </div>
+      <div class="form-group">
+        <input type="checkbox" class="form-control" id="Mandatory" />Mandatory
+        <input type="checkbox" class="form-control" id="Dispaly" />Dispaly
+        <input type="checkbox" class="form-control" id="Enable" />Enable
+      </div>
+      <a href="#" id="addScnt"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+    </div>
+  </form>
+</div>
+
+<script>
+var scntDiv = $("#frm_scents");
+var i = $("#p_scents").length + 1;
+
+$(function() {
+  $("#addScnt").click(function() {
+    $(
+      '<div class="row" id="p_scents"><div class="form-group"><input type="text" class="form-control tx-sm" id="Fld_Alias(' +
+        i +
+        ')" placeholder="Field Alias" /></div><div class="form-group"><input type="text" class="form-control tx-sm" id="Fld_Name(' +
+        i +
+        ')" placeholder="Field Name" /></div><div class="form-group"><input type="text" class="form-control tx-md" id="Fld_Value(' +
+        i +
+        ')" placeholder="Field Value" /></div><div class="form-group"><input type="text" class="form-control tx-md" id="Fld_Dflt_Val(' +
+        i +
+        ')" placeholder="Field Default Value" /></div><div class="form-group"><select class="form-control tx-md" id="Field_Type(' +
+        i +
+        ')"><option value="0">Field Type</option><option value="1">Text Box </option><option value="2">Combo Box </option><option value="3">Date </option></select></div><div class="form-group"><input type="checkbox" class="form-control" id="Mandatory(' +
+        i +
+        ')"  />Mandatory <input type="checkbox" class="form-control" id="Dispaly(' +
+        i +
+        ')" />Dispaly <input type="checkbox" class="form-control" id="Enable(' +
+        i +
+        ')" />Enable</div><a href="#" id="remScnt" onclick="removeCont(this);"><i class="fa fa-minus-circle" aria-hidden="true"></i> Remove</a></div>'
+    ).appendTo(scntDiv);
+    i++;
+    return false;
+  });
+});
+
+function removeCont(_this) {
+  if (i > 1) {
+    $(_this).parent().remove();
+    i--;
+  }
+}
+</script>

@@ -1,0 +1,40 @@
+{% block dst_goals_not_of_std_table_line %}
+	
+<style>
+
+</style>
+
+	<tr>
+	
+		<td>{{ std_goal.id }}</td>
+		
+		<td>{{ std_goal.title }}</td>
+		
+		<td>{{ std_goal.body }}</td> 
+		
+		
+		<td>
+			<div id="ar_div">
+				<input style="text-align:center" type="date" class="form-control" id="due_date" name="due_date" value="{{ due_date }}">
+			</div>   <!-- ar_div -->
+		</td>	
+			
+		<td>סטאטוס:
+			<select style="color:{{ std_goal.status_color }}" name="selected_status">						
+				{% for sts in statuss %}
+					{% if sts.id == std_goal.status_id %}
+						<option style="color:{{ sts.color }}" value="{{ sts.title }}" selected>{{ sts.title }}</option>
+					{% else %}
+						<option style="color:{{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>						
+		</td>
+		
+		<td>
+			<button class="btn btn-success btn-xs" type="submit" value="Save">הוסף יעד זה לתלמיד</button>
+		</td>
+		
+	</tr>
+
+{% endblock dst_goals_not_of_std_table_line %}

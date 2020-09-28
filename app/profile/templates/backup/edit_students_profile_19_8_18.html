@@ -1,0 +1,118 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+	
+}table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+</style>
+	
+	
+<div class="container">	
+
+	<h2><center>Edit students's  {{ student.first_name }} {{ student.last_name }} profile:</center></h2>
+	<h2>student: {{ student.first_name }} {{ student.last_name }}:</h2>
+	</br>
+	<button class="accordion">profile title: {{ profile.title }}</button>
+	<div class="panel">
+	  <p>profile description: {{ profile.body }}.</p>
+	</div>
+	<p></p>
+	
+	<table style="width:100%">
+		<tr>			
+			<th> strength </th>
+			<th> actions </th>
+		</tr>
+		
+		{% for strength in profile.strengthes %}	
+		<form   method="POST" action="{{ url_for('students.edit_students_profile2',selected_student_id=student.id , selected_profile_id=profile.id) }}">	
+			<tr>
+				<td>{{ strength.title }}</td>
+		
+				<td>
+				<button class="btn btn-warning btn-xs" ><a href="{{ url_for('strengthes.strength_update', selected_strength_id=strngth.id) }}">Edit details</a></button>
+				<button class="btn btn-warning btn-xs" type="submit" value="Save">Save</button>
+				<button class="btn btn-danger btn-xs"><a href="{{ url_for('profile.strength_from_profile_delete2', selected_profile_id=profile.id, selected_strength_id = strength.id) }}">Delete</a></button>
+				</td>					
+			</tr>
+		</form>	
+		{% endfor %}				
+	</table>
+	<h2><center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('profile.strength_to_profile_add2', selected_profile_id=profile.id) }}">Add a new Strength to student's profile</a></button></center></h2>
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,447 @@
+from flask import render_template, flash, redirect
+from flask_sqlalchemy import SQLAlchemy
+
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify, json
+from flask_login import login_user, logout_user, current_user, login_required
+#from flask_login import login_manager
+
+from flask_login import LoginManager
+from config import basedir
+import config
+
+from app import current_app, db
+from app.forms import LoginForm
+
+from app.models import User, School, Student, Profile, Strength, Weakness, Role, Accupation
+
+from app.forms import LoginForm, EditForm
+
+from sqlalchemy import update 
+
+from app.content_management import Content
+
+from sqlalchemy import text # for execute SQL raw SELECT ...
+
+
+#FROM https://github.com/realpython/discover-flask/blob/master/project/users/views.py
+from flask import Blueprint
+scl = Blueprint(
+    'schools', __name__,
+    template_folder='templates'
+)   
+#FROM https://github.com/realpython/discover-flask/blob/master/project/users/views.py
+
+
+@scl.route('/school', methods=['GET', 'POST'])
+@login_required
+def school_index():
+
+	g.user.__repr__()
+	print("g sijax is")
+	print(g.sijax).__repr__()
+
+	schools = School.query.all()
+	print("SSSSSSSSSSSSSSSSSSSSSSSStdnts")
+	print (schools)
+	'''	
+	return render_template('edit_schools2.html',
+	user=g.user,
+	schools=schools
+	)
+	'''
+	return render_template('form6.html',)
+	
+	
+@scl.route('/edit_school_tree', methods=['GET', 'POST'])
+def edit_school_tree():
+
+	school = School.query.filter(School.selected==True).first()
+	if school == None:
+		flash("Please select a school to delete first ")
+		return redirect(url_for('school_select'))
+	print ("ttry selected school is " )
+
+	print(school.name)	
+	return render_template('lv.html', school=school)
+
+					
+@scl.route('/edit_school_tree2/<int:selected_school_id>', methods=['GET', 'POST'])
+def edit_school_tree2(selected_school_id):
+	print ("SSSSSSSSSSSSSelected school is" )
+	school_select2(selected_school_id)
+	return edit_school_tree()
+
+	
+@scl.route('/schools')
+@login_required
+def edit_schools():
+	print ("in i0ndex edit_schools printing g.user ")
+	schools = School.query.all()
+	for school in schools:
+		print(school.name)
+	
+	return render_template('edit_schools.html',
+							schools=schools
+							)
+
+
+
+@scl.route('/teachers_by_school_show')
+@login_required
+def teachers_by_school_show():
+
+	#import pdb; pdb.set_trace()
+	school = School.query.filter(School.selected==True).first()
+
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('index'))
+		
+	print("school")
+	print(school.name)
+								
+	print(" IN teachers_by_school_show")
+	school = School.query.filter(School.selected==True).first()
+
+	teachers = Teacher.query.join(School.teachers).filter(School.id==school.id)
+
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+		
+	return render_template('edit_school_teachers.html',
+							school=school,
+							teachers=teachers
+							)
+	
+@scl.route('/teachers_by_school_show2/<int:selected_school_id>', methods=['GET', 'POST'])
+def teachers_by_school_show2(selected_school_id):
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	return redirect(url_for('teachers_by_school_show'))
+							
+
+							
+@scl.route('/students_by_school_show')
+@login_required
+def students_by_school_show():
+
+	#import pdb; pdb.set_trace()
+	school = School.query.filter(School.selected==True).first()
+
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('index'))
+		
+	print("school")
+	print(school.name)
+								
+	print(" IN teachers_by_school_show")
+	students = Student.query.join(School.students).filter(School.id==school.id)
+		
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+		
+	return render_template('edit_school_students.html',
+							school=school,
+							students=students
+							)
+
+	
+@scl.route('/students_by_school_show2/<int:selected_school_id>', methods=['GET', 'POST'])
+def students_by_school_show2(selected_school_id):
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	return redirect(url_for('students_by_school_show'))
+
+	
+	
+							
+@scl.route('/edit_school_students', methods=['GET', 'POST'])
+def edit_school_students():
+	school = School.query.filter(School.selected==True).first()
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+	
+	students = Student.query.join(School.teachers).filter(School.id==school.id)
+	
+	return render_template('edit_school_students.html', school=school, students=students)
+		
+@scl.route('/edit_school_students2/edit/<int:selected_school_id>/<int:selected_student_id>', methods=['GET', 'POST'])
+def edit_school_students2(selected_school_id, selected_student_id):
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	if selected_student_id != 0:
+		print(selected_student_id)
+		school_select2(selected_student_id)
+	return edit_school_students()
+ 
+ 
+@scl.route('/edit_school_teachers', methods=['GET', 'POST'])
+def edit_school_teachers():
+	school = School.query.filter(School.selected==True).first()
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+	
+	teachers = Teacher.query.join(School.teachers).filter(School.id==school.id)	
+	return render_template('edit_school_teachers.html', school=school, teachers=teachers)
+			
+@scl.route('/edit_school_teachers2/edit/<int:selected_school_id>/<int:selected_teacher_id>', methods=['GET', 'POST'])
+def edit_school_teachers2(selected_school_id, selected_teacher_id):
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	if selected_teacher_id != 0:
+		print(selected_teacher_id)
+		school_select2(selected_teacher_id)
+	redirect(url_for('edit_school_teachers'))  
+ 
+ 
+
+@scl.route('/student_to_school_add', methods=['GET', 'POST'])
+def student_to_school_add():
+
+	school = School.query.filter(School.selected==True).first()
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+
+	student = Student.query.filter(Student.selected==True).first()
+	if student == None:
+		flash("Please select a student first ")
+		return redirect(url_for('student_select'))
+		
+	print("SSSSSRRRRR IN student_to_school_add")		
+	print(school.id)
+	print(student.id)		
+	#Check If This team student exist (have Role)  for this school
+	exist_role = Role.query.filter(Role.school_id == school.id).filter(Role.student_id==student.id).count()
+	
+	print("exist_role:", exist_role)
+	sr = request.form.get('selected_role')
+	print("exist_role:   role title:", exist_role, sr, request.method)
+	
+	if exist_role == 0:   #new Role
+		role = Role(school.id, student.id, sr)
+	else:
+		role = Role.query.filter(Role.school_id == school.id).filter(Role.student_id==student.id).first()   #update role
+		print("Role is", role)
+		print ("Role OLD title for school and student :", role.title, role.school_id, role.student_id)
+		role.title=sr
+		print ("Role NEW title for school:", role.title, role.school_id)
+		
+	print("IIIIIIIIIn student_to_school_add ", role.school_id, role.student_id, role.title)
+	role.student = student
+	role.school = school	
+	if exist_role == 0:	#New Role - should be appended to roles list
+		school.students.append(role)			
+		student.schools.append(role) 
+		
+	print("IIIIIIIIIn updating role ", role.school_id, role.school.id, role.student_id,role.student.id,  role.title)
+   
+	db.session.commit() 
+	db.session.refresh(school)
+	db.session.refresh(student)
+	
+	print("student_to_school_add POST", request.method)
+	return  redirect(url_for('edit_school_students'))  #no change in schools staff students
+		
+@scl.route('/student_to_school_add2/add/<int:selected_school_id>/<int:selected_student_id>', methods=['GET', 'POST'])
+def student_to_school_add2(selected_school_id, selected_student_id):
+	print("IIIIIIIIIIIIIIIn student_to_school_add222 view")
+	print(request.form.get('selected_role'))
+	
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	
+	print(selected_student_id)
+	student_select2(selected_student_id)	
+	return redirect(url_for('student_to_school_add'))
+
+
+	
+@scl.route('/student_to_school_delete', methods=['GET', 'POST'])
+def student_to_school_delete():
+
+	school = School.query.filter(School.selected==True).first()
+	if school == None:
+		flash("Please select a school first ")
+		return redirect(url_for('school_select'))
+	
+	student = Student.query.filter(Student.selected==True).first()
+	if student == None:
+		flash("Please select a student first ")
+		return redirect(url_for('student_select'))
+		
+	####import pdb; pdb.set_trace()
+	staff_student = Student.query.join(School.students).filter(School.students.id==student.id)
+	s_role = Role.query.join(School.roles).filter(School.roles.student_id==student.id and School.roles.school_id==school.id)
+
+	school.students.delete(staff_student)   
+	school.roles.delete(s_role)  	
+
+	student = School.query.join(Student.students).filter(Student.students.id==school.id)
+	role = Role.query.join(Student.roles).filter(Student.roles.student_id==student.id) #checking for debug
+	t_role = Role.query.join(Student.roles).filter(Student.roles.student_id==student.id and Student.roles.school_id==school.id)	
+	
+	student.students.delete(student)   
+	student.roles.delete(t_role)  
+	   
+	db.session.commit() 
+	
+	url = url_for('students_by_school_show')
+	return redirect(url)
+   	
+@scl.route('/student_to_school_delete2/add/<int:selected_school_id>/<int:selected_student_id>', methods=['GET', 'POST'])
+def student_to_school_delete2(selected_school_id, selected_student_id):
+	print(selected_school_id)
+	school_select2(selected_school_id)
+	if selected_student_id:
+		print(selected_student_id)
+		school_select2(selected_student_id)
+	return redirect(url_for('student_to_school_delete'))
+
+	
+#Select a school from a list 
+@scl.route('/school_select', methods=['GET', 'POST'])
+def school_select():
+	print("1111111111111")
+	schools = School.query.all()
+	for school in schools:
+		school.selected = False
+	
+	if request.method == 'GET':
+		return render_template('edit_schools.html', schools=schools)
+		
+	print("1111111111111")
+		
+	selected_school_id = int(request.form['selected_school'])
+	print("1111111111111")
+
+	print ("SSSSSSSSSSSSSelected school is" )
+	print (selected_school_id)
+
+	school = School.query.get_or_404(selected_school_id)		
+		
+	school.selected = True
+	print(school.name)
+	
+	db.session.commit()
+	
+	school = School.query.get_or_404(selected_school_id)
+	print(school.selected)
+	schools = School.query.all()
+	#return render_template('edit_schools.html', schools=schools)
+	return redirect(url_for('edit_schools'))
+
+	
+#Select a school from a list 
+@scl.route('/school_select2/<int:selected_school_id>', methods=['GET', 'POST'])
+def school_select2(selected_school_id):
+	print("in school_select22222222222222222222222222222")
+	
+	schools = School.query.all()
+	for school in schools:
+		school.selected = False
+
+	school = School.query.get_or_404(selected_school_id)		
+		
+	school.selected = True
+	
+	db.session.commit()
+	
+	school = School.query.get_or_404(selected_school_id)
+	print(school.selected)
+	schools = School.query.all()
+	return render_template('edit_schools.html', schools=schools)
+	
+	#Select a school from a list 
+	
+			   
+@scl.route('/school/add/', methods=['GET', 'POST'])
+def school_add():
+	  
+	print("RRRRRRRRRRRRRRRRRRRRRRRRRR")
+	user = User.query.get_or_404(g.user.id)
+	print(g.user)
+
+	#print request
+	
+	if request.method == 'GET':
+		return render_template('add_school.html', user=user)
+		   
+	#get data from form and insert to school in schoolgress  db
+	id = request.form.get('id')
+	name = request.form.get('name')
+	description = request.form.get('description')
+
+	
+
+	school_already_exist = School.query.filter(School.id == id).first()
+	print("school_already_exist is not None         school_already_exist", school_already_exist is not None, school_already_exist!=None, school_already_exist)
+	if school_already_exist is not None:  #School already exist in system probably in hide mode
+		flash("This school already exists in system", school_already_exist.id)
+		url = url_for('edit_schools')
+		return redirect(url) 
+
+	###import pdb; pdb.set_trace() 	Enter new school to DB
+	school = School(id, name)	
+	
+	db.session.add(school)	
+	db.session.commit()  
+	db.session.refresh(school)
+	# test insert res
+	url = url_for('edit_schools')
+	return redirect(url)   
+
+	
+#update selected school
+#from https://teamtreehouse.com/community/add-a-a-with-an-href-attribute-that-points-to-the-url-for-the-cancelorder-view-cant-find-my-error 
+@scl.route('/school/update/<int:selected_school_id>', methods=['GET', 'POST'])
+def school_update(selected_school_id):
+
+	school_select2(selected_school_id)
+		
+	school = School.query.get_or_404(selected_school_id)
+	print("In PPPPPPPPPPPPSchool UUUUUUUUUUUUUUUUUUUUUUpdate")
+	print(selected_school_id, school.id, school.name)
+	
+	if request.method == 'GET':
+		print("GET render update_school.html")
+		return render_template('update_school.html', school=school)
+		   
+	#get data from form and insert to school in schoolgress  db
+	#school.id = request.form.get('id')    #not updateable the field apears disabled for user 
+	school.name = request.form.get('name')
+
+	#db.session.update(school)	
+	db.session.commit()  
+	db.session.refresh(school)
+	# test insert res
+	return redirect(url_for('edit_schools'))   	
+			
+		
+#delete from index schools list
+#from https://teamtreehouse.com/community/add-a-a-with-an-href-attribute-that-points-to-the-url-for-the-cancelorder-view-cant-find-my-error 
+@scl.route('/school/delete2/<int:selected_school_id>', methods=['GET', 'POST'])
+#Here author is user_id
+def school_delete2(selected_school_id):
+
+	print ("SSSSSSSSSSSSSelected school is" )
+	school_select2(selected_school_id)
+	return school_delete()
+
+
+
+
+
+
+
+
+
+
+
+
+	

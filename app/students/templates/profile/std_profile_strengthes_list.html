@@ -1,0 +1,39 @@
+{% block profile_strength_list %}
+
+{% include "./profile/profile_style.html" %}
+		
+	{% for strn in profile.strengths %}	
+	
+		<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.strength_from_std_profile_delete2', selected_strength_id=strn.id) }}">הסר נקודת כח זו מפרופיל התלמיד</a></button>			
+		<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('strengthes.strength_update', selected_strength_id=strn.id) }}">ערוך</a></button>			
+		
+		<button class="accordion">כותרת נקודת כח:  strn.title </button>
+		<div class="panel">
+		  <button>תאור נקודת כח:  strn.body.</button>				
+		</div>
+		
+	{% endfor %}
+	
+	<tr><td>
+		<button class="btn btn-warning btn-xs" ><a style="background-color:#99ff99; color:black" href="{{ url_for('students.strength_to_std_profile_add') }}">הוסף נקודת כח לתלמיד מתוך רשימה</a></button>		
+	</tr></td>				
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

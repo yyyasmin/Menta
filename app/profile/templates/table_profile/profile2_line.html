@@ -1,0 +1,222 @@
+{% block profile2_line %}
+
+<style>
+
+<!-- FROM https://codepen.io/GGCDMBit/pen/MONZPe -->
+
+#blue_title  {
+	background:title_color='#e6e6ff';
+	color:blue;
+}
+
+#green_title  {
+	background: title_color='#66ff99';
+	color:green;
+}
+
+#red_title  {
+	background: title_color='#ff9999';
+	color:red;
+}
+
+
+.grid_table{
+  display: table;
+  width:100%;
+  border-collapse:collapse;
+}
+
+.table {
+table-layout: fixed;
+}
+
+.table tr:nth-child(even) {
+    background-color: #4dc6ff;
+}
+
+.table tr:nth-child(odd) {
+    background-color: #b3e7ff;
+}
+
+<!-- FROM https://codepen.io/GGCDMBit/pen/MONZPe -->
+
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+	type: button;
+}
+
+</style>
+
+	<div>
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+		<b>
+		<button type="button" class="btn btn-succsess table-add" style="float:right">
+			<strong>רשימת תחומי עיניין </strong>	
+		</button>
+		</b>
+		
+		<button type="button" class="btn btn-succsess table-add" style="float:right">
+				<a href="#!"><i aria-hidden="true">הוסף תחום עיניין</a>			
+		</button>
+
+		<button type="button" class="btn btn-succsess"  onclick="saveTblData()" style="float:right" type="submit" name="save_prf_part_btn">
+				<a style="color: black">save</a>			
+		</button>
+	</div>
+		
+	<h4>
+	<div class="card">
+	<div class="card-body">		
+	<div id="table" class="table-editable">
+	
+	</br>
+	
+	<table id="debug" class="table table-bordered table-responsive-md table-striped text-center blue_table" style="width:100%">
+					
+		{% include "./table_profile/backup/edit_prf_gt_parts7.html" %}
+						
+	</table>
+			
+	</br>
+		
+	</div>	
+	</div>
+	</div>
+	<!-- Editable table -->
+	</h4>				
+
+</br></br>
+
+
+<script>
+
+const $tableID = $('#table');
+ const $BTN = $('#export-btn');
+ const $EXPORT = $('#export');
+
+ const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half">
+    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+  </td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
+
+ $('.table-add').on('click', 'i', () => {
+
+   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+   if ($tableID.find('tbody tr').length === 0) {
+
+     $('tbody').append(newTr);
+   }
+
+   $tableID.find('table').append($clone);
+ });
+
+ $tableID.on('click', '.table-remove', function () {
+
+   $(this).parents('tr').detach();
+ });
+
+ $tableID.on('click', '.table-up', function () {
+
+   const $row = $(this).parents('tr');
+
+   if ($row.index() === 0) {
+     return;
+   }
+
+   $row.prev().before($row.get(0));
+ });
+
+ $tableID.on('click', '.table-down', function () {
+
+   const $row = $(this).parents('tr');
+   $row.next().after($row.get(0));
+ });
+
+ // A few jQuery helpers for exporting only
+ jQuery.fn.pop = [].pop;
+ jQuery.fn.shift = [].shift;
+
+ $BTN.on('click', () => {
+
+   const $rows = $tableID.find('tr:not(:hidden)');
+   const headers = [];
+   const data = [];
+
+   // Get the headers (add special header logic here)
+   $($rows.shift()).find('th:not(:empty)').each(function () {
+
+     headers.push($(this).text().toLowerCase());
+   });
+
+   // Turn all existing rows into a loopable array
+   $rows.each(function () {
+     const $td = $(this).find('td');
+     const h = {};
+
+     // Use the headers from earlier to name our hash keys
+     headers.forEach((header, i) => {
+
+       h[header] = $td.eq(i).text();
+     });
+
+     data.push(h);
+   });
+
+   // Output the result
+   $EXPORT.text(JSON.stringify(data));
+ });
+ 
+</script>
+ 
+
+<script>
+function saveTblData(event) {
+  var esc = event.which == 27,
+      nl = event.which == 13,
+      el = event.target,
+      input = el.nodeName != 'INPUT' && el.nodeName != 'TEXTAREA',
+      data = {};
+
+  if (input) {
+    if (esc) {
+      // restore state
+      document.execCommand('undo');
+      el.blur();
+    } else  {
+      // save
+      data[el.getAttribute('data-name')] = el.innerHTML;
+
+      //* we could send an ajax request to update the field **********/
+      $.ajax({
+        //url: window.location.toString(),
+        url: "{{ url_for('students.update_std_gt2') }}",
+        data: data,
+        type: 'post'
+      });
+      /**********************/
+      log(JSON.stringify(data));
+
+      el.blur();
+      event.preventDefault();
+    }
+  }
+};
+
+</script>  
+{% endblock profile2_line %}

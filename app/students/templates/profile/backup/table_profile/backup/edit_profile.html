@@ -1,0 +1,26 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div> IN  C: </div>\Users\yasmi\Documents\menta4\app\students\templates\profile\table_profile\edit_profile.html   </div>
+
+<div class="container" id="container_id">
+<h2><strong><center><div style="background:#d6f5f5; color:#006699" >פרופיל התלמיד {{ std.first_name }} {{ std.last_name }}</div></center></strong></h2>
+
+	</br>
+	
+	<form method="POST" action="{{ url_for('students.update_std_profile2') }}">	
+		
+		{% include "./profile/table_profile/edit_std_subjects.html" %}
+		<!--
+		{% include "./profile/table_profile/edit_std_strengths.html" %}	
+		{% include "./profile/table_profile/edit_std_weaknesses.html" %}
+		{% include "./profile/table_profile/not_of_std/edit_std_subjects_not_of_std.html" %}	
+		{% include "./profile/table_profile/not_of_std/edit_std_strengths_not_of_std.html" %}	
+		{% include "./profile/table_profile/not_of_std/edit_std_weaknesses_not_of_std.html" %}	
+		-->
+	</form>
+
+</div>   <!-- container -->
+
+{% endblock %}

@@ -1,0 +1,50 @@
+
+{% block std_goals %}
+
+<style>
+
+
+</style>
+
+
+	<button class="accordion" id="blue_header">						
+		יעד: {{ goal.title }} 
+																		
+		{% for sts in statuss %}	
+			{% for st in std_txts %}
+				{% if st.general_txt_id==goal.id %}
+					{% if st.status_id==sts.id %}
+						<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}					
+	</button>
+		
+	<div class="panel blue_ppp">
+		תאור: {{ goal.body }}
+	</div>
+			
+
+			
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock std_goals %}

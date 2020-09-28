@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+
+<!-- Header -->
+<div class="header" id="myHeader">
+  <h1>Image Grid</h1>
+  <p>Click on the buttons to change the grid view.</p>
+  <button class="btn" onclick="one()">1</button>
+  <button class="btn active" onclick="two()">2</button>
+  <button class="btn" onclick="three()">3</button>
+</div>
+
+<div class="row">
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/form.png') }}"></div>
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/profile.png') }}" ></div>
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/statistics.png') }}" ></div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/form.png') }}"></div>
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/profile.png') }}" ></div>
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/statistics.png') }}" ></div>
+</div>
+
+
+<script>
+// Get the elements with class="column"
+var elements = document.getElementsByClassName("column");
+
+// Declare a loop variable
+var i;
+
+
+// Four images side by side
+function one() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor =  "red"
+		elements[i].style.padding "0 100px"
+    }
+}
+
+// Four images side by side
+function two() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor = "blue";
+    }
+}
+
+// Four images side by side
+function three() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor = "yellow";
+    }
+}
+
+// Add active class to the current button (highlight it)
+var header = document.getElementById("myHeader");
+var btns = header.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>
+
+
+{% endblock %}

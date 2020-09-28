@@ -1,0 +1,15 @@
+<form class="form-inline" method="POST" action="">
+					  <div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon">Please select Role:</span>
+								<select class="selectpicker form-control" name="selected_role">
+																<option class="btn btn-success btn-xs" name="role_option" ><a href="{{ url_for('edit_student_staff_team2', selected_student_id=111, selected_team_member_id=222) }}">Role</a></option>					
+																<option value="teacher"  name="role">Teacher</option>
+																<option value="assistant"  name="assistant">Assistant</option>
+																<option value="acupation_therapy"  name="acupation_therapy">Acupation therapy</option>
+																<option value="music_therapy"  name="music_therapy">Music therapy</option>
+								</select>
+						</div>
+						<button type="submit" class="btn btn-default">Go</button>
+					  </div>
+</form>		

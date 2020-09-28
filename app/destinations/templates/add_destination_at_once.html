@@ -1,0 +1,87 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+</style>
+
+<div class="container" id="container_id">	
+	<h3>הוסף מטרה חדשה:</h3>
+	
+	</br>
+	
+	<form action="{{ url_for('destinations.destination_add', from_dst_sort_order=from_dst_sort_order, selected_ar_title = "בחר קבוצת גיל", selected_tag_title = "בחר נושא", selected_scrt_title = "בחר רמת אבטחה")}}" method="POST"> 			
+
+		</br>							 
+		
+		{% include "./sub_forms/ar/edit_one_ar_at_once.html" %}
+
+		</br>
+		
+		{% include "./sub_forms/tag/edit_one_tag_at_once.html" %}
+		
+		</br>
+		
+		{% include "./sub_forms/scrt/edit_one_scrt_at_once.html" %}
+
+		</br>
+
+		{% include "./sub_forms/edit_one_dst_at_once.html" %}
+		
+		</br>	
+		
+		<input style="background-color:#ff8533" type="submit" value="שמור מטרה" name="submit">		
+	
+	</form>
+	
+</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+<script>
+//FROM https://stackoverflow.com/questions/36852853/dynamically-populate-multiple-more-than-one-dropdown-choices-options-flask-p
+$("#employee_select").change(function() {
+// grab value
+var category_1_id = $("#category_1_select").val();
+var category_2_id = $("#category_2_select").val();
+
+// send value via GET to URL /<category_id>
+var get_request = $.ajax({
+  type: 'POST',
+  data: 'JSON.stringify([category_1_id, category_2_id])',
+  url: '/category_1_id + '/'+ category_2_id + '/',
+});
+
+{% endblock %}

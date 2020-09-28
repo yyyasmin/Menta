@@ -1,0 +1,25 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="title">subject's title:</label>
+		  <input type="title" class="form-control" id="title"  name="title" value="{{ subject.title }}">
+		</div>  
+		
+		<div class="form-group">
+		  <label for="body">subject's description:</label>
+		  <input type="text" class="form-control" id="body"  name="body" value="{{ subject.body }}">
+		</div>  
+		
+		</br>		 
+		<button type="submit" class="btn btn-default">Submit</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

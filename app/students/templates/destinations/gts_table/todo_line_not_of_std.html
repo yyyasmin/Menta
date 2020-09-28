@@ -1,0 +1,56 @@
+{% block gt_line %}
+
+<style>
+
+
+</style>
+
+	<td class="id_width">{{ gt.id }}</td>
+	
+	<td class="tag_width">הוסף משימה ליעד מס {{goal.id}}</td>
+	<td class="sub_tag_width goal_of_dst_border" style="border-right:0px none #b8d1f3 ;"></td>
+	
+	<td class="title_width">{{ gt.title }}</td>
+	<td class="body_width">{{ gt.body }}</td> 
+
+                  
+	<td class="sub_btn_width">
+	
+		<div id="add_sub" style="color:{{gt_sub_obj.color_txt}}" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Content">
+			הראה {{gt_sub_obj.h_plural_name}}
+		</div>
+					
+		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{gt.id}}Content">
+			הוסף {{gt_sub_obj.h_name}}
+		</div>
+		
+	</td>
+	
+	<td class="date_width">
+		<input type="date" style="text-align:center" id="due_date" name="due_date{{ gt.id }}" value="{{ due_date }}">					
+	</td>	
+
+	<td class="status_width">
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ gt.id }}" id="selected_status">	
+			{% for sts in statuss %}
+				<option style="color: {{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+			{% endfor %}
+		</select>					
+	</td>
+
+	<td class="save_width">
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt.id }}">שמור</button>
+	</td>
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>
+				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+
+</script>
+
+
+{% endblock gt_line %}

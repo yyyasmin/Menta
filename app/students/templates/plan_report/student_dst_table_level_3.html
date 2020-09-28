@@ -1,0 +1,42 @@
+
+{% block std_todos %}
+
+<style>
+
+
+</style>
+
+
+ <!-- TODOS COLUMN -->
+	
+	{% for who in whos if( goal.is_parent_of(who) ) %}
+		<strong>{{ who.title }}</strong>
+		{% for todo in student_todos if( goal.is_parent_of(todo) and todo.is_parent_of(who) ) %}  <!-- TODOS COLUMN -->
+			<button class="accordion" id="light_yellow_header">משימה: {{ todo.title }} </button>
+			<div class="panel" class="light_yellow_ppp">
+				תאור:  {{ todo.body }}
+			</div>				
+		{% endfor %}
+	{% endfor %}
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock std_todos %}

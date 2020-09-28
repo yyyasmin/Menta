@@ -1,0 +1,19 @@
+{% block dst_data %}
+		
+			{% for sts in statuss %}
+				{% if dest.is_parent_of(sts) %}
+					nodeDataArray.push({
+						
+						key: {{ dest.id }},
+						color: {{dst.title_color}},
+						//source: "{{ url_for('static', filename='img/goal.png') }}",
+						text_color: '{{ sts.color }}',
+						name: '{{ dest.title }}',
+						status: 'סטאטוס: {{ sts.title }}',	
+						
+					} );
+																			
+				{% endif %}
+			{% endfor %}
+			
+{% endblock dst_data %}

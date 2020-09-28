@@ -1,0 +1,31 @@
+
+{% block dst_form %}
+
+<style>
+
+</style>
+
+	<label for="title" id="header_panel">כותרת מטרה</label>
+	<input type="title" class="form-control" name="title" value="{{ dst.title }}">
+ 
+	<label for="text" id="header_panel">תאור מטרה</label>
+	<input type="text" class="form-control" name="description" value="{{dst.body }}">
+				
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

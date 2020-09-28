@@ -1,0 +1,43 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% block edit_std_gt_by_tag %} 
+
+
+
+<div class="container" id="container_id">	
+
+	<button class="btn btn-info btn-xs" id="add_button">
+		<h5><strong>	
+			<a href="{{ url_for('students.profile_to_student_add2', selected_student_id=std.id) }}">הוסף מטרה</a>
+		<strong></h5>
+	</button>
+
+	<h4>
+		<button class="accordion" id="green_header" ><strong>{{ std_root_gt.h_name }} התלמיד  {{ std.first_name }} {{ std.last_name }} </strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">תז: {{ std.id }}    כיתה: {{ std.grade }}</p>
+		</div>
+	</h4>
+
+	</br>
+	{% for tag in tags %}
+
+		{% for ar in age_ranges %}  <!-- ars -->
+			{% for gt in profiles if (gt.is_parent_of(ar) and gt.is_parent_of(tag)) %}
+												
+				<div><h4><strong><u> נושא: {{ tag.title }}</u></strong></h4></div>						
+						
+						{% include "./profiles/std_edit_one_gt.html" %}
+			
+			{% endfor %} <!-- for.. if.. if  --> 
+		{% endfor %}  <!-- ars -->			
+		
+	{% endfor %}  <!-- all tags -->
+
+		
+</div>   <!-- container -->
+
+{% endblock  edit_std_gt_by_tag %}
+{% endblock %}

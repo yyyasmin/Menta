@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ pageEncoding="ISO-8859-1" import="java.util.*, com.as400samplecode.util.*"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SSSS</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+         <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css">
+    <script type="text/javascript">
+
+    var xmldocu = '<categories><category id="2" name="Pepsi" ><products><product id="858" name="7UP" price="24.4900" /><product id="860" name="Aquafina" price="24.4900" /></products></category><category id="4" name="Coke" ><products><product id="811" name="ThumpsUp" price="24.4900" /><product id="813" name="Maaza" price="24.4900" /></products></category></categories>' ;
+    $( document ).ready(function() {
+
+        $("div.accordian").accordion({
+            autoHeight: false,
+            collapsible: true,
+            active: false,
+    });
+
+        $("div.accordian").accordion({
+             activate: function(event, ui) {
+            var selectedeleemnt = ui.newHeader.text();
+            if(selectedeleemnt=="CoolDrinks")
+            {
+
+                $('#inner')
+                .html(" \
+                    <h3><a href='#'>First</a></h3><div>First</div> \
+                    <h3><a href='#'>Second</a></h3><div>Second</div> \
+                    <h3><a href='#'>Third</a></h3><div>Third</div>")
+                .accordion({
+                autoHeight: false,
+                collapsible: true,
+                active: false,
+            });
+
+            }
+            }
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+ <%
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("CoolDrinks");
+        list.add("Snacks");
+        list.add("Other");
+        %>
+
+<div id="faqs-container" class="accordian">
+
+<%
+for(String item : list)
+{
+    %>
+     <h3><a href="#"><%=item%></a></h3>
+
+      <div id="inner">
+
+    </div>
+    <%
+}
+%>
+
+</div>
+</body>
+
+</html

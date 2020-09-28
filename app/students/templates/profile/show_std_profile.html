@@ -1,0 +1,63 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+
+{% block show_std_profile %}
+
+<style>
+
+.profile_parts_table  {
+	marging:1%;
+	border:0;
+	dir:rtl;
+}
+
+</style>
+
+{% include "./profile/profile_style.html" %}
+
+<!-----------DEBUG -----------------
+<div> DEBUG3 -- IN show_std_profile.html --- DEBUG</div>
+
+<div> DEBUG3 -- IN show_std_profile.html --- DEBUG</div>
+<!-----------DEBUG ----------------->
+
+			<table>
+
+				{% for gt in prf_parts_list if ( (gt.is_parent_of(tag)) and (gt.is_parent_of(sub_tag)) ) %}	
+					{% if gt.title != 'New' %}
+					
+						<tr style="background-color:{{lc_ns.line_color}};">
+						
+							<div type="button" id="{{title_box}}"
+								 style="color:black; background-color:{{part.odd_color}}; marging:10%;" 
+								 onclick="myFunction('{{gt.id}}')">
+									{{gt.title}}
+							</div>
+	
+							<div style="color:black; background-color:{{part.even_color}}" 
+								type="button" id="{{gt.id}}" class="w3-hide  w3-center {{body_box}}">
+									{{gt.body}}
+							</div>
+							
+						</tr>
+					{% endif %}
+				{% endfor %}
+
+				{% include "profile/part_buttons.html"  %}
+
+					
+			</table>
+			
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+{% endblock show_std_profile %}

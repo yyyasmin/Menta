@@ -1,0 +1,36 @@
+<!-- FROM https://stackoverflow.com/questions/7979548/how-to-render-my-textarea-with-wtforms  -->
+{% extends "layout.html" %}
+
+{% block content %} הגדר משימה ליעד {% endblock %}
+
+{% block content %}
+<H3> הגדר/עדכן משימה ליעד: {{goal.title }}</H3>
+
+<form action="" method=post>
+{{form.hidden_tag()}}
+	<dl>
+		<dt>כותרת:
+		<dd>{{ form.totdo.title }}
+		
+		<br>
+		
+		<dt>תאור המשימה:
+		<dd>{{ form.todo.body(cols="35", rows="20") }}}
+		
+		<br>
+		
+		<dt>תפקיד האחראי יל ביצוע המשימה:
+		<dd>{{form.todo.who }}
+		
+		<br>
+		
+		<dt>תאריך סיום המשימה:
+		<dd>{{ form.todo.due_date }}
+		
+		<br>
+		
+	</dl>
+	<p>
+		<input type=submit value="שמור משימה">
+</form>
+{% endblock %}

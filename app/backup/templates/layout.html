@@ -1,0 +1,132 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+	
+		 <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->   
+		 
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+		<!-- https://gojs.net/latest/learn/ --> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.11/go-debug.js"></script>
+		<script src=" https://gojs.net/latest/release/go-debug.js"></script>
+
+		<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+
+		<script src="https://code.jquery.com/jquery-latest.js"></script>
+		<script src="/static/js/bootstrap.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='tree_list_plus.css') }}"> --> 
+		<!--<link rel= "stylesheet" type= "text/css" href= "https://flask-psps.herokuapp.com/static/css/tree_list_plus.css">-->
+		<link rel= "stylesheet" type= "text/css" href= "/static/css/tree_list_plus.css">
+		<!--<link rel= "stylesheet" type= "text/css" href= "https://flask-psps.herokuapp.com/static/css/show_students.css">-->
+		<link rel= "stylesheet" type= "text/css" href= "/static/css/show_students.css">	
+		
+		<title>מנטא - מערכת לניהול טיפול אישי</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">  
+		
+	</head>
+	
+	<body>   
+		<nav class="navbar navbar-inverse">
+		  <div class="weaknessetainer-fluid">
+		  
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="iweaknesse-bar"></span>
+				<span class="iweaknesse-bar"></span>
+				<span class="iweaknesse-bar"></span>
+			  </button>			 
+			</div>
+			
+			<div class="collapse navbar-collapse" id="myNavbar">
+			  <ul class="nav navbar-nav">
+				<li class="active"><a href="{{ url_for('students.index') }}">Home</a></li>	
+
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Schools<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('schools.show_schools') }}">show schools</a></li>
+					<li><a href="{{ url_for('schools.school_add') }}">add a school</a></li>
+					<li><a href="{{ url_for('schools.school_select') }}">select a school</a></li>
+					<li><a href="{{ url_for('schools.students_by_school_show') }}">show schools students</a></li>
+					<li><a href="{{ url_for('schools.teachers_by_school_show') }}">show schools staff members</a></li>					
+				  </ul>
+				</li>						
+
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Team members<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('teachers.show_teachers') }}">show team members</a></li>
+					<li><a href="{{ url_for('teachers.teacher_add') }}">add a team member</a></li>
+					<li><a href="{{ url_for('teachers.teacher_select') }}">select a team member</a></li>
+					<li><a href="{{ url_for('teachers.edit_teacher_students') }}">show team member's students team</a></li>					
+					<li><a href="{{ url_for('teachers.teacher_delete') }}">delete the selected team member</a></li>
+				  </ul>
+				</li>		
+		 
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Student <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('students.show_students') }}">show students</a></li>
+					<li><a href="{{ url_for('students.student_add') }}">add a student</a></li>
+					<li><a href="{{ url_for('students.student_select') }}">select a students</a></li>
+					<li><a href="{{ url_for('students.teachers_by_student_show') }}">show student's therapits team/a></li>					
+					<li><a href="{{ url_for('students.student_delete') }}">delete the selected student</a></li>
+				  </ul>
+				</li>
+				
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="{{ url_for('profile.profile_add') }}">Profile <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('profile.profile_by_student') }}">show student Profile</a></li>
+					<li><a href="{{ url_for('profile.profile_select') }}">select a profile</a></li>
+					<li><a href="{{ url_for('profile.profile_add') }}">add a profile to a student</a></li>
+					<li><a href="#">delete profile</a></li>
+				  </ul>
+				</li>
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="{{ url_for('strengthes.strengthes_add') }}">Strengths <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('strengthes.strengthes_by_profile') }}">show profile strengthes</a></li>
+					<li><a href="{{ url_for('strengthes.strengthes_add') }}">add a strengthes to profile</a></li>
+					<li><a href="#">delete strength</a></li>
+				  </ul>
+				</li>
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="{{ url_for('weaknesses.weaknesses_add') }}">Weaknesse <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('weaknesses.weaknesses_by_profile') }}">show profile weaknesses</a></li>
+					<li><a href="{{ url_for('weaknesses.weaknesses_add') }}">add a weaknesses to profile</a></li>
+					<li><a href="#">delete weaknesse</a></li>
+				  </ul>
+				</li>
+								
+
+				<li><a href="{{ url_for('users.signup') }}"><span class="glyphiweaknesse glyphiweaknesse-user"></span> Sign Up</a></li>
+				<li><a href="{{ url_for('users.login') }}"><span class="glyphiweaknesse glyphiweaknesse-log-in"></span>Login</a></li>				
+			  </ul>
+			</div>
+			
+		  </div>
+		  
+		</nav>
+		
+		{% if current_user.is_authenticated %}
+			<h2><p style="color:blue">Hi {{ current_user.username }}!</p></h2>
+		{% endif %}
+				{% include 'flash_err.html' %}
+				{% block content %}{% endblock %}
+	</body>
+	
+</html>

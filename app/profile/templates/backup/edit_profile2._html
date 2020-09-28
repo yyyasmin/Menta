@@ -1,0 +1,45 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% with student = std %} 
+	{% include "std_3d_title.html" %} 
+{% endwith %} 
+
+
+
+<style>
+
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='red']    {color:red;}
+select[data-chosen='green']  {color:green;}
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='lred']  {color:#ff9999;}    // light-red
+
+select[data-chosen='Not assigned yet'] {color:#ff9999;}   // light red
+select[data-chosen='Not achieved yet'] {color:red;}
+select[data-chosen='Partially achieved'] {color:orange;}
+select[data-chosen='Achieved'] {color:green;}
+
+</style>
+
+<div class="container" id="container_id" style="margin:5%; padding:5%">
+<h2><strong><center>
+	<div style="background:#d6f5f5; color:#006699" >
+		<span style="color:black"> פרופיל </span>
+		<span style="color:blue"> תחומי עיניין </span> 
+		<span style="color:green">חוזקות </span>
+		<span style="color:black"> ו </span>	 
+		<span style="color:red"> נקודות לחיזוק </span>
+	</div>
+</center></strong></h2>
+
+	</br>
+	
+	<form method="POST" action="{{ url_for('students.update_std_gts2') }}">
+		{% include "./profile2/prof2/std_profile2_by_tag.html" %}
+	</form>
+
+</div>   <!-- container -->
+
+{% endblock %}

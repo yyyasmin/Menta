@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+	background: #dddddd;
+}
+
+tr:nth-child(odd) {
+	background: #ffffff;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+
+</style>
+
+<div class="container">	
+
+	<h2><strong><center><div>יעדי התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div> עבור המטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<table style="width:100%">
+	
+			<tr id="header_row">
+			
+				<th> מספר היעד </th>			
+				<th> כותרת היעד </th>
+				<th> תאור היעד </th>
+				<th> תאריך יעד </th>
+				<th> סטאטוס היעד </th>
+				<th>כפתור שמירת היעד לתלמיד </th>
+
+			</tr>
+			
+	{% for std_goal_form in std_goals_forms %}
+	
+		{{ std_goal_form.csrf_token }}
+				
+	{% for goal in destination.goals %}
+	
+			<br><br>						
+						
+			<button class="btn btn-success btn-xs" style="background-color: #ffff66"><a style="color: black" href="{{ url_for('goals.edit_goal_todos2', selected_goal_id=goal.id) }}">ערוך משימות להשגת היעד</a></button>
+			
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a style="color: black" href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a style="color: black" href="{{ url_for('destinations.goal_from_destination_delete2', selected_destination_id=destination.id, selected_goal_id=goal.id) }}">מחק</a></button>		
+			
+			<button class="accordion">{{ goal.title }}</button>
+			
+			<div class="panel">
+				<p class="white_ppp">{{ goal.body }}.</p>
+			</div>
+			
+	{% endfor %}
+	{% endfor %}
+
+		
+	</table>
+	
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+{% endblock %}	

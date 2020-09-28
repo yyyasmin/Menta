@@ -1,0 +1,21 @@
+ <script>  
+	
+	//FROM https://forum.nwoods.com/t/click-node-and-start-text-editor/5770/3
+	  
+    "textEditingTool.starting": go.TextEditingTool.SingleClick,
+	"textEditingTool.doMouseDown": function()
+	{ if (this.isActive) 
+		{ this.acceptText(go.TextEditingTool.MouseDown); 
+			var tb = this.diagram.findObjectAt(this.diagram.lastInput.documentPoint); 
+			if (tb instanceof go.TextBlock && tb.editable)
+			{ var tool = this; setTimeout(function() 
+			
+				{ tool.textBlock = tb; tool.diagram.currentTool = tool; }, 1);
+			}
+		} 
+	}
+	  
+    //FROM https://forum.nwoods.com/t/click-node-and-start-text-editor/5770/3
+	  
+</script>	  
+	  

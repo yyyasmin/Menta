@@ -1,0 +1,120 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts %}
+
+
+	
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set stp_ns = namespace(sub_tag_printed=False) %}
+	
+	{% for tag in tags %}
+		{% set tp_ns.tag_printed = False %}
+
+		{% for sub_tag in sub_tags if tag.is_parent_of(sub_tag) %}
+			{% set stp_ns.sub_tag_printed = False %}
+			
+			{% for dst in student_dsts if dst.is_parent_of(tag) and dst.is_parent_of(sub_tag) %}	
+
+				<td>
+					{% if tp_ns.tag_printed == False %}}
+						<td>
+							<div>TD1</div> {{ tag.title|replace("-", "\n") }}
+						</td>
+						{% set tp_ns.tag_printed = True %}
+					
+					{% else %}
+						<td></td>
+					{% endif %}
+			
+					{% if stp_ns.sub_tag_printed == False %}}
+						<td>
+							<div>TD2</div>{{ sub_tag.title }}
+						</td>
+						{% set stp_ns.sub_tag_printed = True %}
+					{% else %}
+						<td></td>
+					{% endif %}
+							
+					<td>
+						<div>TD3</div>
+						<div type="button" style="color:black;" id="green_title" onclick="myFunction('{{dst.id}}')">
+												
+							מטרה: {{ dst.title }} 
+																							
+							{% for sts in statuss %}	
+								{% for st in std_txts %}
+									{% if st.general_txt_id==dst.id %}
+										{% if st.status_id==sts.id %}
+											<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
+							{% endfor %}				
+						</div>
+						
+						<div type="button" style="color:black;" id="{{dst.id}}" class="w3-hide  w3-center green_body">
+							{{dst.body}}
+						</div>
+					</td>
+					
+					<td>
+						{% for goal in student_goals if dst.is_parent_of(goal) %}	
+								
+								<div>TD4</div>
+								
+								<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+									יעד: {{ goal.title }} 
+																									
+									{% for sts in statuss %}	
+										{% for st in std_txts %}
+											{% if st.general_txt_id==goal.id %}
+												{% if st.status_id==sts.id %}
+													<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									{% endfor %}				
+								</div>
+								
+								<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+									{{goal.body}}
+								</div>
+			
+						<td>
+							{% for todo in student_todos if goal.is_parent_of(todo) %}	
+									
+									<div>TD5</div>
+									
+									<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+										יעד: {{ todo.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==todo.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+										{{todo.body}}
+									</div>
+								
+							{% endfor %}
+											
+						{% endfor %}
+						</td>
+
+
+				</tr>
+
+		
+			{% endfor %}
+		{% endfor %}
+	{% endfor %}
+	
+				
+{% endblock plan_report_show_std_dsts %}

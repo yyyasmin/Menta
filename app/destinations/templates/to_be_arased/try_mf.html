@@ -1,0 +1,40 @@
+
+    <div>
+        <form action="{{ url_for('destinations.destination_add')}}" method="POST">
+            <label for="tag_age">קבוצת גיל</label>			
+				<select class="select" name="selected_age_range" id="selected_age_range">
+					{% for ar in age_ranges %}	
+						{% if ar.title == selected_age_range %}	
+							<option value="{{ ar.title }}" selected="selected">{{ ar.title }}</option>
+						{% endif %}
+					{% endfor %}	
+							
+					{% for ar in age_ranges %}	
+						<option value="{{ ar.title }}">{{ ar.title }}</option>
+					{% endfor %}							
+				</select>
+				<input type="submit" value="submit_age_range" name="submit">			
+        </form>
+        <p>Answer: {{ selected_age_range }}</p>
+    </div>
+	
+	</br></br>
+
+    <div>
+        <form action="{{ url_for('destinations.destination_add')}}" method="POST">
+            <label for="tag_age">Destination's Subject:</label>						
+			<select class="select" name="selected_tag" id="selected_tag">
+				{% for tag in tags %}	
+					{% if tag.title == selected_tag %}	
+						<option value="{{ tag.title }}" selected="selected">{{ tag.title }}</option>
+					{% endif %}
+				{% endfor %}	
+							
+				{% for tag in tags %}	
+					<option value="{{ tag.title }}">{{ tag.title }}</option>
+				{% endfor %}							
+			</select>	
+			<input type="submit" value="submit_tag" name="submit">
+        </form>
+        <p>Answer: {{ selected_tag }}</p>
+    </div>

@@ -1,0 +1,110 @@
+<!--  FROM https://gojs.net/2.0.21/samples/orgChartStatic.html  -->
+ 
+{% extends "layout.html" %}
+
+	
+{% block content %}
+
+{% with from_dst_sort_order=3 %} 
+	{% include "dst_title.html" %} 
+{% endwith %} 
+
+<body onload="init()">
+  
+<div id="sample" style="position: relative;">
+	<div id="myDiagramDiv" style="background-color: white; border: solid 1px black; width: 100%; height: 700px"></div>
+</div>
+
+</body>
+
+
+<script> 
+
+
+function init() {
+	
+	if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+  
+	var $ = go.GraphObject.make;
+	
+	var myFullDiagram =
+	  $(go.Diagram, "myDiagramDiv",
+		{
+		  "undoManager.isEnabled": true,
+		  layout: $(go.TreeLayout,
+					{ angle: 90, layerSpacing: 35 })
+		});
+		
+	myFullDiagram.add( 
+		$(go.Panel, "Vertical",
+		new go.Binding("background", "color"),
+
+				
+			$(go.Picture,
+				{ margin: 10, width: 50, height: 50, background: "red", alignment: go.Spot.Left, },
+				new go.Binding("source")),
+						
+			$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "bold 16px sans-serif" }, 
+				new go.Binding("text", "name")),
+				
+			$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "bold 16px sans-serif" }, 
+				new go.Binding("text", "status"),
+				new go.Binding("fill", "color2"),
+				new go.Binding("stroke", "text_color")),
+		),
+			
+		$(go.Node, "Horizontal",
+			{ background: "#44CCFF" },
+		
+		$(go.Picture,
+			{ margin: 10, width: 50, height: 50, background: "red" },
+			new go.Binding("source")),
+			
+		$(go.TextBlock, "Default Text",
+			{ margin: 12, stroke: "white", font: "bold 16px sans-serif" },
+			new go.Binding("text", "name"))
+		),
+		
+		$(go.Node, "Auto",
+		{ locationSpot: go.Spot.Center, },
+		new go.Binding("text", "key", go.Binding.toString)),  // for sorting
+
+		
+		);
+		
+		
+		
+
+
+	// define a Link template that routes orthogonally, with no arrowhead
+	myFullDiagram.linkTemplate =
+		$(go.Link,
+			{ routing: go.Link.Orthogonal, corner: 5 },
+			
+		$(go.Shape, // the link's path shape
+			{ strokeWidth: 3, stroke: "#555" }));
+
+
+	nodeDataArray = [];
+
+	<!-- FROM https://stackoverflow.com/questions/41339423/how-to-fill-array-content-using-for-loop-in-javascript -->	
+	{% include "./tree/backup/dst_data_3.js" %}
+	{% for goal in dst_goals %}  // GOALS
+		{% include "./tree/backup/goal_data_3.js" %}
+			{% for todo in todo_goals %}  // GOALS
+				{% include "./tree/backup/todo_data_3.js" %}
+			{% endfor %}
+	{% endfor %}
+	
+	var model = $(go.TreeModel);
+	model.nodeDataArray = nodeDataArray;
+	myFullDiagram.model = model;
+			
+	console.log(nodeDataArray);
+
+myFullDiagram.model = model;
+
+}      
+</script>
+
+{% endblock %}

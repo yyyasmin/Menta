@@ -1,0 +1,44 @@
+##########Profile's subject ###################	
+
+@prf.route('/subject_to_profile_add', methods=['GET', 'POST'])
+def subject_to_profile_add():
+
+	user = User.query.get_or_404(current_user.id)
+	author_id = user.id	
+
+	student = Student.query.filter(Student.selected==True).first()
+	if student == None:
+		flash("Please select a student first ")
+		return redirect(url_for('student.student_select'))
+		
+	profile = Profile.query.filter(Profile.selected==True).first()
+
+	if profile == None:
+		flash("Please select an profile first ")
+		return redirect(url_for('profile.profile_select'))
+	print("Adding strength to profile ", profile.title)      
+	#print request
+
+	if request.method == 'GET':
+		return render_template('strength_to_profile_add.html', student=student, profile=profile)
+		   
+	#get data from form and insert to postgress db
+	title = request.form.get('title')
+
+	#import pdb; pdb.set_trace() 	
+	strength = Strength(title)	
+
+	profile.strengthes.append(strength)	
+	   
+	db.session.add(strength)    
+	db.session.commit()  
+	db.session.refresh(strength)
+
+	return  redirect(url_for('students.edit_students_profile')) 
+			
+@prf.route('/strength_to_profile_add2/add/<int:selected_profile_id>', methods=['GET', 'POST'])
+def strength_to_profile_add2(selected_profile_id):
+    profile_select2(selected_profile_id)
+    return redirect(url_for('students.edit_students_profile'))
+##########Profile's subject ###################	
+	

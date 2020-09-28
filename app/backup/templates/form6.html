@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+.grid-container {
+  display: grid;
+  grid-row-gap: 100px;
+  grid-column-gap: 100px;
+  padding: 100px;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto ;
+  background-color: PapayaWhip;
+}
+.grid-item {
+ 
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 30px;
+  text-align: center;
+}
+
+.header {
+	text-align: center;
+}
+</style>
+
+<div class="header"><h1>:בחר פעולה</h1></div>
+​
+
+<div class="grid-container">
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/school.png') }}">בתי ספר</div></p></div>
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/teacher.png') }}">אנשי צוות</div></p></div>	
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/kid.png') }}">תלמידים</div></p></div>	
+
+
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/form.png') }}">תוכנית טיפול אישית לתלמיד</div></p></div>	
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/profile.png') }}">פרופיל תלמיד</div></p></div>	
+    <div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/goal.png') }}">מטרות ויעדים</div></p></div>
+	
+	<div class="grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><img src="{{ url_for('static', filename='img/statistics.png') }}">סטאטיסטיקה</div></p></div>	
+
+
+</div>
+​
+​
+
+{% endblock %}

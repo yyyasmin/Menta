@@ -1,0 +1,76 @@
+{% block dt_list_form %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+</style>
+	
+
+  <center><h3> Destinations list:</h3></center>
+	<div>
+	{% for dst in destinations %}
+		{% for ar in age_ranges %}
+			<h4><center><strong><div>קבוצת גיל {{ ar.title }} </div></strong></center></h4>
+			
+				{% if dst.age_range_id == ar.id %}						
+					{% for tag in dst.tags %}
+						{% include "./sub_forms/edit_one_dst_form.html" %}
+					{% endfor %}  <!-- tags -->
+				{% endif %}   <!-- in age range -->
+			{% endfor %}    <!-- destinations -->
+		{% endfor %}   <!-- age_ranges -->
+		<center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('destinations.destination_add') }}">הוסף מטרה</a></button></center>
+	</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

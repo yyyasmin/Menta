@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<center>
+
+  <div class="row">
+  	<div class="col-md-6">
+
+		<form class="form-horizontal" action="" method="POST">
+
+			<fieldset>
+
+				<div class="control-group">
+					<label class="control-label" for="super_user_code">Super use code</label>
+					<div class="controls">
+						<input type="text" id="super_user_code" 
+							   name="super_user_code"  
+							   value = "{{user.super_user_code}}"
+							   class="form-control input-lg">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="username">שם משתמש</label>
+					<div class="controls">
+						<input type="text" id="username" 
+						       name="username"
+							   value= "{{user.username}}"
+							   class="form-control input-lg">
+						<p class="help-block">Username can contain any letters or numbers, without spaces</p>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="email">דואל</label>
+					<div class="controls">
+						<input type="email" id="email" 
+						       name="email"
+							   value= "{{user.email}}"
+							   class="form-control input-lg">
+						<p class="help-block">Please provide your E-mail</p>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="is_super_user">Is a super user</label>
+					<div class="controls">
+						<input type="checkbox" id="is_super_user"
+							   value= "{{user.email}}"
+							   name="is_super_user"
+							   class="form-control input-lg">
+					</div>
+				</div>
+
+				<div class="control-group">
+					<!-- Button -->
+					<div class="controls">
+						<button class="btn btn-success">Save</button>
+					</div>
+				</div>
+
+			</fieldset>
+
+		</form>
+
+    </div> 
+  </div>
+</center>
+  
+{% endblock %}

@@ -1,0 +1,469 @@
+
+{% extends "layout.html" %} 
+
+
+{% block content %}
+
+<style>
+<!-- teachers -->
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.st_table tr:nth-child(even){
+        background: #dae5f4;
+    }
+<!-- teachers -->
+
+
+<!-- destinations -->
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.destination_accordion {
+    background-color: red;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    goaltent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+
+div.panel {
+    padding: 0 18px;
+    background-color: #eff5ef;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#student_header.accordion {
+		color: #fff;
+		border-color: #EEEEEE;
+		background-color: #346767;
+		font-size: 18px;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+.destination_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB9;
+	font-size: 16px;
+}
+
+#destination_header.accordion {
+		background-color: #bfd9bf;
+		border-color: #afcfaf;
+		font-size: 16px;
+}
+
+
+div.student_panel {
+    padding: 0 18px;
+    background-color: #346767;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+div.destination_panel {
+    padding: 0 18px;
+    background-color: #bfd9bf;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+<!-- Destinations -->
+
+<!-- Profile -->
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+	
+	
+}table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td  {
+    border: 1px solid black;
+	text-align: center;
+}
+
+table#subjects_table tr:nth-child(even) { background-color:#0088cc;  }
+table#subjects_table tr:nth-child(odd)  { background-color:#cceeff;  }
+
+table#strengthes_table tr:nth-child(even) { background-color:#00ff00;  }
+table#strengthes_table tr:nth-child(odd)  { background-color:#ccffcc;  }
+
+table#weaknesses_table tr:nth-child(even) { background-color:#ff0000; }
+table#weaknesses_table tr:nth-child(odd)  { background-color:#ffb3b3; }
+<!-- profile -->
+
+
+<!-- Background -->
+.textareaContainer {
+	width: 90%; 
+	display: block;
+	border: 3px solid #38c;
+	padding: 10px;
+  }
+textarea { 
+	width: 90%; 
+	margin: 10px; 
+	padding: 10px; 
+	border: 3px solid #38c;
+
+  }
+  <!-- Background -->
+  
+</style>
+	
+<!-- Student's details -->
+<div class="container">	
+	<h3> Student's details</h3>
+	<table class="st_table" style="width:100%">
+		<tr>
+			<th>ID:   {{ student.id }}</th>
+			<th>Name:   {{ student.first_name }}  {{ student.last_name }}</th>
+			<th>Grade:   {{ student.birth_date }}</th>
+			<th>Creation Date:   {{ student.grade }}</th>
+		</tr>		
+	</table>
+</div>  <!-- Container -->
+<!-- Student's details -->
+</br>
+</br>
+
+		 
+<!-- BackGround -->
+<div class="container">	
+	<h3><strong><div> Background  </div></strong></h3>
+	<div class="container">
+		<label class="textareaContainer">
+			<textarea name="text">
+				The Student was born by ...
+				Scince eraly age he/she ...
+				He has ... Sisters and ... Brothers . He is the ..th child. 
+			</textarea>
+		</label>
+	</div>
+</div>  <!-- Container -->
+
+<!-- BackGround -->
+</br>
+</br>
+
+
+<!-- Teachers -->
+<div class="container">	
+
+	<h3><strong><div> Student's stuff team  </div></strong></h3>
+	<p></p>
+	<table class="st_table" style="width:100%">
+		<tr>			
+			<th> First name </th>
+			<th> Last name </th>
+			<th> role </th>
+
+		</tr>
+		
+		{% for student_staff_teacher in student_staff_teachers %}	
+
+		<form   method="POST" action="{{ url_for('students.teacher_to_student_add2', selected_teacher_id=student_staff_teacher.id, selected_student_id=student.id) }}">	
+			<tr>
+				<td>{{ student_staff_teacher.first_name }}</td>
+				<td>{{ student_staff_teacher.last_name }}</td> 
+				<td>Role:
+					<select class="select" name="selected_role" id="selected_role">						
+						{% for std in student_staff_teacher.students %}	
+							{% if std.student_id == student.id %}	
+								<option value="{{ std.title }}" selected="selected">{{std.title}}</option>
+							{% endif %}
+						{% endfor %}
+						
+						{% for acc in accupations %}	
+							<option value="{{ acc.title }}">{{ acc.title }}</option>
+						{% endfor %}
+						
+					</select>					
+				</td>		
+		
+			</tr>
+		</form>	
+		{% endfor %}
+	</table>
+</div>		<!-- class="container -->
+
+<!-- Teachers -->
+</br>		 
+</br>		 
+		
+
+
+<!-- Profile -->
+<div class="container">	
+
+	<h3>Profile</h3>
+	
+	<table style="width:100%">	
+		<tr>			
+			<th style="color:blue"><strong> intrest subjects </strong></th>
+			<th style="color:green"><strong> strengthes </strong></th>
+			<th style="color:red"><strong> weaknesses </strong></th> 
+		</tr>
+		
+
+		<td>
+			<table id="subjects_table" style="width:100%">
+				{% for sbj in profile.subjects %}	
+					<tr><td>{{ sbj.title }}</td></tr>	
+				{% endfor %}				
+
+			</table>
+		</td>
+		
+
+		<td>
+			<table id="strengthes_table" style="width:100%">
+				{% for strn in profile.strengthes %}	
+					<tr><td>{{ strn.title }}</td></tr>	
+				{% endfor %}				
+			</table>
+		</td>
+
+		<td>
+			<table id="weaknesses_table" style="wdth:100%">
+				{% for wkns in profile.weaknesses %}	
+					<tr><td>{{ wkns.title }}</td></tr>	
+				{% endfor %}				
+			</table>
+		</td>
+	</table>
+</div>		<!-- class="container -->
+
+<!-- Profile -->
+</br>		 
+</br>		 
+
+<!-- Destinations -->
+	<h2>
+		<button class="accordion" id="student_header">Student's list of destinations:</button>
+		<div class="student_panel" >
+			<p class="ppp">students details: ID: {{ student.id }}  GRADE: {{ student.grade }} .</p>
+		</div>
+	</h2>
+    <div>
+    </br></br>
+	    {% for destination in student.destinations %}		
+			<button class="accordion" id="destination_header">Destination: {{ destination.title }}</button> 			
+			<div class="destination_panel">
+			   <p class="destination_ppp">Destination description: {{ destination.body }}.</p>
+			</div>				
+			<br><br>			
+		{% endfor %}
+    </div>
+<!-- Destinations -->
+</br>  
+
+
+<-- Teachers --> 
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+<-- Teachers -->
+
+<!-- Destinations -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+<!-- Destinations -->
+
+
+
+{% endblock %}
+

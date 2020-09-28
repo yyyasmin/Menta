@@ -1,0 +1,123 @@
+{% block gt_line %}
+
+<!-- FROM https://stackoverflow.com/questions/7208786/how-to-style-the-option-of-an-html-select-element -->
+<style>
+
+</style>
+
+<!---------DEBUG ---------------
+		<div> DEBUG IN dst_line.html </div>
+		
+			{% set stsNs = namespace (stsColor = "BLUE") %}
+			{% for sts in statuss %}
+				{% if gt.is_parent_of(sts) %}
+					<div id="{{ sts.color_txt }}">STS Selected:--- {{ sts.color }} {{ sts.color_txt }} ---</div>
+					{% set stsNs.stsColor = sts.color_txt %}
+					{% break %}
+				{% endif %}
+			{% endfor %}
+			
+		<div id="{{ stsNs.stsColor }}">stsColor:   {{stsNs.stsColor}}  </div>
+		
+		<div> DEBUG IN dst_line.html </div>
+<!---------DEBUG --------------->
+
+				
+	<td class="tag_width">  
+		<select id="selected_tag" class="select" onchange="this.className=this.options[this.selectedIndex].className" name="tag{{ gt.id }}">	
+			{% for tag in tags %}
+				<option value="{{ tag.title }}" >{{ tag.title|replace("-", "\n") }}</option>
+			{% endfor %}
+		</select>					
+	</td>
+	
+    {% set ns = namespace(st=False) %}      
+	{% for sub_tag in sub_tags if (gt.is_parent_of(sub_tag)) %}  <!-- ars -->
+		<td class="sub_tag_width">{{ sub_tag.title }}</td>
+		{% set ns.st = True %}
+		{% break %}
+	{% endfor %}
+		
+	{% if ns.st==False %}
+		<td class="sub_tag_width">No sub tag</td>
+	{% endif %}
+	
+	<td class="title_width">{{ gt.title }}</td>
+	<td class="body_width">{{ gt.body }}</td> 
+
+                  
+	<td class="sub_btn_width">
+	
+		<div id="add_sub" style="color:{{gt_sub_obj.color_txt}}" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Content">
+			הראה {{gt_sub_obj.h_plural_name}}
+		</div>
+					
+		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{gt.id}}Content">
+			הוסף {{gt_sub_obj.h_name}}
+		</div>
+		
+	</td>
+	
+	<td class="date_width">
+		{% for st in std_txts %}
+			{% if st.general_txt_id==gt.id %}
+				<input type="date" style="text-align:center" id="due_date" name="due_date{{ gt.id }}" value="{{ st.due_date }}">					
+			{% endif %}
+		{% endfor %}
+	</td>	
+		
+	{% set stsNs = namespace (stsColor = "") %}
+	{% for sts in statuss %}
+		{% if gt.is_parent_of(sts) %}
+			{% set stsNs.stsColor = sts.color %}
+			{% break %}
+		{% endif %}
+	{% endfor %}	
+	<td class="status_width" style="color:{{ stsNs.stsColor }}">   <!-- ID FOT SELECTED STS COLOR -->
+		<select id="selected_status" class="select" onchange="this.className=this.options[this.selectedIndex].className" name="sts{{ gt.id }}">	
+			{% for sts in statuss %}
+				{% if gt.is_parent_of(sts) %}
+					<option class="{{ sts.color_txt }}" style="color:{{ sts.color_txt }}" value="{{ sts.title }}" selected="selected" id="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% else %}
+					<option class="{{ sts.color_txt }}" style="color:{{ sts.color_txt }}" value="{{ sts.title }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+	<td class="save_width">
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt.id }}">שמור</button>
+	</td>
+
+<!-- FROM https://stackoverflow.com/questions/30890250/onload-event-not-working-in-select-box-dropdown-list-box/30890433 -->
+<script>
+
+function stsTdColor(){
+
+	console.log("IN stsTdColor");
+	
+	let stsTd = document.getElementById("#stsTdId");
+	console.log("parameter stsTd is:");
+	console.log(stsTd);
+	
+	let stsSelect = document.getElementById("#selected_status");
+	console.log("stsSelect  is:");
+	console.log(stsSelect);
+	
+	let stsOptAttrId = $("#selected_status option:selected").attr('id');
+	console.log("stsOptAttrId");
+	console.log(stsOptAttrId);
+			
+	let stsOptPropId = $("#selected_status option:selected").prop('id');
+	console.log("stsOptPropId");
+	console.log(stsOptPropId);
+		
+	console.log("stsSelect.options[stsSelect.selectedIndex].className");
+	console.log(stsSelect.options[stsSelect.selectedIndex].className);
+	
+	stsTd.style.color=stsSelect.options[stsSelect.selectedIndex].className;
+}
+
+</script>
+
+{% endblock gt_line %}

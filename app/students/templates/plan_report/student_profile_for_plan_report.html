@@ -1,0 +1,63 @@
+{% block student_profile_for_plan_report %}
+
+{% include "./plan_report/profile_style.html" %}
+	
+	<h3><strong><div>פרופיל</div></strong></h3>
+	
+	<table>	
+	
+		<tr>			
+			<th style="color:blue"><strong>תחומי עיניין</strong></th>
+			<th style="color:#1aff1a"><strong>מוקדי כח</strong></th>
+			<th style="color:red"><strong>מוקדים לחיזוק</strong></th> 
+		</tr>
+		
+		<td>
+			<table id="subjects_table">
+				{% for sbj in prf_subjects if sbj.title!='New' %}				
+					<tr><td>				
+						<button class="accordion" style="text-align:center">תחום עיניין:  {{ sbj.title }} </button>
+						<div class="panel">
+						  <button>תאור תחום עיניין:  {{ sbj.body }}.</button>				
+						</div>						
+					</td></tr>
+				
+				{% endfor %}
+			</table>
+		</td>
+		
+
+		<td>
+			<table id="strengthes_table" style="width:100%">
+				{% for strn in prf_strengths if sbj.title!='New' %}							
+					<tr><td>				
+						<button class="accordion"  style="text-align:center">חוזקה:  {{ strn.title }} </button>
+						<div class="panel">
+						  <button>תאור חוזקה:  {{ strn.body }}.</button>				
+						</div>						
+					</td></tr>
+				{% endfor %}
+			</table>
+		</td>
+		
+
+		<td>
+			<table id="weaknesses_table" style="width:100%">
+
+				{% for wkn in prf_weaknesses if sbj.title!='New' %}							
+					<tr><td>				
+						<button class="accordion"  style="text-align:center">חולשה: {{ wkn.title }} </button>
+						<div class="panel">
+						  <button>תאור מחולשה  {{ wkn.body }}.</button>				
+						</div>						
+					</td></tr>
+				{% endfor %}
+				
+			</table>
+		</td>
+		
+	</table>
+	
+{% endblock %}
+
+	

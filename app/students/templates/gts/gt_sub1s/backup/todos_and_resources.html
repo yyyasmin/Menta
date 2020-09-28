@@ -1,0 +1,24 @@
+
+	<tr>
+		{% for todo in std_goal.goal.todos %}
+			{% include "./goals/todos/edit_one_std_goal_todo.html" %}
+		{% endfor %}
+	</tr>
+	
+	
+	<tr style="width:100%">
+		<th style="background:lightblue" colspan="5"> משאבי עבודה לתמיכה ביעד </th>
+	</tr>
+	
+		
+		<tr>
+			</td>
+				{% for resource in std_goal.goal.resources %}				
+					<button class="accordion">{{ resource.title }} </button>			
+					<div class="panel">
+					  <p class="white_ppp"> תאור המשאב: {{ resource .body }} </p>
+					</div>
+				{% endfor %}			
+			</td>
+		<tr>
+	

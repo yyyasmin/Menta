@@ -1,0 +1,33 @@
+
+<style>
+
+
+</style>
+
+{% block std_actions %}
+
+<footer>
+
+	<span style="align: center;">
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">ערוך פרטים</a></button>
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.std_edit_profile2', selected_student_id=student.id, dsply_direction=1) }}">פרופיל</a></button>							
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">צוות חינוכי</a></button>
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">דוחות</a></button>							
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">מטרות</a></button>										
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">הצג עץ מטרות</a></button>
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">תוכנית אישית</a></button>
+		
+		<button type="button" id="act_btn"><a style="color:black;" href="{{ url_for('students.student_delete2', selected_student_id=student.id) }}">מחק</a></button>
+
+	</span>
+	
+</footer>
+
+{% endblock std_actions %}

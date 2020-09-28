@@ -1,0 +1,55 @@
+{% block edit_dst_line_not_of_std %}		
+	<tr>
+	
+		<td>{{ std_dst.id }}</td>
+				
+		<td>{{ std_dst.title }}</td>
+		
+		<td>{{ std_dst.body }}</td> 
+				
+		<td>
+			<div id="ar_div">			
+				<input type="date" style="text-align:center" id="due_date" name="due_date{{ std_dst.id }}" value="{{ due_date }}">					
+			</div>   <!-- ar_div -->
+		</td>	
+		
+
+		<td>סטאטוס:
+			<select class="select" name="sts{{ std_dst.id }}" id="selected_status">	
+				{% for sts in statuss %}	
+					{% if st.status_id==desfault_status.id %}
+						<option value="{{ sts.id }}" selected="selected">{{ sts.title }}</option>
+					{% else %}
+						<option value="{{ sts.id }}">{{ sts.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>					
+		</td>
+	
+		<td>
+			{% set dst_num = std_dst.id * 3 %}	
+			<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ dst_num }}">שמור</button>
+		</td>
+	
+	</tr>
+	
+
+	<tr>				
+		{% for goal in std_dst.children.all()  %}
+			{% if goal in goals_not_of_student %}
+				{% include "./destinations/goals/not_of_std/edit_one_std_dst_goal_not_of_std.html" %}
+			{% endif %}
+		{% endfor %}
+	</tr>
+	
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock edit_dst_line_not_of_std %}

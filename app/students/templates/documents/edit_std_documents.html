@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+</br></br>
+
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('students.document_to_student_add2', selected_student_id=std.id) }}">הוסף מסמך חדש</a>
+	<strong></h5></button>
+	</br></br>
+
+
+	<h2><strong><center><div>מסמכים</div></center></strong></h2>
+	<p></p>
+	
+	
+	<br>
+	
+	<p></p>
+	
+	<div>			
+		{% for document in std.documents %}
+
+			<div> document is {{ document.id }}		{{ 	document.title }} </div>
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a href="{{ url_for('documents.document_update', selected_document_id=document.document_id) }}">ערוך</a></button>			
+			<button class="btn btn-warning btn-xs" id="edit_sub_list_id"><a href="{{ url_for('documents.edit_document_uploaded_files2', selected_document_id=document.document_id) }}">ערוך קבצים</a></button>						
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('students.document_from_student_delete2', selected_student_id=std.id, selected_document_id=document.document_id) }}">מחק</a></button>		
+			
+			</br>
+			
+			<button class="accordion"> שם המסמך:  {{ document.title }}</button>			
+			<div class="panel">
+			  <p class="white_ppp"> תאור המסמך: {{ document .body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+		
+		</br>
+
+	</div>
+</div>   <!-- container -->
+ 
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

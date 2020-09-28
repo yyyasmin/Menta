@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4">
+            <select class="js-select">
+                <option value="var0">var0</option>   
+                <option value="var1">var1</option>    
+                <option value="var2">var2</option>
+                <option value="var3">var3</option>
+            </select>
+        </div>
+ 
+    </div>
+</div>

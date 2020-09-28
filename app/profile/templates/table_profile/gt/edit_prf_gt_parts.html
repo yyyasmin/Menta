@@ -1,0 +1,94 @@
+
+{% block edit_prf_gts %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+		
+	</br>
+	
+	<h4>
+		<strong>
+			<div style="margin: 0 0;">
+			
+				<button class="btn btn-info btn-xs" id="add_button">
+					<h5>
+						<a href="{{ url_for('profile.dsply_gt_form_for_add2', selected_profile_id=profile.id, type=type) }}" style="color:{{ color }}">הוסף {{ gt_single_type_txt }}</a>				
+					</h5>
+				</button>
+								
+				<div style="background:{{ title_color }}; padding-bottom:4%; width:100%; height:10px; display:inline-block;">
+					<h4><center><strong>רשימת {{ gt_some_type_txt }}</strong></center></h4>
+				</div>
+			</div>
+		</strong>
+	
+		<div>
+		<table class="{{ table_color }}" id="dst_tbl_id" style="width:100%">
+		
+			<tr id="header_row">							
+				<th>מספר</th>
+				<th>קטגורית פרופיל</th>
+				<th>כותרת</th> 
+				<th>תאור</th> 
+				<th>פעולות</th>
+			</tr>
+			
+			{% for gt in prf_parts_list if (gt.is_parent_of(tag)) %}	
+			
+				<tr>
+
+					<td>{{ gt.id }}</td>
+					<td>{{ gt_single_type_txt }}</td>
+					<td>{{ gt.title }}</td> 				
+					<td>{{ gt.body }}</td> 				
+																				
+					<td>					
+						{% include "./table_profile/gt/edit_prf_gt.html" %}																		
+					</td>									
+			
+				</tr>
+				
+			{% endfor %}
+			
+		</table>
+		</div>
+		
+	</h4>
+	
+	</br>
+
+{% endblock edit_prf_gts %}

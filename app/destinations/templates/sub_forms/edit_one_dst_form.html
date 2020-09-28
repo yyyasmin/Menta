@@ -1,0 +1,40 @@
+{% block edit_one_dst_form %}
+
+<style>
+
+</style>
+
+		</br>
+		</br>	
+		
+		{% include "./sub_forms/edit_dst_actions.html" %}
+		
+		</br>
+		 
+		<h4>
+			<button class="accordion"<strong> מטרה: {{ dst.title }}</strong></button>				
+			<div class="panel">
+				<button>תאור מטרה: {{ dst.body }}</button>
+			</div>				
+		</h4>
+			
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

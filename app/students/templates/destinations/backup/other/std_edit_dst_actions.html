@@ -1,0 +1,95 @@
+{% block std_edit_dst_actions %}
+<style>
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+ 
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+}
+
+
+button.accordion {
+    color: #444;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.4s;
+	
+	<!-- DEBUG -->
+background-color:blue;
+transition: max-height 0.2s ease-out;
+
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    max-height: 0;
+    <!-- overflow: hidden;  -->
+    transition: max-height 0.2s ease-out;
+}
+
+#std_dst_actions_container_id {
+}
+
+</style>
+<div> IN C:\Users\yasmi\Documents\menta4\app\students\templates\destinations\std_edit_dst_actions.html </div>
+<div> std id is: {{std.id }}
+
+<div  id="std_dst_actions_container_id">
+
+	<button class="btn btn-warning btn-xs" style="background-color:#ffdd99"><a href="{{ url_for('destinations.destination_update2', selected_destination_id=dst.id) }}">ערוך</a></button>		
+	
+	<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('students.show_student_tree2', selected_student_id=std.id) }}">הצג עץ מטרות</a></button>
+	
+	<button class="btn btn-warning btn-xs" style="background-color: #00ffcc"><a href="{{ url_for('students.edit_student_goals2', selected_student_id=std.id, selected_destination_id=dst.id) }}">ערוך יעדים</a></button>		
+	
+	<button class="btn btn-danger btn-xs"  style="background-color: #ff5050"><a href="{{ url_for('students.destination_from_student_delete2', selected_student_id=std.id, selected_destination_id=dst.id) }}">מחק</a></button>
+</div>  <!-- container -->
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

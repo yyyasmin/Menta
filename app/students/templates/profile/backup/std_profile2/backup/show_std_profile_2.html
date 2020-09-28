@@ -1,0 +1,45 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+
+{% block show_std_profile %}
+
+<style>
+.global_table span {
+  table-layout: inherit;
+}
+</style>
+
+{% include "./profile/std_profile2/profile_style.html" %}
+
+<!-----------DEBUG -----------------
+<div> DEBUG3 -- IN show_std_profile.html --- DEBUG</div>
+
+<div> DEBUG3 -- IN show_std_profile.html --- DEBUG</div>
+<!-----------DEBUG ----------------->
+
+
+	<table id="{{part.table_color}}" style="border:0; ">
+		{% for gt in prf_parts_list if ( (gt.is_parent_of(default_tag)) and (gt.is_parent_of(default_sub_tag)) ) %}	
+			<tr style="border:10px;">
+				<div style="background-color:{{part.table_color}}+'_odd'" class="accordion" onclick="myFunction('{{gt.id}}')">
+					<p dir="rtl" id="{{part.table_color}}+'_even'">{{gt.title}}</p>
+				</div>
+
+				<div id="{{gt.id}}" class="w3-hide w3-container w3-center">
+					<p dir="rtl" id="{{part.table_color}}">{{gt.body}}</p>
+				</div>
+			</tr>			
+		{% endfor %}
+	</table>   
+	
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+{% endblock show_std_profile %}

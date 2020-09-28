@@ -1,0 +1,28 @@
+
+        
+#FROM https://youtu.be/I2dJuNwlIH0?t=583
+@std.route('/sub_tag/<tag_id>/<sub_tag_id>', methods=['GET', 'POST'])
+def add_tag_sub_tag_to_profile(id):
+            
+    print("")
+    print("")
+    print("IN sub_tag ")
+    print("tag_id: ", tag_id)
+      
+    tag = Tag.query.filter(Tag.id==tag_id).first()
+    sub_tags_array =[]
+    all_sub_tags = Sub_tag.query.all()
+    for st in all_sub_tags:
+        sub_tag_obj = {}
+        if tag.is_parent_of(st):
+            sub_tag_obj['id'] = st.id
+            sub_tag_obj['title'] = st.title
+            sub_tags_array.append(sub_tag_obj)
+            
+    print("")
+    print("")
+    print("IN sub_tag ")
+    print("sub_tags_array: ", sub_tags_array)
+        
+    return jsonify({'sub_tags': sub_tags_array})
+  

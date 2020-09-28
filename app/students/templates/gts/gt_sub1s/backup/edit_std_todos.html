@@ -1,0 +1,58 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+</style>
+
+<div> InC: C:\Users\yasmi\Documents\מנטא\app\students\templates\goals\backup\edit_std_todos.html</div>
+<div> Std todos is: {{ std_todos }}</div>
+
+<div class="container" id="container_id">	
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.try_todo_to_student_add') }}">הוסף משימה</a>
+	<strong></h5></button>
+
+	</br>
+	
+	<h2><strong><center><div>תלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>מטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>יעד:  {{ std_goal.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>רשימת משימות של התלמיד להשגת היעד:</div></center></strong></h2>
+	<p></p>	
+	
+	{% for std_todo in std_todos %}
+		<div> In loop std_todo is: {{ std_todo }}</div>
+		{% include "./goals/backup/edit_one_std_todo_form.html" %}
+	{% endfor %}
+	</br>
+
+</div>   <!-- container -->
+
+{% endblock %}

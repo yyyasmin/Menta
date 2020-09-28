@@ -1,0 +1,43 @@
+
+{% block todo_not_of_std_line_6 %}
+						
+	<td>{{ todo.id }}</td>
+	<td>{{ todo.title }}</td>
+	<td>{{ todo.body }}</td>
+	
+	<td>
+		<div id="ar_div">			
+			<input type="date" style="text-align:center" id="due_date" name="due_date{{ todo.id }}" value="{{ due_date }}">					
+		</div>   <!-- ar_div -->
+	</td>
+	
+				
+	<td>
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ todo.id }}" id="selected_status">	
+			{% for sts in statuss %}
+				{% if todo.is_parent_of(sts) %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+				{% else %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+	<td>
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="who{{ todo.id }}" id="selected_who">this.value	
+			{% for who in whos %}
+				{% if todo.is_parent_of(who) %}
+					<option value="{{ who.title }}" selected="selected">{{ who.title }}</option>
+				{% else %}
+					<option value="{{ who.title }}">{{ who.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+		
+	<td>											
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ todo.id }}">שמור</button>
+	</td>
+		
+{% endblock todo_not_of_std_line_6 %}		

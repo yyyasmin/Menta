@@ -1,0 +1,140 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% block std_gt_edit_subgts %} 
+
+<style>
+
+</style>
+
+
+
+<div class="container" id="container_id">	
+
+	<div>DEBUG:C:\Users\yasmi\Documents\מנטא\app\students\templates\profiles\std_gt_edit_subgts.html</div>
+	
+	<h3><strong><center><div><u> רשימת קטגורית פרופילים של התלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+	
+	</br>
+	
+	<h4>
+		<button class="accordion" id="green_header" ><strong> רשימת קטגורית פרופילים למטרה  {{ gt.title }}</strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">{{ gt.body }}</p>
+		</div>
+	</h4>
+
+	</br>	
+	
+	{% for subgt in std_dd_subgts %}   <!-- std existing subgts -->
+	
+		<form action="{{ url_for('students.subgt_to_student_add2', selected_student_id=std.id, selected_subgt_id=subgt.subgt_id)}}" method="POST"> 			
+	
+			</br></br>
+			
+			<h4>
+				<button class="accordion"<strong> קטגורית פרופיל:   {{ subgt.subgt.title }}</strong></button>				
+				<div class="panel">
+				  <button>תאור הקטגורית פרופיל: {{ subgt.subgt.body }}</button>
+				</div>				
+			</h4>
+			
+			</br>
+			
+			<div class="form-group">
+				<input type="date" class="form-control" id="due_date" name="due_date" value="{{ subgt.due_date.strftime('%Y-%m-%d') }}">
+			</div>
+			
+			</br>
+								
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div style="color:{{ form.status.color }}"> {{form.status.label}}: {{form.status}} </div>
+							{% if form.status.errors %}
+								<ul class=errors>
+									{% for error in form.status.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- ar_div -->
+					</li>
+		
+			</br>
+			</br>
+			
+			<button type="submit" class="btn btn-default" id="save_id">שמור</button>
+			
+			</br></br>		 
+
+		</form>
+
+	{% endfor %}    <!-- std existing subgts -->
+
+
+{% for subgt in std_no_dd %}  <!-- subgts that student doesnt have yet -->
+	
+		<form action="{{ url_for('students.subgt_to_student_add', selected_student_id=std.id, selected_profile_id=gt.id, selected_subgt_id=subgt.subgt_id)}}" method="POST"> 			
+	
+			</br></br>
+			
+			<h4>
+				<button class="accordion"<strong> קטגורית פרופיל:   {{ subgt.subgt.title }}</strong></button>				
+				<div class="panel">
+				  <button>תאור הקטגורית פרופיל: {{ subgt.subgt.body }}</button>
+				</div>				
+			</h4>
+
+			<div class="form-group">		
+				<input type="date" class="form-control" id="due_date" name="due_date" value="{{ now }}">
+			</div>
+
+			</br>
+					
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div style="color:{{ sts_color }}"> {{form.status.label}}: {{form.status}} </div>
+							{% if form.status.errors %}
+								<ul class=errors>
+									{% for error in form.status.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- ar_div -->
+					</li>
+			</br>
+			</br>
+						
+			<button type="submit" class="btn btn-default" id="save_id">שמור</button>
+			
+			</br></br>		 
+
+		</form>
+
+	{% endfor %}  <!-- subgts that student doesnt have yet -->
+	
+</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock std_gt_edit_subgts %}
+
+{% endblock %}

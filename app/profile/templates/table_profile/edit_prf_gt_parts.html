@@ -1,0 +1,250 @@
+<!-- FROM https://mdbootstrap.com/docs/jquery/tables/editable/#:~:text=Table%20editable-,Bootstrap%20table%20editable,at%20our%20Table%20editor%20plugin. -->
+{% block edit_prf_gts %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+
+.pt-3-half {
+padding-top: 1.4rem;
+}
+
+    .subject {
+      grid-area: subject;
+      background-color: #e6e6ff;
+    }
+
+    .actions {
+      grid-area: content;
+    }
+
+    .strength { 
+      grid-area: strength;
+      background-color: #66ff99;
+    }
+
+    .weakness {
+      grid-area: weakness;
+      background-color: #ff9999;
+    }
+
+    .subject_title {
+		grid-area: subject_title;
+		background-color: blue;
+    }	
+	.subject_body {
+		grid-area: subject_body;
+		background-color: blue;
+    }
+	
+	strength_title {
+		grid-area: subject_title;
+		background-color: green;
+    }
+	.strength_body {
+		grid-area: strength_body;
+		background-color: green;
+    }
+
+	.weakness_title {
+		grid-area: weakness_title;
+		background-color: red;
+    }	
+	weakness_body {
+		grid-area: weakness_body;
+		background-color: red;
+    }
+	
+
+
+//.profile-container > * {
+//      padding: 10px;
+//    }
+
+/**********************	
+.profile-container {
+	margin: 20px auto 0 auto;
+	max-width: 100%;
+	  
+	display: grid;
+	grid-template-cols: repeat(4, 1fr);
+	grid-template-rows: repeat(4, auto);
+
+	float: right;
+	dir: rtl;
+	display: grid;
+	grid-template-areas:  "subject        subject        actions        actions"
+						  "sbj_title      sbj_title      sbj_body       sbj_body"   
+						  "strength       actions        weakness       actions"   
+						  "strength_title strength_body  weakness_title weakness_body";   
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+***********************/
+
+.profile-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+</style>
+
+<div> IN table_profile\gt\backup\edit_prf_gt_parts.html </div>	
+	
+	<thead>
+	
+		<tr class="grid_table-row">
+			
+			<th class="grid_table-head subject" style="background:#e6e6ff;color:black;"><center><strong>תחומי עיניין</strong></center></th>
+			
+			<th class="grid_table-head actions"> 
+								
+				<button style="display:inline" class="btn btn-info table-add float-right" id="add_button">
+						<a href="#!" class="text-success" ><i aria-hidden="true">הוסף תחום עיניין</a>			
+				</button>
+			
+				<button style="display:inline" class="btn btn-success" type="submit" name="save_prf_part_btn" id="add_button">
+						<a href="#!" class="text-success">שמור</a>			
+				</button>
+				
+			</th>
+		
+		</tr>
+						
+		<tr class="grid_table-row">							
+			<th class="grid_table-head subject_title" style="background:blue; color:white;">כותרת</th> 
+			<th class="grid_table-head subject_body"  style="background:blue; color:white;">תאור</th> 
+		</tr>
+		
+	</thead>
+	
+	<tbody>
+	
+		{% for gt in prf_parts_list if (gt.is_parent_of(sub_tag)) %}	
+		
+			<tr class="grid_table-row">
+				<td class="grid_table-cell">{{ gt.title }}</td> 				
+				<td class="grid_table-cell">{{ gt.body }}</td> 				
+				<td class="grid_table-cell">					
+					{% include "./table_profile/edit_prf_gt.html" %}																		
+				</td>									
+			</tr>
+			
+		{% endfor %}
+		
+		<tr class="hide">			
+			<td class="grid_table-cell"></td>
+			<td class="grid_table-cell" contenteditable="true">כותרת</td> 
+			<td class="grid_table-cell" contenteditable="true">תאור</td>
+			<td class="grid_table-cell">					
+				<button class="table-remove btn btn-danger btn-xs" id="delete_id">מחק</button>		
+			</td>													
+		</tr>
+		
+	</tbody>
+	
+
+
+<script>
+
+const $tableID = $('#table');
+ const $BTN = $('#export-btn');
+ const $EXPORT = $('#export');
+
+ const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half">
+    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+  </td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
+
+ $('.table-add').on('click', 'i', () => {
+
+   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+   if ($tableID.find('tbody tr').length === 0) {
+
+     $('tbody').append(newTr);
+   }
+
+   $tableID.find('table').append($clone);
+ });
+
+ $tableID.on('click', '.table-remove', function () {
+
+   $(this).parents('tr').detach();
+ });
+
+ $tableID.on('click', '.table-up', function () {
+
+   const $row = $(this).parents('tr');
+
+   if ($row.index() === 0) {
+     return;
+   }
+
+   $row.prev().before($row.get(0));
+ });
+
+ $tableID.on('click', '.table-down', function () {
+
+   const $row = $(this).parents('tr');
+   $row.next().after($row.get(0));
+ });
+
+ // A few jQuery helpers for exporting only
+ jQuery.fn.pop = [].pop;
+ jQuery.fn.shift = [].shift;
+
+ $BTN.on('click', () => {
+
+   const $rows = $tableID.find('tr:not(:hidden)');
+   const headers = [];
+   const data = [];
+
+   // Get the headers (add special header logic here)
+   $($rows.shift()).find('th:not(:empty)').each(function () {
+
+     headers.push($(this).text().toLowerCase());
+   });
+
+   // Turn all existing rows into a loopable array
+   $rows.each(function () {
+     const $td = $(this).find('td');
+     const h = {};
+
+     // Use the headers from earlier to name our hash keys
+     headers.forEach((header, i) => {
+
+       h[header] = $td.eq(i).text();
+     });
+
+     data.push(h);
+   });
+
+   // Output the result
+   $EXPORT.text(JSON.stringify(data));
+ });
+ 
+</script>
+ 
+ 
+{% endblock edit_prf_gts %}

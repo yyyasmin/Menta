@@ -1,0 +1,51 @@
+
+{% block strengths_not_of_std %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+
+{% include "./profile/profile_style.html" %}
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('strengthes.strength_add') }}">צור חוזקה חדשה עבור הילד:</a>
+<strong></h5></button>
+
+</br>
+
+  <center><h3>בחר חוזקה מהרשימה והוסף אותה לילד:    {{ student.first_name }} {{ student.last_name }}</h3></center>
+  
+  <div>
+  
+	    {% for strength in strengthes %}	 
+						
+			<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.match_strength_to_std_profile2', selected_strength_id=strength.id) }}">הוסף חוזקה זו לפרופיל הילד</a></button>				   		
+			<button class="accordion">כותרת חוזקה: {{ strength.title }}</button>
+			<div class="panel">
+			  <button>תאור החוזקה: {{ strength.body }}.</button>				
+			</div>
+			
+		{% endfor %}
+
+ </div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

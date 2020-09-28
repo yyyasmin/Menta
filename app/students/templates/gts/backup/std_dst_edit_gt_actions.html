@@ -1,0 +1,59 @@
+{% block std_gt_subgt_actions %}
+
+	<div>IN std_gt_edit_subgt_actions.html</div>
+    <form role="form" method="POST" action="{{ url_for('students.subgt_to_profile_of_student_add2',
+													selected_student_id=std.id,
+													selected_profile_id=gt.id , 
+													selected_subgt_id=subgt.id) }}"> 
+													
+	<button type="submit" class="btn btn-default" style="background-color:lightgreen;">הוסף קטגורית פרופיל זה לתלמיד</button>
+
+	<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('students.show_student_tree2', selected_student_id=std.id) }}">הצג עץ מטרות</a></button>
+
+
+	<button class="btn btn-danger btn-xs" style="background-color:#ff4d4d"><a href="{{ url_for('students.subgt_from_profile_of_student_delete2', selected_student_id=std.id, selected_profile_id=gt.id, selected_subgt_id=subgt.id) }}">מחק</a></button>		
+	<button class="accordion">{{ subgt.title }}</button>
+	
+	<div class="panel">
+	  <p class="ppp" id="subgt_ppp">{{ subgt.body }}</p>
+	</div>
+		
+	</br>				
+			
+	<strong>:סטאטוס</strong>		
+	<select class="select" name="selected_status" id="selected_status">	
+		{% if std.subgts != None %}
+			{% for std_subgt in std.subgts %}
+				{% if std_subgt.subgt_id == subgt.id %}
+					<option value="{{ subgt.subgt.status }}" selected="selected">{{ subgt.subgt.status }}</option>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+		<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+		<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+	</select>
+
+	</br>
+			
+	   <label for="due_date">תאריך קטגורית פרופיל</label>
+
+		{% if std.subgts != [] %}
+				<div>in std.subgts = {{ std.subgts }}</div>
+			{% for std_subgt in std.subgts %}
+					std_subgt.subgt_id {{ std_subgt.subgt_id }}
+				{% if std_subgt.subgt_id == subgt.id %}
+				in std_subgt.subgt_id == subgt.id 
+					<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ std_subgt.due_date.strftime('%Y-%m-%d') }}">
+				{% else %}
+					<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ now }}">
+				{% endif %}
+			{% endfor %}					
+		{% else %}
+			<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ now }}">
+		{% endif %}				
+		
+	</br>
+	</form>
+
+{% endblock std_gt_subgt_actions %}		

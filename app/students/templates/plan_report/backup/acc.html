@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+button.accordion {
+    background-color: yellow;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 90%;
+    border: solid;
+    text-align: right;
+    outline: solid;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+div.panel {
+    background-color: green;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 90%;
+    border: solid;
+    text-align: right;
+    outline: solid;
+    font-size: 15px;
+    transition: 0.4s;
+}
+</style>
+
+
+
+<div class="w3-container" style="background-color:yellow text-align:right" lang="he" dir="rtl">
+		
+	{% for tag in tags %}  <!-- Tags -->
+	<button onclick="myFunction('{{ tag.id }}')" class="w3-button w3-block w3-yellow w3-right-align">
+		<button class="accordion" style="background-color:yellow text-align:right" lang="he" dir="rtl">
+			<div  style="background-color:orange text-align:right" lang="he" dir="rtl">
+				נושא: {{ tag.title }} 
+			</div>
+		</button>
+		<div class="panel" style="background-color:yellow text-align:right" lang="he" dir="rtl">
+		  <button> תאור נושא: {{ tag.body }} </button>				
+		</div>
+		
+		</br>
+		
+	</button>
+
+	<div id="{{ tag.id }}" class="w3-hide w3-border">
+	
+		<ul class="w3-ul" style="background-color:red text-align:right" lang="he" dir="rtl">
+		
+			<li>Calling include:  destinations for tag {{ tag.title }} </li>
+
+			{% for dst in tag.destinations %}  <!-- Tag Destinations -->
+				<li>
+						{% include "./plan_report/backup/acc_1.html" %}
+				</li>
+			{% endfor %}  <!-- Tag Destinations -->
+
+		</ul>  
+	</div>
+	
+
+	{% endfor %}  <!-- Tags -->
+
+</div>
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

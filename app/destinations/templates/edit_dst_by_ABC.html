@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=1) }}">הוסף מטרה</a>
+	<strong></h5></button>
+	</br>
+
+	<h2><center>רשימת מטרות לפי סדר א-ב</center></h2>	
+		
+		{% for dst in destinations %}
+			{% with from_dst_sort_order=1 %}	
+				{% include "./sub_forms/edit_one_dst_form.html" %}
+			{% endwith %}
+		{% endfor %}  <!-- destinations -->
+
+ </div>   <!-- container -->
+
+{% endblock %}

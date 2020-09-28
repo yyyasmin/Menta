@@ -1,0 +1,52 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+{% block edit_prf_gt_parts12 %}
+
+<style>
+.global_table span {
+  table-layout: inherit;
+}
+</style>
+
+
+	<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
+						
+					<!-- Modal Add Part -->
+	<div id="{{sub_tag.id}}_{{part.class_name}}" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body" style="align:center; float:center">
+				
+					<div class="modal-body" id="{{sub_tag.id}}">
+						<p>נושא:    {{tag.title}}</p>
+						<p>תת נושא: {{sub_tag.title}}</p>
+					</div>	
+			
+					<form method="post" action="{{ url_for('students.std_part_to_prf_add2',
+												            tag_id=tag.id, sub_tag_id=sub_tag.id, dsply_direction=1) }}">
+						<div class="form-group">
+							<label>{{part.h_name}}</label>
+							<input type="title" class="form-control" name="gt_title" required="1">
+						</div>
+						
+						<div class="form-group">
+							<label>תאור</label>
+							<input type="text" class="form-control" name="gt_body" required="1">
+						</div>
+						
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit" name="class_name" 
+							value="{{part.class_name}}">שמור</button>
+						</div>
+					</form>
+					
+				</div>
+					
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock edit_prf_gt_parts12 %}

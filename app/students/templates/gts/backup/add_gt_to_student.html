@@ -1,0 +1,54 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+</style>
+
+	<h2>
+		<button class="accordion" id="student_header">תלמיד {{ student.first_name }} {{ student.last_name }} רשימת המטרות של</button>
+		<div class="student_panel" >
+			<p class="ppp">פרטי התלמיד: ID: {{ student.id }}  GRADE: {{ student.grade }} .</p>
+		</div>
+	</h2>
+	
+	<div class="container" id="container_id">	
+		<h3>הוסף מטרה</h3>
+
+		<form role="form" method="POST" profile='' > 
+			
+			<div class="form-group">
+				<label for="title">פרופילת המטרה</label>
+				<input type="title" class="form-control" name="title">
+			</div>
+			 
+			<div class="form-group">
+				<label for="text">תאור המטרה</label>
+				<input type="text" class="form-control" name="description">
+			</div>
+			
+			</br>					 
+			<button type="submit" class="btn btn-default">שמור</button>		
+		
+		</form>
+	</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% block student_background %}
+
+<style>
+
+.textareaContainer {	
+	align: center;
+	text-align:right;
+	width: 100%;
+
+}
+  
+textarea { 
+	border: 3px solid #555c;	
+	//align: center;
+	text-align:right;
+	width: 100%;
+	
+	
+}
+ 
+ </style>
+ 
+	<h3><strong><div>רקע</div></strong></h3>
+
+	<label class="textareaContainer">
+		<textarea class="form-control" class="autoExpand" rows="10" id="std_background" name="text" 
+			value="{{ student.background }}" style="font-family:David; font-size:20px">
+			{{ student.background }}					  		
+		</textarea>
+	</label>
+
+{% endblock %}

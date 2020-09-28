@@ -1,0 +1,35 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="title">כותרת</label>
+		  <input type="title" class="form-control" id="title"  name="title" value="{{ scrt.title }}">
+		</div> 
+		
+		<div class="form-group">
+		  <label for="body">תאור</label>
+		  <input type="title" class="form-control" id="title"  name="body" value="{{ scrt.body }}">
+		</div>  
+				
+		<div class="form-group">
+		  <label for="from_age">החל מגיל</label>
+		  <input type="title" class="form-control" id="from_age"  name="from_age" value="{{ scrt.from_age }}">
+		</div> 
+		
+		<div class="form-group">
+		  <label for="to_age">עד גיל</label>
+		  <input type="title" class="form-control" id="to_age"  name="to_age" value="{{ scrt.to_age }}">
+		</div>  
+		
+		</br>		 
+		<button type="submit" class="btn btn-default">שמור</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

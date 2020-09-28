@@ -1,0 +1,13 @@
+	{% for std_goal in std_txts if ( goal.id == std_goal.general_txt_id ) %}
+		{% for sts in statuss if (sts.id == std_goal.status_id) %}
+			nodeDataArray.push(
+			{
+				key: j,
+				//color:  go.Brush.randomColor(),
+				color: nodeDataArray[i].color,
+				color2: '{{ sts.color }}',
+				name: 'יעד: {{ goal.title }} \n\n' ,
+				status: 'סטאטוס: {{ sts.title }}',	
+			} );
+		{% endfor %}
+	{% endfor %}

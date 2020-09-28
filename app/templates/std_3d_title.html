@@ -1,0 +1,58 @@
+{% block std_3d_title %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right: 10%;
+
+}
+</style>
+
+</br>
+
+	<center><table style="width:80%">
+		<tr id="header_row">			
+			<th>תז</th>
+			<th>שם פרטי</th>
+			<th>שם משפחה</th> 
+			<th>כיתה</th>
+			<th></th>
+		</tr>
+			
+		<tr>
+			<td>{{ student.id }}</td>
+			<td>{{ student.first_name }}</td>
+			<td>{{ student.last_name }}</td> 
+			<td>{{ student.grade }}</td>
+			<td>
+				{% include "std_3d_actions.html" %}
+			</td>
+		</tr>
+			
+	</table></center>
+	
+
+{% endblock std_3d_title %}

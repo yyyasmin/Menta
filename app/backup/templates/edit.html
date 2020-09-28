@@ -1,0 +1,32 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Edit Your Strengthfile</h1>
+  <form profile="" method="student" name="edit">
+      {{form.hidden_team_member()}}
+      <table>
+		  
+        <tr>
+			<td><p><div>            
+					<label for="text">Your username:</label>
+					<input type="text" class="form-weaknessetrol" name="username" id="username">
+			</div></p></td>
+        </tr>
+		
+        <tr>
+			<div class="form-group">
+			<td><p><div>            
+				<dl>
+					<dt>Add your student::
+					<dd><textarea name=text rows=10 cols=50></textarea>
+                </dl>
+			</div></p></td>
+			</div>
+	  
+        <tr>
+            <td><p><input type="submit" value="Submit"></p></td>
+        </tr>
+      </table>
+  </form>
+{% endblock %}

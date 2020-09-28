@@ -1,0 +1,76 @@
+{% block profile_style %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+	
+	
+}table {
+    border-collapse: separate;
+    width: 100%;
+	vertical-align: top;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+	vertical-align: top;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+	vertical-align: top;
+}
+
+table, th, td  {
+    border: 1px solid black;
+	text-align: center;
+	vertical-align: top;
+}
+
+table#subjects_table tr:nth-child(even) { background-color:#0088cc;  }
+table#subjects_table tr:nth-child(odd)  { background-color:#cceeff;  }
+
+table#strengthes_table tr:nth-child(even) { background-color:#00ff00;  }
+table#strengthes_table tr:nth-child(odd)  { background-color:#ccffcc;  }
+
+table#weaknesses_table tr:nth-child(even) { background-color:#ff0000; }
+table#weaknesses_table tr:nth-child(odd)  { background-color:#ffb3b3; }
+
+</style>
+
+{% endblock profile_style %}

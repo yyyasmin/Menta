@@ -1,0 +1,25 @@
+{% block student_details %}
+
+	<h3><strong><div>פרטי התלמיד</div></strong></h3>
+	
+	<table class="yellow_table">
+	
+	<tr>
+		<th>תז</th>
+		<th>שם</th>
+		<th>כיתה</th>
+		<th>תאריך לידה</th>
+		<th>נוצר בתאריך</th>
+	</tr>
+	
+	<tr>
+		<td>{{ student.id }}</td>
+		<td>{{ student.first_name }}  {{ student.last_name }}</td>
+		<td>{{ student.grade }}</td>
+		<td>{{ student.birth_date }}</td>
+		<td>{{ student.registered_on }}</td>
+	</tr>	
+		
+	</table>
+	
+{% endblock %}

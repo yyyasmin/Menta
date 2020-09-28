@@ -1,0 +1,149 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style type="text/css">
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+input {
+	width: 100%;
+}
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+
+</style>
+
+<div class="container" id="container_dst_add_id">	
+
+	<!-- FROM https://www.tutorialspoint.com/flask/flask_wtf.htm -->		
+	<!-- <div style = "font-size:20px; font-weight:bold;  float:right; text-align:center; width:100%"> -->
+	<div style = "text-align:center; width:100%">
+		<fieldset>
+			<form method="post" action="{{ url_for('profile.gt_profile_update2',selected_profile_id=prf.id, selected_gt_id=gt.id) }}">
+				<div>
+					<legend> עדכן {{ gt.gt_type_txt }} </legend>
+					{{ form.hidden_tag() }}
+				</div>
+					
+				{{ form.csrf_token }}
+				
+			<div class="form-group">
+				<label for="gt_title">כותרת ה {{ gt.gt_type_txt }}  </label>
+				<input type="title" class="form-control" name="gt_title" value="{{ gt.title }}">
+			</div>
+			 
+			<div class="form-group">
+				<label for="gt_body">תאור ה{{ gt.gt_type_txt }}:</label>
+				<input type="textarea" class="form-control" name="gt_body" value="{{ gt.body }}">
+			</div>
+				{{ form.csrf_token }}
+
+				<br><br>
+				
+				<ul class="tabs">
+													
+					<li class="tab " id="tab-3"><span class="tab-title">
+						<div id="tag_div">
+							<div> {{form.tag.label}}: {{form.tag}} </div>
+							{% if form.tag.errors %}
+								<ul class=errors>
+									{% for error in form.tag.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- tag_div -->
+					</li>
+							
+				</ul>
+
+				<br><br>
+				
+
+				
+				<br><br>
+				
+				<div id="submit_button"> {{ form.submit }} </div>
+				
+				<br>
+				
+			</form>
+		</fieldset>
+	</div>
+	<!-- FROM https://www.tutorialspoint.com/flask/flask_wtf.htm -->					
+
+</div>  <!-- class="container -->
+
+
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+<script>
+	var ar_select = document.getElementById("ar");
+	var tag_select = document.getElementById("tag");
+
+	ar_select.onchange = function()  {
+		 
+		ar = ar_select.value;
+		
+		fetch('/tag/' + ar).then(function(response) {
+
+			response.json().then(function(data) {
+				var optionHTML = '';
+
+				for (var tag of data.tags) {
+					optionHTML += '<option value="' + tag.id + '">' + tag.title + '</option>';
+				}
+
+				tag_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+
+<script>
+	vtag tag_select = document.getElementById("tag");
+	vtag scrt_select = document.getElementById("scrt");
+
+	tag_select.onchange = function()  {
+		 
+		tag = tag_select.value;
+		
+		fetch('/scrt/' + tag).then(function(response) {
+
+			response.json().then(function(data) {
+				vtag optionHTML = '';
+
+				for (vtag scrt of data.scrts) {
+					optionHTML += '<option value="' + scrt.id + '">' + scrt.title + '</option>';
+				}
+
+				scrt_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+
+
+{% endblock %}

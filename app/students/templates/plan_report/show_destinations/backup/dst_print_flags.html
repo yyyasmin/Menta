@@ -1,0 +1,7 @@
+	
+	{% set dp_ns = namespace(dst_printed=False) %}
+	{% set ns =    namespace(exist_goal=False) %}
+	{% if dp_ns.dst_printed == False %}
+		{% set dp_ns.dst_printed = True %}
+	{% endif %}
+	{% set dp_ns.dst_printed = False %}

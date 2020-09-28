@@ -1,0 +1,35 @@
+{% block todo %}		
+
+	{% for todo in student_todos if( goal.is_parent_of(todo) and todo.is_parent_of(who) ) %}  <!-- TODOS COLUMN -->
+		
+		{% for who in whos if( todo.is_parent_of(who) ) %}
+			{% set w_ns.who_printed = False %}
+
+			{% if w_ns.who_printed == False %}
+				<div><strong>TD5 {{ who.title }}</strong></div>
+				{% set w_ns.who_printed = True %}
+			{% endif %}	
+		
+			<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+				משימה: {{ todo.title }}  TD5 
+																					
+				{% for sts in statuss %}	
+					{% for st in std_txts %}
+						{% if st.general_txt_id==todo.id %}
+							{% if st.status_id==sts.id %}
+								<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endfor %}				
+			</div>
+					
+			<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+				<div></div>{{todo.body}}
+			</div>
+			
+		{% endfor %}  <!-- WHOS -->	
+		
+	{% endfor %}  <!-- TODOS -->		
+
+{% endblock todo %}		

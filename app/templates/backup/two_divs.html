@@ -1,0 +1,140 @@
+<style>
+* {
+	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-size: 100%;
+  font-family: sans-serif;
+}
+
+section {
+	height: 100vh;
+	background: url(https://cdn.pixabay.com/photo/2018/01/22/13/07/sea-3098951_1280.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+    background-position: center center;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+	height: 18%;
+	box-shadow: 0 5px 15px rgba(0,0,0,.2);	
+}
+
+.logo img {
+   margin-left: 2.3em;
+   max-width: 100%;
+   height: auto !important;
+}
+
+ nav ul {
+	display: flex;
+    flex-flow: nowrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	transition: .5s;
+    list-style-type: none;
+}
+
+ul li a {
+	padding: 10px 20px;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #262625;
+	font-weight: bold;
+    transition: .5s;
+}
+
+ul li a:hover {
+	background: #000;
+	color: #fff;
+    transition: .5s
+}
+
+.menu-trigger {
+    display:none;
+    margin-right: 1.5em;
+	background: #D56287;
+    color: #fff;
+    padding: 5px;
+	cursor: pointer;
+	font-weight: bold;
+    text-decoration: none;
+}
+
+@media screen and (max-width:816px) {
+	
+     .menu-trigger {
+    display:block;
+  }
+  
+    header {
+	display: flex;
+	align-items: flex-start;
+	height: 65%;
+	
+	
+    }
+  
+    nav ul {
+    display:block;
+	
+	
+	}
+	
+	ul li {
+    width: 50vh;
+	
+	}
+   
+    ul li a {
+        display: block;
+		/* text-align: center; */
+		color: #ffff;
+		background: rgba(0,0,0,.5);
+        
+	}
+  
+}
+
+@media (max-width: 359px)
+{
+	.logo img {
+       margin-left: 0.1em;
+       
+}
+	
+    
+}
+
+</style>
+
+
+    <body>
+      <section>
+        <header>
+            <div class="logo">
+		      <a href="#"><img src="https://secure.gravatar.com/avatar/fabdb283fe15708440314fae08b0e7a1?s=60&d=retro&r=g"></a>
+            </div>
+            <nav>
+		    <ul>
+			    <li><a href="#">Главная</a></li>
+				<li><a href="#">Поиск</a></li>
+				<li><a href="#">Услуги</a></li>
+				<li><a href="#">Новости</a></li>
+				<li><a href="#">Фото</a></li>
+				<li><a href="#">Правила</a></li>
+			</ul>
+            </nav>
+            <div class="menu">
+               <a href="#" class="menu-trigger">Меню</a>
+            </div>
+         </header>			
+      </section>
+    </body>

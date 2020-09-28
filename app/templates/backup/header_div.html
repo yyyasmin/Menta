@@ -1,0 +1,20 @@
+			<div style="margin: 0 auto;">
+
+			<center><strong>
+				<h2 class="pull-center" style="color:green; 
+							vertical-align:top; padding: 20px;  display:inline-block;
+							margin-top:0;">
+					<center><strong>מנט"א - מערכת ניהול טיפול אישי</strong></center>
+				</h2>
+			</strong></center>
+				
+				<h3 class="pull-right"  
+					style="color:blue;
+							vertical-align:top; display:inline-block; float:right; 
+							margin-top:0; margin-bottom:20%;">
+					{% if current_user.is_authenticated %}
+						 שלום {{ current_user.username }}!
+					{% endif %}				
+				</h3>
+				
+			</div>

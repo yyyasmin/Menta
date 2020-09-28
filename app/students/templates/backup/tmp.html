@@ -1,0 +1,25 @@
+	<table style="width:100%">		
+		{% for goal in destination.goals %}	
+
+		<form   method="POST" action="{{ url_for('students.goal_to_destination_of_student_add2', selected_student_id=student.id, selected_destination_id=destination.id, selected_goal_id=goal.id) }}">	
+			<table>
+			<tr>
+				<td>
+					<h4>
+						<button class="accordion" id="goal_header" >goal's title: {{ goal.title }}</button>
+						<div class="panel" id="goal_decription">
+						  <p class="ppp" id="goal_ppp">goal description: {{ goal.body }}.</p>
+						</div>
+					</h4>				
+				</td>
+				
+				<td>
+				<button class="btn btn-danger btn-xs"><a href="{{ url_for('students.goal_to_destination_of_student_add2', selected_student_id=student.id, selected_destination_id=destination.id, selected_goal_id=goal.id) }}">Add</a></button>
+				<button class="btn btn-danger btn-xs"><a href="{{ url_for('students.goal_from_destination_of_student_delete2', selected_student_id=student.id, selected_destination_id=destination.id, selected_goal_id=goal.id) }}">delete</a></button>
+				</td>
+				
+			</tr>
+\		</form>	
+		{% endfor %}
+	</table>
+	

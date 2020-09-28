@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    goaltent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    goaltent: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#destination_header.accordion {
+		color: #fff;
+		background-color: #346767;
+		border-color: #EEEEEE;
+		font-size: 18px;
+}
+
+#goal_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+#goal_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+	font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+	<h2><strong><center><div>Student's {{ student.first_name }}, {{ student.last_name }} destination's goals </div></center></strong></h2>
+	<h4>
+		<button class="accordion" id="destination_header" >goals list for Destination: {{ destination.title }}</button>
+		<div class="panel" id="destination_decription">
+		  <p class="ppp">destination description: {{ destination.body }}.</p>
+		</div>
+	</h4>
+	<p></p>
+				
+	{% for goal in destination.goals %}
+			<br><br>						
+			<button class="btn btn-warning btn-xs" ><a href="{{ url_for('goals.goal_update', selected_goal_id=goal.id) }}">Edit</a></button>			
+			<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('students.show_student_tree2', selected_student_id=student.id) }}">Show Student's tree</a></button>
+			<button class="btn btn-danger btn-xs"  ><a href="{{ url_for('destinations.goal_from_destination_delete2', selected_destination_id=destination.id, selected_goal_id=goal.id) }}">Delete</a></button>		
+			<h4>
+				<button class="accordion" id="goal_header" >goal's title: {{ goal.title }}</button>
+				<div class="panel" id="goal_decription">
+				  <p class="ppp" id="goal_ppp">goal description: {{ goal.body }}.</p>
+				</div>
+			</h4>
+	{% endfor %}
+	
+		<center><h2><button class="btn btn-info btn-xs"  ><a href="{{ url_for('destinations.goal_to_destination_add2', selected_destination_id=destination.id) }}">Add new goal</a></button></h2></center>
+  </div>
+  <br><br><br>
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

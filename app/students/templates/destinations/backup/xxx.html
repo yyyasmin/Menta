@@ -1,0 +1,128 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+
+</style>
+
+
+	<button onclick="myFunction('Categories')" class="w3-button w3-block w3-right-align">
+		<h3><strong>נושאים</strong></h3>
+	</button>
+		
+	<div id="Categories" class="w3-hide">
+		<ul class="w3-ul">
+			{% for tag in tags %}  <!-- Tags -->	
+				<li>
+					<button onclick="myFunction('{{ tag.id }}')" class="w3-button w3-block w3-right-align">
+						<button class="accordion" id="header_panel"> נושא: {{ tag.title }}</button>
+						<div class="panel">
+						  <p class="ppp"> תאור נושא: {{ tag.body }}</p>				
+						</div>
+						</br>
+					</button>
+					
+					<div id="{{ tag.id }}" class="w3-hide">
+						<ul class="w3-ul">
+								
+							{% for dst in tag.destinations %}
+							
+							</br>
+							<button onclick="myFunction('{{ dst.id }}')" class="w3-button w3-block w3-right-align">
+								<button class="accordion" id="blue_header"> מטרה: {{ dst.destination.title }} </button>
+								<div class="panel">
+									<p class="blue_ppp"> תאור מטרה: {{ dst.destination.body }} </p>				
+								</div>
+							</button>
+							{% for goal in dst.destination.goals %}  <!-- Destination Goals -->	
+									<div> NEW TEST </div> 
+								{% endfor %}  <!-- goals -->
+							<div id="{{ dst.id }}" class="w3-hide">
+								<ul class="w3-ul">
+								<div>SOPUSED TO SHOW</div>
+								{% for goal in dst.destination.goals %}  <!-- Destination Goals -->	
+									<div> 222222222222222222222 </div> 
+								{% endfor %}  <!-- goals -->
+								</ul>
+							</div>	
+							{% endfor %}  <!-- dst -->
+						</ul>
+					</div>										
+				</li>
+			{% endfor %}  <!-- Tags -->	
+		</ul>
+	</div>
+
+
+<!-- FROM https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_accordion_lists   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+<script>
+function myFunctionDst(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

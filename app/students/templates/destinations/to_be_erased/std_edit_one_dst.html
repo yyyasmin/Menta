@@ -1,0 +1,63 @@
+{% block std_edit_one_dst %}
+
+<style>
+
+div.panel {
+    max-height: 0;
+    <!-- overflow: hidden;  -->
+    transition: max-height 0.2s ease-out;
+}
+
+button.accordion {     <!-- destinations list title pane -->
+    color: #444;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.4s;
+    transition: max-height 0.2s ease-out;
+	margin-left: 50%;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+</style>
+
+	</br>			
+	{% include "./destinations/std_edit_dst_actions.html" %}
+	
+	<button class="accordion">מטרה: {{ dst.title }}</button>
+	
+	<div class="panel">
+	  <button>{{ dst.body }} תאור המטרה:</button>				
+	</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

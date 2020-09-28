@@ -1,0 +1,114 @@
+{% extends "layout.html" %} 
+
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+{% block content %}
+
+{% include "./profile/profile_style.html" %}
+
+<div> IN C:\Users\yasmi\Documents\מנטא\app\students\templates\profile\edit_students_profile.html </div>
+	
+<div class="container">	
+
+	<center><h1>פרופיל:  <span style="blue"> נושאים </span> חוזקות <span style="green"></span> ו <span style="red"> חולשות </span></h1></center>
+
+	<table style="width:100%">
+	
+		<tr>			
+			<th style="color:blue"><strong>תחומי עיניין</strong></th>
+			<th style="color:green"><strong>חוזקות</strong></th>
+			<th style="color:orange"><strong>חולשות</strong></th> 
+		</tr>
+		
+
+
+
+		<td>
+			<table id="subjects_table" style="width:100%">
+				{% for sbj in profile.subjects %}	
+					<tr><td>					
+						<button style="background-color:green; color:white" class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.subject_from_std_profile_delete2', selected_subject_id=sbj.id) }}">הסר תחום עיניין זה מפרופיל התלמיד</a></button>			
+						<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('subjectes.subject_update', selected_subject_id=sbj.id) }}">ערוך</a></button>			
+						
+						<button class="accordion">תחום עיניין  {{ sbj.title }} </button>
+						<div class="panel">
+						  <button>תאור תחום עיניין:  {{ sbj.body }}.</button>				
+						</div>						
+					</td></tr>	
+				{% endfor %}	
+					
+				<tr><td>
+					<center><button class="btn btn-warning btn-xs" ><a style="background-color:lightblue; color:black" href="{{ url_for('students.subject_to_std_profile_add') }}">הוסף תחום עיניין לתלמיד מתוך רשימה</a></button></center>			
+				</tr></td>				
+			
+			</table>
+		</td>
+
+		<td>
+			<table id="strengthes_table" style="width:100%">
+				{% for strn in profile.strengthes %}
+				
+					<tr><td>
+						<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.strength_from_std_profile_delete2', selected_strength_id=strn.id) }}">הסר נקודת כח זו מפרופיל התלמיד</a></button>			
+						<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('strengthes.strength_update', selected_strength_id=strn.id) }}">ערוך</a></button>			
+						
+						<button class="accordion">נקןדת כח:  {{ strn.title }} </button>
+						<div class="panel">
+						  <button>תאור נקודת כח:  {{ strn.body }}.</button>				
+						</div>	
+					</td></tr>
+					
+				{% endfor %}
+				
+				<tr><td>
+					<button class="btn btn-warning btn-xs" ><a style="background-color:#99ff99; color:black" href="{{ url_for('students.strength_to_std_profile_add') }}">הוסף נקודת כח לתלמיד מתוך רשימה</a></button>		
+				</tr></td>				
+					
+			</table>
+		</td>
+
+		<td>
+			<table id="weaknesses_table" style="width:100%">
+				{% for wkns in profile.weaknesses %}
+				
+					<tr><td>
+				
+					<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.weakness_from_std_profile_delete2', selected_weakness_id=wkns.id) }}">הסר חולשה זו מפרופיל התלמיד</a></button>			
+					<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('weaknesses.weakness_update', selected_weakness_id=wkns.id) }}">ערוך</a></button>			
+					
+					<button class="accordion">חולשה: {{ wkns.title }} </button>
+					<div class="panel">
+					  <button>תאור חולשה:  {{ wkns.body }}.</button>				
+					</div>
+					
+				{% endfor %}
+				
+				<tr><td>
+					<center><button class="btn btn-warning btn-xs" ><a style="background-color:red; color: black" href="{{ url_for('students.weakness_to_std_profile_add') }}">הוסף חולשה לתלמיד מתוך רשימה</a></button></center>			
+				</tr></td>
+			
+			</table>
+		</td>
+
+
+	</table>
+</div>		<!-- class="container -->
+
+
+<!-- From https://www.w3schools.com/w3css/w3css_accordions.asp   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+	x.className += " w3-show";
+  } else { 
+	x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+<!-- From https://www.w3schools.com/w3css/w3css_accordions.asp   -->
+
+{% endblock %}

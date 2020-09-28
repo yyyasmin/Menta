@@ -1,0 +1,6 @@
+{% for sub_tag in sub_tags if  ( tag.is_parent_of(sub_tag)
+									   and sub_tag!= all_sub_tag 
+									   and (   sub_tag in prf_subjects.children 
+											or sub_tag in prf_strengths.children 
+											or sub_tag in prf_weaknesses.children) ) %}
+			

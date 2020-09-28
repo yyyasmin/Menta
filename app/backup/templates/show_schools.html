@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+</style>
+
+<h1> show_schools</h1>
+<h2><center>Schools:</center></h2>
+
+	<table style="width:100%">
+		<tr>			
+			<th> School id </th>
+			<th> School name </th>
+			<th> actions </th>
+		</tr>
+			
+		{% for school in schools %}			
+			<tr>
+				<td>{{ school.id }}</td>
+				<td>{{ school.name }}</td>
+				<td>
+					<button class="btn btn-warning btn-xs" ><a href="{{ url_for('school_update', selected_school_id=school.id) }}">Edit details</a></button>
+					<button class="btn btn-warning btn-xs" ><a href="{{ url_for('edit_school_teachers2', selected_school_id=school.id, selected_teacher_id=0) }}">Staff team</a></button>
+					<button class="btn btn-warning btn-xs" ><a href="{{ url_for('edit_school_students2', selected_school_id=school.id, selected_student_id=0) }}">Students</a></button>				
+				</td>
+			</tr>			
+		{% endfor %}
+	</table>
+	<h2><center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('school_add') }}">Add new School</a></button></center></h2>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
+<style>
+.container {
+			padding-top: 50px;
+		}
+
+
+</style>
+
+
+<div class="container">
+    <input type="hidden" value="hotdogs" id="firstValue" />
+    <input type="hidden" value="hamburgers" id="secondValue" />
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#theModal">Open Modal</button>
+</div>
+<div class="modal fade" role="dialog" id="theModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">This is the modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>This is the modal content. Below are the values passed to the modal:</p>
+                <label>1<sup>st</sup>:</label>
+                <span id="first"></span>
+                <br>
+                <label>2<sup>nd</sup>:</label>
+                <span id="second"></span>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-close btn-block" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+$(function() {
+    $("button").on("click", function() {
+        var firstValue = $("#firstValue").val();
+        var secondValue = $("#secondValue").val();
+        $("#first").text(firstValue);
+        $("#second").text(secondValue);
+    });
+});
+
+</script>

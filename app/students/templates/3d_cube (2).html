@@ -1,0 +1,483 @@
+{% block three_d_cube %}
+
+<script type="text/javascript">
+
+	//var _DEBUG = false;
+	var PLAY_FIELD = [800, 600, 800];
+	var SCREEN_DEPTH = 300; // Distance from the "eye" to the screen.
+	var EYE = [400, 300];
+	var LIGHT_SOURCE = [0, 0, 200];
+	var REFRESH_RATE = (1 / 30) * 1000;
+	var G = 3;
+	var DAMP = 1;
+	var LIGHTING = true;
+	var DRAW_NORMALS = false;
+	var DRAW_LIGHT = false;
+	var ROTATION_DAMPING = .03;
+	var MOUSE_ROTATION = 1/80;
+
+	var calcThread;
+	var drawThread;
+	var ball;
+	var sqr;
+	var cube;
+	var lastMX, lastMY, mX, mY, mDown = false, auto = true;
+	var readyToDraw = true;
+	var readyToCalc = false;
+
+	window.onload = function() {
+		canvasy = Raphael(document.getElementById("canvas"), 1000, 700);
+
+		init('cube');
+		var butt = document.getElementById("goraphaelsource");
+		butt.style.visibility="visible";
+		
+	}
+
+	function printQuad(q) {
+		return printPt(q[0]) + "<br/>" + printPt(q[1]) + "<br/>" + printPt(q[2]) + "<br/>" + printPt(q[3]);
+	}
+
+	function printPt(p) {
+		return "(" + rnd(p[0],2) + ", " + rnd(p[1],2) + ", " + rnd(p[2],2) + ")";
+	}
+	
+	function rnd(num, p) {
+		return Math.round(num * Math.pow(10, p)) / Math.pow(10, p);
+	}
+	
+	function init(scn) {
+		switch(scn) {
+		case "ball":
+			/*Enter yours here*/
+			break;
+		case "cube":
+			cube = createCube([400, 300, 200], 50);
+			break;
+		}
+		drawThread = setInterval('drawFrame("' + scn + '")', REFRESH_RATE);
+		calcThread = setInterval('calcFrame("' + scn + '")', REFRESH_RATE/4);
+	}
+
+	function drawFrame(scn) {
+		if(readyToDraw) {
+			readyToDraw = false;
+			switch(scn) {
+			case "ball":
+				drawBall(ball);
+				break;
+			case "square":
+				drawSquare(sqr);
+				break;
+			case "cube":
+				drawCube(cube);
+				break;
+			}
+			readyToCalc = true;
+		}	
+	}
+
+	function calcFrame(scn) {
+		if(readyToCalc) {
+			readyToCalc = false;
+			switch(scn) {
+			case "ball":
+				moveBall(ball);
+				break;
+			case "square":
+				moveSquare(sqr);
+				break;
+			case "cube":
+				moveCube(cube);
+				break;
+			}
+			readyToDraw = true;
+		}
+	}
+
+	function createBall(x, y, z, r, c) {
+		var b = {
+			object: null,
+			v: [10, 10, 10],
+			p: [x, y, z],
+			r: r,
+			c: c
+		}
+
+		return b;
+	}
+
+	function createSquare(tl, tr, br, bl, c) {
+		var s = {
+			object: null,
+			tl: tl,
+			tr: tr,
+			br: br,
+			bl: bl,
+			c: c,
+			shadow: null
+		}
+
+		s.normal = calcNormal(s);
+		
+		return s;
+	}
+
+	function createCube(center, size) {
+		
+		var cbe = {
+			object: 
+			[
+				createSquare([center[0]+size, center[1]-size, center[2]+size], [center[0]-size, center[1]-size, center[2]+size],
+						 	 [center[0]-size, center[1]+size, center[2]+size], [center[0]+size, center[1]+size, center[2]+size], '#FFFF00'),
+		     	createSquare([center[0]-size, center[1]-size, center[2]+size], [center[0]-size, center[1]-size, center[2]-size], 
+				     		 [center[0]-size, center[1]+size, center[2]-size], [center[0]-size, center[1]+size, center[2]+size], '#00C000'),
+				createSquare([center[0]-size, center[1]+size, center[2]-size], [center[0]+size, center[1]+size, center[2]-size],
+							 [center[0]+size, center[1]+size, center[2]+size], [center[0]-size, center[1]+size, center[2]+size], '#FF8080'),
+			 	createSquare([center[0]+size, center[1]-size, center[2]-size], [center[0]-size, center[1]-size, center[2]-size],
+				 	 		 [center[0]-size, center[1]-size, center[2]+size], [center[0]+size, center[1]-size, center[2]+size], '#800080'),
+	 	 		createSquare([center[0]+size, center[1]-size, center[2]-size], [center[0]+size, center[1]-size, center[2]+size],
+					     	 [center[0]+size, center[1]+size, center[2]+size], [center[0]+size, center[1]+size, center[2]-size], '#0000FF'),
+     			createSquare([center[0]-size, center[1]-size, center[2]-size], [center[0]+size, center[1]-size, center[2]-size], 
+				     		 [center[0]+size, center[1]+size, center[2]-size], [center[0]-size, center[1]+size, center[2]-size], '#FF0000')
+		     	
+			],
+			center: center,
+			size: size,
+			rotSpd: [Math.PI/64, Math.PI/64, 0]
+		}
+
+		return cbe;
+	}
+
+	function calcNormal(s) {
+		
+		var bx = s.tr[0] - s.tl[0], by = s.tr[1] - s.tl[1], bz = s.tr[2] - s.tl[2];
+		var cx = s.bl[0] - s.tl[0], cy = s.bl[1] - s.tl[1], cz = s.bl[2] - s.tl[2];
+		var ax = ((by*cz) - (bz*cy))/100, ay = ((bz*cx) - (bx*cz))/100, az = ((bx*cy) - (by*cx))/100;
+
+		var len = Math.sqrt(Math.pow(ax, 2) + Math.pow(ay, 2) + Math.pow(az, 2));
+		ax = (ax/len) * 100; ay = (ay/len) * 100; az = (az/len) * 100;
+
+		var x = (s.tl[0] + s.tr[0] + s.br[0] + s.bl[0]) / 4;
+		var y = (s.tl[1] + s.tr[1] + s.br[1] + s.bl[1]) / 4;
+		var z = (s.tl[2] + s.tr[2] + s.br[2] + s.bl[2]) / 4;
+
+		return [[x,y,z],[x-ax,y-ay,z-az]];
+	}
+
+	function drawBall(b) {
+		if(b.object != null) {
+			b.object.remove();
+		}
+		b.object = drawCircle(b.p[0], b.p[1], b.p[2], b.r);
+		if(b.c) {
+			b.object.attr('fill', b.c);
+		}
+	}
+
+	function drawCube(cbe) {
+		//debug.innerHTML = '';
+		for(var i= 0; i < 6, face = cbe.object[i]; i++) {
+			if(face.object != null) {
+				face.object.remove();
+			}
+			if(face.nObject != null) {
+				face.nObject.remove();
+			}
+			if(face.ntObject != null) {
+				face.ntObject.remove();
+			}
+			if(face.shadowObject != null) {
+				face.shadowObject.remove();
+			}
+			if(face.tObject != null) {
+				face.tObject.remove();
+			}
+			if(face.shadow != null) {
+				face.shadow.remove();
+			}
+			if(face.lVectors != null) {
+				for(var j = 0, len = face.lVectors.length; j < len, lv = face.lVectors[j]; j++) {
+					if(lv != null) lv.remove();
+				}
+			}
+
+			if(i > 2) {
+				face.object = drawQuad(face.tl, face.tr, face.br, face.bl).attr({'stroke-width':4,'stroke-linejoin':'round'});
+				if(face.c) {
+					face.object.attr('fill', face.c);
+				}
+			}
+			
+			if(DRAW_NORMALS && face.normal && i > 2) {
+				var n1 = getPoint(face.normal[0][0],face.normal[0][1],face.normal[0][2]);
+				var n2 = getPoint(face.normal[1][0],face.normal[1][1],face.normal[1][2]);
+				face.nObject = canvasy.path("M"+n1[0]+","+n1[1]+"L"+n2[0]+","+n2[1]);
+				face.ntObject = canvasy.circle(n2[0], n2[1], 5).attr({fill:face.c});
+			}
+
+			if(LIGHTING) {
+				// Shade the polygon
+				if(face.normal && i > 2) {
+					var n1 = getPoint(face.normal[0][0],face.normal[0][1],face.normal[0][2]);
+					var nVector = [face.normal[1][0] - face.normal[0][0], face.normal[1][1] - face.normal[0][1], face.normal[1][2] - face.normal[0][2]];
+					var lVector = [face.normal[0][0] - LIGHT_SOURCE[0], face.normal[0][1] - LIGHT_SOURCE[1], face.normal[0][2] - LIGHT_SOURCE[2]];
+					var lenL = Math.sqrt(Math.pow(lVector[0], 2) + Math.pow(lVector[1], 2) + Math.pow(lVector[2], 2));
+					var lenN = Math.sqrt(Math.pow(nVector[0], 2) + Math.pow(nVector[1], 2) + Math.pow(nVector[2], 2));
+					var dot = ((lVector[0]/lenL)*(nVector[0]/lenN)) + ((lVector[1]/lenL)*(nVector[1]/lenN)) + ((lVector[2]/lenL)*(nVector[2]/lenN));
+					var theta = Math.acos(dot/(lenL*lenN));
+					var darkness = dot;
+					if(darkness < 0) darkness = 0;
+					face.shadowObject = drawQuad(face.tl, face.tr, face.br, face.bl).attr({fill:'black', opacity:darkness});
+				}
+				// Draw the shadow on the ground
+				var tlV = normalize([face.tl[0] - LIGHT_SOURCE[0], face.tl[1] - LIGHT_SOURCE[1], face.tl[2] - LIGHT_SOURCE[2]]);
+				var tlInt = tlV[1] <= 0 ? null : (PLAY_FIELD[1] - face.tl[1])/tlV[1];
+				var trV = normalize([face.tr[0] - LIGHT_SOURCE[0], face.tr[1] - LIGHT_SOURCE[1], face.tr[2] - LIGHT_SOURCE[2]]);
+				var trInt = trV[1] <= 0 ? null : (PLAY_FIELD[1] - face.tr[1])/trV[1];
+				var blV = normalize([face.bl[0] - LIGHT_SOURCE[0], face.bl[1] - LIGHT_SOURCE[1], face.bl[2] - LIGHT_SOURCE[2]]);
+				var blInt = blV[1] <= 0 ? null : (PLAY_FIELD[1] - face.bl[1])/blV[1];
+				var brV = normalize([face.br[0] - LIGHT_SOURCE[0], face.br[1] - LIGHT_SOURCE[1], face.br[2] - LIGHT_SOURCE[2]]);
+				var brInt = brV[1] <= 0 ? null : (PLAY_FIELD[1] - face.br[1])/brV[1];
+				
+				if(tlInt != null && trInt != null && brInt != null && blInt != null) {
+					var tlShadow = [face.tl[0] + (tlInt * tlV[0]), PLAY_FIELD[1], face.tl[2] + (tlInt * tlV[2])];
+					var trShadow = [face.tr[0] + (trInt * trV[0]), PLAY_FIELD[1], face.tr[2] + (trInt * trV[2])];
+					var blShadow = [face.bl[0] + (blInt * blV[0]), PLAY_FIELD[1], face.bl[2] + (blInt * blV[2])];
+					var brShadow = [face.br[0] + (brInt * brV[0]), PLAY_FIELD[1], face.br[2] + (brInt * brV[2])];
+					face.shadow = drawQuad(tlShadow, trShadow, brShadow, blShadow).attr('fill', 'black').toBack();
+
+					if(DRAW_LIGHT) {
+						face.lVectors = new Array();
+						var lv1 = getPoint(LIGHT_SOURCE[0], LIGHT_SOURCE[1], LIGHT_SOURCE[2]);
+						var lv2 = getPoint(tlShadow[0], tlShadow[1], tlShadow[2]);
+						face.lVectors.push(canvasy.path("M"+lv1[0]+","+lv1[1]+"L"+lv2[0]+","+lv2[1]));
+						lv2 = getPoint(trShadow[0], trShadow[1], trShadow[2]);
+						face.lVectors.push(canvasy.path("M"+lv1[0]+","+lv1[1]+"L"+lv2[0]+","+lv2[1]));
+						lv2 = getPoint(blShadow[0], blShadow[1], blShadow[2]);
+						face.lVectors.push(canvasy.path("M"+lv1[0]+","+lv1[1]+"L"+lv2[0]+","+lv2[1]));
+						lv2 = getPoint(brShadow[0], brShadow[1], brShadow[2]);
+						face.lVectors.push(canvasy.path("M"+lv1[0]+","+lv1[1]+"L"+lv2[0]+","+lv2[1]));
+					}
+				}
+			}
+		}
+	}
+
+	function normalize(v) {
+		var len = Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2) + Math.pow(v[2], 2));
+		return [v[0]/len, v[1]/len, v[2]/len]; 
+	}
+
+	function moveBall(b) {
+		b.v[1] += G;
+		
+		if(b.p[0] - b.r + b.v[0] < 0) {
+			var goodV = b.r - b.p[0];
+			b.p[0] += goodV;
+			b.v[0] = - b.v[0]/DAMP;
+			b.p[0] += b.v[0] - goodV;
+		} else if(b.p[0] + b.r + b.v[0] > PLAY_FIELD[0]) {
+			var goodV = PLAY_FIELD[0] - b.r - b.p[0];
+			b.p[0] += goodV;
+			b.v[0] = - b.v[0]/DAMP;
+			b.p[0] += b.v[0] + goodV;
+		} else {
+			b.p[0] += b.v[0];
+		}
+
+		if(b.p[1] - b.r + b.v[1] < 0) {
+			var goodV = b.r - b.p[1];
+			b.p[1] += goodV;
+			b.v[1] = - b.v[1]/DAMP;
+			b.p[1] += b.v[1] - goodV;
+		} else if(b.p[1] + b.r + b.v[1] > PLAY_FIELD[1]) {
+			var goodV = PLAY_FIELD[1] - b.r - b.p[1];
+			b.p[1] += goodV;
+			b.v[1] = - b.v[1]/DAMP;
+			b.p[1] += b.v[1] + goodV;
+		} else {
+			b.p[1] += b.v[1];
+		}
+
+		if(b.p[2] - b.r + b.v[2] < 0) {
+			var goodV = b.r - b.p[2];
+			b.p[2] += goodV;
+			b.v[2] = - b.v[2]/DAMP;
+			b.p[2] += b.v[2] - goodV;
+		} else if(b.p[2] + b.r + b.v[2] > PLAY_FIELD[2]) {
+			var goodV = PLAY_FIELD[2] - b.r - b.p[2];
+			b.p[2] += goodV;
+			b.v[2] = - b.v[2]/DAMP;
+			b.p[2] += b.v[2] + goodV;
+		} else {
+			b.p[2] += b.v[2];
+		}
+	}
+
+	function moveSquare(s) {
+		var newS = rotateQuad(s.tl, s.tr, s.br, s.bl, s.rotSpd, [100, 100, 150]);
+		s.rot[0] += s.rotSpd[0];
+		s.rot[1] += s.rotSpd[1];
+		s.rot[2] += s.rotSpd[2];
+		s.tl = newS[0];
+		s.tr = newS[1];
+		s.br = newS[2];
+		s.bl = newS[3];
+	}
+
+	function dampMovement(spd, dmp) {
+		var newSpd = spd - (dmp * (spd/Math.abs(spd)));
+		if(newSpd * spd < 0) {
+			newSpd = 0;
+		}
+
+		return newSpd;
+	}
+	
+	function moveCube(cbe) {
+		if(!auto) {
+			if(mDown) { 
+				cbe.rotSpd = getMouseRotation(); 
+			} else {
+				cbe.rotSpd[0] = dampMovement(cbe.rotSpd[0], ROTATION_DAMPING);
+				cbe.rotSpd[1] = dampMovement(cbe.rotSpd[1], ROTATION_DAMPING);
+				cbe.rotSpd[2] = dampMovement(cbe.rotSpd[2], ROTATION_DAMPING);
+			}
+		}
+		for(var i = 0; i < 6, f = cbe.object[i]; i++) {
+			var newS = rotateQuad(f.tl, f.tr, f.br, f.bl, cbe.rotSpd, cbe.center);
+			f.tl = newS[0];
+			f.tr = newS[1];
+			f.br = newS[2];
+			f.bl = newS[3];
+			f.normal = calcNormal(f);
+			f.clip = (f.tl[2] + f.tr[2] + f.br[2] + f.bl[2]) / 4;
+		}
+		// Clipping
+		cbe.object.sort(function(a,b) { return b.clip - a.clip; });
+	}
+
+	function getMouseRotation() {
+		var dX = mX - lastMX;
+		var dY = mY - lastMY;
+		lastMX = mX;
+		lastMY = mY;
+
+		return [dY * MOUSE_ROTATION, dX * MOUSE_ROTATION, 0];
+	}
+	
+	function getPoint(x, y, z) {
+		var fromEyeX = x - EYE[0], fromEyeY = y - EYE[1];
+		var angleX = Math.atan(fromEyeX / (z + SCREEN_DEPTH)); // Randians!
+		var angleY = Math.atan(fromEyeY / (z + SCREEN_DEPTH)); // Randians!
+		var newFromEyeX = SCREEN_DEPTH * Math.tan(angleX), newFromEyeY = SCREEN_DEPTH * Math.tan(angleY);
+		var newX = EYE[0] + newFromEyeX, newY = EYE[1] + newFromEyeY;
+		return [newX, newY];
+	}
+
+	function rotatePoint(pt, c, rot) {
+		var newPt = [pt[0], pt[1], pt[2]];
+		// About the x-axis
+		if(Math.abs(rot[0]) > 0) {
+			var dz = newPt[2] - c[2], dy = newPt[1] - c[1];
+			var d = Math.sqrt(Math.pow(dy, 2) + Math.pow(dz, 2));
+			var angle = dz == 0 ? 0 : Math.atan(dz/dy);
+			angle += rot[0];
+			var dy2 = d * Math.cos(angle), dz2 = d * Math.sin(angle);
+			if(dy < 0) dy2 = -dy2;
+			if(dy < 0) dz2 = -dz2;
+			newPt[1] = dy2 + c[1];
+			newPt[2] = dz2 + c[2];
+		}
+		// About the y-axis
+		if(Math.abs(rot[1]) > 0) {
+			var dz = newPt[2] - c[2], dx = newPt[0] - c[0];
+			var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dz, 2));
+			var angle = dz == 0 ? 0 : Math.atan(dz/dx);
+			angle += rot[1];
+			var dx2 = d * Math.cos(angle), dz2 = d * Math.sin(angle);
+			if(dx < 0) dx2 = -dx2;
+			if(dx < 0) dz2 = -dz2;
+			newPt[0] = dx2 + c[0];
+			newPt[2] = dz2 + c[2];
+		}
+		// About the z-axis
+		if(Math.abs(rot[2]) > 0) {
+			var dy = newPt[1] - c[1], dx = newPt[0] - c[0];
+			var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+			var angle = dx == 0 ? 0 : Math.atan(dx/dy);
+			angle += rot[2];
+			var dy2 = d * Math.cos(angle), dx2 = d * Math.sin(angle);
+			if(dy < 0) dx2 = -dx2;
+			if(dy < 0) dy2 = -dy2;
+			newPt[0] = dx2 + c[0];
+			newPt[1] = dy2 + c[1];
+		}
+
+		return newPt;
+	}
+
+	function rotateQuad(tl, tr, br, bl, rot, c) {
+		if(typeof c == 'undefined' || c == null) {
+			c = [Math.abs(tl[0] + tr[0] + br[0] + bl[0]) / 4, Math.abs(tl[1] + tr[1] + br[1] + bl[1]) / 4, Math.abs(tl[2] + tr[2] + br[2] + bl[2]) / 4];
+		}
+
+		var tl2 = rotatePoint(tl, c, rot), tr2 = rotatePoint(tr, c, rot);
+		var br2 = rotatePoint(br, c, rot), bl2 = rotatePoint(bl, c, rot);
+
+		return [tl2, tr2, br2, bl2];
+	}
+
+	function drawRoom() {
+		drawQuad([0, 0, PLAY_FIELD[2]], [PLAY_FIELD[0], 0, PLAY_FIELD[2]], [PLAY_FIELD[0], PLAY_FIELD[1], PLAY_FIELD[2]], [0, PLAY_FIELD[1], PLAY_FIELD[2]]).attr('fill','#FF0000');
+		drawQuad([0, 0, 0], [PLAY_FIELD[0], 0, 0], [PLAY_FIELD[0], 0, PLAY_FIELD[2]], [0, 0, PLAY_FIELD[2]]).attr('fill', '#FFFF00');
+		drawQuad([0, 0, 0], [0, 0, PLAY_FIELD[2]], [0, PLAY_FIELD[1], PLAY_FIELD[2]], [0, PLAY_FIELD[1], 0]).attr('fill', '#008000');
+		drawQuad([0, PLAY_FIELD[1], 0], [PLAY_FIELD[0], PLAY_FIELD[1], 0], [PLAY_FIELD[0], PLAY_FIELD[1], PLAY_FIELD[2]], [0, PLAY_FIELD[1], PLAY_FIELD[2]]).attr('fill', '#0000FF');
+		drawQuad([PLAY_FIELD[0], PLAY_FIELD[1], 0], [PLAY_FIELD[0], 0, 0], [PLAY_FIELD[0], 0, PLAY_FIELD[2]], [PLAY_FIELD[0], PLAY_FIELD[1], PLAY_FIELD[2]]).attr('fill', '#FF4040');
+	}
+
+	function drawCircle(x, y, z, r) {
+		var center = getPoint(x, y, z);
+		var edgePoint = getPoint(x + r, y, z);
+		var newRadius = edgePoint[0] - center[0];
+
+		return canvasy.circle(center[0], center[1], newRadius);
+	}
+
+	function drawQuad(tl, tr, br, bl) {
+		var topLeft = getPoint(tl[0], tl[1], tl[2]), topRight = getPoint(tr[0], tr[1], tr[2]);
+		var bottomLeft = getPoint(bl[0], bl[1], bl[2]), bottomRight = getPoint(br[0], br[1], br[2]);
+
+		return canvasy.path("M"+topLeft[0]+","+topLeft[1]+"L"+topRight[0]+","+topRight[1]+"L"+bottomRight[0]+","+bottomRight[1]+"L"+bottomLeft[0]+","+bottomLeft[1]+"z");
+	}
+
+	function acceptKey(evt) {
+		var e = evt ? evt : window.event;
+		switch(evt.keyCode) {
+		case 27:
+			clearInterval(drawThread);
+			clearInterval(calcThread);
+			break;
+		}
+	}
+
+	function moveMouse(evt) {
+		var e = evt ? evt : window.event;
+		mX = e.pageX;
+		mY = e.pageY;
+		if(!mDown) {
+			lastMX = mX;
+			lastMY = mY;
+		}
+	}
+
+	document.onmousemove = moveMouse;
+	document.onkeydown = acceptKey;
+	document.onmousedown = function() {mDown = true; cube.rotSpd = [0, 0, 0]; auto = false;}
+	document.onmouseup = function() {mDown = false;}
+
+</script>
+
+{% endblock three_d_cube %}

@@ -1,0 +1,110 @@
+
+{% block profile2_parts_list %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+	table-layout: fixed;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+<div> INN 	profile\std_profile2\std_profile2_parts_list.html </div>	
+				
+	</br>
+	
+	<h4>
+		<strong>
+			<div style="margin: 0 0;">			
+				<div style="background:{{ part.title_color }}; padding-bottom:4%; width:100%; height:10px; display:inline-block;">
+					<h4><center><strong>{{part.h_plural_name}}</strong></center></h4>
+				</div>
+			</div>
+		</strong>
+	
+		<div>
+		
+		<table class="general_table {{ part.table_color }}" style="width:100%">
+		
+			{% include "./profile/std_profile2/std_profile2_parts_header.html" %}
+			
+			{% for gt in prf_parts_list if (gt.is_parent_of(default_tag) and (gt.is_parent_of(default_sub_tag))) %}
+
+				<tr class="collapse in" id="{{default_tag.id}}{{gt_type}}Content">
+				
+					<td>{{ gt.id }}</td>
+					<td>{{ gt.title }}</td> 				
+					<td>{{ gt.body }}</td> 													
+					
+					<td>												
+						<button class="btn btn-success btn-xs" type="submit" name="save_std_prf_part" value="{{ gt.id }}">שמור</button>
+					</td>
+				
+				</tr>
+
+			{% endfor %}
+			
+			<!--<tr></tr>   for add/even rows color -->
+			
+		</table>   <!-- table with matched part color -->
+
+
+		
+		<table class="general_table gray_table" style="width:100%">
+	
+			{% for gt in prf_parts_list_not_of_std if (gt.is_parent_of(tag) and (gt.is_parent_of(sub_tag))) %}	
+				
+				<tr class="collapse" id="not_of_std{{default_tag.id}}{{gt_type}}Content">
+				
+					<td></td>
+					<td>{{ gt.id }}</td>
+					<td>{{ gt_single_type_txt }}</td>
+					<td>{{ gt.title }}</td> 				
+					<td>{{ gt.body }}</td>
+					
+					<td>												
+						<button class="btn btn-success btn-xs" type="submit" name="save_std_prf_part" value="{{ gt.id }}">שמור</button>
+					</td>
+						
+				</tr>
+								
+			{% endfor %}
+			
+		</table>   <!-- gray tanle for notof -->
+			
+		
+		</div>
+		
+	</h4>
+	
+	</br>
+
+{% endblock profile2_parts_list %}

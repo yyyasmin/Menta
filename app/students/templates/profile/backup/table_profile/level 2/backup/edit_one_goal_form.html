@@ -1,0 +1,40 @@
+{% block edit_one_std_goal_form %}
+
+<style>
+
+</style>
+
+		</br>
+		</br>	
+		
+		{% include "./backup/edit_std_goal_actions.html" %}
+		
+		</br>
+		 
+		<h4>
+			<button class="accordion"<strong> יעד: {{ dst.title }}</strong></button>				
+			<div class="panel">
+				<button>תאור היעד: {{ dst.body }}</button>
+			</div>				
+		</h4>
+			
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

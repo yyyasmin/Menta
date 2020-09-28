@@ -1,0 +1,58 @@
+	
+	<table>
+		<tr>
+			<th>			
+					<th> מספר המשימה </th>	
+					<th> כותרת המשימה </th>
+					<th> תאור המשימה </th>
+					<th> תאריך ביצוע המשימה </th>
+					<th> סטאטוס המשימה </th>
+					<th> תפקיד האחראי על המשימה </th>
+
+			</th>
+		</tr>
+		{% for std_todo in std_todos %}
+		
+		<form method="POST" action="{{ url_for('students.match_todo_to_std2', selected_todo_id=std_todo.id) }}">	
+				
+			<tr>
+			
+				<td>{{ std_todo.id }}</td>
+				<td>{{ std_todo.title }}</td>
+				<td>{{ std_todo.body }}</td> 
+					
+				<td>
+					<div id="ar_div">
+						<input type="date" class="form-control" id="due_date" name="due_date" value="{{ due_date }}">
+					</div>   <!-- ar_div -->
+				</td>	
+					
+				<td>
+					<select class="select" name="selected_status" id="selected_status">	
+						{% for sts in statuss %}	
+							<option style="sts.color" value="{{ sts.title }}" selected="selected">{{ sts.title }}</option>
+						{% endfor %}
+					</select>					
+				</td>
+				
+				<td>
+					<select class="select" name="selected_who" id="selected_who">	
+						{% for who in whos %}	
+							<option value="{{ who.title }}" selected="selected">{{ who.title }}</option>
+						{% endfor %}
+					</select>					
+				</td>
+									
+				<td>
+				<button class="btn btn-success btn-xs" type="submit" value="Save">הוסף משימה זו ליעד התלמיד</button>
+				</td>
+				
+			</tr>
+			
+		</form>	
+		
+		</br>
+		
+		{% endfor %}
+
+	</table>

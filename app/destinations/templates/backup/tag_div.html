@@ -1,0 +1,11 @@
+
+				<div id="scrt_div">
+					<div> {{form.scrt.label}}: {{form.scrt}} </div>
+					{% if form.scrt.errors %}
+						<ul class=errors>
+							{% for error in form.scrt.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>   <!-- scrt_div -->

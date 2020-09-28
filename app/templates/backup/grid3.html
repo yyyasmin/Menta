@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+
+.grid-container {
+
+	display: grid;
+
+	background-color: blue;
+	text-align: center;  
+	justify-content: space-evenly;
+	align-content:   space-evenly;
+
+	grid-template-rows: 33% 33% 33%;
+	grid-template-cols: 25% 25% 25% 25%;
+	grid-template-rows: auto auto auto ;
+	grid-template-columns: auto auto auto  ;
+	
+	align-items: strech;
+	
+	margin-left: 10%;    
+	margin-right: 10%;
+	margin-top: 20%
+	margin-bottom: 20%;
+		
+	padding: 5%;
+	//grid-gap: 30px;
+
+  background-color: blue;
+
+	<!-- FROM https://www.youtube.com/watch?v=073XKB9xv-M -->
+	<!-- FROM https://youtu.be/073XKB9xv-M?list=TLPQMjUwNjIwMjDu0MlnktjVfg&t=707 -->
+	overflow: auto;
+	margin:auto;
+	max-width:1200px;
+	<!-- FROM https://youtu.be/073XKB9xv-M?list=TLPQMjUwNjIwMjDu0MlnktjVfg&t=707 -->
+	
+}
+
+<!-- FROM https://youtu.be/073XKB9xv-M?list=TLPQMjUwNjIwMjDu0MlnktjVfg&t=888 -->
+footer {
+	padding: 10px;
+	margin: auto;
+	font-weight:bold;
+	text-align:center;
+	background: Azure:
+	color: white;
+	font-family: Arial;
+	letter-spacing:1px;		
+}
+<!-- FROM https://youtu.be/073XKB9xv-M?list=TLPQMjUwNjIwMjDu0MlnktjVfg&t=888 -->
+
+
+.grid-item {
+
+  background-color: Azure;
+
+  border: 1px solid blue;
+  font-size: 20px;
+  text-align: center;
+  display: block;  #fit img to line height
+  max-width: 33%;
+  max-height: 55%;
+  
+  <!-- FROM https://www.youtube.com/watch?v=073XKB9xv-M -->
+  margin: 5px;
+  float: right;
+  width: 150px;
+
+}
+
+img {
+
+	#height: 33%;
+	#width: 33%;
+	max-width: 33%;
+	max-height: 33%;
+	display: block;
+	align: top;
+	
+	<!-- FROM https://www.youtube.com/watch?v=073XKB9xv-M -->
+	width: 100%;
+	height: auto;
+}
+
+<!-- FROM https://www.youtube.com/watch?v=073XKB9xv-M -->
+<!-- FROM https://youtu.be/073XKB9xv-M?list=TLPQMjUwNjIwMjDu0MlnktjVfg&t=817 -->
+.text_line }
+	padding: 15px;
+	text-align: center;
+
+}
+
+</style>
+
+	<div class="grid-container">
+
+
+		<div class = "grid-item">
+								
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('teachers.edit_teachers') }}"><img src="{{ url_for('static', filename='img/school.png') }}">בתי ספר</a></div></p></div>	
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('teachers.edit_teachers') }}"><img src="{{ url_for('static', filename='img/teacher.png') }}">אנשי צוות</a></div></p></div>	
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/kid.png') }}">תלמידים</a></div></p></div>			
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/form.png') }}">תוכנית טיפול אישית לתלמיד</a></div></p></div>	
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/profile.png') }}">פרופיל תלמיד</a></div></p></div>	
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('destinations.edit_destinations', from_dst_sort_order=0) }}"><img src="{{ url_for('static', filename='img/goal.png') }}">מטרות ויעדים</a></div></p></div>			
+			<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.index') }}"><img src="{{ url_for('static', filename='img/statistics.png') }}">סטאטיסטיקה</a></div></p></div>	
+
+		</div>
+		
+	</div>
+
+<footer>
+	"כל הזכויות שמורות ליסמין עמראן "
+</footer>
+
+{% endblock %}

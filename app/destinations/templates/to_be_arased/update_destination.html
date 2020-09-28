@@ -1,0 +1,33 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">	
+
+	<h3>ערוך מטרה</h3>
+	</br>
+	
+	{% include "./sub_forms/ar/ar_update_form.html" %}
+
+	</br>
+	
+	{% include "./sub_forms/tag/tag_update_form.html" %}
+	
+	</br>
+	
+	{% include "./sub_forms/scrt/scrt_update_form.html" %}
+
+	</br>
+
+	{% include "./sub_forms/update_one_dst_form.html" %}
+	
+	</br>
+	
+	{% include "./sub_forms/back_to_dst_list_form.html" %}
+
+	</br>
+	
+</div>  <!-- class="container -->
+
+{% endblock %}
+

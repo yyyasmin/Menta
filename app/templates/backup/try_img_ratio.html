@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+div.gallery {
+	margin: 5px;
+	border: 1px solid #ccc;
+	float: left;
+	width: 100px;
+	height: 120px;
+	float: right;
+	text-align: center;
+	/******** TRY ***********/
+	margin:2%;
+	margin-right:7%;
+	grid-template-columns: auto auto auto auto;
+	grid-template-rows: auto auto auto;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+
+
+</style>
+
+		<div class = "grid-item">								
+			<div class = "gallery"><p>
+				<a href="{{ url_for('teachers.edit_teachers') }}">
+				<img src="{{ url_for('static', filename='img/school.png') }}">בתי ספר</a>
+			</div></p>
+		</div>
+
+		
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('teachers.edit_teachers') }}">
+			<img src="{{ url_for('static', filename='img/teacher.png') }}">אנשי צוות</a>			
+			</div></p>
+		</div>
+
+	
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('students.edit_students') }}">
+			<img src="{{ url_for('static', filename='img/kid.png') }}">תלמידים</a>			
+			</div></p>
+		</div>
+
+						
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('destinations.edit_destinations', from_dst_sort_order=0) }}">
+			<img src="{{ url_for('static', filename='img/goal.png') }}">מטרות ויעדים</a>			
+			</div></p>
+		</div>
+							
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('students.index') }}">
+			<img src="{{ url_for('static', filename='img/statistics.png') }}">סטאטיסטיקה</a>			
+			</div></p>
+		</div>
+	
+	
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('students.edit_students') }}">
+			<img src="{{ url_for('static', filename='img/profile.png') }}">פרופיל תלמיד</a>			
+			</div></p>
+		</div>
+
+					
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('students.edit_students') }}">
+			<img src="{{ url_for('static', filename='img/form.png') }}">תוכנית טיפול אישית לתלמיד</a>						
+			</div></p>
+		</div>
+
+
+
+{% endblock %}

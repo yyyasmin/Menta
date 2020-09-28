@@ -1,0 +1,17 @@
+
+@dst.route('/edit_destinations_goals', methods=['GET', 'POST'])
+def edit_destinations_goals():
+
+	destination = Destination.query.filter(Destination.selected==True).first()
+	if destination == None:
+		flash("Please select a destination first ")
+		return redirect(url_for('select.destination_select'))		
+	print("In edit_destinations_goals student for show tree: " )
+	return render_template('edit_destinations_goals.html', destination=destination) 
+																
+														  		
+@dst.route('/edit_destinations_goals2/<int:selected_destination_id>', methods=['GET', 'POST'])
+def edit_destinations_goals2(selected_destination_id):
+	print("In edit_destination_goals2 Request is :", request)
+	dst = destination_select2(selected_destination_id)
+	return redirect(url_for('destinations.edit_destinations_goals'))		

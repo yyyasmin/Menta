@@ -1,0 +1,166 @@
+<!-- from https://codepen.io/reza_shaban/pen/ZpboJL -->
+{% block editable_node_tree %}
+
+<style>
+body{
+//  direction:rtl;
+  font-family: tahoma;
+  font-size: 14px;
+}
+.add {
+  color: green;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    color: darkgreen;
+  }
+}
+
+.minus {
+  color: red;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    color: darkred;
+  }
+}
+
+.edit {
+  color: darkgreen;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    color: darken(yellow, 20%);
+    ;
+  }
+}
+
+.list-group {
+  padding: 10px;
+  background: gainsboro;
+  list-style: none;
+  transition: all 500ms;
+  .list-group-item {
+    transition: all 500ms;
+    a {
+      padding: 5px 0;
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+     &:hover {
+      background: gainsboro;
+    }
+  }
+}
+</style>
+
+<div class="container">
+<div class="row">
+  <div class="col-md-12">
+    <p class="alert alert-danger">
+      Use the below buttons to create your dynamic tree ;)
+    </p>
+    <ul data-dynamic="true"></ul>
+  </div>
+</div>
+</div>
+
+<script>
+(function($) {
+  $.fn.dynamicMenu = function(config) {
+    var $dMenu = $(this),
+      $li = $('<li>').addClass('list-group-item'),
+      $btnAdd = $('<span>').addClass('fa fa-plus add'),
+      $btnDel = $('<span>').addClass('fa fa-remove minus'),
+      $btnEdit = $('<span>').addClass('fa fa-edit edit'),
+      $title = $('<a>').text('new item'),
+      $editClick = function(element) {
+        var el = element.parent();
+        var a = el.children('a');
+        var input = el.children('input');
+        if (!input.length) {
+          var $input = $('<input>').addClass('sm-input').val(a.text());
+          el.prepend($input);
+          element.removeClass('fa-edit').addClass('fa-check');
+          a.hide(); //.text('changed text');
+        } else {
+          if (confirm('Are you sure you want save changes?')) {
+            a.text(input.val());
+            a.show();
+            input.remove();
+            element.addClass('fa-edit').removeClass('fa-check');
+            config.edit();
+          }
+        }
+      },
+      $delClick = function(element) {
+        var item = element.parent('li');
+        if (!item.children('input').length) {
+          if (confirm('Are you sure you want to delete this item?')) {
+            item.remove();
+            config.delete();
+          }
+        } else {
+          if (confirm('Are you sure you want to cancel edite?')) {
+            item.children('input').remove();
+            item.children('a').show();
+            element.next('.fa-check').addClass('fa-edit').removeClass('fa-check');
+          }
+        }
+      },
+      $addClick = function(element) {
+        var $oldElement = element;
+        var $add = $btnAdd.clone();
+        $add.on('click', function() {
+          $addClick($add);
+        });
+        var $del = $btnDel.clone();
+        $del.on('click', function() {
+          $delClick($del);
+        });
+        var $edit = $btnEdit.clone();
+        $edit.on('click', function() {
+          $editClick($edit);
+        });
+        var $tit = $title.clone();
+        var $item = $li.clone().append($tit, $add, $del, $edit);
+        $item.on('click', function(elem) {
+console.log($(elem).find('ul'));
+          $(elem).find('ul').slideToggle();
+        });
+        if ($oldElement.parent().children('ul').length) {
+          $oldElement.parent().children('ul').append($item);
+          config.add();
+        } else {
+          var $ul = $('<ul>');
+          $oldElement.parent().append($ul.append($item));
+          config.add();
+        }
+      };
+    $btnAdd.on('click', function() {
+      $addClick($btnAdd);
+    });
+    $btnEdit.on('click', function() {
+      //$editClick($btnEdit);
+    });
+    $btnDel.on('click', function() {
+      $delClick();
+    });
+    $dMenu.addClass('list-group').append($li.clone().text('').append($btnAdd, $btnDel, $btnEdit));
+  };
+  $('ul[data-dynamic="true"]').dynamicMenu({
+    add: function() {
+      //alert('item saved!')
+    },
+    edit: function() {
+      //alert('item edited');
+    },
+    delete: function() {
+      //alert('item deleted');
+    }
+  });
+}(jQuery));
+</script>
+
+{% end block editable_node_tree %}

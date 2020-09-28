@@ -1,0 +1,140 @@
+
+{% block edit_one_std_dst_gt_sub1 %}
+
+	<table class="purple_table">
+
+		<tr>
+			<th style="background:#ffffff" colspan="5"></th>
+		</tr>
+		
+		<tr style="width:100%">
+			<th style="background:#dcbae6; color:black" colspan="6">עדכן {{ gt_sub1.gt_type_txt }}</th>
+		</tr>
+				
+		<tr>			
+			<th> מספר ה{{ gt_sub1.gt_type_txt }} </th>	
+			<th> כותרת ה{{ gt_sub1.gt_type_txt }} </th>
+			<th> תאור ה{{ gt_sub1.gt_type_txt }} </th>
+			<th> נושא ה{{ gt_sub1.gt_type_txt }} </th>
+			
+			<!--
+			<th> תאריך השלמת ה{{ gt_sub1.gt_type_txt }} </th>
+			<th> סטאטוס ה{{ gt_sub1.gt_type_txt }} </th>
+			-->
+			
+		</tr>
+						
+		<tr>
+		
+			<td>{{ gt_sub1.id }}</td>
+			<td>{{ gt_sub1.title }}</td>
+			<td>{{ gt_sub1.body }}</td> 
+
+			<td>נושא:
+				<select class="select" name="tag{{ gt_sub1.id }}" id="selected_status">	
+					{% for tag in statuss %}	
+						{% for st in std_txts %}
+							{% if st.general_txt_id==gt_sub1.id %}
+								{% if st.tag_id==tag.id %}
+									<option value="{{ tag.id }}" selected="selected">{{ tag.title }}</option>
+								{% else %}
+									<option value="{{ tag.id }}">{{ tag.title }}</option>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				</select>					
+			</td>
+			
+			<!--
+			<td>
+				<div id="ar_div">				
+					{% for st in std_txts %}
+						{% if st.general_txt_id==gt_sub1.id %}
+							<input type="date" style="text-align:center" id="due_date" name="due_date{{ gt_sub1.id }}" value="{{ st.due_date }}">
+						{% endif %}	
+					{% endfor %}
+				</div>   
+			</td>	
+
+
+			<td>סטאטוס:
+				<select class="select" name="sts{{ gt_sub1.id }}" id="selected_status">	
+					{% for sts in statuss %}	
+						{% for st in std_txts %}
+							{% if st.general_txt_id==gt_sub1.id %}
+								{% if st.status_id==sts.id %}
+									<option value="{{ sts.id }}" selected="selected">{{ sts.title }}</option>
+								{% else %}
+									<option value="{{ sts.id }}">{{ sts.title }}</option>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				</select>					
+			</td>
+			-->
+			
+			
+			
+			<td>								
+				{% set gt_sub1_num = gt_sub1.id * 3 + 1 %}
+				<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt_sub1_num }}">שמור</button>
+			</td>
+									
+		</tr>
+	
+	<tr>				
+		{% for todo in student_todos %}
+			{% if todo in gt_sub1.children.all() %}
+				{% if todo in student_todos %}
+					{% include "./destinations/gt_sub1s/todos/gt_sub1_todos_table_line.html" %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</tr>
+	
+	<tr>				
+		{% for todo in todos_not_of_student %}
+			{% include "./destinations/gt_sub1s/todos/gt_sub1_todos_table_line_not_of_std.html" %}
+		{% endfor %}
+	</tr>
+		
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+			
+	</table>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+<!-- call match_gt_sub1 function for save gt_sub1 details when submit button is pushed by the user -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.getJSON('/match_gt_sub1_to_std2',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+{% endblock edit_one_std_dst_gt_sub1 %}

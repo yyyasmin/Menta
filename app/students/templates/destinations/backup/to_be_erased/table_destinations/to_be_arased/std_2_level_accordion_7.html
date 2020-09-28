@@ -1,0 +1,46 @@
+{% block std_accordion_7 %}
+						
+	<div type="button" class="accordion" style="color:green; width:auto"
+		 onclick="myFunction('{{ level_1_id }}')">{{ level_1_title }}
+	</div>
+	
+	<div style="width:auto; height: auto;" class="panel">
+	<p> 
+	
+		<table class="{{level_1_color}}_table">	
+			<thead>
+				{% include "./destinations/table_destinations/{{level_2_header}}.html" %}
+			</thead>
+
+			<tbody>
+				{% for level_2_item in level_2_list if (level_1_item.is_parent_of(level_2_item)) %}
+					<tr>
+						{% include "./destinations/table_destinations/{{level_2_line}}.html" %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+													
+	 </p>								 
+	</div>
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+						
+{% block std_accordion_7 %}

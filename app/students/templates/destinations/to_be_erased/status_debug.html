@@ -1,0 +1,20 @@
+
+
+<!-----------------DEBUG    ---------->
+<div> IN C:\Users\yasmi\Documents\menta4\app\students\templates\destinations\goals\edit_one_std_dst_goal.html</div>
+		<td>סטאטוס:
+				{% for sts in statuss %}
+					<div> sts: {{ sts }} </div>
+				
+					{% for st in std_txts %}
+						<div> st: {{ st }} </div>
+						<div> st.general_txt_id {{ st.general_txt_id }} </div>
+						<div> goal.id {{ goal.id }} </div>
+						<div> st.general_txt_id==goal.id: {{ st.general_txt_id==goal.id }} </div>
+							<div> st.status_id {{ st.status_id }} </div> 
+							<div> sts.id {{ sts.id }} </div>
+							<div> st.status_id==sts.id:   {{ st.status_id==sts.id }} </div>							
+					{% endfor %}
+				{% endfor %}
+		</td>		
+<!-----------------DEBUG    ---------->

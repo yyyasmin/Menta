@@ -1,0 +1,26 @@
+{% block dsts_list_content_6 %}				
+					
+	<tr class="collapsed" data-toggle="collapse" data-target=".{{std_dst.id}}Content">											
+													
+		{% include "./destinations/table_destinations/dst_line_7.html" %}
+		
+		<tr></tr>
+		
+		<tr class="collapse" id="{{std_dst.id}}Content" aria-expanded="true">
+			<td colspan="6">
+				{% include "./destinations/table_destinations/goals_list_6.html" %}								
+			</td>
+		</tr>
+		
+		<tr></tr>
+		
+		<tr class="collapse" id="not_of_std{{std_dst.id}}Content" aria-expanded="true">
+			<td colspan="6">
+				{% include "./destinations/table_destinations/goals_not_of_std_list_6.html" %}								
+			</td>
+		</tr>
+		
+	</tr>
+					
+{% endblock dsts_list_content_6 %}				
+					

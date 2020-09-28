@@ -1,0 +1,40 @@
+{% block edit_gt_line %}
+
+
+	<tr>
+	
+		<td>{{ gt.id}}</td>	
+		
+		<td>{{ tag.title}}</td>
+		
+		<td>{{ gt_category.h_name }}</td>	
+								
+								
+		<td>
+			<div id="ar_div">			
+				<input type="text" style="text-align:center" id="{{ gt.gt_type }}" name="title{{ gt.id }}" value="{{ gt.title }}">					
+			</div>  
+		</td>	
+		
+		<td>
+			<div id="ar_div">			
+				<input type="text" style="text-align:center" id="{{ gt.gt_type }}" name="body{{ gt.id }}" value="{{ gt.body }}">					
+			</div>  
+		</td>	
+			
+		<td>
+			<button class="btn btn-success btn-xs" type="submit" name="save_gt" value="{{ gt.id }}">{{ gt.id }} עדכן</button>
+		</td>
+		
+	</tr>
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock edit_gt_line %}

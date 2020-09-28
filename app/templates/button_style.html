@@ -1,0 +1,80 @@
+{% block button_style %}
+
+<style>
+
+button.accordion {
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    outline: none;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+ 
+
+#add_button  {
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+
+<!-- FROM https://www.w3schools.com/howto/howto_css_outline_buttons.asp -->
+#act_btn {
+	border: 2px solid black;
+	color: black;
+	padding: 14px 28px;
+	font-size: 16px;
+font-size: 1em;
+	cursor: pointer;
+
+}
+
+.act_btn {
+	border: 2px solid black;
+	color: black;
+	padding: 14px 28px;
+font-size: 1em;
+	cursor: pointer;
+
+}
+	
+.accordion_title {
+	border: 2px solid black;
+	color: black;
+	padding: 14px 28px;
+font-size: 1em;
+	cursor: pointer;
+
+}
+	
+#accordion_title {
+	border: 2px solid black;
+	color: black;
+	padding: 14px 28px;
+font-size: 1em;
+	cursor: pointer;
+
+}
+	
+</style>
+
+{% endblock button_style %}

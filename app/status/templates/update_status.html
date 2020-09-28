@@ -1,0 +1,41 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="title">כותרת הסטאטוס:</label>
+		  <input type="title" class="form-control" id="title"  name="title" value="{{ status.title }}">
+		</div>  
+		
+		<div class="form-group">
+		  <label for="description">תאור הסטאטוס:</label>
+		  <input type="text" class="form-control" id="title"  name="description" value="{{ status.body }}">
+		</div>  
+		
+		</br>
+
+		<div class="form-group">
+			<label for="description">צבע שבו יופיע הסטאטוס:</label>
+			<input type="text" class="form-control" id="title"  name="color" value="{{ status.color }}">
+			
+			<!-- FROM https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_input_type_color -->
+			<!---  Display color palate
+			<label for="favcolor">Select a color for this status:</label>
+			<input type="color" id="favcolor" name="favcolor" value="#ff0000"><br><br>
+			--->		
+		
+		</div>  
+		
+		</br>
+			
+			
+		<button type="submit" class="btn btn-default">שמור</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

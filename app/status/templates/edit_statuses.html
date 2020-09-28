@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+button.accordion {
+    background-color: #eee;
+	font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    #text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+div.panel {
+    padding: 0 18px;
+    background-color: #888;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+</style>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('status.status_add') }}">הוסף סטאטוס</a>
+<strong></h5></button>
+
+</br>
+  <center><h3>סטאטוס:</h3></center>
+  <div>
+  
+	    {% for status in statuses %}	 
+			<br><br>						
+						
+			<button class="btn btn-warning btn-xs" ><a href="{{ url_for('status.status_update', selected_status_id=status.id) }}">ערוך</a></button>		
+			<button class="btn btn-danger btn-xs"  ><a href="{{ url_for('status.status_delete2', selected_status_id=status.id) }}">מחק</a></button>
+	
+	   		<button class="accordion" style="color:{{ status.color }}">status's title: {{ status.title }}</button>
+			<div class="panel">
+			  <button>status's description: {{ status.body }}.</button>				
+			</div>
+		    <br>
+		{% endfor %}
+  </div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

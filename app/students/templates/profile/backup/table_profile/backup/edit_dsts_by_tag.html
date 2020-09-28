@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+<h2><center>רשימת מטרות לפי נושאים</center></h2>	
+	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+
+		<a href="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=3) }}">עדכן מטרה</a>
+
+	<strong></h5></button>
+	
+	</br>
+	{% for tag in tags %}
+		</br></br>
+		<th><h4><strong> נושא:   {{ tag.title }}</strong></h4></th>
+
+		<table id="dst_tbl_id" style="width:100%">
+
+		<tr id="header_row">							
+			<th>נושא</th>
+			<th>קבוצת גיל</th>
+			<th>מטרות</th> 
+			<th>פעולות</th>
+		</tr>
+		
+		{% for ar in age_ranges %}  <!-- ars -->
+			{% for dst in destinations if (dst.is_parent_of(ar) and dst.is_parent_of(tag)) %}
+				<tr>
+					<td>{{ tag.title }}</td>
+					<td>{{ ar.title }}</td>
+					<td>{{ dst.title }}</td> 				
+																				
+					<td>	
+					{% with from_dst_sort_order=3 %}		
+						{% include "./destinations/table_destinations/edit_std_dst_line.html" %}
+					{% endwith %}
+					</td>									
+			
+				</tr>
+			
+			{% endfor %} <!-- for.. if.. if  --> 
+		{% endfor %}  <!-- ars -->			
+		
+		</table>
+	{% endfor %}  <!-- tags -->
+	</br></br>	
+
+{% endblock %}

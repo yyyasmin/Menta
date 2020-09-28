@@ -1,0 +1,76 @@
+{% block edit_std_subjects %}		
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+		
+		{% for subject in std_subjects %}
+		
+			<tr>
+				<td>{{ subject.title }}</td>
+				<td>{{ ar.title }}</td>
+				<td>{{ std_dst.title }}</td> 				
+																								
+				</br>
+				
+				<table class="blue_table">	
+					
+					<tr>
+						<th style="background:#ffffff" colspan="5"></th>
+					</tr>
+					
+					<tr style="width:100%">
+						<th style="background:#b7deed; color:black" colspan="6">עדכן את מטרות התלמיד:</th>
+					</tr>
+							
+					<tr>	
+						<th> מספר תחום העיניין </th>				
+						<th> כותרת תחום העיניין </th>
+						<th> תאור תחום העיניין </th>
+					</tr>
+								
+					{% include "./profile/table_profile/edit_std_subject_line.html" %}
+													
+				</table>
+							
+			</tr>
+			
+		{% endfor %}  	
+		
+		</table>
+	{% endfor %}  <!-- subjects -->
+	</br></br>	
+
+{% endblock edit_std_subjects %}

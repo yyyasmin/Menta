@@ -1,0 +1,90 @@
+@slct.route('/subject_select', methods=['GET', 'POST'])
+def subject_select():
+	print("in ppppppppppppppppsubject_ssssssssssssssssssselect")
+
+	student = Student.query.filter(Student.selected==True).first()
+	if student == None:
+		flash("Please select a student first ")
+		return redirect(url_for('index'))
+
+	profile = Profile.query.filter(Profile.selected==True).first()
+
+	if profile == None:
+		flash("Please select an profile first ")
+		return redirect(url_for('profile_select'))		
+	print(profile.title)      
+	#print request
+		
+	#import pdb; pdb.set_trace()
+
+	subjectes = Profile.query.join(Profile.profiles).filter(Profile.id==profile.id)
+
+
+	if (subjectes.count() == 0):
+		flash("There is no subjectes for this student.")
+		print ("subjectes count is 0 ")
+		redirect(url_for('flash_err'))
+		return render_template('select_pro.html', subjectes=subjectes)
+		#return redirect(url_for('index'))
+
+	subject = Subject.query.all()		
+	for subject in subjectes:
+		subject.selected = False
+
+	if request.method == 'GET':
+		return render_template('select_pro.html', subjectes=subjectes)
+		
+	selected_subject_id = int(request.form['selected_pro'])
+	subject =Subject.query.get_or_404(selected_subject_id)
+	subject.selected = True
+		
+	db.session.commit()
+	#profiles = Profile.query.all()
+	print("In subject_select BeFFFFFFFFFFFFFFFore subjectes edit_subjectes")
+	return redirect(url_for('subjectes.edit_subjectes'))		
+
+
+
+@slct.route('/subject_select2/<int:selected_subject_id>', methods=['GET', 'POST'])
+def subject_select2(selected_subject_id):
+
+	student = Student.query.filter(Student.selected==True).first()
+	if student == None:
+		flash("Please select a student first ")
+		return redirect(url_for('index'))
+
+	profile = Profile.query.filter(Profile.selected==True).first()    
+	if profile == None:
+		flash("Please select an profile first ")
+		return redirect(url_for('profile_select'))		
+	#print request
+
+	#import pdb; pdb.set_trace()
+	subjectes = Profile.query.join(Profile.subjectes).filter(Profile.id==profile.id)
+
+	if (subjectes.count() == 0):
+		flash("There is no subjectes for this student.")
+		print ("subjectes count is 0 ")
+		redirect(url_for('flash_err'))
+		return render_template('select_pro.html', subjectes=subjectes)
+		
+	profile = Profile.query.filter(Profile.selected==True).first()
+	print("In 44444444444444 Begining of subject_select2 profile selected  is:")
+	print(profile.id)
+
+	subject = Subject.query.all()		
+	for subject in subjectes:
+		subject.selected = False
+		
+	print(profile.id)
+	profile_select2(profile.id)    # fixing bug- selected profile was effected by subject select setting
+		
+	profile = Profile.query.filter(Profile.selected==True).first()
+	print(profile.title)
+
+	subject = Subject.query.get_or_404(selected_subject_id)
+
+	subject.selected = True
+	db.session.commit()
+
+	return redirect(url_for('subjectes.edit_subjectes'))		

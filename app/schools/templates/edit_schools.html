@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+
+</style>
+
+</br>
+
+<h2><div id="page_title">בתי ספר</center></div></h2>
+
+</br>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('schools.school_add') }}">הוסף בית ספר חדש</a>
+<strong></h5></button>
+
+	<table class="std_table">
+		<tr id="header_row">			
+			<th>שם</th>
+			<th>תאור</th> 
+		</tr>
+			
+		{% for scl in schools %}			
+			<tr>
+				<td>{{ scl.title }}</td>
+				<td>{{ scl.body }}</td> 
+				
+				<td>
+										
+					<button class="btn btn-default">
+						<strong><a style="color:black;" 
+							   href="{{ url_for('schools.school_update', selected_school_id=scl.id) }}">
+							ערוך</a>
+						</strong>
+					</button>
+					
+					<button class="btn btn-default">
+						<strong><a style="color:black;" 
+						href="{{ url_for('schools.dsply_school_logo2', selected_school_id=scl.id) }}" 
+						style="color:black background:#ff6666">הצג לוגו של בית הספר</a></strong>
+					</button>
+						
+					<button class="btn btn-default">
+						<strong><a style="color:black;" 
+						href="{{ url_for('schools.dsply_matya_logo2', selected_school_id=scl.id) }}" 
+						style="color:black background:#ff6666">הצג לוגו של המתיא</a></strong>
+					</button>
+						
+					<button class="btn btn-default">
+						<strong><a style="color:black;" 
+							href="{{ url_for('schools.school_delete2', selected_school_id=scl.id) }}" 
+							style="color:black background:#ff6666">מחק</a></strong>
+					</button>
+					
+				</td>
+			</tr>
+			
+		{% endfor %}
+	</table>
+	
+{% endblock %}

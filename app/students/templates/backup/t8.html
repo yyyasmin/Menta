@@ -1,0 +1,131 @@
+<!-- FROM http://jsfiddle.net/krpec/1r7p14qb/ -->
+{% block t8 %}
+
+<style>
+table {
+    border-collapse:collapse;
+}
+th, td {
+    border:1px solid #DDD;
+}
+
+
+</style>
+	</br></br>
+
+{% include "destinations/table_destinations/tag_and_ar_dropdown.html" %}
+
+
+{% for tag in tags %}
+{% for ar in age_ranges %}  <!-- ars -->	
+{% if (tag.id == default_tag.id) and (ar.id == default_ar.id) %}  <!-- Open content only the part that was updated by the user -->
+			
+</br> 
+		
+<table class="table table-hover table-bordered table-condensed cashflow_report green_table">
+
+    <thead>
+		{% include "./destinations/table_destinations/dst_header_7.html" %}
+    </thead>
+	
+	
+    
+	{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+	<tbody>
+        <tr class='info' rowname='{{std_dst.id}}' state='opened'>
+            
+			<td class='name'>	<span onclick="toggle_rows(this, '{{std_dst.id}}');">
+					מטרות {{ar.title}} {{tag.title}}
+				</span>
+
+            </td>
+			
+			<th>מספר</th>
+			<th>מטרה</th>
+			<th>תאור</th>
+			
+            <th class='name'>	<span onclick="toggle_rows(this, 'in-ct-1');">
+					&nbsp;יעדים
+				</span>
+            </th>	
+			
+			<th>תאריך השלמה</th>
+			<th>סטאטוס</th>
+			<th>הוספת יעדים</th>
+			<th>שמירה</th>				
+									
+		</tr>
+		
+			
+        </tr>
+	
+    </tbody>
+	
+    <tbody class="{{std_dst.id}} blue_table">
+	
+	
+        <tr parent='{{std_dst.id}}' rowname='in-ct-1' state='opened'>		
+			
+			<th>מספר</th>
+			<th>יעד</th>
+			<th>תאור</th>
+			
+            <th class='name'>	<span onclick="toggle_rows(this, 'in-ct-1');">
+					&nbsp;משימות
+				</span>
+            </th>	
+			
+			<th>תאריך השלמה</th>
+			<th>סטאטוס</th>
+			<th>vuxp, nahnu,</th>
+			<th>שמירה</th>				
+									
+		</tr>
+	</tbody>	
+
+{% endfor %}	
+</table>
+																		
+{% endif %}			
+{% endfor %}
+{% endfor %}
+
+<script>
+var toggle_rows = function (element, parent) {
+    if ($(element).closest("tr").attr("state") == "opened") {
+        $("tr[parent~='" + parent + "']").each(function (i, obj) {
+            toggle_child_rows(obj, false);
+        });
+        $("tr[parent~='" + parent + "']").hide();
+        $(element).closest("tr").attr("state", "collapsed")
+    } else {
+        $("tr[parent~='" + parent + "']").each(function (i, obj) {
+            toggle_child_rows(obj, true);
+        });
+        $("tr[parent~='" + parent + "']").show();
+        $(element).closest("tr").attr("state", "opened");
+    }
+};
+
+var toggle_child_rows = function (obj, willShow) {
+    var name = null;
+    if ($(obj).attr("state") === "leaf") {
+        return;
+    } else {
+        name = $(obj).attr("rowname");
+        if ($(obj).attr("state") === "opened" && !willShow) {
+            $("tr[parent~='" + name + "']").each(function (i, elem) {
+                toggle_child_rows(elem, willShow);
+                $(elem).hide();
+            });
+        } else if ($(obj).attr("state") === "opened" && willShow) {
+            $("tr[parent~='" + name + "']").each(function (i, elem) {
+                toggle_child_rows(elem, willShow);
+                $(elem).show();
+            });
+        }
+    }
+};
+</script>
+
+{% endblock t8 %}

@@ -1,0 +1,145 @@
+{% block std_plan_report_todos %}
+
+<style>
+
+</style>
+
+<table style="width:100%">
+
+	
+		<tr id="header_row">
+		
+			<th>משימות מחנכת</th>  <!-- 1 -->
+			<th>משימות תומכת למידה</th> <!-- 2 -->
+			<th>משימות מורה חברתי</th>  <!-- 3 -->
+			<th>משימות הורים</th>  <!-- 4 -->
+			<th>משימות תלמיד</th>  <!-- 5 -->
+			<th>הערכה מעצבת</th>  <!-- 6 -->
+			<th>הערכה מסכמת</th>  <!-- 7 -->
+
+		</tr>
+		
+			
+		
+		<tr>
+		
+		<td>	<!-- 1 -->	
+			{% for todo in goal.todos %}  <!-- std todos -->
+				{% if (todo.who_title == 'מחנכת') %}
+				<li style="margin-right: 3%">
+					<button class="accordion" id="yellow_header"> שם משימה: {{ todo.title }} </button>
+					<div class="panel">
+						<p class="yellow_ppp"> 
+							<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+							<div>תאור משימה:  {{ todo.body }}</div>
+						</p>
+					</div>"
+				</li>
+				{% endif %}			
+			{% endfor %}
+		</td>
+		
+		<td>	 <!-- 2 -->
+			{% for todo in goal.todos %}  <!-- std todos -->
+				{% if (todo.who_title == 'סייעת') or (todo.who_title == 'תומכת למידה') %}
+					<li style="margin-right: 3%">
+						<button class="accordion" id="yellow_header"> שם משימה: {{ todo.title }} </button>
+						<div class="panel">
+							<p class="yellow_ppp"> 
+								<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+								<div>תאור משימה:  {{ todo.body }}</div>
+							</p>
+						</div>
+					</li>
+				{% endif %}			
+			{% endfor %}
+		</td>
+		
+		<td>	 <!-- 3 -->
+			{% for todo in goal.todos %}  <!-- std todos -->	
+			
+				{% if (todo.who_title == 'מורת שילוב') %}
+					<li style="margin-right: 3%">
+						<button class="accordion" id="yellow_header"> שם משימה: {{ todo.title }} </button>
+						<div class="panel">
+							<p class="yellow_ppp"> 
+								<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+								<div>תאור משימה:  {{ todo.body }}</div>
+							</p>
+						</div>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</td>	
+		
+		
+		<td>	 <!-- 4 -->		
+			{% for todo in goal.todos %}  <!-- std todos -->			
+				{% if (todo.who_title == 'הורים') %}
+					<li style="margin-right: 3%">
+						<button class="accordion" id="yellow_header"> שם משימה: {{ todo.title }} </button>
+						<div class="panel">
+							<p class="yellow_ppp"> 
+								<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+								<div>תאור משימה:  {{ todo.body }}</div>
+							</p>
+						</div>
+					</li>
+				{% endif %}
+			{% endfor %}
+		</td>
+		
+		
+		<td>   <!-- 5 -->
+			{% for todo in goal.todos %}  <!-- std todos -->
+					 
+					{% if (todo.who_title == 'תלמיד') %}
+						<li style="margin-right: 3%">
+							<button class="accordion" id="yellow_header"> שם משימה: {{ todo.title }} </button>
+							<div class="panel">
+								<p class="yellow_ppp"> 
+									<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+									<div>תאור משימה:  {{ todo.body }}</div>
+								</p>
+							</div>
+						</li>
+					{% endif %}
+					
+				
+			{% endfor %}
+		</td>
+		
+			<td> <!-- הערכה מעצבת 6 -->
+			</td>
+			
+			<td> <!-- הערכה מסכמת 7 -->
+			</td>
+											
+		</tr>	
+		
+	{% endfor %}  <!-- std todos -->
+					
+</table>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+ 
+ }
+}
+</script>
+{% endblock %}  <!-- std_plan_report_todos -->
+
+

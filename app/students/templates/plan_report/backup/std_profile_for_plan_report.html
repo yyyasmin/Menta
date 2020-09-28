@@ -1,0 +1,83 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% include "./profile/profile_style.html" %}
+
+<div> IN C:\Users\yasmi\Documents\מנטא\app\students\templates\profile\backup\edit_std_profile.html </div>
+	
+<div class="container">	
+
+	<center><h1>{{ student.first_name }} {{ student.last_name }} פרופיל של התלמיד</h1></center>
+
+	<table style="width:100%">
+	
+		<tr>			
+			<th style="color:blue"><strong>תחומי עיניין</strong></th>
+			<th style="color:green"><strong>חוזקות</strong></th>
+			<th style="color:red"><strong>חולשות</strong></th> 
+		</tr>
+		
+
+
+
+		<td>
+			<table id="subjects_table" style="width:100%">
+				{% for sbj in profile.subjects %}	
+					<tr><td>					
+						<button style="background-color:green; color:white" class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.subject_from_std_profile_delete2', selected_subject_id=sbj.id) }}">הסר תחום עיניין זה מפרופיל התלמיד</a></button>			
+						<button style="background-color:red; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:red; color: black" href="{{ url_for('subjectes.subject_update', selected_subject_id=sbj.id) }}">ערוך</a></button>			
+						
+						<button class="accordion">כותרת תחום עיניין:  sbj.title </button>
+						<div class="panel">
+						  <button>תאור תחום עיניין:  sbj.body.</button>				
+						</div>						
+					</td></tr>	
+				{% endfor %}	
+
+			</table>
+		</td>
+
+		<td>
+			<table id="strengthes_table" style="width:100%">
+				{% for strn in profile.strengthes %}
+				
+					<tr><td>
+						<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.strength_from_std_profile_delete2', selected_strength_id=strn.id) }}">הסר נקודת כח זו מפרופיל התלמיד</a></button>			
+						<button style="background-color:red; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:red; color: black" href="{{ url_for('strengthes.strength_update', selected_strength_id=strn.id) }}">ערוך</a></button>			
+						
+						<button class="accordion">כותרת נקודת כח:  strn.title </button>
+						<div class="panel">
+						  <button>תאור נקודת כח:  strn.body.</button>				
+						</div>	
+					</td></tr>
+					
+				{% endfor %}
+
+			</table>
+		</td>
+
+		<td>
+			<table id="weaknesses_table" style="width:100%">
+				{% for wkns in profile.weaknesses %}
+				
+					<tr><td>
+				
+					<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.weakness_from_std_profile_delete2', selected_weakness_id=wkns.id) }}">הסר חולשה זו מפרופיל התלמיד</a></button>			
+					<button style="background-color:red; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:red; color: black" href="{{ url_for('weaknesses.weakness_update', selected_weakness_id=wkns.id) }}">ערוך</a></button>			
+					
+					<button class="accordion">כותרת חולשה:  wkns.title </button>
+					<div class="panel">
+					  <button>תאור חולשה:  wkns.body.</button>				
+					</div>
+					
+				{% endfor %}
+
+			</table>
+		</td>
+
+
+	</table>
+</div>		<!-- class="container -->
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% block show_std_profile %}
+
+{% include "./profile/std_profile2/profile_style.html" %}
+
+	<h3><strong><div>פרופיל</div></strong></h3>
+	
+	<table style="table-layout:fixed;" class="table-hide">	
+		
+		<tr class="gray_table">			
+			<th style="width:12%"><strong>נושא</strong></th>
+			<th style="width:12%"><strong>קטגוריה</strong></th>
+			<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>תחומי עיניין</strong></th>
+			<th style="background-color:#4CAF50; color:#ffffcc; width:32%;"><strong>מוקדי כח</strong></th>
+			<th style="background-color:#ff5c33; color:#ffffcc; width:32%;"><strong>מוקדים לחיזוק</strong></th> 
+		</tr>
+
+<!-----------DEBUG -----------------
+<div> DEBUG -- IN show_std_profile.html --- DEBUG</div>
+									   
+
+<div> DEBUG -- IN show_std_profile.html --- DEBUG</div>	
+-----------DEBUG ----------------->
+
+
+		{% set tag_color = namespace (gray_line_color = "gray_even") %}
+		{% set tag_line_ns = namespace (new_tag_line = True) %}
+		
+		{% for tag in tags if profile.is_parent_of(tag) and tag!= all_tag %}
+			
+			{% set tag_line_ns.new_tag_line = True %}
+
+			{% for sub_tag in sub_tags if  (  tag.is_parent_of(sub_tag) and
+										      profile.is_parent_of(sub_tag) and
+											  sub_tag!= all_sub_tag   )  %}
+											  
+				{% if tag_line_ns.new_tag_line==True %}
+					<tr id="{{tag_color.gray_line_color}}">
+					{% set tag_line_ns.new_tag_line = False %}
+					{% if tag_color.gray_line_color=="gray_even" %}
+						{% set tag_color.gray_line_color = "gray_odd" %}
+					{% else %}
+						{% set tag_color.gray_line_color = "gray_even" %}
+				{% endif %}
+
+			<tr id="{{tag_color.gray_line_color}}" >
+	
+				<td id="{{tag_color.gray_line_color}}" class="tag_width">{{ tag.title|replace("-", "\n") }}</td>
+						{% set tag_line_ns.new_tag_line = False %}
+					{% else %}
+						<td id="{{tag_color.gray_line_color}}"class="tag_width"></td>
+					{% endif %}			
+
+					<td id="{{tag_color.gray_line_color}}">{{sub_tag.title}}</td>					
+					
+				
+					<td id="{{tag_color.gray_line_color}}">
+						<table id="subjects_table">
+							{% for sbj in prf_subjects if (sbj.is_parent_of(tag) and sbj.is_parent_of(sub_tag)) %}
+								<tr>
+									<td>				
+										{{ sbj.title }}									
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</td>
+			
+
+					<td id="{{tag_color.gray_line_color}}">
+						<table id="strengthes_table" style="width:100%">
+							{% for strn in prf_strengths if (strn.is_parent_of(tag) and strn.is_parent_of(sub_tag)) %}	
+								<tr>
+									<td>				
+										{{ strn.title }}									
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</td>
+			
+
+					<td id="{{tag_color.gray_line_color}}">
+						<table id="weaknesses_table" style="width:100%">
+							{% for wkn in prf_weaknesses if (wkn.is_parent_of(tag) and wkn.is_parent_of(sub_tag)) %}							
+								<tr>
+									<td>	
+										{{ wkn.title }}									
+									</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</td>
+					
+				</tr>
+			
+			{% endfor %}
+			
+			</tr>
+
+		{% endfor %}
+		
+	</table>
+
+{% endblock show_std_profile %}
+
+	

@@ -1,0 +1,25 @@
+{% block edit_dst_actions %}
+
+	<button class="btn btn-warning btn-xs" id="edit_list_id" ><a style="color:black" href="{{ url_for('destinations.dsply_dst_form_for_update2', selected_destination_id=dst.id, from_dst_sort_order=from_dst_sort_order) }}">ערוך</a></button>		
+	<button class="btn btn-warning btn-xs" id="show_tree_id" ><a style="color:black" href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+	<button class="btn btn-warning btn-xs" id="edit_sub_list_id" ><a style="color:black" href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=dst.id) }}">ערוך יעדים</a></button>
+	<button class="btn btn-danger btn-xs"  id="delete_id" ><a style="color:black" href="{{ url_for('destinations.destination_delete_for_good2', selected_destination_id=dst.id) }}">מחק</a></button>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

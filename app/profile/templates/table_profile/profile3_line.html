@@ -1,0 +1,47 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block profile3_line %}
+
+<style>
+
+
+#blue_title  {
+	background:title_color='#e6e6ff';
+	color:blue;
+}
+
+#green_title  {
+	background: title_color='#66ff99';
+	color:green;
+}
+
+#red_title  {
+	background: title_color='#ff9999';
+	color:red;
+}
+
+</style>
+
+</br>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3" style="background;orange; width:100%">
+ 
+				{% with part=sbj, prf_parts_list=prf_subjects %}
+					{% include "./table_profile/edit_prf.html" %} 
+				{% endwith %}
+				
+				{% with part=strn, prf_parts_list=prf_strengths %}
+					{% include "./table_profile/edit_prf.html" %} 
+				{% endwith %}
+				
+				{% with part=weak, prf_parts_list=prf_weaknesses %}
+					{% include "./table_profile/edit_prf.html" %} 
+				{% endwith %}
+				
+			</div>
+        </div>
+    </div>	
+				
+{% endblock profile3_line %}

@@ -1,0 +1,39 @@
+ <!-- FROM https://stackoverflow.com/questions/15696365/twitter-bootstrap-collapse-plugin-how-to-enable-multiple-groups-to-be-opened  -->
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" href="#collapseOne">
+        Collapsible Group level 1 #1
+      </a>
+
+    </div>
+    <div id="collapseOne" class="accordion-body collapse in">
+      <div class="accordion-inner">{% include "backup/cp_level2.html" %}</div>
+    </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading"> 
+      <a class="accordion-toggle" data-toggle="collapse" href="#collapseTwo">
+        Collapsible Group level 1 #2
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">Item 2 Body</div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#multipleOPened').on('click', function() {
+  if($(this).is(':checked')) {
+    $('#accordion .collapse').removeAttr('data-parent');
+  } else {
+    $('#accordion .collapse').attr('data-parent','#accordion');
+  }
+});
+</script>

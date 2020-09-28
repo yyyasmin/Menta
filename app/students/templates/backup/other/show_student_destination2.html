@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.action_accordion {
+    background-color: red;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+
+div.panel {
+    padding: 0 18px;
+    background-color: #eff5ef;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#post_header.accordion {
+		color: #fff;
+		border-color: #EEEEEE;
+		background-color: #346767;
+		font-size: 18px;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+.action_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB9;
+	font-size: 16px;
+}
+
+#action_header.accordion {
+		background-color: #bfd9bf;
+		border-color: #afcfaf;
+		font-size: 16px;
+}
+
+
+div.post_panel {
+    padding: 0 18px;
+    background-color: #346767;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+div.action_panel {
+    padding: 0 18px;
+    background-color: #bfd9bf;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+
+</style>
+
+	<h2>
+		<button class="accordion" id="post_header">Solutions list of situation: {{ post.title }}</button>
+		<div class="post_panel" >
+			<p class="ppp">Situation description: {{ post.body }}.</p>
+		</div>
+	</h2>
+  <div>
+	    {% for action in actions %}
+			<br><br>
+						
+			<button class="btn btn-warning btn-xs" ><a href="{{ url_for('action_update', selected_action_id=action.id) }}">Edit</a></button>
+			
+			<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('show_post_tree2', selected_post_id=post.id) }}">Show Situations tree</a></button>
+
+			<button class="btn btn-success btn-xs" ><a href="{{ url_for('pros_add2', selected_action_id=action.id) }}">Add a Pro</a></button>
+			<button class="btn btn-success btn-xs" ><a href="{{ url_for('pros_by_action2', selected_action_id=action.id) }}">Show Pros</a></button>
+			<button class="btn btn-danger btn-xs" ><a href="{{ url_for('cons_add2', selected_action_id=action.id) }}">Add a Con</a></button>
+			<button class="btn btn-danger btn-xs" ><a href="{{ url_for('cons_by_action2', selected_action_id=action.id) }}">Show Cons</a></button>
+			<button class="btn btn-danger btn-xs"  ><a href="{{ url_for('action_delete2', selected_action_id=action.id) }}">Delete</a></button>
+		
+			<button class="accordion" id="action_header">Action: {{ action.title }}</button> 			
+			<div class="action_panel">
+			   <p class="action_ppp">Action description: {{ action.body }}.</p>
+			</div>			
+			
+		{% endfor %}
+		<h3><button class="btn btn-info btn-xs"  ><a href="{{ url_for('action_add2', selected_post_id=post.id) }}">Add new Action</a></button></h3>
+  </div>
+  <br><br><br>
+  
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

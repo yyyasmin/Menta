@@ -1,0 +1,70 @@
+
+{% block std_todos_block %}
+
+	<table class="yellow_table">
+		
+		<tr>
+		
+			{% for t in student.teachers %}
+				<th>{{ t.title }}</th>  				  
+			{% endfor %}
+			<th>הערכה מעצבת</th>
+			<th>הערכה מסכמת</th>			
+		</tr>
+		
+		<tr>
+		
+			
+			
+				{% for t in student.teachers %}
+				<td>
+					{% for todo in goal.todos %}  <!-- std todos -->
+						{% if (todo.who_title == t.title) %}
+						
+							<button class="accordion" id="light_yellow_header"> שם משימה: {{ todo.title }} </button>
+							<div class="panel">
+								<p class="light_yellow_ppp"> 
+									<div>תפקיד האחראי לביצוע המשימה:  {{ todo.who_title }}</div>
+									<div>תאור משימה:  {{ todo.body }}</div>
+								</p>
+							</div>							
+						{% endif %}
+					{% endfor %}
+				</td>	
+				{% endfor %}
+							
+			
+				
+			<td> 
+			</td>
+			
+			<td> 
+			</td>
+											
+		</tr>	
+					
+	</table>
+	
+	</br></br>	
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

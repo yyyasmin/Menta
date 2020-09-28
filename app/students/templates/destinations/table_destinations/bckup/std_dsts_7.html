@@ -1,0 +1,147 @@
+{% block std_dsts_7 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'הראה מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'הסתר מטרות - ';
+}
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרות חדשות + ';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הסתר מטרות חדשות - ';
+}
+
+.collapsed .goals-icon-class:before {
+    content: 'הראה יעדים קיימים+';
+	dir: rtl;
+	margin:0px;
+	padding:0px;
+}
+.goals-icon-class:before {
+	content: 'הסתר יעדים קיימים-';
+}
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעדים חדשים+';
+}
+.add-goals-icon-class:before {
+	content: 'הסתר יעדים חדשים-';
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+
+<body>
+
+			
+<div id="std_dsts_list" class="list-group-item">
+
+    <div class="collapsed" data-toggle="collapse" data-target="#std_dsts_listContent" data-role="expander" data-group-id="std_dsts_list">
+      <ul class="list-inline" style="color:green">
+            <li class="dsts-icon-class"></li>
+        </ul>
+    </div>
+
+
+    <div class="collapsed" data-toggle="collapse" data-target="#dsts_not_of_stdContent" data-role="expander" data-group-id="dsts_not_of_std">
+      <ul class="list-inline" style="color:green">
+            <li class="dsts_not_of_std-icon-class"></li>
+        </ul>
+    </div>
+	
+	
+	<div class="collapse" id="std_dsts_listContent" aria-expanded="true">
+		<table class="green_table">
+		
+			{% include "./destinations/table_destinations/dst_header_6.html" %}
+					
+			<tbody>
+				{% for std_dst in student_dsts %}
+					{% include "./destinations/table_destinations/dsts_list_content_6.html" %}
+				{% endfor %}  
+			</tbody>
+		</table>
+	</div>
+		
+	<div class="collapse" id="dsts_not_of_stdContent" aria-expanded="true">
+		<table class="gray_table">
+		
+			{% include "./destinations/table_destinations/dst_header_6.html" %}			
+		
+			<tbody>
+				{% for std_dst in dsts_not_of_student %}
+					{% include "./destinations/table_destinations/dsts_list_content_6.html" %}
+				{% endfor %}  
+			</tbody>
+		</table>
+	</div>
+	
+	
+</div>
+
+</body>
+
+</html>
+
+{% endblock std_dsts_7 %}

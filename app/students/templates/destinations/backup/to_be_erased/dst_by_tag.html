@@ -1,0 +1,37 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+{% block edit_std_dst_by_tag %} 
+
+
+
+<div class="container" id="container_id">	
+
+	<button class="btn btn-info btn-xs" id="add_button">
+		<h5><strong>	
+			<a href="{{ url_for('students.destination_to_student_add2', selected_student_id=std.id) }}">הוסף מטרה</a>
+		<strong></h5>
+	</button>
+
+	<h4>
+		<button class="accordion" id="green_header" ><strong>רשימת מטרות של התלמיד  {{ std.first_name }} {{ std.last_name }} </strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">תז: {{ std.id }}    כיתה: {{ std.grade }}</p>
+		</div>
+	</h4>
+
+	</br>
+	{% for tag in tags %}
+		<div><h4><strong><u> נושא: {{ tag.title }} </u></strong></h4></div>
+		{% for dst in tag.destinations %}
+			{% if dst.destination_id in std_dst_ids %}
+				{% include "./destinations/std_edit_one_dst.html" %}
+			{% endif %}
+		{% endfor %}
+		</br>			
+	{% endfor %}  <!-- tags -->
+		
+</div>   <!-- container -->
+
+{% endblock  edit_std_dst_by_tag %}
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+button.accordion {
+    background-color: #eee;
+	font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+div.panel {
+    padding: 0 18px;
+    background-color: #888;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right: 10%;
+
+}
+</style>
+
+<button class="btn btn-info btn-xs" id="add_button" style="margin-right:10%"><h5><strong>
+	<a href="{{ url_for('users.user_add') }}">Add user</a>
+<strong></h5></button>
+
+</br>
+
+  <center><h3>User</h3></center>
+  <div>
+  
+	    {% for user in users %}	 
+			<br><br>						
+						
+			<button class="btn" style="background-color:#ffcc00; color:#ffcc33" >
+			<strong>
+			<a style="color:black;" 
+			   href="{{ url_for('users.user_update', selected_user_id=user.id) }}">
+				ערוך
+			</a></strong></button>
+			
+			<button class="btn" style="background-color:#ff4d4d;"><strong><a style="color:black;" href="{{ url_for('users.user_delete2', selected_user_id=user.id) }}" style="color:black background:#ff6666">מחק</a></strong></button>
+			
+			<button class="btn" style="background-color:#ff0000;"><strong><a style="color:black;" href="{{ url_for('users.user_delete_for_good2', selected_user_id=user.id) }}" style="background:#ff3333 color:black">מחק לתמיד</a></strong></button>
+	
+	   		<button class="accordion" style="color:{{user.color}};">
+				{{ user.class_name }}
+				</br> 
+				{{ user.title }}  {{ user.id }}	
+				</br>
+				parent: {{user.get_parent().title}}  {{user.get_parent().id}}
+			</button>
+			
+			<div class="panel">
+			  <button>body: {{ user.body }}</button>				
+			</div>
+			
+		    <br>
+		{% endfor %}
+ </div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.lenuserh; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

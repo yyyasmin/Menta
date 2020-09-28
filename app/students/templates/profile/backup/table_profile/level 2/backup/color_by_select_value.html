@@ -1,0 +1,61 @@
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: sans-serif;
+}
+body {
+  padding: .65rem;
+}
+p {
+  margin-bottom: 5px;
+}
+p + select {
+  margin-bottom: 10px;
+}
+select {
+  -webkit-appearance: none;
+  outline: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  border-radius: 0;
+  background: #ffffff;
+  border: 1px solid #d1d1d1;
+  padding: 0.5em 3.5em 0.5em 1em;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+}
+
+select {
+  color: black;
+}
+
+.placeholder {
+  color: gray
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+</style>
+
+<p>select with onchaneg event to retrive class from selected option's class</p>
+<select onchange="this.className=this.options[this.selectedIndex].className" class="placeholder">
+  <option value="" selected class="placeholder" disabled>placeholder</option>
+  <option value="1" class="green">green</option>
+  <option value="2" class="red">red</option>
+</select>
+

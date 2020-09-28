@@ -1,0 +1,51 @@
+<style>
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  /*padding:  4px;*/
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 100%;
+  max-width: 100%;
+  /* padding: 0 16px; */
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+</style>
+
+<div class="row"> 
+
+  <div class="column">
+    <img src="{{ url_for('static', filename='img/school.png') }}">
+    <img src="{{ url_for('static', filename='img/teacher.png') }}">
+    <img src="{{ url_for('static', filename='img/kid.png') }}">
+  </div>
+  
+  <div class="column">
+    <img src="{{ url_for('static', filename='img/form.png') }}">
+    <img src="{{ url_for('static', filename='img/profile.png') }}">
+    <img src="{{ url_for('static', filename='img/statistics.png') }}">	
+  </div> 
+ 
+</div>

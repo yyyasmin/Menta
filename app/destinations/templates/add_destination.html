@@ -1,0 +1,49 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container" id="container_id">	
+	<h3>הוסף מטרה חדשה:</h3>
+	
+	</br>
+	
+	{% include "./sub_forms/ar/ar_add_form.html" %}
+
+	</br>
+	
+	{% include "./sub_forms/tag/tag_add_form.html" %}
+	
+	</br>
+	
+	{% include "./sub_forms/scrt/scrt_add_form.html" %}
+
+	</br>
+
+	{% include "./sub_forms/add_one_dst_form.html" %}
+	
+	</br>	
+	
+	{% include "./sub_forms/back_to_dst_list_form.html" %}
+
+	</br>
+
+</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

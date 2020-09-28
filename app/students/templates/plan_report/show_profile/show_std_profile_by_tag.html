@@ -1,0 +1,90 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<h3><strong><div>פרופיל</div></strong></h3>
+	
+	<table class="gray_table profile_table">	
+	
+		<thead>
+			<tr>			
+				<th style="width:12%"><strong>נושא</strong></th>
+				<th style="width:12%"><strong>קטגוריה</strong></th>
+				<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>תחומי עיניין</strong></th>
+				<th style="background-color:mediumseagreen; color:#ffffcc; width:32%;"><strong>מוקדי כח</strong></th>
+				<th style="background-color:#ff5c33; color:#ffffcc; width:32%;"><strong>מוקדים לחיזוק</strong></th> 
+			</tr>
+		</thead>
+	
+	
+	<tbody>
+	
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set ns =    namespace(exist_part=False) %}
+	
+	{% for tag in tags if tag.body != 'all' %}
+	
+		
+		{% set tp_ns.tag_printed = False %}
+		
+		{% for sub_tag in sub_tags if ( tag.is_parent_of(sub_tag) and sub_tag.body != 'all' ) %}
+		
+			<tr>
+			
+				{% set ns.exist_part = False %}
+				
+				{% for gt in profile.children if   gt.is_parent_of(tag) and
+												   gt.is_parent_of(sub_tag) %} 
+		
+					{% if tp_ns.tag_printed == False %}
+						<td style="max-width:100%; text-overflow: ellipsis;">{{ tag.title|replace("-", "\n") }}</td>
+						{% set tp_ns.tag_printed = True %}
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					<td style="max-width:100%; text-overflow: ellipsis;">{{sub_tag.title}}</td>
+					{% set ns.exist_part = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_part == True %}			
+					<td>
+						{% with part=sbj, prf_parts_list=prf_subjects, title_box="blue_title", body_box="blue_body" %}
+							{% include "./plan_report/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					<td>
+						{% with part=strn, prf_parts_list=prf_strengths, title_box="green_title", body_box="green_body" %}
+							{% include "./plan_report/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					<td>
+						{% with part=weak, prf_parts_list=prf_weaknesses, title_box="red_title", body_box="red_body"  %}
+							{% include "./plan_report/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+				{% endif %}	
+				
+			</tr>
+				
+		{% endfor %}
+	{% endfor %}
+	
+	</tbody>
+	
+	</table>
+				
+{% endblock plan_report_show_std_profile_by_tag %}

@@ -1,0 +1,181 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+$cor-1: #9b59b6;
+$cor-2: #ecf0f1;
+$cor-3: #27ae60; // green
+
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background: $cor-3;
+}
+
+nav {
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+
+h1 {
+  width: 500px;
+  margin: 100px auto 20px;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+.nav {
+  width: 500px;
+  margin: 0 auto;
+  background: darken( $cor-3, 10% );
+  color: #f0f0f0;
+  a {
+    display: block;
+    padding: 0 16px;
+    line-height: inherit;
+    cursor: pointer;
+  }
+  
+   &__menu {
+     line-height: 45px;
+     font-weight: 700;
+     text-transform: uppercase;
+     &-item {
+       display: inline-block;
+       position: relative;
+       
+       &:hover {
+         background-color: $cor-1;
+         
+         .nav__submenu {
+           display: block;
+         }
+       }
+     }
+     
+   }
+  
+  
+  &__submenu {
+    font-weight: 300;
+    text-transform: none;
+    display: none;
+    position: absolute;
+    width: 220px;
+    background-color: $cor-1;
+    
+    &-item {
+      &:hover {
+        background: rgba( #000, 0.1 );
+      }
+    }
+  }
+  
+}
+</style>
+
+link( href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,300' rel='stylesheet' type='text/css' )
+
+
+h1 A Simple Dropdown Menu
+
+nav.nav
+  ul.nav__menu
+    li.nav__menu-item
+      a Home
+    li.nav__menu-item
+      a Services
+      ul.nav__submenu
+        li.nav__submenu-item 
+          a Web Design
+        li.nav__submenu-item 
+          a Web Development
+        li.nav__submenu-item 
+          a Web Hosting
+    li.nav__menu-item
+      a About
+      ul.nav__submenu
+        li.nav__submenu-item 
+          a Our Company
+        li.nav__submenu-item 
+          a Our Team
+        li.nav__submenu-item 
+          a Our Reach
+    li.nav__menu-item
+      a Blog
+    li.nav__menu-item
+      a Contact
+	  
+{% endblock %}
+
+
+<script>
+/*
+Reference: http://jsfiddle.net/BB3JK/47/
+*/
+
+$('select').each(function(){
+    var $this = $(this), numberOfOptions = $(this).children('option').length;
+  
+    $this.addClass('select-hidden'); 
+    $this.wrap('<div class="select"></div>');
+    $this.after('<div class="select-styled"></div>');
+
+    var $styledSelect = $this.next('div.select-styled');
+    $styledSelect.text($this.children('option').eq(0).text());
+  
+    var $list = $('<ul />', {
+        'class': 'select-options'
+    }).insertAfter($styledSelect);
+  
+    for (var i = 0; i < numberOfOptions; i++) {
+        $('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+    }
+  
+    var $listItems = $list.children('li');
+  
+    $styledSelect.click(function(e) {
+        e.stopPropagation();
+        $('div.select-styled.active').not(this).each(function(){
+            $(this).removeClass('active').next('ul.select-options').hide();
+        });
+        $(this).toggleClass('active').next('ul.select-options').toggle();
+    });
+  
+    $listItems.click(function(e) {
+        e.stopPropagation();
+        $styledSelect.text($(this).text()).removeClass('active');
+        $this.val($(this).attr('rel'));
+        $list.hide();
+        //console.log($this.val());
+    });
+  
+    $(document).click(function() {
+        $styledSelect.removeClass('active');
+        $list.hide();
+    });
+
+});
+</script>
+

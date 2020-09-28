@@ -1,0 +1,35 @@
+{% extends "layout.html" %} 
+
+
+{% with student=student, std=student  %} 
+{% include "dst_title.html" %} 
+{% endwith %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="title">resource's title:</label>
+		  <input type="title" class="form-control" id="title"  name="title" value="{{ resource.title }}">
+		</div>  
+		
+		<div class="form-group">
+		  <label for="description">resource's description:</label>
+		  <input type="text" class="form-control" id="title"  name="description" value="{{ resource.body }}">
+		</div>
+		
+		<!--
+		<div class="form-group">		
+		  <input type = "file" name = "file_name" />	
+		</div> 
+		-->
+		</br>		 
+		<button type="submit" class="btn btn-default">Submit</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

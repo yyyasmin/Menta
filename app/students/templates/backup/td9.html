@@ -1,0 +1,233 @@
+{% block t9 %}
+
+<style>
+table {
+    border-collapse:collapse;
+}
+th, td {
+    border:1px solid #DDD;
+}
+
+
+</style>
+
+
+	</br></br>
+
+{% include "destinations/table_destinations/tag_and_ar_dropdown.html" %}
+
+
+{% for tag in tags %}
+{% for ar in age_ranges %}  <!-- ars -->	
+{% if (tag.id == default_tag.id) and (ar.id == default_ar.id) %}  <!-- Open content only the part that was updated by the user -->
+			
+</br> 
+		
+
+<table class="table table-hover table-bordered table-condensed cashflow_report green_table">
+    <thead>
+        <tr class='info' rowname='{{tag.id}}{{ar.id}}' state='opened'>           
+		
+			<th>מספר</th>
+			<th>מטרה</th>
+			<th>תאור</th>
+			
+			<td class='name'>	
+				<span onclick="toggle_rows(this, '{{std_dst}}');">
+						פרוט יעדים
+				</span>
+            </td>
+			
+			<th>תאריך השלמה</th>
+			<th>סטאטוס</th>
+			<th>הוספת יעדים</th>
+			<th>שמירה</th>		
+        </tr>
+		
+
+	</thead>
+	
+    <tbody class="{{tag.id}}{{ar.id}}">
+	
+	{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+    	
+		<tr>
+			{% include "./destinations/table_destinations/dst_line_7.html" %}
+		</tr>        
+		
+		<tr class='info' rowname='{{std_dst}}' state='opened'>           
+
+		
+			<th>מספר</th>
+			<th>מטרה</th>
+			<th>תאור</th>
+			
+			<td class='name'>	
+				<span onclick="toggle_rows(this, '{{std_dst}}');">
+						פרוט יעדים
+				</span>
+            </td>
+			
+			<th>תאריך השלמה</th>
+			<th>סטאטוס</th>
+			<th>הוספת יעדים</th>
+			<th>שמירה</th>		
+        </tr>
+		
+		<tr>
+			{% include "./destinations/table_destinations/dst_line_7.html" %}
+		</tr>
+	</thead>
+
+	
+	{% for goal in student_golas if (std_dst.is_parent_of(std_dst)) %}
+	
+	
+		<tr>
+			{% include "./destinations/table_destinations/goal_header_7.html" %}
+		</tr>
+		
+		<tr parent='{{std_dst.id}}' rowname='in-ct-1' state='opened'>
+
+					
+			<td>{{ goal.id }}</td>
+					
+			<td>{{ goal.title }}</td>
+			
+			<td>{{ goal.body }}</td> 
+
+			<td>
+			
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-ct-1');">
+					&nbsp;משימות
+				</span>
+
+            </td>
+			
+			</td>
+								
+			<td>
+				<div id="ar_div">			
+					{% for st in std_txts %}
+						{% if st.general_txt_id==std_dst.id %}
+							<input type="date" style="text-align:center" id="due_date" name="due_date{{ std_dst.id }}" value="{{ st.due_date }}">					
+						{% endif %}
+					{% endfor %}
+				</div>   <!-- ar_div -->
+			</td>	
+
+			<td>
+				<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ std_dst.id }}" id="selected_status">	
+					{% for sts in statuss %}
+						{% if std_dst.is_parent_of(sts) %}
+							<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+						{% else %}
+							<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>					
+			</td>
+
+			<td>	
+				<button type="button" class="accordion" style="color:gray; width:auto;"
+					 onclick="myFunction('{{std_dst.id}}')">הוסף משימה 
+				</button>	
+			</td>
+				
+			<td>
+				<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ std_dst.id }}">שמור</button>
+			</td>
+							
+							
+        </tr>
+		
+		
+        <tr parent='in-ct-1' rowname='in-tt-1' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-tt-1');">
+					&nbsp;&nbsp;Subgroup 1
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+		
+        <tr parent='in-tt-1' state='leaf'>
+            <td class='name'>&nbsp;&nbsp;&nbsp;Operation 1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+		
+        <tr parent='in-ct-1' rowname='in-tt-2' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-tt-2');">
+					&nbsp;&nbsp;Subgroup 2
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+		
+        <tr parent='in-tt-2' state='leaf'>
+            <td class='name'>&nbsp;&nbsp;&nbsp;Operation 2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+	{% endfor %}
+	{% endfor %}
+</table>
+
+																		
+{% endif %}			
+{% endfor %}
+{% endfor %}
+
+
+<script>
+var toggle_rows = function (element, parent) {
+    if ($(element).closest("tr").attr("state") == "opened") {
+        $("tr[parent~='" + parent + "']").each(function (i, obj) {
+            toggle_child_rows(obj, false);
+        });
+        $("tr[parent~='" + parent + "']").hide();
+        $(element).closest("tr").attr("state", "collapsed")
+    } else {
+        $("tr[parent~='" + parent + "']").each(function (i, obj) {
+            toggle_child_rows(obj, true);
+        });
+        $("tr[parent~='" + parent + "']").show();
+        $(element).closest("tr").attr("state", "opened");
+    }
+};
+
+var toggle_child_rows = function (obj, willShow) {
+    var name = null;
+    if ($(obj).attr("state") === "leaf") {
+        return;
+    } else {
+        name = $(obj).attr("rowname");
+        if ($(obj).attr("state") === "opened" && !willShow) {
+            $("tr[parent~='" + name + "']").each(function (i, elem) {
+                toggle_child_rows(elem, willShow);
+                $(elem).hide();
+            });
+        } else if ($(obj).attr("state") === "opened" && willShow) {
+            $("tr[parent~='" + name + "']").each(function (i, elem) {
+                toggle_child_rows(elem, willShow);
+                $(elem).show();
+            });
+        }
+    }
+};
+</script>
+
+{% endblock t9 %}

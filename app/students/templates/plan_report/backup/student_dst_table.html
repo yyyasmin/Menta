@@ -1,0 +1,103 @@
+
+{% block std_dst_block %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: #f5f5f0;
+}
+tr:nth-child(even) {
+    background-color: #ebebe0;
+}
+
+#dst_header_row  {
+background-color: #53c68c;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+	{% for std_tag in student.tags %}
+		</br></br>
+		<th><h4><strong> נושא: {{ std_tag.tag.title }} </strong></h4></th>
+
+		<table id="dst_tbl_id" style="width:100%">
+		
+			<tr id="dst_header_row">		
+				<th>מטרות</th>								
+			</tr>
+				
+			{% for dst in std_tag.tag.destinations %}
+				{% for std_dst in student.destinations %}
+					{% if dst.destination_id == std_dst.destination_id %} 
+			
+						<tr>
+						
+							<td>  <!-- DST COLUMN -->
+								{% include "plan_report/backup/student_dst_table_level_1.html" %}
+							</td>
+							
+							<td>   <!-- GOALS COLUMN -->
+								<div>
+									{% include "plan_report/backup/student_dst_table_level_2.html" %}
+								</div>
+							</td>
+						
+						</tr>
+						
+					{% endif %}
+				{% endfor %}	
+			{% endfor %}											
+		</table>
+	{% endfor %}  <!-- tags -->
+	
+	</br></br>	
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

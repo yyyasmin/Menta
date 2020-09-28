@@ -1,0 +1,44 @@
+
+{% block dst_form %}
+
+<style>
+
+</style>
+
+<div class="container" id="container_id">	
+
+	<form action="{{ url_for('destinations.destination_add', from_dst_sort_order=from_dst_sort_order)}}" method="POST"> 			
+		<div class="form-group">
+			<label for="title" id="header_panel">כותרת מטרה</label>
+			<input type="title" class="form-control" name="title" value="{{ dst.title }}">
+		</div>
+		 
+		<div class="form-group">
+			<label for="text" id="ppp">תאור מטרה</label>
+			<input type="text" class="form-control" name="description" value="{{dst.body }}">
+		</div>
+		
+		</br>							 
+		<input type="submit" value="submit_description" name="submit">			
+	</form>
+
+</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

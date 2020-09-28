@@ -1,0 +1,149 @@
+{% block profile2_subjects_of_interest %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'מטרות - ';
+}
+
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרה + ';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הוסף מטרה - ';
+}
+
+
+
+.collapsed .goals-icon-class:before {
+    content: 'יעדים + ';
+	dir: rtl;
+}
+.goals-icon-class:before {
+    content: 'יעדים - ';
+	dir: rtl;
+}
+
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעד - ';
+	dir: rtl;
+
+}
+.add-goals-icon-class:before {
+	content: 'הוסף יעד - ';
+	dir: rtl;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+<body>
+
+	</br></br>
+			
+	{% include "profile2/tag_dropdown.html" %}
+
+		
+	{% for tag in tags %}
+						
+			{% if (tag.id == default_tag.id) %}  <!-- Open content only the part that was updated by the user -->
+			
+				<div class="collapsed" data-toggle="collapse" data-target="#{{tag.id}}Content">
+					<ul class="list-inline" style="color:blue">
+						<li class="subjec_of_interest-icon-class"></li>
+					</ul>
+				</div>
+
+
+				<div class="collapsed" data-toggle="collapse" data-target="#not_of_std{{tag.id}}Content">
+					<ul class="list-inline" style="color:green">
+						<li class="subjec_of_interest_not_of_std-icon-class"></li>
+					</ul>
+				</div>
+						
+				<div class="collapse in" id="{{tag.id}}Content">
+					<table class="green_table">
+											
+						{% include "./profile2/prof2/subjec_of_interest_header_6.html" %}
+								
+						<tbody>
+							{% for std_subjec_of_interest in student_subjets if (std_subjec_of_interest.is_parent_of(tag)) %}
+								{% include "./profile2/prof2/std_subjec_of_interest_list_content_2.html" %}
+							{% endfor %}  
+						</tbody>
+					</table>
+				</div>
+																					
+			{% endif %}
+						
+	{% endfor %}
+	
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+{% endblock profile2_subjects_of_interest %}

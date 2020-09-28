@@ -1,0 +1,152 @@
+{% extends "layout.html" %} 
+
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.st_table tr:nth-child(even){
+        background: #dae5f4;
+    }
+
+</style>
+
+
+{% with std = student, student=student  %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+	
+<div class="container">	
+
+</br></br>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('students.teacher_to_student_add2', selected_teacher_id=0, selected_student_id=student.id) }}">הוסף איש צוות</a>
+<strong></h5></button>
+
+</br>
+
+	<h2><strong><center><div>צוות חינוכי</div></center></strong></h2>
+	<p></p>
+	
+	<table class="st_table" style="width:100%">
+		<tr>			
+			<th> שם פרטי </th>
+			<th> שם משפחה </th>
+			<th> Email </th>
+			<th> תפקיד </th>
+			<th> פעולות עריכה </th>
+		</tr>
+		
+		{% for student_staff_teacher in student_staff_teachers %}	
+
+		<form method="POST" action="{{ url_for('students.teacher_to_student_add2', selected_teacher_id=student_staff_teacher.id, selected_student_id=student.id) }}">	
+			<tr>
+				<td>{{ student_staff_teacher.first_name }}</td>
+				<td>{{ student_staff_teacher.last_name }}</td> 
+				<td>{{ student_staff_teacher.email }}</td>
+
+				<td>תפקיד:
+					<select class="select" name="selected_role" id="selected_role">						
+						{% for std in student_staff_teacher.students %}	
+							{% if std.student_id == student.id %}	
+								<option value="{{ std.title }}" selected="selected">{{std.title}}</option>
+							{% endif %}
+						{% endfor %}
+						
+						{% for acc in accupations %}	
+							<option value="{{ acc.title }}">{{ acc.title }}</option>
+						{% endfor %}
+						
+					</select>					
+				</td>
+				
+				<td>
+				<button class="btn btn-xs" type="submit" value="Save">שמור</button>	
+				<button class="btn btn-xs"><a style="color:black" href="{{ url_for('students.teacher_from_student_delete2', selected_student_id=student.id, selected_teacher_id=student_staff_teacher.id) }}">מחק</a></button>
+				</td>			
+		
+			</tr>
+		</form>	
+		{% endfor %}
+
+	</table>
+</div>		<!-- class="container -->
+
+</br>
+  
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+{% endblock %}

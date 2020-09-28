@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-container">
+	<div>In start of acc.html: " {{ i }}</div>
+
+	{% set i=i+1 %}
+	
+	<div>After ++  i=: " {{ i }}</div>
+	
+	{% if i != 4 %}    <!-- recursion call stop condition -->
+	
+	<button onclick="myFunction('{{ i }}')" class="w3-button w3-block w3-black w3-left-align">
+		Level {{ i }}
+	</button>
+
+	<div id="{{ i }}" class="w3-hide w3-border">			  
+		<ul class="w3-ul">
+			<li>Calling include:  I am in button i= {{ i }} </li>
+			<li>
+				{% with i=i %}
+					<button> 
+					{% include "./plan_report/backup/acc_bak.html" %}
+					</button>
+				{% endwith %}
+			</li>
+		</ul>  
+	</div>
+
+	{% endif %}   <!-- recursion call stop condition -->
+</div>
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>
+
+

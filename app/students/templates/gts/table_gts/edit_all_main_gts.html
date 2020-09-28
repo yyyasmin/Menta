@@ -1,0 +1,52 @@
+{% extends "layout.html" %} 
+
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+{% block content %}
+
+<div class="container" id="container_id">
+<h2><strong><center><div style="background:#d6f5f5; color:#006699" >{{ std_gts[0].h_name }}</div></center></strong></h2>
+
+	</br>
+		
+		<form method="POST" action="{{ url_for('students.update_std_gt2') }}">	
+			
+			{% for tag in tags %}
+								</br></br>
+				<th><h4><strong> נושא:   {{ tag.title }}</strong></h4></th>
+
+				{% for gt_category in gt_categories %}
+				
+					<br><br>
+					
+					<strong></h5></button>					
+					<button class="btn btn-info btn-xs" id="add_button"><h5><strong>		
+						<a href="" style="color:{{ gt_category.color }}">עדכן {{ gt_category.h_name }}</a>				
+					<strong></h5></button>
+					
+					<br>
+																
+					{% include "./gts/table_gts/edit_category_gts.html" %}    <!--- std_prf_subjects/strnengths/weaknesses --->
+							
+					<strong></h5></button>					
+					<button class="btn btn-info btn-xs" id="add_button"><h5><strong>		
+						<a href="" style="color:{{ gt_category.color }}">הוסף לתלמיד {{ gt_category.h_name }}</a>				
+					<strong></h5></button>
+					
+					<br>
+					
+					{% include "./gts/table_gts/not_of_std/edit_category_gts_not_of_std.html" %}	
+					
+				{% endfor %}
+			{% endfor %}  <!-- tags -->	
+			
+		</form>
+		
+	
+
+</div>   <!-- container -->
+
+{% endblock %}

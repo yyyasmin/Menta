@@ -1,0 +1,51 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+</style>
+
+<div> In C:\Users\yasmi\Documents\מנטא\app\students\templates\goals\backup\edit_std_dst_goals_3.html</div>
+<div> Std goals is: {{ std_goals }}</div>
+
+<div class="container" id="container_id">	
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.try_goal_to_student_add') }}">הוסף יעד</a>
+	<strong></h5></button>
+
+	</br>
+	
+	<h2><strong><center><div>יעדי התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div> עבור המטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+	{% for std_goal in std_goals %}
+		<div> In loop Std goal is: {{ std_goal }}</div>
+		{% include "./goals/backup/edit_one_std_goal_form.html" %}
+	{% endfor %}
+	</br>
+
+</div>   <!-- container -->
+
+{% endblock %}

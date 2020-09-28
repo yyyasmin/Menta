@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+.header {
+    text-align: center;
+    padding: 32px;
+}
+
+.row {
+    display: -ms-flexbox; /* IE 10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE 10 */
+    flex-wrap: wrap;
+    /*padding: 0 4px;
+	padding: 100px 100px;*/
+	
+	-ms-flex: 50%; /* IE 10 */
+    flex: 50%;
+	horizontal-align: middle;
+	
+	padding: 30px 30px;
+	margin-left: 15%;
+	
+}
+
+}#row1: {
+		background: green;
+}
+}#row2: {
+		background: light-blue;
+}
+
+/* Create 3 equal columns that sits next to each other */
+.column {
+    -ms-flex: 33%; /* IE 10 */
+    flex: 33%;
+    /* padding: 0 4px;*/
+	padding: 30px 30px;
+	
+}#col1: {	
+	padding: 0 100px;
+	background: yellow;
+	
+}
+}#col2: {	
+	padding: 100px 0;
+	background: orange;
+}
+}#col3: {	
+	padding: 50px 50px;
+	background: red;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Style the buttons */
+.btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #ddd;
+}
+
+.btn.active {
+    background-color: #666;
+    color: white;
+}
+</style>
+<body>
+
+<!-- Header -->
+<div class="header" id="myHeader">
+  <h1>Image Grid</h1>
+  <p>Click on the buttons to change the grid view.</p>
+  <button class="btn" onclick="one()">1</button>
+  <button class="btn active" onclick="two()">2</button>
+  <button class="btn" onclick="three()">3</button>
+</div>
+
+<div class="row">
+    <div class="col-md-4"><img src="{{ url_for('static', filename='img/form.png') }}" style="width:100%"></div>
+    <div class="col-md-8"><img src="{{ url_for('static', filename='img/profile.png') }}" style="width:100%"></div>
+    <div class="col-md-12"><img src="{{ url_for('static', filename='img/statistics.png') }}" style="width:100%"></div>
+</div>
+
+
+<div class="row" id="row2"> 
+  <div class="column" id="col2">
+    <img src="{{ url_for('static', filename='img/form.png') }}" style="width:40%">
+  </div>
+  
+  <div class="column">
+    <img src="{{ url_for('static', filename='img/profile.png') }}" style="width:40%">
+  </div>  
+  
+  <div class="column">
+    <img src="{{ url_for('static', filename='img/statistics.png') }}" style="width:40%">
+  </div>
+</div>
+
+<script>
+// Get the elements with class="column"
+var elements = document.getElementsByClassName("column");
+
+// Declare a loop variable
+var i;
+
+
+// Four images side by side
+function one() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor =  "red"
+		elements[i].style.padding "0 100px"
+    }
+}
+
+// Four images side by side
+function two() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor = "blue";
+    }
+}
+
+// Four images side by side
+function three() {
+    for (i = 0; i < elements.length; i++) {
+        elements[i].style.msFlex = "33%";  // IE10
+        elements[i].style.flex = "33%";
+		elements[i].style.backgroundColor = "yellow";
+    }
+}
+
+// Add active class to the current button (highlight it)
+var header = document.getElementById("myHeader");
+var btns = header.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>
+
+</body>
+</html>

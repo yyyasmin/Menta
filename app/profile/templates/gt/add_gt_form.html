@@ -1,0 +1,54 @@
+{% block edit_std_dst_line %}		
+	<form method="post" action="{{ url_for('profile.gt_to_profile_add2') }}">
+	
+	<tr>
+		<td>נושא:
+			<select class="select" name="gt_tag" id="selected_tag">	
+				{% for tag in tags %}	
+					{% if gt.is_parent_of(tag) %}
+							<option value="{{ tag.id }}" selected="selected">{{ tag.title }}</option>
+						{% else %}
+							<option value="{{ tag.id }}">{{ tag.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>					
+		</td>
+			
+			
+		<td>
+			<div id="ar_div">
+			
+				<input type="input" style="text-align:center" id="css_gt_id" name="gt_title" value="{{ gt.title }}">					
+
+			</div>   <!-- ar_div -->
+		</td>
+		
+		
+		<td>
+			<div id="ar_div">
+			
+				<input type="input" style="text-align:center" id="css_gt_id" name="gt_body" value="{{ gt.body }}">					
+
+			</div>   <!-- ar_div -->
+		</td>	
+	
+
+		<td>
+			<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{type}}{{ gt.id }}">שמור</button>
+		</td>
+		
+	</tr>
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+	</from>
+
+
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock edit_std_dst_line %}

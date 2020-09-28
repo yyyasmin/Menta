@@ -1,0 +1,140 @@
+<!-- FROM https://gojs.net/latest/learn/index.html -->
+
+{% extends "layout.html" %}
+	
+{% block content %}
+
+<!DOCTYPE html>  <!-- HTML5 document type -->
+<html>
+<head>
+	<!-- use go-debug.js when developing and go.js when deploying -->
+	<script src="go-debug.js"></script>
+	<script src="https://unpkg.com/gojs/release/go-debug.js"></script>  
+
+ 
+ <script id="code">
+    function init() {
+      if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+
+var $ = go.GraphObject.make;
+
+
+var myDiagram =
+  $(go.Diagram, "myDiagramDiv",
+    {
+			initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            maxScale: 1.00,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+            isReadOnly: true,  // don't allow user to change the diagram
+            "animationManager.isEnabled": false,
+            layout: $(go.TreeLayout,
+                      { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            maxSelectionCount: 1 , // only one node may be selected at a time in each diagram
+            // when the selection changes, update the myLocalDiagram view 
+			
+			
+		"undoManager.isEnabled": true,
+		layout: $(go.TreeLayout,
+		{ angle: 90, layerSpacing: 35 })
+    });
+
+
+/************
+		  
+      // Define a node template that is shared by both diagrams
+      var myNodeTemplate =
+        $(go.Node, "Auto",
+          { locationSpot: go.Spot.Center, },
+          new go.Binding("text", "key", go.Binding.toString),  // for sorting
+		  
+<!-- FROM https://forum.nwoods.com/t/centering-textblocks-in-panels/7941/9  -->	
+        $(go.Panel, "Vertical",
+          $(go.Panel, "Auto",
+            $(go.Shape, "Rectangle", { stroke: "black", fill: "yellow" },
+			new go.Binding("fill", "color")),
+            $(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "12pt sans-serif" }, 
+			new go.Binding("text", "name"))
+          ),
+          $(go.Panel, "Auto", 
+            $(go.Shape, "Rectangle", { stroke: "black", strokeWidth: 2, fill: "lightblue",  },
+			new go.Binding("fill", "color2")),
+            $(go.TextBlock, { margin: 5, stroke: "black", textAlign: "center", font: "12pt sans-serif" }, 
+			new go.Binding("text", "status"))
+          )
+        )
+				
+        );
+**********************/
+// the template we defined earlier
+myDiagram.nodeTemplate =
+  $(go.Node, "Horizontal",
+    { background: "#44CCFF" },
+	
+	  $(go.Panel, "Vertical",
+	  $(go.Panel, "Auto",
+		$(go.Shape, "Rectangle", { stroke: "black", fill: "yellow" },
+		new go.Binding("fill", "color")),
+		$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "12pt sans-serif" }, 
+		new go.Binding("text", "name"))
+	  ),
+	  $(go.Panel, "Auto", 
+		$(go.Shape, "Rectangle", { stroke: "black", strokeWidth: 2, fill: "lightblue",  },
+		new go.Binding("fill", "color2")),
+		$(go.TextBlock, { margin: 5, stroke: "black", textAlign: "center", font: "12pt sans-serif" }, 
+		new go.Binding("text", "status"))
+	  )
+	)
+  );
+
+// define a Link template that routes orthogonally, with no arrowhead
+myDiagram.linkTemplate =
+  $(go.Link,
+    { routing: go.Link.Orthogonal, corner: 5 },
+    $(go.Shape, // the link's path shape
+      { strokeWidth: 3, stroke: "#555" }));
+
+  // Create the full tree diagram
+  
+  windoe.alert("BEDOTR CALL TO setupDiagram");
+  
+  setupDiagram();
+  
+	
+	{% include "./tree/backup/set_dst_data.js" %}	    /*** setupDiagram ==> fills diagram with dst info ***/
+
+	var model = $(go.TreeModel);
+	model.nodeDataArray = nodeDataArray;
+	myDiagram.model = model;
+	
+/*************************************
+var model = $(go.TreeModel);
+model.nodeDataArray =
+[
+  { key: "1",              name: "Don Meow",   source: "cat1.png" },
+  { key: "2", parent: "1", name: "Demeter",    source: "cat2.png" },
+  { key: "3", parent: "1", name: "Copricat",   source: "cat3.png" },
+  { key: "4", parent: "3", name: "Jellylorum", source: "cat4.png" },
+  { key: "5", parent: "3", name: "Alonzo",     source: "cat5.png" },
+  { key: "6", parent: "2", name: "Munkustrap", source: "cat6.png" }
+];
+myDiagram.model = model;
+*********************************/
+	  
+    }
+	
+
+  </script>
+</head>
+<body onload="init()">
+
+	<div id="sample">
+	<!-- The DIV for a Diagram needs an explicit size or else we will not see anything.
+		 In this case we also add a background color so we can see that area. -->
+		<div id="myDiagramDiv"
+			 style="width:100%; height:100%; background-color: #DAE4E4;">
+		 </div>
+	</div>
+
+</body>
+</html>
+{% endblock %}

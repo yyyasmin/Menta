@@ -1,0 +1,107 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+	
+	
+}table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+</style>
+	
+<div class="container">	
+
+	<center><h1> Student's {{ student.first_name }} {{ student.last_name profile }}</h1></center>
+	<h2><center>Profile title: {{ profile.title }}</center></h2>
+	<h2><center>Profile description: {{ profile.description }}</center></h2>
+	
+	<table style="width:100%">
+	
+		<tr>			
+			<th> intrest subjects </th>
+			<th> strengthes </th>
+			<th> weaknesses </th> 
+			<th> actions </th>
+		</tr>
+		
+
+		<td>
+			{% for sbj in profile.interest_subject %}	
+				{{ sbj.title }}			
+			{% endfor %}
+			<center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('profile.subject_add') }}">Add new Subject of intrest</a></button>
+		</td>
+		
+		<td>
+		{% for strn in profile.strengthes %}	
+			{{ strn.title }}
+		{% endfor %}
+		<center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('profile.strength_add') }}">Add new strength</a></button>
+		</td>
+		
+		<td>
+		{% for sbj in profile.weaknesses %}	
+			{{ sbj.title }}
+		{% endfor %}	
+		<center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('profile.weakness_add') }}">Add new weakness</a></button>		
+		</td>
+			
+
+	</table>
+</div>		<!-- class="container -->
+
+{% endblock %}

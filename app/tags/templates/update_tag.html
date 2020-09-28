@@ -1,0 +1,30 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action='' > 
+			
+		<div class="form-group">
+		  <label for="tag_title">נושא</label>
+		  <input type="title" class="form-control" id="title"  name="tag_title" value="{{ tag.title }}">
+		</div> 
+		
+		<div class="form-group">
+		  <label for="description">תאור נושא</label>
+		  <input type="text" class="form-control" id="title"  name="description" value="{{ tag.body }}">
+		</div> 
+ 		
+		<div class="form-group">
+		  <label for="tag_age">גיל</label>
+		  <input type="number" class="form-control" id="title"  name="tag_age" value="{{ tag.age }}">
+		</div>  
+		
+		</br>		 
+		<button type="submit" class="btn btn-default">שמור</button>
+		
+	</form>
+</div>
+
+{% endblock %}
+

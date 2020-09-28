@@ -1,0 +1,161 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+
+</style>
+
+<div class="container">	
+
+
+	<h3><strong><center><div><u> רשימת יעדים לתלמיד: {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+	
+	</br>
+	
+	<h4>
+		<button class="accordion" id="green_header" ><strong> עבור המטרה:  {{ dst.title }}</strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">{{ dst.body }}</p>
+		</div>
+	</h4> 
+
+	<br>
+	
+	<table style="width:100%">
+	
+			<tr>			
+				<th> כותרת היעד </th>
+				<th> תאור היעד </th>
+				<th> תאריך יעד </th>
+				<th> סטאטוס היעד </th>
+
+			</tr>
+			
+		{% for std_goal in std_goals %}	
+
+			<form method="POST" action="{{ url_for('students.try_goal_to_student_add') }}">	
+			
+			<tr>
+			
+					
+				<td>{{ std_goal.goal_title }}</td>
+				<td>{{ std_goal.goal_body }}</td> 
+				
+				<td>
+					<div id="ar_div">
+						<input type="date" class="form-control" id="due_date" name="due_date" value="{{ std_goal.due_date }}">
+					</div>
+				</td>
+
+			
+				
+				<td>סטאטוס: 
+					<select class="select" name="selected_status" id="selected_status">	
+						{% for sts in statuss %}
+							{% if std_goal.status_id == sts.id %}
+							<option value="{{ sts.title }}" selected="selected">{{ sts.title }}</option>
+							{% else %}
+								<option value="{{ sts.title }}">{{ sts.title }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+					<button class="btn btn-success btn-xs" type="submit" value="שמור סטאטוס">שמור סטאטוס</button>	
+					<!-- <button class="btn btn-success btn-xs" type="submit" value="שמור סטאטןס חדש"></button> -->	
+				</td>
+				
+			</tr>
+
+			</form>	
+		
+		{% endfor %}
+
+		
+	</table>
+	
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+{% endblock %}	

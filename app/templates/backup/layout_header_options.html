@@ -1,0 +1,94 @@
+		  
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="iweaknesse-bar"></span>
+				<span class="iweaknesse-bar"></span>
+				<span class="iweaknesse-bar"></span>
+			  </button>			 
+			</div>
+			
+			<div class="collapse navbar-collapse" id="myNavbar">
+			  <ul class="nav navbar-nav">
+				<li class="active"><a href="{{ url_for('students.index') }}">בית</a></li>	
+
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">בת ספר<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('schools.edit_schools') }}">הראה בתי הצג</a></li>
+					<li><a href="{{ url_for('schools.school_add') }}">הוסף בית ספר</a></li>
+					<li><a href="{{ url_for('schools.students_by_school_show') }}">תלמידי בית הספר</a></li>
+					<li><a href="{{ url_for('schools.teachers_by_school_show') }}">צוות בית הספר</a></li>					
+				  </ul>
+				</li>						
+
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">חברי צוות<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('teachers.edit_teachers') }}">הצג חברי צוות</a></li>
+					<li><a href="{{ url_for('teachers.teacher_add') }}">הוסף איש צוות</a></li>
+					<li><a href="{{ url_for('teachers.edit_teacher_students') }}">תלמידי המורה</a></li>					
+				  </ul>
+				</li>		
+		 
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">תלמידים<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('students.edit_students') }}">הצג רשימת תלמידים</a></li>
+					<li><a href="{{ url_for('students.student_add') }}">הוסף תלמיד</a></li>
+					<li><a href="{{ url_for('students.edit_student_teachers') }}">קבוצות תלמידים של מורה</a></li>					
+					<li><a href="{{ url_for('students.student_delete') }}">מחק תלמיד</a></li>
+				  </ul>
+				</li>
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">פרופיל<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('students.edit_profile2_by_tag') }}">פרופיל לפי נושאים</a></li>
+				 </ul>
+				</li>
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">מטרות<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('destinations.edit_destinations_by_age_range') }}">מטרות לפי קבוצות גיל</a></li>
+					<li><a href="{{ url_for('destinations.edit_destinations_by_subject') }}">מטרות לפי נושאים</a></li>				  				  
+					<li><a href="{{ url_for('destinations.edit_destinations_by_ABC') }}">מטרות לפי סדר אלפא-ביתי</a></li>				  				  
+					<li><a href="{{ url_for('destinations.edit_destinations_by_scrt') }}">מטרות לפי הרשאות </a></li>				  				  
+
+				  </ul>
+				</li>
+				
+				<li class="dropdown">
+				  <a class="dropdown-toggle" data-toggle="dropdown" href="#">קטגוריות<span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="{{ url_for('age_ranges.edit_age_ranges') }}">קבוצות גיל</a></li>
+					<li><a href="{{ url_for('scrts.edit_scrts') }}">אבטחה</a></li>				  				  
+					<li><a href="{{ url_for('tags.edit_tags') }}">נושאים</a></li>				  				  
+					<li><a href="{{ url_for('accupations.edit_accupations') }}">תפקידים</a></li>				  				  
+					<li><a href="{{ url_for('status.edit_statuses') }}">סטאטוס ביצוע</a></li>				  				  
+					<li><a href="{{ url_for('gts.edit_gts') }}">קטגוריה כללית</a></li>				  				  
+				  </ul>
+				</li>
+			
+		
+				<li><a href="{{ url_for('users.signup') }}"><span class="glyphiweaknesse glyphiweaknesse-user"></span>פתח חשבון</a></li>
+				<li><a href="{{ url_for('users.login') }}"><span class="glyphiweaknesse glyphiweaknesse-log-in"></span>הרשם</a></li>				
+				<li><a href="{{ url_for('users.logout') }}"><span class="glyphiweaknesse glyphiweaknesse-log-in"></span>התנתק</a></li>				
+		
+				<!--### PRINT PAGE ###-->	
+				<li>
+					<button class="btn btn-info btn-xs" id="add_button" onclick="print_page()" style="color:black"><h5><strong>
+						 הדפס 
+					<strong></h5></button>
+				</li>
+				<script>
+				<!--
+				function print_page() {
+				  window.print();
+				}
+				-->
+				</script>
+				<!--### PRINT PAGE ###-->
+					 
+			 </ul>
+			</div>

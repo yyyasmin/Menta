@@ -1,0 +1,140 @@
+<!-- FROM https://gojs.net/latest/learn/index.html -->
+
+{% extends "layout.html" %}
+	
+{% block content %}
+
+<!DOCTYPE html>  <!-- HTML5 document type -->
+<html>
+<head>
+	<!-- use go-debug.js when developing and go.js when deploying -->
+	<script src="go-debug.js"></script>
+	<script src="https://unpkg.com/gojs/release/go-debug.js"></script>  
+
+ 
+ <script id="code">
+    function init() {
+	
+	window.alert("IN family8 init");
+	
+	
+      if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+      var $ = go.GraphObject.make;  // for conciseness in defining templates
+      myFullDiagram =
+        $(go.Diagram, "fullDiagram",  // each diagram refers to its DIV HTML element by id
+          {
+            initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            maxScale: 1.00,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+            isReadOnly: true,  // don't allow user to change the diagram
+            "animationManager.isEnabled": false,
+            layout: $(go.TreeLayout,
+                      { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            maxSelectionCount: 1  // only one node may be selected at a time in each diagram
+            // when the selection changes, update the myLocalDiagram view
+			});
+
+  
+// the template we defined earlier
+myDiagram.nodeTemplate =
+  $(go.Node, "Horizontal",
+    { background: "#44CCFF" },
+	
+	  $(go.Panel, "Vertical",
+	  $(go.Panel, "Auto",
+		$(go.Shape, "Rectangle", { stroke: "black", fill: "yellow" },
+		new go.Binding("fill", "color")),
+		$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "12pt sans-serif" }, 
+		new go.Binding("text", "name"))
+	  ),
+	  $(go.Panel, "Auto", 
+		$(go.Shape, "Rectangle", { stroke: "black", strokeWidth: 2, fill: "lightblue",  },
+		new go.Binding("fill", "color2")),
+		$(go.TextBlock, { margin: 5, stroke: "black", textAlign: "center", font: "12pt sans-serif" }, 
+		new go.Binding("text", "status"))
+	  )
+	)
+  );
+
+      myFullDiagram.nodeTemplate = myNodeTemplate;
+      // Define a basic link template, not selectable, shared by both diagrams
+
+      var myLinkTemplate =
+        $(go.Link,
+          { routing: go.Link.Normal, selectable: false },
+          $(go.Shape,
+            { strokeWidth: 2 })
+        );
+		
+
+      myFullDiagram.linkTemplate = myLinkTemplate;
+	  
+		window.alert( "BEFORE setupDiagram" );
+
+		// Create the full tree diagram
+		setupDiagram();
+	  
+		   
+      // Start by focusing the diagrams on the node at the top of the tree.
+      // Wait until the tree has been laid out before selecting the root node.
+      myFullDiagram.addDiagramListener("InitialLayoutCompleted", function(e) {
+        var node0 = myFullDiagram.findPartForKey(0);
+      });
+    }
+	
+
+	// {% include "./tree/backup/set_dst_data8.js" %}	    /*** setupDiagram ==> fills diagram with dst info ***/
+	
+ // Create the tree model containing TOTAL nodes, with each node having a variable number of children
+    function setupDiagram(total) {
+				
+			
+		if (total === undefined) total = '{{ total_gts }}';  // total should be the number of destinations
+		var nodeDataArray = [];
+		var i=0;			
+		nodeDataArray.push({
+		key: i,
+		color: go.Brush.randomColor(),
+		name: '{{ dest.id }} {{ dest.title }}',
+		});
+
+		i=1;		
+	    {% for goal in dst_goals  %}  // GOALS			
+			{% include "./tree/goal_data.js" %}
+			
+			nodeDataArray[i].parent = 0;   // all the destinations parent is student
+					
+			var j=i+1;
+
+		{% for todo in dst_todos if (goal.is_parent_of(todo) ) %}  // TODOS		
+			{% include "./tree/todo_data.js" %}
+			
+				nodeDataArray[j].parent = nodeDataArray[i].key;				
+				var k=j+1;
+				
+					{% for who in whos if ( todo.is_parent_of(who) ) %}  // WHOS	
+						
+						window.alert("who.title");
+
+						nodeDataArray[k].parent = nodeDataArray[j].key;
+						k++; 		
+					{% endfor %}  // WHOS		
+				j++;
+				j=k;
+			{% endfor %}  //GOALS		
+			
+			i=j;			
+        {% endfor %}  // DESTINATIONS
+
+      myFullDiagram.model = new go.TreeModel(nodeDataArray);
+    }
+	
+  </script>
+</head>
+<body onload="init()">
+<div id="sample">
+  <div id="fullDiagram" style="height:100%;width:100%;border:1px solid black;margin:2px"></div>
+</div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,19 @@
+		<!--
+
+		{% for todo in goal.todos %}
+
+			<div> todo is {{ todo.id }}		{{ 	todo.title }} </div>
+			<button class="btn btn-warning btn-xs" id="edit_list_id"><a href="{{ url_for('todos.todo_update', selected_todo_id=todo.id) }}">ערוך</a></button>			
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('goals.todo_from_goal_delete2', selected_goal_id=goal.id, selected_todo_id=todo.id) }}">מחק</a></button>		
+			</br>
+			
+			<button class="accordion">כותרת המשימה  {{ todo.title }}</button>			
+			<div class="panel">
+			  <p class="white_ppp"> תאור המשימה: {{ todo .body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+		-->

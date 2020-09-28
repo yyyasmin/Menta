@@ -1,0 +1,10 @@
+{% block tag_title %}
+
+<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align">
+						<button class="accordion">tag's title: {{ tag.title }}</button>
+						<div class="panel">
+						  <button>tag's description: {{ tag.body }}</button>				
+						</div>
+						</br>
+					</button>
+{% endblock tag_title %}

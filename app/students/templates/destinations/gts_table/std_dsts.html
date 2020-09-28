@@ -1,0 +1,241 @@
+{% block std_dsts %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'מטרות - ';
+}
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרה + ';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הוסף מטרה - ';
+}
+
+
+
+.collapsed .goals-icon-class:before {
+    content: 'יעדים';
+	dir: rtl;
+	text-align: center; 
+}
+
+.goals-icon-class:before {
+    content: 'יעדים';
+	text-align: center; 
+	dir: rtl;
+}
+
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעד';
+	dir: rtl;
+	text-align: center; 
+}
+
+.add-goals-icon-class:before {
+	content: 'הוסף יעד';
+	dir: rtl;
+}
+
+
+.collapsed .todos-icon-class:before {
+    content: 'משימות';
+	dir: rtl;
+}
+.todos-icon-class:before {
+    content: 'משימות';
+	dir: rtl;
+}
+
+
+.collapsed .add-todos-icon-class:before {		
+    content: 'הוסף משימה';
+	dir: rtl;
+}
+.add-todos-icon-class:before {
+	content: 'הוסף משימה';
+	dir: rtl;
+}
+
+
+.id_width  { 
+width: 2em;
+}
+
+.tag_width  { 
+width: 5em;
+}
+
+.sub_tag_width  { 
+width: 5em;
+}
+
+.goal_of_dst_border {
+	border-left-width: 0;
+}
+
+.title_width  { 
+width: 7em;
+}
+
+.body_width  { 
+width: 7em;
+}
+
+.sub_btn_width  { 
+width: 5em;
+}
+
+.date_width  { 
+width: 8em;
+}
+
+.status_width  { 
+width: 7em;
+}
+
+.save_width  { 
+width: 3em;
+}
+
+.gray_table  { 
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.green_table  { 
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.blue_table  { 
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.orange_table  { 
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+
+td { 
+	align: center;
+}
+
+#add_sub:after { 
+    content: ' \21D3';
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+<body>
+	
+		<div id="add_sub" style="color:ForestGreen" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{tag.id}}{{ar.id}}Content">
+			הראה מטרות
+		</div>
+					
+		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{tag.id}}{{ar.id}}Content">
+			הוסף מטרה
+		</div>
+		
+		</br>
+
+	<!--- DESTINATIONS --->
+	<div class="collapse in" id="{{tag.id}}{{ar.id}}Content" aria-expanded="true">
+		{% include "./destinations/gts_table/dsts_table.html" %}
+	</div>  <!-- dsts collapse -->
+	<!--- DESTINATIONS --->
+	
+	<!--- DESTINATIONS NOT OF STD --->
+	<div class="collapse" id="not_of_std{{tag.id}}{{ar.id}}Content" aria-expanded="true">
+		{% if dsts_not_of_student == [] %}
+			<div style="background:#e6ffe6">
+				אין יותר מטרות בבנק מקטגוריה זו.
+				<br>
+				להוספת מטרה יש לגשת דרך לשונית מטרות בסרגל השחור שלמעלה.
+			</div>
+		{% else %}
+			<table class="gray_table" >
+				{% for dst in dsts_not_of_student %}
+					<tr>
+						{% with gt=dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+							{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+						{% endwith %}
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+	</div>
+	<!--- DESTINATIONS NOT OF STD --->
+
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+{% endblock std_dsts %}

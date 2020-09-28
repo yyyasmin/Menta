@@ -1,0 +1,53 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='red']    {color:red;}
+select[data-chosen='green']  {color:green;}
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='lred']  {color:#ff9999;}    // light-red
+
+select[data-chosen='Not assigned yet'] {color:#ff9999;}   // light red
+select[data-chosen='Not achieved yet'] {color:red;}
+select[data-chosen='Partially achieved'] {color:orange;}
+select[data-chosen='Achieved'] {color:green;}
+
+</style>
+
+{% with student = std %} 
+{% include "std_title.html" %} 
+{% endwith %} 
+
+<h2><strong><center>
+
+	<div>
+		<span style="color:black"> בנק פרופיל </span>
+		<span style="color:#0086b3"> תחומי עיניין </span> 
+		<span style="color:green">מוקדי כוח</span>
+		<span style="color:black"> ו </span>	 
+		<span style="color:red">מוקדים לחיזוק</span>
+	</div>
+	
+</center></strong></h2>
+
+	</br>
+
+	{% include "./profile/std_profile2/show_profile/show_std_profile_by_tag.html" %}
+
+	<form method="POST" action="{{ url_for('students.get_sub_tag_profile') }}">
+		
+		<!-----
+		<button type="button"  class="btn btn-success" name="show_std_profile" id="add_button" style="margin-bottom:0;">
+				הצג פרופיל מלא
+		</button>
+		---------->
+		
+
+		{% include "./profile/std_profile2/edit_profile/std_edit_profile2_by_tag.html" %}
+	</form>
+
+
+{% endblock %}

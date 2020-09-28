@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+#resource_header.accordion {
+		color: #fff;
+		background-color: #346767;
+		border-color: #EEEEEE;
+		font-size: 18px;
+}
+
+#uploaded_file_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+#uploaded_file_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+	font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+	
+	<!--
+	<h4>
+		<button class="accordion" id="resource_header" >רשימת קבצים:  {{ resource.title }} </button>
+		<div class="panel" id="resource_decription">
+			<p class="ppp">תאור הקובץ:  {{ resource.body }} </p>
+		</div>
+	</h4>
+	-->
+	
+	<p></p>
+
+	<div class="container">
+	
+		<form role="form" method="POST" action='' enctype="multipart/form-data">
+			<div class="form-group" enctype="multipart/form-data">
+			  <label for="file_name">העלה קובץ</label>
+			  <input type="file" class="form-control" enctype="multipart/form-data"  id="title" name="file_name">
+			</div>			
+
+			<button class="btn btn-success btn-xs" type="submit" value="Save">שמור</button>	
+		</form>
+		
+		<br><br>
+
+	</div>
+
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

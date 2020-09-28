@@ -1,0 +1,77 @@
+<table class='table table-hover table-bordered table-condensed cashflow_report'>
+
+    <thead>
+        <tr>
+            <th class='name'></th>
+            <th>Aug 08</th>
+            <th>Aug 09</th>
+            <th>Aug 10</th>
+            <th>Aug 11</th>
+        </tr>
+    </thead>
+	
+    <tbody>
+        <tr class='info' rowname='inflow' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'inflow');">
+					Inflow
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+	
+	
+    <tbody class='inflow'>
+        <tr parent='inflow' rowname='in-ct-1' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-ct-1');">
+					&nbsp;Group 1
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr parent='in-ct-1' rowname='in-tt-1' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-tt-1');">
+					&nbsp;&nbsp;Subgroup 1
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr parent='in-tt-1' state='leaf'>
+            <td class='name'>&nbsp;&nbsp;&nbsp;Operation 1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr parent='in-ct-1' rowname='in-tt-2' state='opened'>
+            <td class='name'>	<span onclick="toggle_rows(this, 'in-tt-2');">
+					&nbsp;&nbsp;Subgroup 2
+				</span>
+
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr parent='in-tt-2' state='leaf'>
+            <td class='name'>&nbsp;&nbsp;&nbsp;Operation 2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>

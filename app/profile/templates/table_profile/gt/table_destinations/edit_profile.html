@@ -1,0 +1,16 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container" id="container_id">
+<h2><strong><center><div style="background:#d6f5f5; color:#006699" >פרופיל התלמיד המפטי דמפטי</div></center></strong></h2>
+
+	</br>
+	
+	<form method="POST" action="{{ url_for('students.update_std_prf2') }}">	
+		{% include "./gt/table_subjects/edit_std_gts.html" %}
+	</form>
+
+</div>   <!-- container -->
+
+{% endblock %}

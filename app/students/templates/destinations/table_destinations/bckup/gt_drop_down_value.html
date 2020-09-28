@@ -1,0 +1,12 @@
+
+	<td>
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="who{{ todo.id }}" id="selected_who">this.value	
+			{% for who in statuss %}
+				{% if todo.is_parent_of(who) %}
+					<option value="{{ who.title }}" selected="selected">{{ who.title }}</option>
+				{% else %}
+					<option value="{{ who.title }}">{{ who.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>

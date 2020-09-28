@@ -1,0 +1,49 @@
+{% block std_gt_edit_one_goal %}
+
+<style>
+
+div.panel {
+    max-height: 0;
+    <!-- overflow: hidden;  -->
+    transition: max-height 0.2s ease-out;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+</style>
+
+	</br>
+	{% include "./destinations/std_gt_edit_goal_actions.html" %}
+	</br></br></br>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_gt_edit_one_goal %}

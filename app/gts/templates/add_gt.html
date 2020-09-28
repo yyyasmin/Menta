@@ -1,0 +1,170 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right: 10%;
+
+}
+</style>
+
+	<div class="container">	
+		<h3>Add gt </h3>
+
+		<form role="form" method="POST" action='' > 
+			
+			<div class="form-group">
+				<label for="h_name">שם הקטגוריה בעברית</label>
+				<input type="title" class="form-control" name="h_name"> 
+			</div>
+						
+			<div class="form-group">
+				<label for="e_name">Category Txt Name</label>
+				<input type="title" class="form-control" name="e_name">
+			</div>
+			
+			<div class="form-group">
+				<label for="class_name">Class name</label>
+				<input type="title" class="form-control" name="class_name">
+			</div>
+				
+			<div class="form-group">
+				<label for="default">Default</label>
+				<input type="checkbox" class="form-control" name="default">
+			</div>
+					
+			<div class="form-group">
+				<label for="title">Title</label>
+				<input type="text" class="form-control" name="title">
+			</div>
+					
+			<div class="form-group">
+				<label for="body">Body</label>
+				<input type="text" class="form-control" name="body">
+			</div>
+			 			 
+			<div class="form-group">
+				<label for="from_age">From age</label>
+				<input type="text" class="form-control" name="from_age">
+			</div>
+			
+			<div class="form-group">
+				<label for="to_age">To Age</label>
+				<input type="text" class="form-control" name="to_age">
+			</div>
+			
+			<div class="form-group">
+				<label for="parent">Parent title</label>
+				<input type="title" class="form-control" name="parent">
+			</div>
+			
+			<div class="form-group">
+				<label for="parent_class_name">Parent class name</label>
+				<input type="title" class="form-control" name="parent_class_name">
+			</div>	
+			
+			<div class="form-group">
+				<label for="child">Child title</label>
+				<input type="title" class="form-control" name="child">
+			</div>	
+							
+			<div class="form-group">
+				<label for="child_class_name">Child class nmae</label>
+				<input type="title" class="form-control" name="child_class_name">
+			</div>	
+				
+			<div class="form-group">
+				<label for="color_name_txt">color name Txt</label>
+				<input type="title" class="form-control" name="color_name_txt">
+			</div>	
+				
+			<div class="form-group">
+				<label for="color_hexa_string">Color hexa string</label>
+				<input type="title" class="form-control" name="color_hexa_string">
+			</div>	
+							
+			</br>					 
+			<button type="submit" class="btn btn-default">Save gt</button>		
+		
+		</form>
+	</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

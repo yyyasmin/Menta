@@ -1,0 +1,129 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+
+{% block edit_prf_gt_parts2 %}
+
+<style>
+
+</style>
+
+<div> IN table_profile\edit_prf_gt_parts2.html </div>	
+ 			
+	<div> prf_parts_list   {{prf_parts_list}} </div>
+	<div> sub_tag   {{sub_tag}} </div>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+ 
+                <h2>ערוך <b>תחומי עיניין </b>  
+					<button type="button"  class="btn btn-success float-right"
+						data-toggle="modal" data-target="#mymodal">הוסף תחום עיניין חדש
+					</button> 
+				</h2>
+ 
+ 
+                <table class="table table-hover blue_table">
+	
+					{% for gt in prf_parts_list if (gt.is_parent_of(sub_tag)) %}	
+							
+							<div> gt.title: {{gt.title}} {{gt.id}}   is_Parent:    gt.is_parent_of(sub_tag) </div>
+
+						<tr>
+						
+							<td>gt.title</td> 				
+							<td>gt.body</td> 				
+							
+							<td>
+								<a href="/update/{{gt.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{gt.id}}">ערוך</a>
+								<a href="/delete/{{gt.id}}" class="btn btn-danger btn-xs" onclick="return confirm('בטוח למחוק?')">מחק</a> 
+							</td>
+	 
+						</tr>
+ 
+						<!-- Modal Edit Employee-->
+						<div id="modaledit{{gt.id}}" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								
+									<div class="modal-header">
+										<h4 class="modal-title">עדכן נתונים</h4>
+									</div>
+									
+									<div class="modal-body">
+										<form action="{{ url_for('profile.gt_profile_update2',selected_profile_id=prf.id, selected_gt_id=gt.id) }}" method="POST">
+
+											<div class="form-group">
+												<label>תחום עיניין</label>
+												<input type="hidden" name="
+												id" value="{{gt.id}}">
+												<input type="text" class="form-control" name="gt_title" value="{{gt.title}}">
+											</div>
+											
+											<div class="form-group">
+												<label>תאור</label>
+												<input type="text" class="form-control" name="gt_body" value="{{gt.body}}">
+											</div>
+											
+											<div class="form-group">
+												<button class="btn btn-primary" type="submit">עדכן נתונים</button>
+											</div>
+										
+										</form>
+										
+									</div>
+									
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+						
+					{% endfor %}
+				</table>
+
+			</div>
+  
+			<!-- Modal Add Employee-->
+			<div id="mymodal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h4 class="modal-title">הוסף תחום עיניין</h4>
+						</div>
+							<div class="modal-body">
+							
+			<form method="post" action="{{ url_for('profile.gt_to_profile_add2', selected_profile_id=profile.id, type=type ) }}">
+									
+									<div class="form-group">
+										<label>תחום עיניין</label>
+										<input type="title" class="form-control" name="gt_title" required="1">
+									</div>
+									
+									<div class="form-group">
+										<label>תאור</label>
+										<input type="text" class="form-control" name="gt_body" required="1">
+									</div>
+									
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit">+הוסף תחום עיניין</button>
+									</div>
+									
+			</form>
+								
+							</div>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+							</div>
+							
+					</div>
+				</div>
+			</div>
+			
+        </div>
+    </div>
+
+ 
+{% endblock edit_prf_gt_parts2 %}

@@ -1,0 +1,6 @@
+{% block edit_std_goal_actions %}
+	
+	<button class="btn btn-warning btn-xs" id="edit_sub_list_id" ><a style="color:black" href="{{ url_for('students.edit_student_todos2', selected_std_id=std.id, selected_goal_id=std_goal.goal_id) }}">ערוך משימות</a></button>
+	<button class="btn btn-danger btn-xs"  id="delete_id" ><a style="color:black" href="{{ url_for('students.std_goal_delete2', selected_std_id=std.id, selected_goal_id=std_goal.goal_id) }}">מחק</a></button>
+
+{% endblock edit_std_goal_actions %}

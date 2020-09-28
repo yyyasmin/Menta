@@ -1,0 +1,18 @@
+
+{% extends "layout.html" %} 
+
+
+{% block content %}
+
+<div class="container">
+    <form role="form" method="POST" action=''> 
+		<label for="title">תז של התלמיד {{ student_already_exist.id }}   שם פרטי {{ student_already_exist.first_name }}  שם משפחה: {{ student_already_exist.last_name }}</label>
+		<h2><label for="title">תלמיד זה נמחק בעבר. האם תרצה להחזירו למערכת? </label></h2>
+		
+		</br>		 
+		<button class="btn btn-danger btn-xs" ><a href="{{ url_for('students.student_add') }}">No thanks</a></button>
+		<button class="btn btn-success btn-xs" ><a href="{{ url_for('students.student_unhide2', selected_student_id=student_already_exist.id) }}">Yes</a></button>
+	</form>
+</div>
+
+{% endblock %}

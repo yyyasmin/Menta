@@ -1,0 +1,109 @@
+
+{% extends "layout.html" %}
+
+	
+{% block content %}
+
+{% with from_dst_sort_order=3 %} 
+	{% include "dst_title.html" %} 
+{% endwith %} 
+
+
+<body onload="init()">
+
+<div id="sample">
+  <div id="fullDiagram" style="height:100%;width:100%;border:2px solid black;margin:2px;"></div>
+</div>
+
+</body>
+
+
+ <script id="code">
+    function init() {
+		if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+		var $ = go.GraphObject.make;  // for conciseness in defining templates
+		myFullDiagram =
+		$(go.Diagram, "fullDiagram",  // each diagram refers to its DIV HTML element by id
+		  {
+			initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+			maxScale: 0.5,
+			contentAlignment: go.Spot.Center,  // center the tree in the viewport
+			layout: $(go.TreeLayout,
+					  { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+			maxSelectionCount: 1,  // only one node may be selected at a time in each diagram
+			// when the selection changes, update the myLocalDiagram view
+		  });
+
+		// Define a node template that is shared by both diagrams
+		var myNodeTemplate =
+			$(go.Node, "Auto",
+			  { locationSpot: go.Spot.Center, },
+			  new go.Binding("text", "key", go.Binding.toString),  // for sorting
+			  
+		<!-- FROM https://forum.nwoods.com/t/centering-textblocks-in-panels/7941/9  -->	
+
+			$(go.Panel, "Vertical",
+				new go.Binding("background", "color"),
+
+						
+					$(go.Picture,
+						{ margin: 10, width: 50, height: 50, background: "red", alignment: go.Spot.Left, },
+						new go.Binding("source")),
+								
+					$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "bold 16px sans-serif" }, 
+						new go.Binding("text", "name")),
+						
+					$(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "bold 16px sans-serif" }, 
+						new go.Binding("text", "status"),
+						new go.Binding("fill", "color2"),
+						new go.Binding("stroke", "text_color")),
+			)
+
+		<!-- FROM https://forum.nwoods.com/t/centering-textblocks-in-panels/7941/9  -->			
+
+		);
+
+		myFullDiagram.nodeTemplate = myNodeTemplate;
+		// Define a basic link template, not selectable, shared by both diagrams
+
+		var myLinkTemplate =
+		$(go.Link,
+			{ routing: go.Link.Normal, selectable: false },
+			$(go.Shape,
+			{ strokeWidth: 2 })
+		);
+
+
+		myFullDiagram.linkTemplate = myLinkTemplate;
+		// Create the full tree diagram
+		setupDiagram();
+
+		// Create the tree model containing TOTAL nodes, with each node having a variable number of children
+		function setupDiagram() {
+		
+			nodeDataArray = [];
+
+			<!-- FROM https://stackoverflow.com/questions/41339423/how-to-fill-array-content-using-for-loop-in-javascript -->	
+			{% include "./tree/backup/dst_data_3.js" %}
+			{% for goal in dst_goals %}  // GOALS
+				{% include "./tree/backup/goal_data_3.js" %}
+					{% for todo in todo_goals %}  // GOALS
+						{% include "./tree/backup/todo_data_3.js" %}
+					{% endfor %}
+			{% endfor %}
+	
+			console.log(nodeDataArray);
+			
+			var model = $(go.TreeModel);
+
+			model.nodeDataArray = nodeDataArray;
+			myFullDiagram.model = model;
+			
+		}	
+
+	}
+	
+</script>
+  
+
+{% endblock %}

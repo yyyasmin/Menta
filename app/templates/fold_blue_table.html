@@ -1,0 +1,145 @@
+{% block fold_blue_table_style %}
+
+<style>
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+.fold_blue_table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+	dir: rtl;
+}
+	
+table.fold_blue_table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.fold_blue_table td {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+.fold_blue_table th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+	background-color: #006699;    // Destinatins header 
+	color: #ffffcc;
+	color: white;
+	
+}
+
+
+.fold_blue_table tr:nth-child(even) {
+    background-color: #4dc6ff;
+    //background-color: red;   // TEST
+}
+
+.fold_blue_table tr:nth-child(odd) {
+    background-color: #b3e7ff;
+    //background-color: yellow;   // TEST
+}
+
+
+
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: .2em 2em;
+}
+
+table {
+  width: 100%;
+}
+
+table th {
+  text-align: center;
+  border-bottom: 1px solid #000;
+}
+table th, table td {
+  padding: .4em;
+}
+
+table.fold_blue_table > tbody > tr.view td, table.fold_blue_table > tbody > tr.view th {
+  cursor: pointer;
+}
+table.fold_blue_table > tbody > tr.view td:first-child,
+table.fold_blue_table > tbody > tr.view th:first-child {
+  position: relative;
+  //padding-left: 20px;
+}
+table.fold_blue_table > tbody > tr.view td:first-child:before,
+table.fold_blue_table > tbody > tr.view th:first-child:before {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 9px;
+  height: 16px;
+  margin-top: -8px;
+  font: 16px fontawesome;
+  color: #000;
+  content: "\f0d7";
+  transition: all .3s ease;
+}
+table.fold_blue_table > tbody > tr.view:nth-child(4n-1) {
+  background: yellow;
+}
+table.fold_blue_table > tbody > tr.view:hover {
+   background: red;
+}
+table.fold_blue_table > tbody > tr.view.open {
+  background: tomato;
+  color: white;
+}
+table.fold_blue_table > tbody > tr.view.open td:first-child:before, table.fold_blue_table > tbody > tr.view.open th:first-child:before {
+  transform: rotate(-180deg);
+  color: #000;
+}
+table.fold_blue_table > tbody > tr.fold {
+  display: none;
+}
+table.fold_blue_table > tbody > tr.fold.open {
+  display: table-row;
+}
+
+.fold-content {
+  padding: .5em;
+}
+.fold-content h3 {
+  margin-top: 0;
+}
+.fold-content > table {
+  border: 2px solid #ccc;
+}
+
+.fold-content > table > tbody tr:nth-child(even) {
+  //background-color: #4dc6ff;
+  background-color: red;    // TEST
+}
+
+
+.fold-content > table > tbody tr:nth-child(odd) {
+    background-color: #b3e7ff;
+    background-color: red;    // TEST
+}
+
+<!--
+.fold-content > fold_blue_table > tbody tr:nth-child(even) {
+  background-color: #4dc6ff;
+}
+
+.fold-content > fold_blue_table > tbody tr:nth-child(odd) {
+    background-color: #b3e7ff;
+}
+-->
+
+</style>
+
+{% endblock fold_blue_table_style %}

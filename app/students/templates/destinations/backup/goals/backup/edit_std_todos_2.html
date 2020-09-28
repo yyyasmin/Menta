@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+<div> In TODO 22222:\Users\yasmi\Documents\מנטא\app\students\templates\goals\backup\edit_std_todos_2.html</div>
+
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.try_todo_to_student_add') }}">הוסף משימה</a>
+	<strong></h5></button>
+
+	</br>
+	
+	<h2><strong><center><div>תלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>מטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>יעד:  {{ std_goal.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>רשימת משימות של התלמיד להשגת היעד:</div></center></strong></h2>
+	<p></p>	
+	
+	<div>			
+		{% for std_todo in std_todos %}
+		
+			<div> todo is {{ std_todo.todo_id }}		{{ 	std_todo.todo_title }} </div>
+									
+			<button class="btn btn-warning btn-xs" id="show_tree_id"><a style="color: black" href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a style="color: black" href="{{ url_for('students.todo_from_std_delete2', selected_std_id=std_todo.student_id, selected_todo_id=std_todo.todo_id) }}">מחק</a></button>		
+			
+			</br>
+			<button class="accordion">כותרת המשימה  {{ std_todo.todo_title }}</button>			
+
+					<div class="panel">
+					
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div class="white_ppp"> תפקיד האחראי על ביצוע המשימה: {{ std_todo.who_title }} </div>
+							</div>   <!-- ar_div -->
+						</li>
+						
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div class="white_ppp">תאור המשימה: {{ std_todo.todo_body }} </div>
+							</div>   <!-- ar_div -->
+						</li>
+						
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div style="color:{{ std_todo.status_color }}"> סטאטוס: {{ std_todo.status_title }} </div>
+							</div>   <!-- ar_div -->
+						</li>
+						
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div class="white_ppp">תאריך יעד לסיום ביצוע המשימה:  {{ std_todo.due_date }} </div>
+							</div>
+						</li>
+						
+					</div>				
+			</br>			
+
+		{% endfor %}
+		
+		</br>
+
+	</div>
+</div>   <!-- container -->
+ 
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

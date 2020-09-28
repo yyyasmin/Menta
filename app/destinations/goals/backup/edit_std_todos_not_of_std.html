@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+	background: #dddddd;
+}
+
+tr:nth-child(odd) {
+	background: #ffffff;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+
+</style>
+
+<div class="container">	
+
+	<h2><strong><center><div>משימות התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>עבור היעד:  {{ std_goal.title }}</div></center></strong></h2>
+	<p></p>
+	
+	<table style="width:100%">
+	
+			<tr id="header_row">
+			
+				<th> מספר המשימה </th>			
+				<th> כותרת המשימה </th>
+				<th> תאור המשימה </th>
+				<th> תאריך ביצוע המשימה </th>
+				<th> סטאטוס המשימה </th>
+				<th>כפתור שמירת המשימה לתלמיד </th>
+
+			</tr>
+			
+	{% for std_todos_forms in std_todos_forms %}
+	
+		{{ std_todos_forms.csrf_token }}
+		<fieldset>
+		
+			<form method="post" action="{{ url_for('students.update_std_todos_forms2') }}">
+				
+				<tr>
+						
+
+					<td>
+						<div class="form-group">
+							<input type="number" class="form-control" name="todo_id"  value="{{ std_todos_forms.todo_id.data }}">
+						</div>
+					</td>
+
+
+				
+					<td>	
+						<div class="form-group">
+							<input type="title" class="form-control" name="title" value="{{ std_todos_forms.todo_title.data }}">
+						</div>
+					</td>
+					
+					<td>
+						<div class="form-group">
+							<input type="textarea" class="form-control" name="body" value="{{ std_todos_forms.todo_body.data }}">
+						</div>
+					</td>
+					
+					<td>
+						<div id="ar_div">
+							<input type="date" class="form-control" id="due_date" name="due_date" value="{{ std_todos_forms.due_date }}">
+						</div>
+					</td>
+						
+					<td>
+					<ul class="tabs">
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div> {{std_todos_forms.status.label}}: {{std_todos_forms.status}} </div>
+								{% if std_todos_forms.status.errors %}
+									<ul class=errors>
+										{% for error in std_todos_forms.status.errors %}
+											<li>{{ error }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</div>   
+						</li>
+					</td>
+											
+					<td>
+						<div id="submit_button"> {{ std_todos_forms.submit }} </div>
+					</td>
+				
+				</tr>
+			
+			</form>
+			
+		</fieldset>
+		
+	{% endfor %}
+
+		
+	</table>
+	
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+{% endblock %}	

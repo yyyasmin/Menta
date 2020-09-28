@@ -1,0 +1,22 @@
+
+<style>
+
+
+</style>
+
+{% block dst_actions %}
+
+<footer>
+
+	<span style="align: center;">
+		
+		<button type="button" id="act_btn"><a style="color:black" href="{{ url_for('destinations.dsply_dst_form_for_update2', selected_destination_id=dst.id, from_dst_sort_order=from_dst_sort_order) }}">פרטים</a></button>		
+		<button type="button" id="act_btn"><a style="color:black" href="{{ url_for('destinations.show_dst_tree2', selected_dst_id=dst.id) }}">הצג עץ מטרות</a></button>
+		<button type="button" id="act_btn"><a style="color:black" href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=dst.id, from_dst_sort_order=from_dst_sort_order) }}">יעדים</a></button>
+		<button type="button" id="act_btn"><a style="color:black" href="{{ url_for('destinations.destination_delete_for_good2', selected_destination_id=dst.id) }}">מחק</a></button>
+
+	</span>
+	
+</footer>
+
+{% endblock dst_actions %}

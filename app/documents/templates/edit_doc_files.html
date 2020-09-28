@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div style="dir:ltr"> IIIIIII InC:    C:\Users\yasmi\Documents\מנטא\app\docs\templates\edit_doc_files.html  </div>
+
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('documents.document_upload_new_file2', selected_document_id=doc.id) }}">הוסף קובץ חדש</a>
+	<strong></h5></button>
+	</br></br>
+
+	<h3>		
+		<button class="accordion" id="header_panel">רשימת קבצים למשאב:{{ doc.title }} </button>
+		<div class="panel">
+		  <p class="ppp">תאור המשאב{{ doc.body }} </p>
+		</div>
+	</h3>
+	
+	<br>
+	
+	<p></p>
+	
+	<div>			
+		{% for file in doc.files %}
+			<div> 5CHGFFFFF fiile is {{ file.title }} {{ file.id }} </div>
+			
+			<button class="btn btn-warning btn-xs" style="background-color: #ffff66" ><a href="{{ url_for('documents.download_document_file2', selected_file_id=file.id) }}">הורד קובץ</a></button>		
+			<button class="btn btn-warning btn-xs" id="edit_sub_list_id"><a href="{{ url_for('documents.document_replace_upload_file2', selected_file_id=file.id) }}">החלף קובץ</a>			
+			<button class="btn btn-danger btn-xs"  id="delete_id"><a href="{{ url_for('documents.uploaded_file_from_document_delete2', selected_file_id=file.id) }}">מחק</a></button>					
+			</br>
+			
+			<button class="accordion">שם הקובץ: {{ file.name }}</button>			
+			<div class="panel">
+			  <p class="white_ppp">תאור הקובץ: {{ file.body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+		
+		</br>
+
+	</div>
+</div>   <!-- container -->
+ 
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

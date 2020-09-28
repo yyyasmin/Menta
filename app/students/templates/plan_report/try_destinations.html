@@ -1,0 +1,259 @@
+{% block student_destinations_for_plan_report %}
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+button.accordion {
+    background-color: #eee;
+	font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+div.panel {
+    padding: 0 18px;
+    background-color: #888;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.destination_accordion {
+    background-color: red;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    goaltent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+
+div.panel {
+    padding: 0 18px;
+    background-color: #eff5ef;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#student_header.accordion {
+		color: #fff;
+		border-color: #EEEEEE;
+		background-color: #346767;
+		font-size: 18px;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+.destination_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB9;
+	font-size: 16px;
+}
+
+#destination_header.accordion {
+		background-color: #bfd9bf;
+		border-color: #afcfaf;
+		font-size: 16px;
+}
+
+
+div.student_panel {
+    padding: 0 18px;
+    background-color: #346767;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+div.destination_panel {
+    padding: 0 18px;
+    background-color: #bfd9bf;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+
+
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="w3-container">
+
+	<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align">
+		<h3><strong><div>Categories</div></strong></h3>
+	</button>
+		
+	<div id="Demo1" class="w3-hide">
+		<ul class="w3-ul">
+			{% for tag in tags %}  <!-- Tags -->	
+				<li>
+					<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align">
+						<button class="accordion">tag's title: {{ tag.title }}</button>
+						<div class="panel">
+						  <button>tag's description: {{ tag.body }}</button>				
+						</div>
+						</br>
+					</button>
+					
+					<div id="Demo1" class="w3-hide">
+						<ul class="w3-ul">
+							{% for destination in tag.destinations %}  <!-- Tag Destinations -->	
+								<li>
+									<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align">
+										<button class="accordion">Destination's title: {{ destination.title }}</button>
+										<div class="panel">
+										  <button>Destination's description: {{ destination.body }}.</button>				
+										</div>
+										</br>
+									</button>
+									
+									<div id="Demo1" class="w3-hide">
+										<ul class="w3-ul">
+											{% for goal in destination.goals %}  <!-- Destination Goals -->	
+												{{ goal.title }}
+												<li>
+													<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align">
+														<button class="accordion">goal's title: {{ goal.title }}</button>
+														<div class="panel">
+														  <button>goal description: {{ goal.body }}</button>				
+														</div>
+														</br>
+													</button>
+												</li>
+											{% endfor %}  <!-- Destination Goals -->
+										</ul>
+									</div>											
+								</li>
+							{% endfor %}  <!-- Tag Destinations -->
+						</ul>
+					</div>										
+				</li>
+			{% endfor %}  <!-- Tags -->	
+		</ul>
+	</div>
+</div>		<!-- class="w3-container" -->
+
+
+<!-- FROM https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_accordion_lists   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

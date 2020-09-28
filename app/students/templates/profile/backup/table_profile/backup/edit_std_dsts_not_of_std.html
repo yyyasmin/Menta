@@ -1,0 +1,43 @@
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+
+		<a href="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=3) }}">עדכן מטרה</a>
+
+	<strong></h5></button>
+	
+	</br>
+	{% for tag in tags %}
+		</br></br>
+		<th><h4><strong> נושא:   {{ tag.title }}</strong></h4></th>
+
+		<table id="dst_tbl_id" style="width:100%">
+
+		<tr id="header_row">							
+			<th>נושא</th>
+			<th>קבוצת גיל</th>
+			<th>מטרות</th> 
+			<th>פעולות</th>
+		</tr>
+		
+		{% for ar in age_ranges %}  <!-- ars -->
+			{% for dst in destinations if (dst.is_parent_of(ar) and dst.is_parent_of(tag)) %}
+				<tr>
+					<td>{{ tag.title }}</td>
+					<td>{{ ar.title }}</td>
+					<td>{{ dst.title }}</td> 				
+																				
+					<td>	
+					{% with from_dst_sort_order=3 %}		
+						{% include "./destinations/table_destinations/not_of_std/edit_std_dst_line_not_of_std.html" %}
+					{% endwith %}
+					</td>									
+			
+				</tr>
+			
+			{% endfor %} <!-- for.. if.. if  --> 
+		{% endfor %}  <!-- ars -->			
+		
+		</table>
+	{% endfor %}  <!-- tags -->
+	</br></br>	
+
+{% endblock edit_std_dsts %}

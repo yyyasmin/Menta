@@ -1,0 +1,68 @@
+{% block dst_dsts_table_line %}		
+
+	<tr>
+	
+		<td>{{ std_dst.id }}</td>
+		
+		<td>{{ dst.id }}</td>
+		
+		<td>{{ std_dst.title }}</td>
+		
+		<td>{{ std_dst.body }}</td> 
+		
+		<td>
+			<div id="ar_div">
+				<input type="date" style="text-align:center" class="form-control" id="due_date" name="due_date" value="{{ std_dst.due_date }}">
+			</div>   <!-- ar_div -->
+		</td>	
+		
+		<td>סטאטוס:
+			<select style="color:{{ std_dst.status_color }}" name="selected_status" id="color_me">						
+				{% for sts in statuss %}
+					{% if sts in std_dst.children %}
+						<option style="color:{{ std_dst.status_color }}" value="{{ std_dst.status_title }}" selected>{{ std_dst.status_title }}</option>
+					{% else %}
+						<option style="color:{{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>						
+		</td>
+		
+		<td>		
+			{% set dst_num = std_dst.id * 2 %}	
+			{{ dst_num }}			
+			<button class="btn btn-success btn-xs" type="submit" name="dst_and_goal_form_button_name" value="{{ dst_num }}">שמור</button>
+		</td>
+	
+	</tr>
+	
+	<tr>
+		<th style="background:#ffffff" colspan="5"></th>
+	</tr>
+
+	<tr style="width:100%">
+		<th style="background:#ffffb3; color:black" colspan="6"> משימות להשגת היעד </th>
+	</tr>
+	<tr>				
+		{% for goal in student_goals if ( goal in dst.children ) %}
+			{% include "./goals/edit_one_std_dst_goal.html" %}
+		{% endfor %}
+	</tr>
+	
+	<!--
+	<tr>
+		{% for goal in goals_not_of_student if ( goal in dst.children ) %}
+			{% include "./dsts/goals/edit_one_std_dst_goal_gray.html" %}
+		{% endfor %}
+	</tr>
+	-->	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock dst_dsts_table_line %}

@@ -1,0 +1,25 @@
+	<h2><strong><center>
+
+		<div>
+			<span style="color:black"> בנק פרופיל </span>
+			<span style="color:#0086b3"> תחומי עיניין </span> 
+			<span style="color:green">מוקדי כוח</span>
+			<span style="color:black"> ו </span>	 
+			<span style="color:red">מוקדים לחיזוק</span>
+		</div>
+		
+	</center></strong></h2>
+
+
+
+	<form method="POST" action="{{ url_for('students.get_sub_tag_profile') }}">
+		
+		<!-----
+		<button type="button"  class="btn btn-success" name="show_std_profile" id="add_button" style="margin-bottom:0;">
+				הצג פרופיל מלא
+		</button>
+		---------->
+		
+
+		{% include "./profile/edit_profile/std_edit_profile_by_tag.html" %}
+	</form>

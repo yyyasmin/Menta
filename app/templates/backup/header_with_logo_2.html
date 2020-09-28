@@ -1,0 +1,41 @@
+<!-- FROM https://codepen.io/bootstrapped/pen/KwYGwq -->
+
+
+  <nav class="navbar navbar-default" style="font-size:14pt; font-family:Arial;">
+    <div class="container-fluid">
+	<div class="navbar-header">
+	
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar5">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+
+		<a class="navbar-brand">
+			<img style="height:150px%;" 
+				 src="{{ url_for('static', filename='img/idanim.PNG') }}">
+		</a>
+	
+		<a class="navbar-brand">
+			<img style="width:64px; height:150px%;" 
+				 src="{{ url_for('static', filename='img/eitan.PNG') }}" alt="Dispute Bills">
+		</a>
+		
+
+			{% if current_user.is_authenticated %}
+				 שלום {{ current_user.username }}!
+			{% endif %}
+		
+	</div>
+	
+      <div id="navbar5" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+			{% include "layout_header_options.html" %}
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+  </nav>
+

@@ -1,0 +1,51 @@
+		{% for student_not_of_teacher in students_not_in_team %}
+		<form   method="POST" action="{{ url_for('teachers.student_to_teacher_add2', selected_teacher_id=teacher.id, selected_student_id=student_not_of_teacher.id) }}">	
+				
+			<tr>
+				<td>{{ student_not_of_teacher.first_name }}</td>
+				<td>{{ student_not_of_teacher.last_name }}</td> 
+				<td>{{ student_not_of_teacher.grade }}</td>
+				
+				<td>Select a Role: 
+					<select class="select" name="selected_role" id="selected_role">
+						{% for r in student_not_of_teacher.teachers %}					
+							{% if r.student_id == student_not_of_teacher.id %}
+								<option value="No_role" selected="selected">{{ "No Role" }}</option>
+							{% endif %}
+						{% endfor %}		
+								<option value="Teacher">Teacher</option>
+								<option value="Assistant">Assistant</option>
+								<option value="Acupation_therapy">Acupation therapy</option>
+								<option value="Music_therapy">Music therapy</option>
+					</select>					
+				</td>
+					
+				<td>
+				<button class="btn btn-success btn-xs" type="submit" value="Save">Add to student</button>
+				<button class="btn btn-danger btn-xs"><a href="{{ url_for('students.student_from_teacher_delete2', selected_student_id=student.id, selected_teacher_id=teacher_not_in_staff.id) }}">Delete</a></button>
+				</td>				
+			</tr>
+			
+		</form>	
+		{% endfor %}
+
+	</table>
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>

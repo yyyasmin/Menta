@@ -1,0 +1,39 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container" id="container_id">	
+<div> IN C:\Users\yasmi\Documents\menta4\app\students\templates\destinations\edit_std_dsts.html </div>
+	<h2><strong><center><div>מטרות התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	</br><br>
+	
+	{% for std_dst in student_dsts %}	
+	
+		</br>
+		</br>
+		
+		<table class="blue_table">	
+		
+			<tr>	
+				<th> מספר המטרה </th>				
+				<th> כותרת המטרה </th>
+				<th> תאריך להשלמת המטרה </th>
+				<th> סטאטוס המטרה </th>
+
+			</tr>
+						
+			<form method="POST" action="{{ url_for('students.match_dst_to_std2', selected_dst_id=std_dst.id) }}">					
+				{% include "./destinations/edit_std_dst_line.html" %}
+			</form>
+							
+	
+					
+		</table>
+	
+	{% endfor %}
+	
+</div>   <!-- container -->
+
+{% endblock %}

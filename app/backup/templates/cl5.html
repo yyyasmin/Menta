@@ -1,0 +1,100 @@
+    
+	function set_role(val) {
+	  alert("The input value has changed. The new value is: " +val);
+      val.preventDefault();
+      $.ajax({
+        method: 'POST',
+        url: {{ url_for('selected_role_value')|tojson }},
+        data: class: $('.selected_role').val()
+      }).done(addShow);
+	  
+    }
+	
+    function addShow(data) {
+      $('#result').text(data.result);
+    }
+<!-- from https://stackoverflow.com/questions/8747439/detecting-value-change-of-inputtype-text-in-jquery -->	
+function fff(val) {
+    alert("The input value has changed. The new value is: " +val);
+}
+
+
+								<select class="select" name="selected_role" id="selected_role" onchange="fff(this.value)">
+
+$(document).ready(function(){  
+  $('#save').click(function(){ 
+   alert("The input value has changed. The new value is: ",$('teacher').val(), val);
+   console.log($('teacher').val());
+   console.log($('#selected_role :selected').text());
+   });
+});
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#selected_role").click(function(){
+        $("p").slideToggle();
+    });
+});
+</script>
+
+$(document).ready(function(){
+    $("#save").click(fff(){
+		alert(""IN Docoment ready JS caling FFF");
+    });
+});
+
+<!-- FROM https://github.com/spantaleev/flask-sijax/blob/master/examples/templates/hello.html -->	
+
+    <script type="text/javascript">
+		{{ g.sijax.get_js()|safe }}
+	</script>
+	
+				<!--
+				<form>
+				<a href="javascript://" onchange="Sijax.request('set_role_value', ['{{ student_staff_member.role }}']);">bla bla bla</a>
+				</form>
+				-->
+				
+				
+function fff(val) {
+    var vvv = val.options[val.selectedIndex].value;
+	alert("The input value has changed. The new value is: "+  $(val).val());
+	console.log("role_val"+vvv);
+	<!--
+	$.ajax('/role',  {
+			type: 'POST',
+			data: {selected_role: val},
+	});	
+	-->
+}
+
+function fff() {
+	var role_value = $("#selected_role option:selected").val();
+	alert("The input value has changed. The new value is: "+  role_value);
+	console.log("role_val"+vvv);
+	<!--
+	$.ajax('/role',  {
+			type: 'POST',
+			data: {selected_role: val},
+	});	
+	-->
+}
+
+<!-- FROM http://jsfiddle.net/8jPXb/ -->
+    <script type="text/javascript">
+            $(document).ready(function(){ 
+                    $('#save').click(function(){ 
+                           alert($('#selected_role :selected').text());
+						   alert("student is"+{{ student.id }});
+                    });
+        });
+    </script>
+<!-- FROM http://jsfiddle.net/8jPXb/ -->
+
+for role in staf.roles:
+	if role.team_member_id == staf.id:
+		set rrr = role
+		
+
+
+

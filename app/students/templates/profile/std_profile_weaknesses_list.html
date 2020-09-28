@@ -1,0 +1,39 @@
+{% block profile_weakness_list %}
+
+{% include "./profile/profile_style.html" %}
+		
+				{% for wkns in profile.weaknesses %}	
+				
+					<button style="background-color:green; color:white"  class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.weakness_from_std_profile_delete2', selected_weakness_id=wkns.id) }}">הסר חולשה זו מפרופיל התלמיד</a></button>			
+					<button style="background-color:orange; color: black"  class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('weaknesses.weakness_update', selected_weakness_id=wkns.id) }}">ערוך</a></button>			
+					
+					<button class="accordion">כותרת חולשה:  wkns.title </button>
+					<div class="panel">
+					  <button>תאור חולשה:  wkns.body </button>				
+					</div>
+					
+				{% endfor %}
+				
+				<tr><td>
+					<center><button class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('students.weakness_to_std_profile_add') }}">הוסף חולשה לתלמיד מתוך רשימה</a></button></center>			
+				</tr></td>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

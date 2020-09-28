@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+<h2><center>פרופיל כללי</center></h2>
+	
+	<p></p>
+	
+	{% with gt_type='Subject', type=3, gt_single_type_txt='תחום עיניין', gt_some_type_txt='תחומי עיניין', color='blue', table_color='blue_table', title_color='#3366ff', prf_parts_list=prf_subjects %}
+		{% include "./gt/edit_prf_gt_parts.html" %}
+	{% endwith %}
+	
+	<p></p>
+		
+	{% with gt_type='Strength', type=2, gt_single_type_txt='חוזקה', gt_some_type_txt='חוזקות', color='green', table_color='green_table', title_color='#66ff99', prf_parts_list=prf_strengths %}
+		{% include "./gt/edit_prf_gt_parts.html" %}
+	{% endwith %}
+	
+	<p></p>
+		
+	{% with gt_type='Weakness',type=1,  gt_single_type_txt='חולשה', gt_some_type_txt='חולשות', color='red', table_color='red_table', title_color='#ff9999', prf_parts_list=prf_weaknesses %}	
+		{% include "./gt/edit_prf_gt_parts.html" %}
+	{% endwith %}
+					
+	<!--
+	</br></br>
+	-->	
+
+{% endblock %}

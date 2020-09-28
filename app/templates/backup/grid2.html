@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+
+
+/* CSS */
+.wrapper {
+  display : flex;
+  align-items : right;
+  background-color: Azure;
+  height: 100px;
+}
+
+
+.main2 {
+    display: table;
+    
+    height: 100px;
+}
+
+.inner2 {
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #FF0000;
+}
+
+</style>
+
+<!--Method #1-->
+<div class="wrapper">
+   <div>Hi</div>
+</div>
+
+<!--Method #2-->
+<div class="main2">
+    <div class="inner2"> This </div>
+</div>
+
+
+	<div class="grid-container">
+	
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('teachers.edit_teachers') }}"><img src="{{ url_for('static', filename='img/school.png') }}">בתי ספר</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('teachers.edit_teachers') }}"><img src="{{ url_for('static', filename='img/teacher.png') }}">אנשי צוות</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/kid.png') }}">תלמידים</a></div></p></div>			
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/form.png') }}">תוכנית טיפול אישית לתלמיד</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/profile.png') }}">פרופיל תלמיד</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('destinations.edit_destinations', from_dst_sort_order=0) }}"><img src="{{ url_for('static', filename='img/goal.png') }}">מטרות ויעדים</a></div></p></div>
+		
+		<div class = "grid-item"><p><div class="w3-col s4 w3-lightblue w3-center"><a href="{{ url_for('students.index') }}"><img src="{{ url_for('static', filename='img/statistics.png') }}">סטאטיסטיקה</a></div></p></div>	
+
+	</div>
+​<!--</div>-->
+
+{% endblock %}

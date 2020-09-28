@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+
+</style>
+
+<div class="w3-container" id="container_id">
+
+  <center><h3> {{ tag.title }} destinations list:</h3></center>
+  <div>
+  
+
+	   		<button class="accordion" id="header_panel">{{ tag.title }} כותרת הנושא </button>
+			<div class="panel">
+			  <button>{{ tag.body }} תאור הנושא</button>				
+			</div>
+		    <br>
+	<div>
+		{% for destination in destinations %}	 
+			<br><br>						
+						
+			<button class="btn btn-warning btn-xs" ><a href="{{ url_for('destinations.destination_update', selected_destination_id=destination.destination_id) }}">ערוך</a></button>		
+			<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+			<button class="btn btn-success btn-xs" ><a href="{{ url_for('destinations.goal_to_destination_add2', selected_destination_id=destination.destination_id) }}">הוסף יעד</a></button>
+			<button class="btn btn-success btn-xs" ><a href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=destination.destination_id) }}">הצג יעדים</a></button>
+			<button class="btn btn-danger btn-xs"  ><a href="{{ url_for('destinations.destination_delete_for_good2', selected_destination_id=destination.destination_id) }}">מחק</a></button>
+
+			<button class="accordion">מטרה: {{ destination.title }}</button>
+			<div class="panel">
+				<button>תאור המטרה: {{ destination.body }}.</button>				
+			</div>
+			<br>
+		{% endfor %}
+		<center><button class="btn btn-info btn-xs"  ><a href="{{ url_for('destinations.destination_add') }}">Add a new Destination</a></button></center>
+	</div>
+
+ </div>
+ 
+</div>   <!-- container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

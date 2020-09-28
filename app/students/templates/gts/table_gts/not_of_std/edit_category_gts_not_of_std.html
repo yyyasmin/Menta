@@ -1,0 +1,72 @@
+{% block edit_std_gts %}		
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+	
+		<table class="{{ gray_color }}">	
+	
+			<tr id="header_row">
+			
+				<th>מספר</th>
+				<th>נושא</th>
+				<th>קטגורית פרופיל</th>
+				<th>כותרת</th> 
+				<th>תאור</th> 
+				<th>פעולות</th>
+				
+			</tr>
+																															
+			</br>			
+					
+			{% for gt in gt_subs_not_of_std %} 
+				{% if gt.children != [] %}
+					{% if gt.is_parent_of(tag) %}
+					
+						{% if gt.gt_type == gt_category.gt_type  %}
+										
+							{% include "./gts/table_gts/not_of_std/edit_std_gt_prf_line_not_of_std.html" %}
+																																		
+						{% endif %}	
+					
+					{% endif %}						
+				{% endif %}	
+				
+
+			{% endfor %}
+			
+		</table>				
+
+{% endblock edit_std_gts %}

@@ -1,0 +1,222 @@
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+</script>
+
+
+</head>
+<body>
+
+
+	<input type="button" id="hide_dsts">
+		הסתר מטרות
+	</input>
+
+	<input type="button" id="show_dsts">
+		הראה מטרות	
+	</input>
+			
+		
+	{% for tag in tags %}
+		{% for ar in age_ranges %}  <!-- ars -->
+
+			</br></br>
+			
+			<h4><strong> נושא:   {{ tag.title }}   </strong></h4>
+			<h4 style="dislay:inline;"><strong>קבוצת גיל: :{{ ar.title }}  </strong></h4>
+		
+				<table class="green_table" id="gt">   <!-- DESTINATIONS -->
+				
+					{% for std_dst in student_dsts if (std_dst.is_parent_of(ar) and std_dst.is_parent_of(tag)) %}						
+						{% include "./destinations/table_destinations/dst_header.html" %}
+						{% break %}
+					{% endfor %}
+					
+					{% for std_dst in student_dsts if (std_dst.is_parent_of(ar) and std_dst.is_parent_of(tag)) %}			
+	
+						<tr>					
+							{% include "./destinations/table_destinations/edit_std_dst_line.html" %}
+						</tr>
+						
+
+
+							<tr>  <!-- GOALS -->
+							<td colspan="6">  
+							<table class="blue_table">
+																																		
+						<input type="button" id="hide_goals"  data-toggle="toggle">
+							הסתר יעדים
+						</input>
+
+						<input type="button" id="show_goals"     data-toggle="toggle">
+							הראה יעדים	
+						</input>
+									
+								{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}	
+									<tr>
+									{% include "./destinations/table_destinations/goals/goal_header.html" %}
+									</tr>
+									{% break %}
+								{% endfor %}							
+								
+								{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}			
+									<tr>
+										{% include "./destinations/table_destinations/goals/edit_std_goal_line.html" %}
+									</tr>
+									
+									
+									<tr>	<!-- TODOS -->								
+										<td colspan="6">
+											<table class="orange_table">
+											
+												{% for todo in student_todos if (goal.is_parent_of(todo)) %}
+													<tr>
+													{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}														
+													</tr>
+													{% break %}
+												{% endfor %}
+												
+												{% for todo in student_todos if (goal.is_parent_of(todo)) %}			
+													<tr>
+														{% include "./destinations/table_destinations/goals/todos/edit_std_todo_line.html" %}
+													</tr>
+												{% endfor %}					
+											</table>
+										</td>
+									</tr>
+									<!-- TODOS -->
+									
+
+									<tr>   <!-- TODOS NOT_OF_STD -->
+										<td colspan="6">
+											<table class="gray_table">	
+																													
+												<tr>
+													{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}												
+														<tr>
+														{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}
+														</tr>
+														{% break %}
+													{% endfor %}
+												</tr>		
+														
+												{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}									
+													<tr>
+														{% include "./destinations/table_destinations/not_of_std/goals/todos/edit_std_todo_line_not_of_std.html" %}
+													</tr>
+												{% endfor %}					
+											</table>
+										</td>	
+									</tr>  <!-- TODOS NOT_OF_STD -->
+										
+								{% endfor %}					
+							</table>
+							</td>
+							</tr>  <!-- GOALS -->
+							
+							<tr>  <!-- GOALS NOT_OF_STD IN DSTS -->
+							<td colspan="6">
+							<table class="gray_table">
+											
+								{% for goal in goals_not_of_student if (std_dst.is_parent_of(goal)) %}
+									<tr>
+									{% include "./destinations/table_destinations/goals/goal_header.html" %}
+									</tr>
+									{% break %}
+								{% endfor %}
+														
+								{% for goal in goals_not_of_student if (std_dst.is_parent_of(goal)) %}			
+									<tr>
+										{% include "./destinations/table_destinations/not_of_std/goals/edit_std_goal_line_not_of_std.html" %}
+									</tr>
+									
+									
+									<tr>	<!-- TODOS IN GOALS NOT_OF_STD -->								
+										<td colspan="6">
+											<table class="gray_table">
+															
+												{% for todo in all_todos if (goal.is_parent_of(todo)) %}
+													<tr>
+													{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}
+													</tr>
+													{% break %}
+												{% endfor %}		
+												
+												{% for todo in all_todos if (goal.is_parent_of(todo)) %}			
+													<tr>
+														{% include "./destinations/table_destinations/goals/todos/edit_std_todo_line.html" %}
+													</tr>
+												{% endfor %}					
+											</table>
+										</td>
+									</tr>   <!-- TODOS IN GOALS NOT_OF_STD -->																						
+									
+								{% endfor %}					
+							</table>
+							</td>							
+							</tr>  <!-- GOALS NOT_OF_STD IN DSTS -->
+							
+							
+					{% endfor %}<!--DESTINATIONS -->								
+				
+					<tr>  <!-- DESTINATIONS NOT OF STD -->
+						<td colspan="6">							
+							{% include "./destinations/table_destinations/not_of_std/edit_std_dsts_not_of_std.html" %}
+						</td>
+					</tr>
+			
+				</table>	
+			{% endfor %}  			
+	{% endfor %} 
+	
+
+	</br></br>	
+
+</body>
+</html>

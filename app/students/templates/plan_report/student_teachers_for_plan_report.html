@@ -1,0 +1,70 @@
+{% block student_teachers_for_plan_report %}
+
+<style>
+<!-- teachers -->
+
+</style>
+
+<!-- teachers -->
+
+
+	<h3><strong><div>צוות חינוכי</div></strong></h3>
+	<p></p>
+	
+	<table>
+	
+		<tr>			
+			<th>שם פרטי</th>
+			<th>שם משפחה</th>
+			<th>תפקיד</th>
+		</tr>
+		
+		{% for student_staff_teacher in student_staff_teachers %}	
+
+		<form   method="POST" action="{{ url_for('students.teacher_to_student_add2', selected_teacher_id=student_staff_teacher.id, selected_student_id=student.id) }}">	
+			<tr>
+				<td>{{ student_staff_teacher.first_name }}</td>
+				<td>{{ student_staff_teacher.last_name }}</td> 
+				<td>Role:
+					<select class="select" name="selected_role" id="selected_role">						
+						{% for std in student_staff_teacher.students %}	
+							{% if std.student_id == student.id %}	
+								<option value="{{ std.title }}" selected="selected">{{std.title}}</option>
+							{% endif %}
+						{% endfor %}
+						
+						{% for acc in accupations %}	
+							<option value="{{ acc.title }}">{{ acc.title }}</option>
+						{% endfor %}
+						
+					</select>					
+				</td>		
+		
+			</tr>
+		</form>	
+		{% endfor %}
+		
+	</table>
+
+<!-- Teachers --> 
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+<!-- Teachers -->
+
+{% endblock %}
+

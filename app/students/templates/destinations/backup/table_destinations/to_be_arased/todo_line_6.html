@@ -1,0 +1,85 @@
+
+{% block todo_line_6 %}
+	
+	<td>{{ todo.id }}</td>
+	<td>{{ todo.title }}</td>
+	<td>{{ todo.body }}</td> 
+	
+	<td>
+		<div id="ar_div">				
+			{% for st in std_txts %}
+				{% if st.general_txt_id==todo.id %}
+					<input type="date" style="text-align:center" id="due_date" name="due_date{{ todo.id }}" value="{{ st.due_date }}">
+				{% endif %}	
+			{% endfor %}
+		</div>   <!-- ar_div -->
+	</td>	
+
+
+	<td>
+		<select style="width:100%" class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ todo.id }}" id="selected_status">this.value	
+			{% for sts in statuss %}
+				{% if todo.is_parent_of(sts) %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+				{% else %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+
+	<td>
+		<select style="width:100%" class="select" onchange="this.dataset.chosen = this.value;" name="who{{ todo.id }}" id="selected_who">this.value	
+			{% for who in whos %}
+				{% if todo.is_parent_of(who) %}
+					<option value="{{ who.title }}" selected="selected">{{ who.title }}</option>
+				{% else %}
+					<option value="{{ who.title }}">{{ who.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+
+	<td>								
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ todo.id }}">שמור</button>
+	</td>
+
+
+
+			
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+<!-- call match_todo function for save todo details when submit button is pushed by the user -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.getJSON('/match_todo_to_std2',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+{% endblock todo_line_6 %}

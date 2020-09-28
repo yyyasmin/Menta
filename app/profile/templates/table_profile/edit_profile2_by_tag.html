@@ -1,0 +1,59 @@
+<!-- FROM https://stackoverflow.com/questions/25978879/how-to-create-chained-selectfield-in-flask-without-refreshing-the-page -->
+{% block edit_profile2_by_tag %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .subjects_of_interest-icon-class:before {
+    content: 'תחומי עיניין + ';
+}
+.subjects_of_interest-icon-class:before {
+	content: 'תחומי עיניין - ';
+}
+
+</style>
+
+	</br></br>
+	
+	{% include "./table_profile/tag_sub_tag_dropdown2.html" %}
+	
+	
+<!----------- Open content only the part that was updated by the user ------------>	
+<!----------- SAVE IN CASE TO SHOE MORE THAN ONE TAG PROFILE  ---------------------
+	{% for tag in tags %}
+	{% for sub_tag in sub_tags %}				
+			{% if (tag.id == default_tag.id) and (sub_tag.id == default_sub_tag.id) %} 
+---------------------------------------------------------------------------------------->			
+				
+				<div class="collapsed in" data-toggle="collapse" data-target="#{{tag.id}}Content">
+					<ul class="list-inline" style="color:blue">
+						<!-- <li class="subjects_of_interest-icon-class"></li>  -->
+					</ul>
+				</div>
+
+				<div class="collapse in" id="{{tag.id}}Content">
+											
+						{% include "./table_profile/profile3_line.html" %}
+								
+				</div>
+																					
+			{% endif %}
+
+<!----------- Open content only the part that was updated by the user ------------>	
+<!----------- SAVE IN CASE TO SHOE MORE THAN ONE TAG PROFILE  ---------------------
+	{% endfor %}
+	{% endfor %}
+---------------------------------------------------------------------------------------->			
+	
+{% endblock edit_profile2_by_tag %}

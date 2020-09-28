@@ -1,0 +1,72 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% include "./profile/profile_style.html" %}
+
+	<div> IN C:\Users\yasmi\Documents\מנטא\app\profile\templates\edit_students_profile.html </div>
+	
+<div class="container">	
+
+	<center><h1>{{ student.first_name }} {{ student.last_name }} פרופיל של התלמיד</h1></center>
+	
+	<table style="width:100%">
+	
+		<tr>			
+			<th style="color:blue"><strong>תחומי עיניין</strong></th>
+			<th style="color:green"><strong>חוזקות</strong></th>
+			<th style="color:red"><strong>חולשות</strong></th> 
+		</tr>
+		
+		<tr>
+		
+		<td>
+			<table id="subjects_table" style="width:100%">
+				{% include "./profile/std_profile_subjects_list.html" %}
+				<br><br>
+				{% include "./profile/edit_subjects_not_of_std_profile.html" %}				
+			</table> 
+			
+		</td>
+		
+
+		<td>
+			<table style="vertical-align:top" id="strengthes_table" style="width:100%">
+				{% include "./profile/std_profile_strengthes_list.html" %}				
+			</table>
+			
+		</td>
+		
+
+		<td>
+			<table id="weaknesses_table" style="width:100%">
+				{% include "./profile/std_profile_weaknesses_list.html" %}				
+			</table>
+			
+		</td>
+		
+		</tr>
+		
+	</table>
+</div>		<!-- class="container -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

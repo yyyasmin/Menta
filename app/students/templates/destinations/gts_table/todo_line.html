@@ -1,0 +1,68 @@
+{% block gt_line %}
+
+<style>
+
+
+</style>
+
+	<td class="id_width">{{ gt.id }}</td>
+	
+	<td class="tag_width" style="border-left:0;">משימה ליעד מס {{goal.id}}</td>
+	<td class="sub_tag_width goal_of_dst_border" style="border-right:0;"></td>
+	
+	<td class="title_width">{{ gt.title }}</td>
+	<td class="body_width">{{ gt.body }}</td> 
+
+                  
+	<td class="sub_btn_width">
+	
+		<div id="add_sub" style="color:purple" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Content">
+			הראה משאבי עבודה
+		</div>
+					
+	</td>
+	
+	<td class="date_width">
+		{% for st in std_txts %}
+			{% if st.general_txt_id==gt.id %}
+				<input type="date" style="text-align:center" id="due_date" name="due_date{{ gt.id }}" value="{{ st.due_date }}">					
+			{% endif %}
+		{% endfor %}
+	</td>	
+		
+	{% set stsNs = namespace (stsColor = "") %}
+	{% for sts in statuss %}
+		{% if gt.is_parent_of(sts) %}
+			{% set stsNs.stsColor = sts.color %}
+			{% break %}
+		{% endif %}
+	{% endfor %}	
+	<td class="status_width" style="color:{{ stsNs.stsColor }}">   <!-- ID FOT SELECTED STS COLOR -->
+		<select id="selected_status" class="select" onchange="this.className=this.options[this.selectedIndex].className" name="sts{{ gt.id }}">	
+			{% for sts in statuss %}
+				{% if gt.is_parent_of(sts) %}
+					<option class="{{ sts.color_txt }}" style="color:{{ sts.color_txt }}" value="{{ sts.title }}" selected="selected" id="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% else %}
+					<option class="{{ sts.color_txt }}" style="color:{{ sts.color_txt }}" value="{{ sts.title }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+	
+	<td class="save_width">
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ gt.id }}">שמור</button>
+	</td>
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>
+				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+
+</script>
+
+
+{% endblock gt_line %}

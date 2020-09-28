@@ -1,0 +1,16 @@
+{% block parts_add_button %}
+			
+		{% with part=sbj %}
+			{% include "./profile/part_buttons.html" %} 
+		{% endwith %}
+	
+		{% with part=strn %}
+			{% include "./profile/part_buttons.html" %} 
+		{% endwith %}
+	
+		{% with part=weak %}
+			{% include "./profile/part_buttons.html" %} 
+		{% endwith %}
+				
+{% endblock parts_add_button %}
+					

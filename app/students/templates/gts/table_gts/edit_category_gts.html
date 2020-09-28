@@ -1,0 +1,76 @@
+{% block edit_std_gts %}		
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+		{% set table_color = gt_category.color_txt + '_table' %}    <!-- shhould be gt_category.color_txt -->
+	
+		<table class="{{ table_color }}">	
+	
+			<tr id="header_row">
+			
+				<th>מספר</th>
+				<th>נושא</th>
+				<th>קטגורית פרופיל</th>
+				<th>כותרת</th> 
+				<th>תאור</th> 
+				<th>פעולות</th>
+				
+			</tr>
+																															
+			</br>		
+						
+			{% for gt in gt_subs %} 
+				
+				{% if (gt.is_parent_of(tag))  %}
+					{% if gt.gt_type == gt_category.gt_type  %}
+									
+						{% include "./gts/table_gts/edit_std_gt_line.html" %}
+																																	
+					{% endif %}						
+				{% endif %}	
+				
+			{% endfor %}
+			
+		</table>
+			
+	
+		
+	</br></br>
+		
+		
+
+{% endblock edit_std_gts %}

@@ -1,0 +1,26 @@
+				
+											
+		<div class="collapse" id="not_of_std{{goal.id}}Content" aria-expanded="true">
+			<table class="gray_table" >
+					{% for todo in todos_not_of_student if( todo.is_parent_of(tag) and todo.is_parent_of(ar) ) %}
+						<tr>
+							{% with gt=todo, gt_obj=todo_obj, gt_sub_obj=None %}
+								{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+							{% endwith %}
+						</tr>
+					{% endfor %}
+			</table>
+		</div>
+			
+			
+			<div class="collapse" id="not_of_std{{dst.id}}Content" aria-expanded="true">
+				<table class="gray_table" >
+						{% for goal in goals_not_of_student if( goal.is_parent_of(tag) and goal.is_parent_of(ar) ) %}
+							<tr>
+								{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+									{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+								{% endwith %}
+							</tr>
+						{% endfor %}
+				</table>
+			</div>

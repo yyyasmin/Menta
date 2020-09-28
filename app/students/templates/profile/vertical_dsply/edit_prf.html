@@ -1,0 +1,89 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+{% block edit_prf_gt_parts12 %}
+
+<style>
+
+</style>
+		
+	<!--------------------- DEBUG --------------------->
+
+	<!--------------------- DEBUG --------------------->
+	
+	{% if gray == 0 %}
+	
+		</br></br>
+		
+		<div style="float:left; margin-left:45%; margin-bottom:0;"> 
+			<h4 style="padding-bottom:0.3em">
+				<strong>
+					<center>{{part.h_plural_name}}</center>
+				</strong>
+			</h4>
+		</div>
+		
+		<button type="button" class="w3-button w3-large w3-border w3-border-{{part.color_txt}}"
+				data-toggle="modal" data-target="#{{part.class_name}}modal" id="add_button"
+				style="color:{{part.color}}; margin-bottom:0;">
+				<strong>הוסף {{part.h_name}}</strong>
+		</button>
+		
+	{% endif %}
+
+	<table class="table {{part.table_color}}" style="table-layout: fixed;">
+			
+		{% if gray == 0 %}
+			<thead>
+				<tr>
+					<th>מספר</th> 				
+					<th>{{part.h_name}}</th> 				
+					<th>תאור</th> 				
+					<th>פעולות עריכה</th>
+				</tr> 	
+			</thead>
+		{% endif %}
+	
+		{% if prf_parts_list != [] and prf_parts_list != None %}
+			<tbody>
+				{% for gt in prf_parts_list if 
+					   gt.body!='New' and
+					   gt.is_parent_of(default_tag) and
+					   gt.is_parent_of(default_sub_tag) %}
+						{% include "profile/vertical_dsply/std_prf_parts_tables.html" %}
+				{% endfor %}
+			</tbody>	
+		{% endif %} 
+	</table>   
+
+	<!-- Modal Add Employee-->
+	<div id="{{part.class_name}}modal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">		
+					<form method="post" action="{{ url_for('students.std_part_to_prf_add2',
+															tag_id=0,sub_tag_id=0, dsply_direction=0) }}">
+									
+									<div class="form-group">
+										<label>{{part.h_name}}</label>
+										<input type="title" class="form-control" name="gt_title" required="1">
+									</div>
+									
+									<div class="form-group">
+										<label>תאור</label>
+										<input type="text" class="form-control" name="gt_body" required="1">
+									</div>
+									
+									<div class="form-group">
+										<button class="btn btn-primary" type="submit" name="class_name" value="{{part.class_name}}">שמור</button>
+									</div>
+					</form>
+				</div>
+					
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock edit_prf_gt_parts12 %}

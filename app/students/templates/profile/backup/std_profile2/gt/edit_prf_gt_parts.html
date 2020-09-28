@@ -1,0 +1,83 @@
+
+{% block edit_prf_gt_parts %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+		
+	</br>
+	
+	<h4>
+		<strong>
+			<div style="margin: 0 0;">			
+				<div style="background:{{ title_color }}; padding-bottom:4%; width:100%; height:10px; display:inline-block;">
+					<h4><center><strong>רשימת {{ gt_some_type_txt }}</strong></center></h4>
+				</div>
+			</div>
+		</strong>
+	
+		<div>
+		
+		<table class="{{ table_color }}" id="dst_tbl_id" style="width:100%">
+		
+			{% include "./profile/std_profile2/std_profile2_parts_header.html" %}
+			
+			{% for gt in prf_parts_list if (gt.is_parent_of(tag)) %}	
+			
+				<tr>
+					<td></td>
+					<td>{{ gt.id }}</td>
+					<td>{{ gt_single_type_txt }}</td>
+					<td>{{ gt.title }}</td> 				
+					<td>{{ gt.body }}</td> 				
+									
+				</tr>
+			
+				<tr>					
+					{% include "./profile/std_profile2/std_profile2_parts_list.html" %}																		
+				</tr>
+					
+			{% endfor %}
+			
+		</table>
+		
+		</div>
+		
+	</h4>
+	
+	</br>
+
+{% endblock edit_prf_gt_parts %}

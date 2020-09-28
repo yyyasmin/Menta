@@ -1,0 +1,32 @@
+
+{% block save_all_dst_info %}
+
+<style>
+
+</style>
+
+<form action="{{ url_for('destinations.destination_add', from_dst_sort_order=from_dst_sort_order)}}" method="POST"> 			
+	
+	</br>							 
+	
+	<input style="background-color:#ff8533" type="submit" value="save destination" name="submit">			
+</form>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+</style>
+
+<div class="container" id="container_id">	
+	<h3>הוסף מטרה חדשה:</h3>
+	
+	</br>
+
+    <form method="POST">
+		{{ form.csrf_token }}
+		{{ form.ar }}
+		{{ form.tag }}
+		{{ form.scrt }}
+		<input style="background-color:#ff8533" type="submit" value="שמור מטרה" name="submit">
+    </form>
+<!-- FROM https://www.tutorialspoint.com/flask/flask_wtf.htm -->		
+  <form  method = post>
+         <fieldset>
+            <legend>הוסף מטרה חדשה:</legend>
+            {{ form.hidden_tag() }}
+            
+            <div style = "font-size:20px; font-weight:bold; margin-left:150px; width=100%">
+              
+               {{ form.dst_title.label }}<br>
+               {{ form.dst_title }}
+               <br>
+                             
+               {{ form.ar.label }}<br>
+               {{ form.ar }}
+               
+               {{ form.tag.label }}<br>
+               {{ form.tag }}			   
+               <br>
+               
+               {{ form.scrt.label }}<br>
+               {{ form.scrt }}
+			   <br>
+			   
+               {{ form.submit }}
+            </div>
+            
+         </fieldset>
+      </form>
+<!-- FROM https://www.tutorialspoint.com/flask/flask_wtf.htm -->					
+	
+</div>  <!-- class="container -->
+
+
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+<script>
+	var ar_select = document.getElementById("ar");
+	var tag_select = document.getElementById("tag");
+
+	ar_select.onchange = function()  {
+		 
+		ar = ar_select.value;
+		
+		fetch('/tag/' + ar).then(function(response) {
+
+			response.json().then(function(data) {
+				var optionHTML = '';
+
+				for (var tag of data.tags) {
+					optionHTML += '<option value="' + tag.id + '">' + tag.title + '</option>';
+				}
+
+				tag_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+
+<script>
+	vtag tag_select = document.getElementById("tag");
+	vtag scrt_select = document.getElementById("scrt");
+
+	tag_select.onchange = function()  {
+		 
+		tag = tag_select.value;
+		
+		fetch('/scrt/' + tag).then(function(response) {
+
+			response.json().then(function(data) {
+				vtag optionHTML = '';
+
+				for (vtag scrt of data.scrts) {
+					optionHTML += '<option value="' + scrt.id + '">' + scrt.title + '</option>';
+				}
+
+				scrt_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+
+
+{% endblock %}

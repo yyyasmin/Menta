@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+}
+
+
+
+
+</style>
+<button class="btn btn-info btn-xs" id="add_button">
+	<h5><strong>
+		<a href="{{ url_for('destinations.destination_add'), selected_student_id=student.id, public=False }}">Add a new Destination</a>
+	<strong></h5></button>
+
+</br></br>
+
+<h2>
+	<button class="accordion" id="student_header">Student's {{ student.first_name }} {{ student.last_name }} destinations list:</button>
+	<div class="student_panel" >
+		<p class="ppp">students details: ID: {{ student.id }}  GRADE: {{ student.grade }} .</p>
+	</div>
+</h2>
+
+</br>
+	
+{% for tag in dst.tags %}
+	</br></br>
+	<th><h4><strong>Subject: {{ tag.title }}</strong></h4></th>
+
+	<table style="width:100%">
+
+	<tr>							
+		<th>Subject</th>
+		<th>Age Category</th>
+		<th>Destination</th> 
+		<th>Actions</th>
+	</tr>
+	{% for dst in std_dstenations if dst in tag.destinations %}								
+		<tr>
+			<td>{{ tag.title }}</td>
+			<td>{{ ar.title }}</td>
+			<td>{{ dst.title }}</td> 				
+			<td>
+				<button class="btn btn-warning btn-xs" ><a href="{{ url_for('destinations.destination_update', selected_destination_id=dst.id) }}">Edit</a></button>		
+				<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('destinations.show_dummy_student_tree2') }}">Show Destinations tree</a></button>
+				<button class="btn btn-warning btn-xs" style="background-color: #00ffcc"><a href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=dst.id) }}">Edit Goals</a></button>
+				<button class="btn btn-warning btn-xs" style="background-color: #ffff66"><a href="{{ url_for('destinations.edit_dst_age_range2', selected_destination_id=dst.id) }}">Age Category</a></button>
+				<button class="btn btn-success btn-xs" style="background-color: #ffff00"><a href="{{ url_for('destinations.edit_destinations_tags2', selected_destination_id=dst.id, selected_tag_id=0) }}">Tags</a></button>										
+				<button class="btn btn-danger btn-xs"  style="background-color: #ff5050"><a href="{{ url_for('destinations.destination_delete_for_good2', selected_destination_id=dst.id) }}">Delete</a></button>		
+			</td>
+		</tr>
+			
+	{% endfor %}  <!-- std_dstenations -->
+	
+	</table>
+	
+</br></br>	
+
+{% endblock %}

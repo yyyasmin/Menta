@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+	margin-right:10%;
+}
+
+</style>
+
+<h2><center>רשימת מטרות לפי אפשרויות אבטחה</center></h2>	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=4) }}">הוסף מטרה</a>
+	<strong></h5></button>
+	</br></br>
+	
+	{% for scrt in scrts %}
+		</br></br>
+		<th><h4><strong>אופצית אבטחה {{ scrt.title }}</strong></h4></th>
+
+		<table style="width:100%">
+
+		<tr id="header_row">
+			<th>אבטחה</th>			
+			<th>קבוצת גיל</th>
+			<th>נושא</th>
+			<th>מטרה</th> 
+			<th>פעולות</th>
+		</tr>
+
+			{% for tag in tags %}				
+				{% for ar in age_ranges %}  <!-- ars -->
+					{% for dst in destinations if  (dst.is_parent_of(ar)  and
+													dst.is_parent_of(tag) and)
+												dst.is_parent_of(scrt) %}
+						<tr>
+							<td>{{ scrt.title }}</td>
+							<td>{{ ar.title }}</td>
+							<td>{{ tag.title }}</td>
+							<td>{{ dst.title }}</td> 
+							
+							<td>	
+							{% with from_dst_sort_order=4 %}		
+								{% include "./sub_forms/scrt/edit_scrt_dst_actions.html" %}
+							{% endwith %}
+							</td>
+				
+						</tr>
+							
+						{% endif %}
+					{% endfor %}				
+				{% endfor %}  <!-- ar.destinations -->								
+			{% endfor %}  <!-- tags -->
+		{% endfor %}  <!-- ar -->
+
+		</table>
+		
+	{% endfor %}  <!-- scrts -->
+	
+{% endblock %}

@@ -1,0 +1,134 @@
+<!-- FROM https://codepen.io/chriscoyier/pen/LixbE -->
+
+{% block std_actions_3d_buttons %}
+
+<!-- TAB TEMPLATE -->
+<svg height="0" width="0" style="position: absolute; margin-left: -100%;">
+  
+  <defs>
+    
+    <filter id='shadow'>
+      <feComponentTransfer in="SourceGraphic">
+        <feFuncR type="discrete" tableValues="0"/>
+        <feFuncG type="discrete" tableValues="0"/>
+        <feFuncB type="discrete" tableValues="0"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="1"/>
+       <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+      <feOffset dx="5" dy="1" result="shadow"/>
+      <feComposite in="SourceGraphic" />
+    </filter>
+        
+    <linearGradient id="tab-1-bg" x1="0%" y1="0%" x2="0%" y2="65%">
+      <stop offset="0%" style="stop-color: rgba(136, 195, 229, 1.0);" />
+      <stop offset="100%" style="stop-color: rgba(118, 160, 192, 1.0);" />
+    </linearGradient>
+    
+    <linearGradient id="tab-2-bg" x1="0%" y1="0%" x2="0%" y2="65%">
+      <stop offset="0%" style="stop-color: rgba(149, 190, 233, 1.0);" />
+      <stop offset="100%" style="stop-color: rgba(112, 153, 213, 1.0);" />
+    </linearGradient>
+    
+    <linearGradient id="tab-3-bg" x1="0%" y1="0%" x2="0%" y2="65%">
+      <stop offset="0%" style="stop-color: rgba(61, 149, 218, 1.0);" />
+      <stop offset="100%" style="stop-color: rgba(43, 130, 197, 1.0);" />
+    </linearGradient>
+    
+    <linearGradient id="tab-4-bg" x1="0%" y1="0%" x2="0%" y2="65%">
+      <stop offset="0%" style="stop-color: rgba(72, 204, 243, 1.0);" />
+      <stop offset="100%" style="stop-color: rgba(71, 194, 243, 1.0);" />
+    </linearGradient>
+      
+  </defs>
+  
+  <path id="tab-shape" class="tab-shape" d="M116.486,29.036c-23.582-8-14.821-29-42.018-29h-62.4C5.441,0.036,0,5.376,0,12.003v28.033h122v-11H116.486
+			z">
+  
+</svg>
+
+<nav role="navigation" class="main-navigation">
+  <ul>
+  
+    <li class="tab-1 active" data-bg-color="rgba(118, 160, 192, 1.0)">
+      <a style="color:black;" href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">">
+        <span>פרטים אישיים</span>
+        <svg viewBox="0 0 122 40">
+           <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+    <li class="tab-2" data-bg-color="rgba(112, 153, 213, 1.0)">
+      <a style="color:black;" href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">
+        <span>דוחות</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+    <li class="tab-3" data-bg-color="rgba(43, 130, 197, 1.0)">
+      <a style="color:black;" href="{{ url_for('students.edit_std_profile2', selected_student_id=student.id) }}">
+        <span>פרופיל</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+    <li class="tab-4" data-bg-color="rgba(71, 194, 243, 1.0)">
+      <a style="color:black;" href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">
+        <span>צוות חינוכי</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>	  
+    </li>
+		
+    <li class="tab-4" data-bg-color="rgba(71, 194, 243, 1.0)">
+      <button class="btn btn-success btn-xs" style="background-color:#ffff66;"><a style="color:black;" href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">
+        <span>מטרות</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>	  
+    </li>
+	
+	    <li class="tab-4" data-bg-color="rgba(71, 194, 243, 1.0)">
+      <button class="btn btn-warning btn-xs" style="background-color:plum;"><a style="color:black;" href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">
+        <span>הצג עץ מטרות</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+	<li class="tab-4" data-bg-color="rgba(71, 194, 243, 1.0)">
+      <button class="btn btn-success btn-xs" style="background-color:#9999ff;" ><a style="color:black;" href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">
+        <span>תוכנית אישית</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+	    <li class="tab-4" data-bg-color="rgba(71, 194, 243, 1.0)">
+      <a href="#contact">
+        <span>מחק</span>
+        <svg viewBox="0 0 122 40">
+          <use xlink:href="#tab-shape"></use>
+        </svg>
+      </a>
+    </li>
+	
+  </ul>
+</nav>
+
+<div class="main-content">
+  <article class="article">
+    <h2>An Article Right Here, Boss.</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa totam cumque ad repellendus ab ea repellat aperiam accusantium labore officia est culpa fugiat eaque magnam a. Labore molestias ea at maiores inventore veritatis cupiditate cum doloribus quisquam eum et asperiores!</p>
+  </article>
+</div>
+
+{% endblock std_actions_3d_buttons %}

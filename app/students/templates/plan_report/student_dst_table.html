@@ -1,0 +1,85 @@
+
+{% block std_dst_block %}
+	<h3>
+	
+	</br>
+	
+	<strong><div>מטרות, יעדים ומשימות</div></strong>
+
+	</br> 
+	
+	<table class="light_green_table" style="table-layout:fixed;">
+		<tbody>			
+		{% for tag in tags if (tag in std_gts) %} 
+
+			
+			
+					{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) %}
+			
+						<tr>
+												
+							<td style="25%;">  
+								{% include "plan_report/student_dst_table_level_1.html" %}   <!-- DST COLUMN -->
+							</td>
+							
+							<td style="width:150px;">
+								<table class="blue_table" style="margin:0; padding:0; border:0; table-gap:0;" >
+									<tbody>
+									{% for goal in student_goals if(std_dst.is_parent_of(goal)) %}  <!-- GOALS COLUMN -->
+										<tr>	
+											<td style="width:80px%;">
+												{% include "plan_report/student_dst_table_level_2.html" %}
+											</td>
+											
+											<td style="width:75%;">
+												<table class="orange_table" style="margin:0; padding:0; border:0; table-gap:0;">
+													<tbody>
+														<tr>	
+															<td>
+																{% include "plan_report/student_dst_table_level_3.html" %}																
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+										
+									{% endfor %}	
+									</tbody>
+								</table>
+							</td>
+							
+						</tr>	
+																					
+					{% endfor %}	
+		
+											
+	
+		{% endfor %}  <!-- tags -->
+		</tbody>
+	</table>
+	
+	</br></br>	
+	
+	</h3>
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

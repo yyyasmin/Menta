@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+#resource_header.accordion {
+		color: #fff;
+		background-color: #346767;
+		border-color: #EEEEEE;
+		font-size: 18px;
+}
+
+#uploaded_file_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+#uploaded_file_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+	font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+<div class="w3-container" id="container_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('resources.uploaded_file_to_resource_add2', selected_resource_id=resource.id) }}">העלה קובץ חדש</a>
+	<strong></h5></button>
+	</br></br>
+	
+	<div>
+		<h4>
+			<button class="accordion" id="green_header" > רשימת קבצים ליישום המשאב: {{ resource.title }} </button>
+			<div class="panel">
+				<p class="ppp" id="green_ppp">Resource description: {{ resource.body }}.</p>
+			</div>
+		</h4>
+		
+		<p></p>
+		</br>
+					
+		{% for uploaded_file in resource.files %}
+		
+			</br>			
+			
+			<button class="btn btn-danger btn-xs" id="delete_id" >
+			  <strong>
+				<a href="{{ url_for('resources.uploaded_file_from_resource_delete2', selected_resource_id=resource.id, selected_uploaded_file_id=uploaded_file.id) }}">הסר קובץ זה מהמשאב</a>
+			  </strong>
+			</button>		
+			
+			
+			<button class="btn btn-warning btn-xs" id="edit_id"  >
+			  <strong>
+				<a href="{{ url_for('resources.download_resource_file2', selected_resource_id=resource.id, selected_download_file_id=uploaded_file.id) }}">הורד קובץ</a>
+			  </strong>
+			</button>		
+			
+			
+			</br>
+			
+			<button class="accordion">שם הקובץ:{{ resource.title }}</button>			
+			<div class="panel">
+			  <p class="white_ppp">תאור הקובץ{{ resource .body }} </p>
+			</div>
+			
+			</br>			
+
+		{% endfor %}
+  </div>
+  
+  </br>
+  
+</div>   <!-- container -->
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

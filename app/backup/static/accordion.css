@@ -1,0 +1,166 @@
+<style>
+
+.container {
+    overflow: auto;
+    
+    color: black;
+   
+}
+
+#problem_block {
+    overflow: auto;
+    
+    background: #ffe6b3;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+    
+}
+
+#problem_title{
+    overflow: auto;
+
+    background: #cc3300; 
+    color: white;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+   
+}
+
+#problem_description{
+    overflow: auto;
+
+    background: #ff531a; 
+    color: black;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+   
+}
+
+p.a{
+    color: orange;
+}
+
+
+#solutions_block  {
+    overflow: auto;    
+    background: #e6ebff;
+    color: yellow;
+  
+}
+
+
+#solution_title{
+    overflow: auto;
+
+    background: #0000ff; 
+    color: white;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+   
+}
+
+#solution_description{
+    overflow: auto;
+
+    background: #b3c6ff; 
+    color: black;
+    padding-top: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-bottom: 0.5em;
+   
+}
+
+#solution_title a{
+    background: blue;
+    color: white;   
+}
+
+#solution_link a{
+    background: blue;
+    color: white;
+}
+
+
+
+
+#pros_and_cons_block {
+    overflow: auto;   
+    background: #b3ffb3;  /* light gray */
+    
+
+}
+
+#pros_block{
+    
+    color: brown;
+    background: green;
+    
+    margin: 0px auto;
+
+   /* -- box example from http://codepen.io/colintoh/pen/kbrzL */      
+    text-align: center;
+    vertical-align:middle;
+     
+  /* box example from http://codepen.io/colintoh/pen/kbrzL */ 
+ 
+    float: left;
+
+    width: 47%; 
+}
+
+#cons_block{
+    /* display:inline-table;  */
+    color: white;
+    background: red;
+    
+    margin: 0px auto;
+ 
+  /* -- box example from http://codepen.io/colintoh/pen/kbrzL */  
+    text-align: center;
+    vertical-align:middle;  
+  /* box example from http://codepen.io/colintoh/pen/kbrzL */ 
+ 
+    float: right; 
+ 
+    width: 47%;  
+ }
+
+
+#pros_block a {
+    color:orange;
+}
+
+ #cons_block a {
+    color:blue; 
+ }
+
+ 
+#pros_alert , #cons_alert{
+    margin-right: 1em;
+} 
+
+
+.pros_add, .cons_add  {
+    width: 100%;
+}
+
+/*
+#cons_list, #pros_list  {
+    margin: 0px auto;
+}
+*/
+ 
+ 
+</style>
+
+
+

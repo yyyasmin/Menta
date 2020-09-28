@@ -1,0 +1,37 @@
+				{% if gt.children.all() != [] %}
+					{% if gt.is_parent_of(tag) %}
+					
+						{% if gt.gt_type == gt_category.gt_type  %}
+										
+							{% include "./gts/table_gts/not_of_std/edit_std_gt_prf_line_not_of_std.html" %}
+																																		
+						{% endif %}	
+					
+					{% endif %}						
+				{% endif %}	
+
+<!----- DEBUG   ---->
+				
+				<br>
+				<div>{{ gt }}  gt </div>
+				<br><br><br>
+					
+				<div>{{ gt.gt_type }} gt.gt_type </div>
+				<br>
+				
+				<div>{{ gt.type }} gt.type </div>
+				<br>
+					
+				<div>{{ gt.title }} gt.title</div>
+				<br>
+				<div>{{ gt.id }} gt.id</div>
+				
+				<br>
+				<div>{{ gt.children == [] }}   gt.children == []</div>
+				
+				<br>
+				<div>{{ gt.children.all() }}   gt.children.all()</div>
+				
+				<br><br>
+
+<!----- DEBUG   ---->

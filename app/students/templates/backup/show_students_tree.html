@@ -1,0 +1,440 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from http://gojs.net/latest/samples/localView.html  -->
+<!-- add a textbox for status from https://gojs.net/latest/intro/groups.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Inspector gojs extension file -->
+	<meta charset="UTF-8">
+		
+		<!-- gojs extension files -->		
+		<script src="https://unpkg.com/gojs/release/go-debug.js"></script>
+		
+		<link rel='stylesheet' href='https://gojs.net/latest/extensions/DataInspector.css' />
+		
+		<script src="https://gojs.net/latest/extensions/DataInspector.js"></script>
+		
+		<script src="https://gojs.net/latest/extensions/ExtendedBrush.js"></script>
+
+		
+		<!--  gojs extension files -->
+		
+	
+	
+  <script id="code">
+    function init() {
+      if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+      var $ = go.GraphObject.make;  // for conciseness in defining templates
+      
+	  myFullDiagram =
+        $(go.Diagram, "fullDiagram",  // each diagram refers to its DIV HTML element by id
+          {
+            initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            maxScale: 0.25,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+            isReadOnly: true,  // don't allow user to change the diagram
+            "animationManager.isEnabled": false,
+            layout: $(go.TreeLayout,
+                      { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            maxSelectionCount: 1,  // only one node may be selected at a time in each diagram
+            // when the selection changes, update the myLocalDiagram view
+            "ChangedSelection": showLocalOnFullClick
+          });  // END myFullDiagram
+		  
+      myLocalDiagram =  // this is very similar to the full Diagram
+        $(go.Diagram, "localDiagram",
+         {
+		    // FROM show tree
+		    initialAutoScale: go.Diagram.UniformToFill,  // automatically scale down to show whole tree
+            //maxScale: 0.25,
+            contentAlignment: go.Spot.Center,  // center the tree in the viewport
+            "animationManager.isEnabled": false,
+            layout: $(go.TreeLayout,
+                      { angle: 90, sorting: go.TreeLayout.SortingAscending }),
+            maxSelectionCount: 1,  // only one node may be selected at a time in each diagram
+			// FROM show tree
+			
+			// FROM INspector
+            "animationManager.isEnabled": false,
+                 
+		    // allow Ctrl-G to call groupSelection()
+            "commandHandler.archetypeGroupData": { text: "Group", isGroup: true, color: "blue" },
+            // enable undo & redo
+            "undoManager.isEnabled": true,
+            // automatically show the state of the diagram's model on the page
+            "ModelChanged": function(e) {
+              if (e.isTransactionFinished) {
+                document.getElementById("savedModel").textContent = myLocalDiagram.model.toJson();
+              }
+            },
+			
+			// FROM INspector
+			
+          });  // END myLocalDiagram
+		  
+	  
+      // Groups consist of a title in the color given by the group node data
+      // above a translucent gray rectangle surrounding the member parts
+      myLocalDiagram.groupTemplate =
+        $(go.Group, "Vertical",
+          {
+            selectionObjectName: "PANEL",  // selection handle goes around shape, not label
+            ungroupable: true
+          },  // enable Ctrl-Shift-G to ungroup a selected Group
+          $(go.TextBlock,
+            {
+              font: "bold 19px sans-serif",
+              isMultiline: false,  // don't allow newlines in text
+              editable: true  // allow in-place editing by user
+            },
+            new go.Binding("text", "name").makeTwoWay(),
+            new go.Binding("stroke", "color")),
+          $(go.Panel, "Auto",
+            { name: "PANEL" },
+            $(go.Shape, "Rectangle",  // the rectangular shape around the members
+              { fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 3 }),
+            $(go.Placeholder, { padding: 10 })  // represents where the members are
+          )
+        );
+				  
+		  
+      // Define a node template that is shared by both diagrams
+      var myNodeTemplate =
+        $(go.Node, "Auto",
+          { locationSpot: go.Spot.Center, },
+          new go.Binding("text", "key", go.Binding.toString),  // for sorting
+		  
+<!-- FROM https://forum.nwoods.com/t/centering-textblocks-in-panels/7941/9  -->	
+        $(go.Panel, "Vertical",
+          $(go.Panel, "Auto",
+            $(go.Shape, "Rectangle", { stroke: "black", fill: "yellow" },
+			new go.Binding("fill", "color")),
+            $(go.TextBlock, {  margin: 5, stroke:"black", textAlign: "center", font: "12pt sans-serif" , editable:true}, 
+			new go.Binding("text", "name").makeTwoWay())
+          ),
+		  
+          $(go.Panel, "Auto", 
+            $(go.Shape, "Rectangle", { stroke: "black", strokeWidth: 2, fill: "lightblue",  },
+			new go.Binding("fill", "color2")),
+            
+			$(go.TextBlock, { margin: 5, stroke: "black", textAlign: "center", font: "12pt sans-serif" , editable:true}, 
+			new go.Binding("text", "status").makeTwoWay())
+          ),
+		  
+
+        ),
+								
+        );  // END myNodeTemplate
+
+      myFullDiagram.nodeTemplate = myNodeTemplate;
+      myLocalDiagram.nodeTemplate = myNodeTemplate;
+      // Define a basic link template, not selectable, shared by both diagrams
+
+      var myLinkTemplate =
+        $(go.Link,
+          { routing: go.Link.Normal, selectable: false },
+          $(go.Shape,
+            { strokeWidth: 2 })
+        );
+		
+
+      myFullDiagram.linkTemplate = myLinkTemplate;
+      myLocalDiagram.linkTemplate = myLinkTemplate;
+      // Create the full tree diagram
+      setupDiagram();
+
+	//myLocalDiagram.select(myLocalDiagram.nodes.first());
+
+	  
+      // Create a part in the background of the full diagram to highlight the selected node
+      highlighter =
+        $(go.Part, "Auto",
+          {
+            layerName: "Background",
+            selectable: false,
+            isInDocumentBounds: false,
+            locationSpot: go.Spot.Center
+          },
+          $(go.Shape, "Ellipse",
+            {
+              fill: $(go.Brush, "Radial", { 0.0: "yellow", 1.0: "white" }),
+              stroke: null,
+              desiredSize: new go.Size(400, 400)
+            })
+          );
+		  
+      myFullDiagram.add(highlighter);
+
+//******************
+         addChildPart = $(go.Panel, "Auto", 
+            $(go.Shape, "Rectangle", { stroke: "black", strokeWidth: 2, fill: "snow",  },
+			new go.Binding("fill", "color2")),
+			 <!-- add a node FROM https://forum.nwoods.com/t/adding-a-parent-node-to-tree-model/5946/8 -->
+			$("Button",
+			  { alignment: go.Spot.TopRight, click: addNode },
+			  $(go.TextBlock, "הוסף בן"),
+			  new go.Binding("visible", "child")
+			),
+			
+          ),
+		myLocalDiagram.nodeTemplate.add(addChildPart);  		  
+//***************************
+				  
+      // Start by focusing the diagrams on the node at the top of the tree.
+      // Wait until the tree has been laid out before selecting the root node.
+      myFullDiagram.addDiagramListener("InitialLayoutCompleted", function(e) {
+        var node0 = myFullDiagram.findPartForKey(0);
+        if (node0 !== null) node0.isSelected = true;
+        showLocalOnFullClick();
+      });
+	  
+	       // Show the primary selection's data, or blanks if no Part is selected:
+      var inspector = new Inspector('myInspectorDiv', myLocalDiagram,
+        {
+          // allows for multiple nodes to be inspected at once
+          multipleSelection: true,
+          // max number of node properties will be shown when multiple selection is true
+          showSize: 4,
+          // when multipleSelection is true, when showAllProperties is true it takes the union of properties
+          // otherwise it takes the intersection of properties
+          showAllProperties: true,
+          // uncomment this line to only inspect the named properties below instead of all properties on each object:
+          // includesOwnProperties: false,
+          properties: {
+            "name": {},
+            // key would be automatically added for nodes, but we want to declare it read-only also:
+            "key": { readOnly: true, show: Inspector.showIfPresent },
+            // color would be automatically added for nodes, but we want to declare it a color also:
+            "color": { show: Inspector.showIfPresent, type: 'color' },
+            // Comments and LinkComments are not in any node or link data (yet), so we add them here:
+            "Comments": { show: Inspector.showIfNode },
+            "LinkComments": { show: Inspector.showIfLink },
+            "isGroup": { readOnly: true, show: Inspector.showIfPresent },
+            "flag": { show: Inspector.showIfNode, type: 'checkbox' },
+            "state": {
+              show: Inspector.showIfNode,
+              type: "select",
+              choices: function(node, propName) {
+                if (Array.isArray(node.data.choices)) return node.data.choices;
+                return ["one", "two", "three", "four", "five"];
+              }
+            },
+            "choices": { show: false },  // must not be shown at all
+            // an example of specifying the <input> type
+            "password": { show: Inspector.showIfPresent, type: 'password' }
+          }
+        });
+
+      // Always show the first Node:
+      var inspector2 = new Inspector('myInspectorDiv2', myLocalDiagram,
+        {
+          // By default the inspector works on the Diagram selection.
+          // This property lets us inspect a specific object by calling Inspector.inspectObject.
+          inspectSelection: false,
+          properties: {
+            "text": {},
+            // This property we want to declare as a color, to show a color-picker:
+            "color": { type: 'color' },
+            // key would be automatically added for node data, but we want to declare it read-only also:
+            "key": { readOnly: true, show: Inspector.showIfPresent }
+          }
+        });
+      // If not inspecting a selection, you can programatically decide what to inspect (a Part, or a JavaScript object)
+      inspector2.inspectObject(myLocalDiagram.nodes.first().data);
+
+      // Always show the model.modelData:
+      var inspector3 = new Inspector('myInspectorDiv3', myLocalDiagram,
+        {
+          inspectSelection: false
+        });
+      inspector3.inspectObject(myLocalDiagram.model.modelData);
+    }  // END init
+	
+	
+    // Make the corresponding node in the full diagram to that selected in the local diagram selected,
+    // then call showLocalOnFullClick to update the local diagram.
+    function showLocalOnLocalClick() {
+      var selectedLocal = myLocalDiagram.selection.first();
+      if (selectedLocal !== null) {
+        // there are two separate Nodes, one for each Diagram, but they share the same key value
+        myFullDiagram.select(myFullDiagram.findPartForKey(selectedLocal.data.key));
+      }
+    }
+	
+	
+    function showLocalOnFullClick() {
+      var node = myFullDiagram.selection.first();
+
+      if (node !== null) {
+        // make sure the selected node is in the viewport
+        myFullDiagram.scrollToRect(node.actualBounds);
+        // move the large yellow node behind the selected node to highlight it
+        highlighter.location = node.location;
+        // create a new model for the local Diagram
+        var model = new go.TreeModel();
+        // add the selected node and its children and grandchildren to the local diagram
+        var nearby = node.findTreeParts(3);  // three levels of the (sub)tree
+        // add parent and grandparent
+        var parent = node.findTreeParentNode();
+        if (parent !== null) {
+          nearby.add(parent);
+          var grandparent = parent.findTreeParentNode();
+          if (grandparent !== null) {
+            nearby.add(grandparent);
+          }
+        }
+        // create the model using the same node data as in myFullDiagram's model
+        nearby.each(function(n) {
+            if (n instanceof go.Node) model.addNodeData(n.data);
+          });
+        myLocalDiagram.model = model;
+        // select the node at the diagram's focus
+        var selectedLocal = myLocalDiagram.findPartForKey(node.data.key);
+        if (selectedLocal !== null) selectedLocal.isSelected = true;
+      }
+    }  // END showLocalOnFullClick
+	
+    // Create the tree model containing TOTAL nodes, with each node having a variable number of children
+    function setupDiagram(total) {
+		if (total === undefined) total = '{{ student.destinations|length }}';  // total should be the number of destinations
+		var nodeDataArray = [];
+		var i=0;			
+		nodeDataArray.push({
+		key: i,
+		color: go.Brush.randomColor(),
+		name: '{{ student.first_name }} {{ student.last_name }}',
+		});
+		
+		i=1;		
+	    {% for dest in student.destinations %}  // set the nodes text to students destinations	
+			nodeDataArray.push({
+				key: i,
+				color: go.Brush.randomColor(),
+				color2: go.Brush.randomColor(),
+				name: '{{ dest.destination.title }}',
+			},
+			);
+			
+			nodeDataArray[i].parent = 0;   // all the destinations parent is student
+			var j=i+1;
+			{% for goal in student.goals if (goal.dst_id==dest.destination_id) %}  // set the nodes text to destinations goals 	
+				nodeDataArray.push(
+				{
+					key: j,
+					//color:  go.Brush.randomColor(),
+					color: nodeDataArray[i].color,
+					color2: '{{ goal.status_color }}',
+					name: 'יעד: {{ goal.goal_title }} \n\n' ,
+					status: 'סטאטוס: {{ goal.status_title }}',						
+				} );
+				
+				nodeDataArray[j].parent = nodeDataArray[i].key;				
+				var k=j+1;
+					{% for todo in student.todos if ( goal.goal_id == todo.goal_id ) %}  // set the nodes text to goal todos	
+						nodeDataArray.push({
+							key: k,
+							// color:  go.Brush.randomColor(),
+							color: nodeDataArray[i].color,
+							name: ' משימה: {{ todo.todo_title }} \n\n',
+							status: 'סטאטוס: {{ todo.status_title }}',
+							color2: '{{ todo.status_color }}',	
+						});
+						nodeDataArray[k].parent = nodeDataArray[j].key;
+						k++; 		
+					{% endfor %}  //todos loop			
+				j++;
+				j=k;
+				
+			{% endfor %}  //goals loop			
+			
+			i=j;			
+        {% endfor %}  // destinations seting text loop
+
+      myFullDiagram.model = new go.TreeModel(nodeDataArray);
+    }  // END setupDiagram
+
+	
+// FROM https://forum.nwoods.com/t/adding-a-parent-node-to-tree-model/5946/8
+function addNode(e, button) {
+    var diagram = button.diagram;
+    var model = diagram.model;
+    var parent = button.part;
+	
+      model.startTransaction("add a child node");
+	  
+      // add child node by adding new data object to model
+    var child_data = {
+		//key: model.nodeDataArray.length,  // this is optional
+		//everExpanded: true,  // cancle if you want to not to automatically createSubTree on first expansion
+		//color: go.Brush.randomColor()  // add whatever properties you need for each node
+		color: parent.data.color,
+		color2: parent.data.color2,
+		// FROM https://codepen.io/JEE42/pen/MYLBQy?editors=0110
+		key: 777, category: 'note', loc: new go.Point(50,50), text: 'Initial text',
+                   width: 300, height:80
+    };
+
+	// FROM https://forum.nwoods.com/t/can-the-diagram-be-interactive-by-adding-a-node-directly-on-the-diagram/7301/2
+	child_data.parent = parent.data.key;  // connect to existing node as parent
+	//document.getElementById("nodeText").value = child_data.data.text;
+	model.addNodeData(child_data);
+
+	console.log(child_data.data);
+	console.log("added a child node to parent.data.name node");
+	diagram.commitTransaction("added a child node to parent.data.name node");
+
+// FROM https://codepen.io/JEE42/pen/MYLBQy?editors=0110
+  var oNode = myLocalDiagram.findPartForKey(child_data.key) // get the node we just added to the diagram
+  var txtNode = oNode.findObject('cmntText') // get a handle for the textBlock
+  
+  if (txtNode instanceof go.TextBlock && myLocalDiagram.commandHandler.canEditTextBlock(txtNode)) {
+    
+    /* We are ok to start the editor, but gojs needs a split sec to position the new node on the diagram so use a timeout to achieve that.  */
+    setTimeout(function() {
+      txtNode.isSelected = true
+      doEdit(oNode, txtNode)
+      myLocalDiagram.commandHandler.editTextBlock(txtNode);
+    }, 100)
+    
+  }
+	
+  }  // END addNode
+	
+	
+  </script>
+  
+</head>
+
+<body onload="init()">
+
+
+	<div id="sample">
+
+		<div id="fullDiagram" style="height:250px;width:100%; border:10px solid blue; margin:2px"></div>
+		<div id="localDiagram" style="height:350px;width:100%; border:10px solid gray; margin:2px"></div>
+		
+		<pre id="savedModel" style="border:10px solid black; margin:2px"/>
+	</div>
+	
+	<div id="sample" style="border:10px solid green;">
+		<span style="display: inline-block; vertical-align: top;">
+		  Selected Part:<br/>
+		  <div id="myInspectorDiv" class="inspector" style="border:10px solid yellow;"> </div><br/>
+		  First Node's data:<br />
+		  <div id="myInspectorDiv2" class="inspector" style="border:10px solid orange;"> </div><br />
+		  Model.modelData:<br />
+		  <div id="myInspectorDiv3" class="inspector" style="border:10px solid red;"> </div><br />
+		</span>
+		 
+	</div>
+
+
+</body>
+
+</html>
+{% endblock %}

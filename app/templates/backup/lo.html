@@ -1,0 +1,27 @@
+{% block lo %}
+		
+	<nav class="navbar">
+			<span class="navbar-toggle" id="js-navbar-toggle">
+				<i class="fas fa-bars"></i>
+			</span>
+
+			<ul class="main-nav" id="js-menu">
+				{% include "layout_options.html" %}
+			</ul>
+			
+			<a href="#" class="logo"><img src="{{ url_for('static', filename='img/eitan.PNG') }}"></a>
+			<a href="#" class="logo"><img src="{{ url_for('static', filename='img/idanim.PNG') }}" ></a>
+
+	</nav>
+
+	
+<script>
+let mainNav = document.getElementById("js-menu");
+let navBarToggle = document.getElementById("js-navbar-toggle");
+
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});
+</script>
+
+{% endblock lo %}
