@@ -47,7 +47,32 @@
 			</div>
 			
 		  </div>
-
+		  
+			
+			{% if current_user.school_logo_name == None %}
+				
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+'ssharon'+'.PNG') }}">	
+					
+			{% else %}	 
+			
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+current_user.school_logo_name+'.PNG') }}">	
+			
+			{% endif %}
+			  
+			{% if current_user.matya_logo_name == None %}
+				
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+'ssharon'+'.PNG') }}">	
+					
+			{% else %}	 
+			
+				<img class="pull-right" style="height:70px" 
+				src="{{ url_for('static', filename='img/'+current_user.matya_logo_name+'.PNG') }}">	
+			
+			{% endif %}
+		
 		</nav>
 	</center>
 	
