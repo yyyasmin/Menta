@@ -1984,7 +1984,7 @@ def std_edit_profile(dsply_direction):
     print("")
     print("")
     print("IN END OF std_edit_profile DEFAULT-TAG: {0}  DEFAULT-SUB-TAG: {1}".format(
-                                        default_tag.id==None, default_sub_tag.id==None))
+                                        default_tag==None, default_sub_tag==None))
     print("")
     
     
