@@ -1,5 +1,5 @@
 <!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
-{% block edit_prf_gt_parts12 %}
+{% block edit_prf_gt_sbjs12 %}
 
 <style>
 .global_table span {
@@ -11,19 +11,15 @@
 	<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
 						
 					<!-- Modal Add Part -->
-	<div id="{{tag.id}}_{{part.class_name}}" class="modal fade" role="dialog">
+	<div id="{{sbj.class_name}}" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body" style="align:center; float:center">
-				
-					<div class="modal-body" id="{{tag.id}}">
-						<p>נושא:    {{tag.title}}</p>
-					</div>	
-			
-					<form method="post" action="{{ url_for('students.std_part_to_prf_add_tag_only2',
-												            tag_id=tag.id, dsply_direction=1) }}">
+		
+				<form method="post" action="{{ url_for('students.std_sbj_to_prf_add2') }}">
+												           
 						<div class="form-group">
-							<label>{{part.h_name}}</label>
+							<label>{{sbj.h_name}}</label>
 							<input type="title" class="form-control" name="gt_title" required="1">
 						</div>
 						
@@ -34,9 +30,9 @@
 						
 						<div class="form-group">
 							<button class="btn btn-primary" type="submit" name="class_name" 
-							value="{{part.class_name}}">שמור</button>
+							value="{{sbj.class_name}}">שמור</button>
 						</div>
-					</form>
+				</form>
 					
 				</div>
 					
@@ -48,4 +44,4 @@
 	</div>
 
 
-{% endblock edit_prf_gt_parts12 %}
+{% endblock edit_prf_gt_sbjs12 %}

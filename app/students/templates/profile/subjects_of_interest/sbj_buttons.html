@@ -1,4 +1,4 @@
-{% block part_buttons %}
+{% block sbj_buttons %}
 
 	
 	<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
@@ -6,26 +6,26 @@
 	<td style="background-color:{{lc_ns.line_color}};">
 		
 		<button type="button" onclick="get_tag_id($(this))"
-				data-toggle="modal" data-target="#{{tag.id}}_{{part.class_name}}"
+				data-toggle="modal" data-target="#{{sbj.class_name}}"
 				id="add_button"
-				style="color:{{part.color}};
+				style="color:{{sbj.color}};
 					   margin-top:1em; align:center; float:none;">
-					הוסף {{part.h_name}} חדש
+					הוסף {{sbj.h_name}} חדש
 		</button>
-		{% include "profile/add_prf_modal.html" %}
+		{% include "profile/subjects_of_interest/add_sbj_modal.html" %}
 
 		<button type="button"
-				data-toggle="modal" data-target="#bank_{{tag.id}}_{{part.class_name}}" 
+				data-toggle="modal" data-target="#bank_{{sbj.class_name}}" 
 				id="add_button"
-				style="color:{{part.color}}; 
+				style="color:{{sbj.color}}; 
 				       margin-bottom:3em; margin-top:1em; align:center; float:none;">
-					הוסף {{part.h_name}} מהבנק
+					הוסף {{sbj.h_name}} מהבנק
 		</button>
-		{% include "profile/add_tag_prf_from_bank.html" %}
+		{% include "profile/subjects_of_interest/add_sbj_from_bank.html" %}
 	
 	</td>
 	
-{% endblock part_buttons %}
+{% endblock sbj_buttons %}
 
 
 <!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->

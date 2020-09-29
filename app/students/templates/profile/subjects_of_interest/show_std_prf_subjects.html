@@ -21,13 +21,7 @@
 <!-----------DEBUG ----------------->
 
 			<table>
-			
-			<!-------------- DEBUG ------------------------------
-				<div> prf_parts_list  {{prf_parts_list}} </div>
-				</br></br>
-				<div> tag  {{tag}} </div>
-			<-------------- DEBUG ------------------------------>
-			
+
 				{% for gt in prf_parts_list if gt.is_parent_of(tag) %}	
 					{% if gt.title != 'New' %}
 					
@@ -48,9 +42,6 @@
 					{% endif %}
 				{% endfor %}
 
-				{% include "profile/part_buttons.html"  %}
-
-					
 			</table>
 			
 		

@@ -8,45 +8,39 @@
 </style>
 
 				<!-- Modal Add Part From Bank -->
-	<div id="bank_{{tag.id}}_{{part.class_name}}" class="modal fade" role="dialog">
+	<div id="bank_{{sbj.class_name}}" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-body">
-				
-					<div class="modal-body" id="{{tag.id}}">
-						<p>נושא:    {{tag.title}}</p>
-					</div>	
-					
 
 							<!--------- DEBUG ----------------------->
 
 							<!--------- DEBUG ----------------------->
 							
 					<form method="post" 
-						  action="{{ url_for('students.std_part_to_prf_add_tag_only2',       
-										   	  tag_id=tag.id, dsply_direction=1) }}"> 
+						  action="{{ url_for('students.std_sbj_to_prf_add') }}"> 
 							
-						{% set ns = namespace(exist_part=False) %}
-						{% for gt in parts_not_of_prf
+						{% set ns = namespace(exist_sbj=False) %}
+						{% for gt in sbjs_not_of_prf
 							   if ( gt.is_parent_of(tag) and gt.title != 'New' ) %}
-									{% set ns.exist_part = True %}
+									{% set ns.exist_sbj = True %}
 									{% break %}
 
 						{% endfor %}
 														
 						<table class="table_color">
 							
-							{% if ns.exist_part == False %}
+							{% if ns.exist_sbj == False %}
 
-								<div class="alert" style="background:{{part.odd_color}}">
-									אין יותר {{part.h_name}} בנושא {{tag.title}}\{{tag.title}} בבנק.
+								<div class="alert" style="background:{{sbj.odd_color}}">
+									אין יותר {{sbj.h_name}} בבנק.
 								</div>
 							
 							{% else %}
 							
-								{% for gt in parts_not_of_prf
+								{% for gt in sbjs_not_of_prf
 									   if ( gt.is_parent_of(tag) and gt.title != 'New' ) %}
-										{% include "profile/std_prf_parts_tables.html" %}
+										{% include "profile/subjects_of_interest/std_prf_sbjs_tables.html" %}
 								{% endfor %}
 								
 							{% endif %}
