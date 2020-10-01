@@ -115,9 +115,10 @@ def get_public_dsts():
     public_scrt = Scrt.query.filter(Scrt.title=='public' or Scrt.title=='ציבורי').first()
     # Get all public dummy std destinations
     dummy_std = get_dummy_student()
-    #dummy_std_gts = Std_general_txt.query.filter(Std_general_txt.student_id==dummy_std.id).filter(Std_general_txt.scrt_id==public_scrt.id).all()   # dummy student has all dsts
+
     dummy_std_gts = Std_general_txt.query.filter(Std_general_txt.student_id==dummy_std.id).all()   # dummy student has all dsts
     all_destinations = Destination.query.filter(Destination.hide==False).order_by(Destination.title).all()
+    
     return all_destinations
     '''
     public_destinations=[]
@@ -180,7 +181,13 @@ def edit_destinations_by_subject():
     age_ranges = Age_range.query.order_by(Age_range.title).all()
     tags = Tag.query.order_by(Tag.title).all()
     sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
-
+    
+    print("IN edit_destinations_by_subject")
+    print("")
+    print("")
+    for d in destinations:
+        if d.id > 500:
+            print("DST: " ,d, d.title, d.body)
     #DEBUG
     print("")
     print("")
