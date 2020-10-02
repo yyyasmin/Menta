@@ -1,4 +1,4 @@
-web: gunicorn run:app --log-level=debug --timeout 200
+web: gunicorn run:app --log-level=debug --timeout 300
 
 init: python db_create.py
 upgrade: python db_migrate.py; python db_upgrade.py
