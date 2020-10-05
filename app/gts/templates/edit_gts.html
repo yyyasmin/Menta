@@ -87,7 +87,8 @@ table, th, td {
   <center><h3>General txt</h3></center>
   <div>
   
-	    {% for gt in gts %}	 
+		{% for gt in gts %}			
+
 			<br><br>						
 						
 			<button class="btn" style="background-color:#ffcc00; color:#ffcc33" ><strong><a style="color:black;" href="{{ url_for('gts.gt_update', selected_gt_id=gt.id) }}">ערוך</a></strong></button>		

@@ -52,10 +52,11 @@ def edit_gts():
 
     #DEBUG ONLY
     
+    gts = General_txt.query.order_by(General_txt.class_name).order_by(General_txt.title).all() 
     
-    gts = General_txt.query.order_by(General_txt.type).order_by(General_txt.title).all() 
-    #gts = General_txt.query.all() 
-
+    #FROM https://stackoverflow.com/questions/403421/how-to-sort-a-list-of-objects-based-on-an-attribute-of-the-objects
+    
+    
     '''
     print("")
     for g in gts:
