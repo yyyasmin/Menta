@@ -52,7 +52,8 @@ def edit_gts():
 
     #DEBUG ONLY
     
-    gts = General_txt.query.order_by(General_txt.class_name).order_by(General_txt.title).all() 
+    
+    #gts = General_txt.query.order_by(General_txt.class_name).order_by(General_txt.title).all() 
     gts = General_txt.query.all() 
 
     '''
