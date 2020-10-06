@@ -1702,13 +1702,13 @@ def attach_gt_to_std(std_id, gt_id):
         sts = Status.query.filter(Status.default==True).first()
         if sts == None:
             flash ("please create a default status first")
-            return render_template('gts.edit_gts')            
+            return render_template('./gts/gts.edit_gts')            
         std_gt.status_id = sts.id 
      
         who = Accupation.query.filter(Accupation.default==True).first()
         if who == None:
             flash ("please create a default accupation first")
-            return render_template('gts.edit_gts')            
+            return render_template('./gts/gts.edit_gts')            
         std_gt.acc_id = who.id 
 
         std = Student.query.filter(Student.id==std_id).first()
@@ -1941,10 +1941,19 @@ def std_edit_profile(dsply_direction):
     print("")
     print("")
     print("IN get_profile_data")
+    
+    
     print("")
     
     #DEBUG - ARESE!
-
+    g = Sub_tag.query.filter(Sub_tag.title=='כללי').first()
+    tags = Tag.query.all()
+    for t in tags:
+        t.set_parent(g)
+        
+    sbjs = Subject.query.all()
+    for t in sbjs:
+        t.set_parent(g)
     #DEBUG - ARESE!
     
     std = Student.query.filter(Student.selected==True).first()
@@ -1961,8 +1970,13 @@ def std_edit_profile(dsply_direction):
         for t in tags:
             if t.default==True:
                 default_tag = t
- 
- 
+    if default_tag == None:
+        default_tag = Tag.query.filter(Tag.title=='כללי').first()
+        if default_tag == None:
+            default_tag = Tag('כללי', 'general', get_author_id())
+            db.session.add(default_tag)
+            db.session.commit()
+    
     print("")
     print("")
     print("DEFAULT TAG: ", default_tag.id, default_tag.body)
@@ -1984,10 +1998,16 @@ def std_edit_profile(dsply_direction):
                 break
     if default_sub_tag == None:
         default_sub_tag = Sub_tag.query.filter(Sub_tag.title == 'כללי').first()
-
+        if default_sub_tag == None:
+            default_sub_tag = Sub_tag('כללי', 'general', get_author_id())
+            db.session.add(default_sub_tag)
+            db.session.commit()
+                
     all_tag = Tag.query.filter(Tag.body=='all').first()
     all_sub_tag = Sub_tag.query.filter(Sub_tag.body=='all').first()
     all_sub_tags = all_sub_tag
+    
+    
     
     print("")
     print("")

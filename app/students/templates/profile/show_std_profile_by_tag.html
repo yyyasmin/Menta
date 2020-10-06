@@ -45,8 +45,22 @@
 				{% for gt in profile.children if gt.is_parent_of(tag) %}
 												 
 					{% if tp_ns.tag_printed == False %}
-						<td>{{ tag.title|replace("-", "\n") }}</td>
+					
+						<td>	
+							<div type="button" id="{{title_box}}"
+								 style="color:black; background-color:{{part.odd_color}}; marging:10%;" 
+								 onclick="myFunction('{{gt.id}}')">
+									{{gt.title}}
+							</div>
+	
+							<div style="color:black; background-color:{{part.even_color}}" 
+								type="button" id="{{gt.id}}" class="w3-hide  w3-center {{body_box}}">
+									{{gt.body}}
+							</div>
+							
 						{% set tp_ns.tag_printed = True %}
+						</td>
+						
 					{% else %}
 						<td style="border:0;"></td>
 					{% endif %}
