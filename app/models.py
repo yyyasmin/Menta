@@ -238,11 +238,16 @@ class General_txt(db.Model):
     }
     
     def get_parent(self):
-        all_gts = General_txt.query.all()
-        for parent_gt in all_gts:
-            if (parent_gt.is_parent_of(self) and parent_gt.type=='tag'):
-                return parent_gt
+        parents = [i for i in self.parent_child_relationship if i.type == 'tag']
+        assert len(parents) <= 1
+        if len(parents) == 1:
+            return parents[0]
         return None
+        #all_gts = General_txt.query.all()
+        #for parent_gt in all_gts:
+        #    if (parent_gt.is_parent_of(self) and parent_gt.type=='tag'):
+        #        return parent_gt
+        #return None
  
     def set_parent(self, general_txt):
         if not self.is_parent_of(general_txt):
