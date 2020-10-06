@@ -1982,6 +1982,8 @@ def std_edit_profile(dsply_direction):
             if st.default==True:
                 default_sub_tag = st
                 break
+    if default_sub_tag == None:
+        default_sub_tag = Sub_tag.query.filter(Sub_tag.title == 'כללי').first()
 
     all_tag = Tag.query.filter(Tag.body=='all').first()
     all_sub_tag = Sub_tag.query.filter(Sub_tag.body=='all').first()
