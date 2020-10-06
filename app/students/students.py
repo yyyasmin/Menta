@@ -1978,6 +1978,7 @@ def std_edit_profile(dsply_direction):
     default_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
     if default_sub_tag == None:
         for st in std_sub_tags:
+            print("SUB-TAG: ", st.id, st.body)
             if st.default==True:
                 default_sub_tag = st
                 break
