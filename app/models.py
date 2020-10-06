@@ -239,8 +239,8 @@ class General_txt(db.Model):
     
     def get_parent(self):
         parents = [i for i in self.parent_child_relationship if i.type == 'tag']
-        assert len(parents) <= 1
-        if len(parents) == 1:
+        #assert len(parents) <= 1
+        if len(parents) > 0:
             return parents[0]
         return None
         #all_gts = General_txt.query.all()
