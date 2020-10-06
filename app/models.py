@@ -237,8 +237,8 @@ class General_txt(db.Model):
         'polymorphic_on':type
     }
     
-    def get_parent(self):
-        parents = [i for i in self.parent_child_relationship if i.type == 'tag']
+    def get_parent(self, type):
+        parents = [i for i in self.parent_child_relationship if i.type == type]
         #assert len(parents) <= 1
         if len(parents) > 0:
             return parents[0]

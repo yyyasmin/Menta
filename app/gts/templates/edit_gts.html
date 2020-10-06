@@ -100,7 +100,9 @@ table, th, td {
 				</br> 
 				{{ gt.title }}  {{ gt.id }}	
 				</br>
-				parent: {{gt.get_parent().title}}  {{gt.get_parent().id}}
+				{% if gt.type=='sub_tag' %}
+					parent: {{gt.get_parent('tag').title}}  {{gt.get_parent('tag').id}}
+				{% endif %}
 			</button>
 			
 			<div class="panel">
