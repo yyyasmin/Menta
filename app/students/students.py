@@ -1963,6 +1963,11 @@ def std_edit_profile(dsply_direction):
                 default_tag = t
  
  
+    print("")
+    print("")
+    print("DEFAULT TAG: ", default_tag.id, default_tag.body)
+    print("")
+    
     sub_tags = Sub_tag.query.all()
     std_sub_tags = []
     for st in sub_tags:
