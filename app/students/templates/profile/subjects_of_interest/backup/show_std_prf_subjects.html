@@ -20,7 +20,6 @@
 <div> DEBUG3 -- IN show_std_profile.html --- DEBUG</div>
 <!-----------DEBUG ----------------->
 
-			<table>
 
 				{% for gt in prf_parts_list if gt.is_parent_of(tag) %}	
 					{% if gt.title != 'New' %}
@@ -29,12 +28,12 @@
 						
 							<div type="button" id="{{title_box}}"
 								 style="color:black; background-color:{{part.odd_color}}; marging:10%;" 
-								 onclick="myFunction('{{gt.id}}')">
+								 onclick="myFunction('{{tag.id}}{{gt.id}}')">
 									{{gt.title}}
 							</div>
 	
 							<div style="color:black; background-color:{{part.even_color}}" 
-								type="button" id="{{gt.id}}" class="w3-hide  w3-center {{body_box}}">
+								type="button" id="{{tag.id}}{{gt.id}}" class="w3-hide  w3-center {{body_box}}">
 									{{gt.body}}
 							</div>
 							
@@ -42,7 +41,6 @@
 					{% endif %}
 				{% endfor %}
 
-			</table>
 			
 		
 <script>

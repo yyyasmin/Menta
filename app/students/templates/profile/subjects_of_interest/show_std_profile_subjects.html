@@ -1,0 +1,72 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+</br>
+	
+<table class="profile_table gray_table">	
+	
+	<thead>
+		<tr>	
+			<th style="background-color:#0089b3; color:#ffffcc; width:100%;">
+				<strong>תחומי עיניין</strong>
+			</th>
+		</tr>
+	</thead>
+
+
+	<tbody>
+	
+		{% for sbj in prf_subjects if sbj.title != 'New' %}	
+			
+				<tr>
+					<td>
+						<div type="button" id="blue_title"
+							 onclick="myFunction('{{sbj.id}}')">
+								{{sbj.title}}
+						</div>
+
+						<div type="button" id="{{sbj.id}}" style="color:black;" class="w3-hide  w3-center blue_body">
+								{{sbj.body}}
+						</div>
+					</td>
+					
+				</tr>
+				
+		{% endfor %}
+
+						
+		<tr>
+			{% include "profile/subjects_of_interest/sbj_buttons.html"  %}
+		</tr>
+		
+		<!-- DEBUG --
+
+		<!-- DEBUG -->
+	
+	</tbody>
+	
+</table>
+
+			
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+
+
+				
+{% endblock show_std_profile_by_tag %}

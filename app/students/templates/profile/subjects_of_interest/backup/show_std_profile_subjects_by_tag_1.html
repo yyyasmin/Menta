@@ -20,39 +20,21 @@
 	
 	<tbody>
 	
-	
-	{% set tp_ns = namespace(tag_printed=False) %}
-	{% set lc_ns = namespace(line_color='#E8E8E8') %}
-	{% set ns = namespace(exist_part=False) %}
-	
-	{% for tag in tags %}
-		{% set tp_ns.tag_printed = False %}
 		
-		{% if lc_ns.line_color == '#F8F8F8' %}    <!-- CHANGE TAG LINE COLOR -->
-			{% set lc_ns.line_color = '#E8E8E8' %} 
-		{% else %}
-			{% set lc_ns.line_color = '#F8F8F8' %}
-		{% endif %}		
-			
-			<tr>
-		
-				<td>
-					{% with part=sbj, 
-							prf_parts_list=prf_subjects, parts_not_of_prf=subjects_not_of_prf,
-							title_box="blue_title", body_box="blue_body" %}
-						{% include "./profile/subjects_of_interest/show_std_prf_subjects.html" %} 
-					{% endwith %}
-				</td>
+			{% with part=sbj, 
+					prf_parts_list=prf_subjects, parts_not_of_prf=subjects_not_of_prf,
+					title_box="blue_title", body_box="blue_body" %}
+				{% include "./profile/subjects_of_interest/show_std_prf_subjects.html" %} 
+			{% endwith %}
+				
 						
-			</tr>
-			
-	{% endfor %}
-	
-	{% include "profile/subjects_of_interest/sbj_buttons.html"  %}
+		<tr>
+			{% include "profile/subjects_of_interest/sbj_buttons.html"  %}
+		</tr>
+		
+		<!-- DEBUG --
 
-	<!-- DEBUG --
-
-	<!-- DEBUG -->
+		<!-- DEBUG -->
 	
 	</tbody>
 	

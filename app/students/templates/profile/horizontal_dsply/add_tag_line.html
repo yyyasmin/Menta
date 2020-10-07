@@ -1,0 +1,71 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block add_tag_line %}
+
+<style>
+
+</style>
+
+</br>
+
+			<tr>
+			
+				<td>  
+					<label for="tag1"> הוסף נושא </label>
+					<select id="tag1" style="max-width:100%;">
+						<option value="selection_msg">
+							בחר נושא
+						</option>					
+						{% for tag in tags if not profile.is_parent_of(tag) %}
+							<option value="{{ tag.id }}">
+								{{tag.id}} {{ tag.title|replace("-", "\n") }}  
+							</option>
+						{% endfor %}
+					</select>
+				</td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+					
+			</tr>
+			
+
+
+<script>
+
+// FROM https://youtu.be/I2dJuNwlIH0?t=717	
+	let tag1_select = document.getElementById('tag1');
+	
+	tag1_select.onclick = function()  {
+		
+		console.log("In TAG1 CHANGE FUNCTION");
+		
+		tag_id = tag1_select.value;
+		console.log("tag_id");
+		console.log(tag_id);
+		
+		//fetch('/tag_sub_tag_to_profile_add/' + tag_id);
+		tag_id = tag1_select.value;
+		
+		var data = {
+			'tag_id': tag_id,
+			}
+					$.ajax( {
+			url: '/tag_to_profile_add',
+			type: 'POST',
+			data: data, 
+			success: function(response) {
+				console.log(response);
+				location.reload(response);
+			}
+		
+		} ); 
+
+
+	}
+
+</script>
+
+				
+{% endblock add_tag_line %}

@@ -1,0 +1,128 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+</br>
+	
+<table class="profile_table gray_table">	
+	
+		<thead>
+			<tr>	
+				<th style="width:30%"><strong>נושא</strong></th>
+				
+				<th style="background-color:#4CAF50; color:#ffffcc; width:35%;"><strong>מוקדי כח</strong></th>
+				
+				<th style="background-color:#ff5c33; color:#ffffcc; width:35%;"><strong>מוקדים לחיזוק</strong></th> 
+			</tr>
+		</thead>
+	
+	
+	<tbody>
+	
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set lc_ns = namespace(line_color='#E8E8E8') %}
+	{% set ns = namespace(exist_part=False) %}
+			
+		{% for tag in tags if tag.body != 'all' %}
+
+<!--------------------- DEBUG -------------------------------------------------------->
+
+<!--------------------- DEBUG -------------------------------------------------------->
+
+			{% set tp_ns.tag_printed = False %}
+		
+		{% if lc_ns.line_color == '#F8F8F8' %}    <!-- CHANGE TAG LINE COLOR -->
+			{% set lc_ns.line_color = '#E8E8E8' %} 
+		{% else %}
+			{% set lc_ns.line_color = '#F8F8F8' %}
+		{% endif %}		
+			
+
+			<tr style="background-color:{{lc_ns.line_color}};">
+
+				{% set ns.exist_part = False %}
+
+<!--------------------- DEBUG -------------------------------------------------------->
+
+<!--------------------- DEBUG -------------------------------------------------------->
+				
+				
+				{% for gt in profile.children if gt.is_parent_of(tag) %}
+												 
+					{% if tp_ns.tag_printed == False %}
+					
+						<td>	
+							<div type="button" id="gray_title"
+								 onclick="switchGray('{{tag.id}}')">
+									{{ tag.title|replace("-", "\n") }}
+							</div>
+	
+							<div style="color:black; background-color:{{gray_body}}" 
+								type="button" id="{{tag.id}}" class="w3-hide  w3-center gray_body">
+									{{tag.body}}
+							</div>
+							
+						{% set tp_ns.tag_printed = True %}
+						</td>
+						
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					{% set ns.exist_part = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_part == True %}			
+			
+						<td>
+							{% with part=strn,
+									prf_parts_list=prf_strengths, parts_not_of_prf=strengths_not_of_prf,
+									title_box="green_title", body_box="green_body" %}
+								{% include "./profile/horizontal_dsply/show_std_profile.html" %} 
+							{% endwith %}
+						</td>
+						
+						
+						<td>
+							{% with part=weak, 
+									prf_parts_list=prf_weaknesses, parts_not_of_prf=weaknesses_not_of_prf,
+									title_box="red_title", body_box="red_body"  %}
+								{% include "./profile/horizontal_dsply/show_std_profile.html" %} 
+							{% endwith %}
+						</td>
+
+				{% endif %}	
+				
+			</tr>
+			
+	{% endfor %}
+	
+	
+	<!-- DEBUG --
+
+	<!-- DEBUG -->
+
+	{% include "./profile/horizontal_dsply/add_tag_line.html" %} 
+	
+	</tbody>
+	
+</table>
+
+<script>
+function switchGray(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+				
+{% endblock show_std_profile_by_tag %}

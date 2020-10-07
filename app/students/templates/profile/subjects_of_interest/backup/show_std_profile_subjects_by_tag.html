@@ -1,0 +1,74 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+</br>
+	
+<table class="profile_table gray_table">	
+	
+	<thead>
+		<tr>	
+			<th style="background-color:#0089b3; color:#ffffcc; width:100%;">
+				<strong>תחומי עיניין</strong>
+			</th>
+		</tr>
+	</thead>
+
+
+	<tbody>
+
+		{% for gt in prf_parts_list if gt.is_parent_of(tag) %}	
+			{% if gt.title != 'New' %}
+			
+				<tr>
+				
+					<div type="button" id="{{title_box}}"
+						 style="color:black; background-color:{{part.odd_color}}; marging:10%;" 
+						 onclick="myFunction('{{tag.id}}{{gt.id}}')">
+							{{gt.title}}
+					</div>
+
+					<div style="color:black; background-color:{{part.even_color}}" 
+						type="button" id="{{tag.id}}{{gt.id}}" class="w3-hide  w3-center {{body_box}}">
+							{{gt.body}}
+					</div>
+					
+				</tr>
+			{% endif %}
+		{% endfor %}
+
+						
+		<tr>
+			{% include "profile/subjects_of_interest/sbj_buttons.html"  %}
+		</tr>
+		
+		<!-- DEBUG --
+
+		<!-- DEBUG -->
+	
+	</tbody>
+	
+</table>
+
+			
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+
+
+				
+{% endblock show_std_profile_by_tag %}

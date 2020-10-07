@@ -1947,7 +1947,14 @@ def std_edit_profile(dsply_direction):
     print("")
     
     #DEBUG - ARESE!
-
+    g = Sub_tag.query.filter(Sub_tag.title=='כללי').first()
+    tags = Tag.query.all()
+    for t in tags:
+        t.set_parent(g)
+        
+    sbjs = Subject.query.all()
+    for t in sbjs:
+        t.set_parent(g)
     #DEBUG - ARESE!
     
     std = Student.query.filter(Student.selected==True).first()
@@ -2057,37 +2064,31 @@ def std_edit_profile(dsply_direction):
     sbj = Subject.query.filter(Subject.title=='Subject_data').first()
     if sbj==None:
         sbj = Subject('Subject_data', 'Subject_data', author_id)
-        #sbj.odd_color = '#e6f2ff'   
-        #sbj.even_color = '#cce5ff'
+    sbj.odd_color = '#e6f2ff'   
+    sbj.even_color = '#cce5ff'
        
     strn = Strength.query.filter(Strength.title=='Subject_data').first()
     if strn==None:
         strn = Strength('Strength_data', 'Strength_data', author_id)
-  
-    weak = Weakness.query.filter(Weakness.title=='Subject_data').first()
-    if weak==None:
-        weak = Weakness('Weakness', 'Weakness', author_id)
-   
-    gray = Gray.query.filter(Gray.title=='gray data').first()
-    if gray==None:
-        gray = Gray('Gray', 'Gray', author_id)
-
-
     
     print("")
     print("")
     print("std_edit_profile")
-    print("SBJ ODD: ", sbj.odd_color)
-    print("SBJ EVEN: ", sbj.even_color)
-    print("")
     print("STRN ODD: ", strn.odd_color)
     print("STRN EVEN: ", strn.even_color)
     print("")
-    print("WEAK ODD: ", weak.odd_color)
-    print("WEAK EVEN: ", weak.even_color)
     print("")
-    print("")
-  
+    
+    weak = Weakness.query.filter(Weakness.title=='Subject_data').first()
+    if weak==None:
+        weak = Weakness('Weakness', 'Weakness', author_id)
+    #weak.odd_color = '#ffe6e6'
+    #weak.even_color = '#ffb3b3'
+    
+    gray = Gray.query.filter(Gray.title=='gray data').first()
+    if gray==None:
+        gray = Gray('Gray', 'Gray', author_id)
+
     print("IN END OF std_edit_profile Calling std_edit_profile.html")
     print("")
     print("")
@@ -2191,52 +2192,7 @@ def get_sub_tag_profile():
     sys.stdout.flush()
 
     return std_edit_profile(0)
-
-
    
-        
-@std.route('/tag_to_profile_add', methods=['GET', 'POST'])
-def tag_to_profile_add():
-            
-    print("")
-    print("")
-    print("IN tag_to_profile_add ")
-
-    tag_id =  request.form['tag_id']
-
-    
-    print("tag_id: ", tag_id)
-      
-    tag = tag_select2(tag_id)
-    
-    print("")
-    print("")
-    print("IN tag_to_profile_add AFTER SELECT2: ")
-    print("tag_id: ", tag.id)
-    
-    profile = Profile.query.filter(Profile.selected==True).first()
-    profile.set_parent(tag)
-    
-    newDummyStrn = Strength.query.filter(Strength.title=='New').first()
-    if newDummyStrn == None:
-        newDummyStrn = Strength('New', 'New', get_author_id())
-        db.session.add(newDummyStrn)
-        
-    profile.set_parent(newDummyStrn)
-    tag.set_parent(newDummyStrn)
-    newDummyStrn.set_parent(tag)
-    
-    db.session.commit()
-    
-    print("")
-    print("")
-    print("IN END OF tag_to_profile_add , calling std_edit_profile")
-    print("")
-    print("")
-    
-    return std_edit_profile(1)
-  
-     
         
 @std.route('/tag_sub_tag_to_profile_add', methods=['GET', 'POST'])
 def tag_sub_tag_to_profile_add():
@@ -2533,6 +2489,138 @@ def std_part_to_prf_add2(tag_id, sub_tag_id, dsply_direction):
 
   
 
+#### POST CASE ####                                                                                     
+@std.route('/std_part_to_prf_add_tag_only/<int:dsply_direction>', methods=['GET', 'POST'])
+def std_part_to_prf_add_tag_only(new_gt_type, new_gt_id, new_gt_title, new_gt_body, tag_id, dsply_direction):
+
+    print("")
+    print("")
+    
+    print(" IN std_part_to_prf_add")
+
+    if tag_id == 0:
+        tag = Tag.query.filter(Tag.selected==True).first()
+        if tag == None:
+            flash ("יש לבחור נושא")
+            return std_edit_profile(0)
+        tag_id = tag.id
+            
+
+    print("TAG-ID ", tag_id)
+    print("")
+    print("")
+    tag = Tag.query.filter(Tag.id==tag_id).first()
+    
+    print("")
+    print("")
+    print("IN std_part_to_prf_add")
+    print("TAG: ", tag, tag.id)
+    print("")
+    print("")
+
+    profile = Profile.query.filter(Profile.selected=='True').first()
+    if profile == None:
+        flash("Please select a profile to add a part to ")
+        return redirect(url_for('students.std_edit_profile', dsply_direction=dsply_direction) ) 
+        
+    ### POST Case
+    ### FROM https://stackoverflow.com/questions/38309131/wtforms-post-with-selectfield-not-working
+    ##print ("form.validate_on_submit", form.validate_on_submit)
+    
+    print("In std_part_to_prf_add profile is :", profile, profile.id)
+    print("")    
+    print("")    
+    print("In std_part_to_prf_add new_gt_title is :", new_gt_title)
+    print("")    
+    print("In std_part_to_prf_add new_gt_id is :", new_gt_id)
+    print("")
+    print("In std_part_to_prf_add new_gt_body is :", new_gt_body)
+    print("")
+    print("In std_part_to_prf_add gt_type is :", new_gt_type)
+    print("")
+    print("")
+    print(" *** In std_part_to_prf_add TAG is :", tag, tag.id)
+    print("")    
+    print("")
+    
+    author_id = current_user._get_current_object().id 
+    
+    new_gt = eval(new_gt_type).query.filter(eval(new_gt_type).id==new_gt_id).first()
+    if new_gt == None:    
+        new_gt = eval(new_gt_type).query.filter(eval(new_gt_type).title==new_gt_title). \
+                                         filter(eval(new_gt_type).body==new_gt_body).first()
+        if new_gt == None:
+            new_gt = eval(new_gt_type)(new_gt_title, new_gt_body, author_id)
+            db.session.add(new_gt)
+            db.session.commit()
+        
+    #print("new_gt.id  ", new_gt.id)
+    
+    #new_gt = general_txt_select3(new_gt.id)
+    
+    new_gt.title = new_gt_title
+    new_gt.body =  new_gt_body
+    
+    db.session.add(new_gt)
+    db.session.commit()
+    
+    #new_gt = general_txt_select3(new_gt.id)
+    all_tag =  Tag.query.filter(Tag.body=='all').first()
+    
+    new_gt.set_parent(tag)
+    new_gt.set_parent(all_tag)
+
+    tag.set_parent(new_gt)
+    all_tag.set_parent(new_gt)
+
+    scrt = Scrt.query.filter(Scrt.body=='Private').first()
+    if scrt == None:
+        flash ("No such Secirity option: Private")
+        redirect(url_for('gts.edit_gts'))
+        
+    print("")
+    print("")
+    print("IN std_part_to_prf_add")
+    print("new_gt", new_gt)
+    print("new_gt", new_gt.id, new_gt.title)
+    print("scrt", scrt)
+    print("scrt", scrt.id, scrt.title)
+    print("")
+    print("")
+
+    new_gt.set_parent(scrt)
+    scrt.set_parent(new_gt)
+       
+    db.session.commit()
+
+    std = get_dummy_student()   # Match new gt to Humpty Dumpty
+    std_gt = attach_gt_to_std(std.id, new_gt.id) 
+    
+    #######################################import pdb;; pdb.set_trace()
+    profile.set_parent(new_gt)
+    profile.set_parent(tag)
+    
+    humpty_prf = Profile.query.filter(Profile.body==str(get_dummy_student().id)).first()
+    humpty_prf.set_parent(new_gt)
+    humpty_prf.set_parent(tag)
+    
+    print("")
+    print("")
+    print("IN std_part_to_prf_add")
+    print("Hynpty prf", humpty_prf.id, humpty_prf.title, humpty_prf.body)
+    print("Add Part: ", new_gt.id, new_gt.title, new_gt.body)
+    print("")
+   
+    #selected_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
+    ##print(" In END OF gt_to_profile_add SUB_GT =: " ,selected_sub_tag, selected_sub_tag.id)
+    ##print(" In END OF gt_to_profile_add NEW_GT =: " ,new_gt.id,  new_gt.gt_type)
+    
+    new_gt.selected = False
+    db.session.commit()
+    
+    return std_edit_profile(dsply_direction)
+          
+
 @std.route('/std_part_to_prf_add_tag_only2/<int:tag_id>/<int:dsply_direction>', methods=['GET', 'POST'])
 def std_part_to_prf_add_tag_only2(tag_id, dsply_direction):
 
@@ -2562,11 +2650,8 @@ def std_part_to_prf_add_tag_only2(tag_id, dsply_direction):
     new_gt_title =  request.form['gt_title']
     new_gt_body =  request.form['gt_body']
     new_gt_type =  request.form['class_name']
-    
-    sub_tag = Sub_tag.query.filter(Sub_tag.title=='כללי').first()
-    
-    return std_part_to_prf_add(new_gt_type, 0, new_gt_title, new_gt_body, tag_id, sub_tag.id, 1)
-
+        
+    return std_part_to_prf_add_tag_only(new_gt_type, 0, new_gt_title, new_gt_body, tag_id, dsply_direction) 
 
 
 @std.route('/attach_prf_part_to_std_tag_only2/<int:selected_gt_id>/<int:tag_id>/<int:dsply_direction>', methods=['GET', 'POST'])
@@ -2581,12 +2666,104 @@ def attach_prf_part_to_std_tag_only2(selected_gt_id, tag_id, dsply_direction):
     
     gt = gt_type_select2(selected_gt_id)
     
-    sub_tag = Sub_tag.query.filter(Sub_tag.title=='כללי').first()
-        
-    return std_part_to_prf_add(gt.class_name, gt.id, gt.title, gt.body, tag_id, sub_tag.id, dsply_direction) 
+    return std_part_to_prf_add_tag_only(gt.class_name, gt.id, gt.title, gt.body, 
+                                        tag_id, dsply_direction) 
 
   
- 
+
+#### POST CASE ####                                                                                     
+@std.route('/std_sbj_to_prf_add', methods=['GET', 'POST'])
+def std_sbj_to_prf_add(new_gt_type, new_gt_id, new_gt_title, new_gt_body):
+
+    profile = Profile.query.filter(Profile.selected=='True').first()
+    if profile == None:
+        flash("Please select a profile to add a sbj to ")
+        return redirect(url_for('students.std_edit_profile', dsply_direction=dsply_direction) ) 
+        
+    ### POST Case
+    ### FROM https://stackoverflow.com/questions/38309131/wtforms-post-with-selectfield-not-working
+    ##print ("form.validate_on_submit", form.validate_on_submit)
+    
+    print("In std_sbj_to_prf_add profile is :", profile, profile.id)
+    print("")    
+    print("")    
+    print("In std_sbj_to_prf_add new_gt_title is :", new_gt_title)
+    print("")    
+    print("In std_sbj_to_prf_add new_gt_id is :", new_gt_id)
+    print("")
+    print("In std_sbj_to_prf_add new_gt_body is :", new_gt_body)
+    print("")
+    print("In std_sbj_to_prf_add gt_type is :", new_gt_type)
+    print("")
+    print("")
+    print("")
+    
+    author_id = current_user._get_current_object().id 
+    
+    new_gt = eval(new_gt_type).query.filter(eval(new_gt_type).id==new_gt_id).first()
+    if new_gt == None:    
+        new_gt = eval(new_gt_type).query.filter(eval(new_gt_type).title==new_gt_title). \
+                                         filter(eval(new_gt_type).body==new_gt_body).first()
+        if new_gt == None:
+            new_gt = eval(new_gt_type)(new_gt_title, new_gt_body, author_id)
+            db.session.add(new_gt)
+            db.session.commit()
+        
+    #print("new_gt.id  ", new_gt.id)
+    
+    #new_gt = general_txt_select3(new_gt.id)
+    
+    new_gt.title = new_gt_title
+    new_gt.body =  new_gt_body
+    
+    db.session.add(new_gt)
+    db.session.commit()
+
+    scrt = Scrt.query.filter(Scrt.body=='private').first()
+    if scrt == None:
+        flash ("No such Secirity option: Private")
+        return edit_gts()
+        
+    print("")
+    print("")
+    print("IN std_sbj_to_prf_add")
+    print("new_gt", new_gt)
+    print("new_gt", new_gt.id, new_gt.title)
+    print("scrt", scrt)
+    print("scrt", scrt.id, scrt.title)
+    print("")
+    print("")
+
+    new_gt.set_parent(scrt)
+    scrt.set_parent(new_gt)
+       
+    db.session.commit()
+
+    std = get_dummy_student()   # Match new gt to Humpty Dumpty
+    std_gt = attach_gt_to_std(std.id, new_gt.id) 
+    
+    #######################################import pdb;; pdb.set_trace()
+    profile.set_parent(new_gt)
+    
+    humpty_prf = Profile.query.filter(Profile.body==str(get_dummy_student().id)).first()
+    humpty_prf.set_parent(new_gt)
+    
+    print("")
+    print("")
+    print("IN std_sbj_to_prf_add")
+    print("Hynpty prf", humpty_prf.id, humpty_prf.title, humpty_prf.body)
+    print("Add Part: ", new_gt.id, new_gt.title, new_gt.body)
+    print("")
+   
+    #selected_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
+    ##print(" In END OF gt_to_profile_add SUB_GT =: " ,selected_sub_tag, selected_sub_tag.id)
+    ##print(" In END OF gt_to_profile_add NEW_GT =: " ,new_gt.id,  new_gt.gt_type)
+    
+    new_gt.selected = False
+    db.session.commit()
+    
+    return std_edit_profile(dsply_direction)
+          
 
 @std.route('/std_sbj_to_prf_add2/', methods=['GET', 'POST'])
 def std_sbj_to_prf_add2():
@@ -2604,7 +2781,8 @@ def std_sbj_to_prf_add2():
     tag = Tag.query.filter(Tag.title=='כללי').first()
     sub_tag = Sub_tag.query.filter(Sub_tag.title=='כללי').first()
         
-    return std_part_to_prf_add('Subject', 0, new_gt_title, new_gt_body, tag.id, sub_tag.id, 1)
+    return std_part_to_prf_add(,'subject', new_gt_id, new_gt_title, new_gt_body, tag.id, sub_tag.id, 1)
+
 
 
 
