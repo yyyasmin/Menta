@@ -1424,6 +1424,175 @@ def document_from_student_delete2(selected_student_id, selected_document_id):
 
 
 ##############START studets stds###############	
+
+
+
+
+@std.route('/edit_std_destinations_by_ssharon', methods=['GET', 'POST'])
+@login_required
+def edit_std_destinations_by_ssharon():
+    
+    print("")
+    print("")
+    print("IN edit_std_destinations_by_ssharon")
+    
+    
+    std = Student.query.filter(Student.selected==True).first()
+    if std == None:
+        std = get_dummy_student()
+        
+        
+    tags = Tag.query.order_by(Tag.title).all() 
+    default_tag = Tag.query.filter(Tag.selected==True).first()
+    if default_tag == None:
+        default_tag = Tag.query.filter(Tag.default==True).first()
+   
+    sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
+    default_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
+    if default_sub_tag == None:
+        default_sub_tag = Sub_tag.query.filter(Sub_tag.default==True).first()
+
+    age_ranges = Age_range.query.order_by(Age_range.from_age).all()     
+    default_ar = Age_range.query.filter(Age_range.selected==True).first()
+    if default_ar == None:
+        default_ar = Tag.query.filter(Age_range.default==True).first()
+        
+    std_gts = General_txt.query.join(Std_general_txt).filter(Std_general_txt.student_id==std.id).filter(Std_general_txt.general_txt_id==General_txt.id).all()
+ 
+    student_dsts = []
+    dsts_not_of_student = [] 
+    all_dsts = Destination.query.filter(Destination.hide==False).all()  
+    for d in all_dsts:
+        if d.is_parent_of(default_tag) and d.is_parent_of(default_ar):
+            std_dst = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).filter(Std_general_txt.general_txt_id==d.id).first()
+            if std_dst != None:
+               student_dsts.append(d)
+            else:
+                dsts_not_of_student.append(d)            
+            
+            
+    student_goals = []    # Get all student's destinations
+    all_goals = Goal.query.filter(Goal.hide==False).all()
+    for g in std_gts:
+        if g in all_goals:
+            student_goals.append(g)
+    goals_not_of_student = list(set(all_goals).difference(set(student_goals)))  #goals_not_of_student = all_destinations - std_destinations
+    
+                                  
+    student_methods = []    # Get all student's destinations
+    all_methods = Method.query.filter(Method.hide==False).all()
+    for t in std_gts:
+        if t in all_methods:
+            student_methods.append(t)
+    methods_not_of_student = list(set(all_methods).difference(set(student_methods)))  #methods_not_of_student = all_destinations - std_destinations
+
+    author_id = get_author_id()
+    
+    method_obj = Method.query.filter(Method.body=='ex').first()
+    if method_obj == None:
+        method_obj = Method("Data Object", "ex", author_id)
+    
+    goal_obj = Goal.query.filter(Goal.body=='ex').first()
+    if goal_obj == None:
+        goal_obj = Goal("Data Object", "ex", author_id)
+    
+    dst_obj = Destination.query.filter(Destination.body=='ex').first()
+    if dst_obj == None:
+        dst_obj = Destination("Data Object", "ex", author_id)
+
+    '''
+    #DEBUG ONLY
+    #print("")
+    #print("")    
+    for d in student_dsts:
+        print("D", d.title, d.id)
+        for g in student_goals: 
+            if d.is_parent_of(g):
+                print("   G", g.title, g.id)
+            for t in student_todos:
+                if g.is_parent_of(t):
+                    print("       T", t.title, t.id)
+    #print("")
+    #print("")  
+          
+    for d in dsts_not_of_student:
+        print("D  NOT_OF_STD ", d.title, d.id)
+        for g in goals_not_of_student:
+            if d.is_parent_of(g):
+                print("   G  NOT_OF_STD", g.title, g.id)
+            for t in todos_not_of_student:
+                if g.is_parent_of(t):
+                    print("       T  NOT_OF_STD", t.title, t.id)
+    #print("")
+    #print("")
+    #DEBUG ONLY
+    '''
+    
+    #print("1111111111111111111111111111111")
+
+    whos = Accupation.query.all()
+    default_who = Accupation.query.filter(Status.default==True).first()
+    #print("2222222222222222222222222222222")
+
+    statuss = Status.query.all()
+    default_status = Status.query.filter(Status.default==True).first()
+    if default_status == None:
+        default_status = Status.query.filter(Status.body == 'Not achieved yet').first()
+        if default_status == None:
+            default_status = Status('עדין לא הושג', 'Not achieved yet', get_author_id())
+            db.session.add(default_status)
+            db.session.commit()
+    #print("33333333333333333333333333")
+    
+    print("")
+    print("")
+    print("default_status", default_status)
+    print("color", default_status.color)
+    print("color_txt", default_status.color_txt)
+    print("title", default_status.title)
+    print("body", default_status.body)
+    print("")
+    print("")
+  
+
+    std_txts = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).all()
+
+    due_date = date.today()
+     
+    #print("")
+    #print("")
+
+    #print("")
+    #print("")
+    #print("")
+    #print("")
+    
+    due_date = date.today()
+    
+
+    files = Ufile.query.all()   #Reset files selection
+
+    print("")
+    print("IN END of SSHARON calling show_std_dsts_by_tag.html")
+
+    
+    return render_template('./destinations/dsts_table_2/show_std_dsts_by_tag.html', std=std, due_date=due_date,
+    
+                                                        dst_obj=dst_obj, goal_obj=goal_obj, method_obj=method_obj,
+                                                        
+                                                        student_dsts=student_dsts, dsts_not_of_student=dsts_not_of_student,
+                                                        
+                                                        all_goals=all_goals, student_goals=student_goals, goals_not_of_student=goals_not_of_student, files=files,
+                                                        
+                                                        all_methods=all_methods, student_methods=student_methods, methods_not_of_student=methods_not_of_student,
+                                                        
+                                                        std_txts=std_txts,
+                                                        
+                                                        tags=tags, default_tag=default_tag,
+                                                        sub_tags=sub_tags, default_sub_tag=default_sub_tag,                                                        
+                                                        statuss=statuss, default_status=default_status,
+                                                        whos=whos, default_who=default_who,
+                                                        age_ranges=age_ranges, default_ar=default_ar)
 	
 @std.route('/student_dsts', methods=['GET', 'POST'])
 @login_required
@@ -1477,11 +1646,32 @@ def student_dsts():
         if t in all_todos:
             student_todos.append(t)
     todos_not_of_student = list(set(all_todos).difference(set(student_todos)))  #todos_not_of_student = all_destinations - std_destinations
+                                  
+    student_methods = []    # Get all student's destinations
+    all_methods = Method.query.filter(Method.hide==False).all()
+    for t in std_gts:
+        if t in all_methods:
+            student_methods.append(t)
+    methods_not_of_student = list(set(all_methods).difference(set(student_methods)))  #student_methods_not_of_student = all_destinations - std_destinations
 
     author_id = get_author_id()
-    todo_obj = Todo("Data Object", "ex", author_id)
-    goal_obj = Goal("Data Object", "ex", author_id)
-    dst_obj = Destination("Data Object", "ex", author_id)
+    
+    method_obj = Method.query.filter(Method.body=='ex').first()
+    if method_obj == None:
+        method_obj = Method("Data Object", "ex", author_id)
+      
+    todo_obj = Todo.query.filter(Todo.body=='ex').first()
+    if todo_obj == None:
+        todo_obj = Todo("Data Object", "ex", author_id)
+      
+    goal_obj = Goal.query.filter(Goal.body=='ex').first()
+    if goal_obj == None:
+        goal_obj = Goal("Data Object", "ex", author_id)
+      
+    dst_obj = Destination.query.filter(Destination.body=='ex').first()
+    if dst_obj == None:
+        dst_obj = Destination("Data Object", "ex", author_id)
+        
     '''
     #DEBUG ONLY
     #print("")
@@ -1550,11 +1740,20 @@ def student_dsts():
 
 
     return render_template('./destinations/gts_table/edit_all_gts.html', std=std, due_date=due_date,
-                                                        dst_obj=dst_obj, goal_obj=goal_obj, todo_obj=todo_obj,  
+                                                        dst_obj=dst_obj, goal_obj=goal_obj, 
+                                                        todo_obj=todo_obj, method_obj=method_obj,  
+                                                        
                                                         student_dsts=student_dsts, dsts_not_of_student=dsts_not_of_student,
+                                                        
                                                         all_goals=all_goals, student_goals=student_goals, goals_not_of_student=goals_not_of_student, files=files,
+                                                        
                                                         all_todos=all_todos, student_todos=student_todos, todos_not_of_student=todos_not_of_student,
+                                                        
+                                                        all_methods=all_methods, student_methods=student_methods, 
+                                                        methods_not_of_student=methods_not_of_student,
+                                                        
                                                         std_txts=std_txts,
+                                                        
                                                         statuss=statuss, default_status=default_status,
                                                         whos=whos, default_who=default_who,
                                                         tags=tags, default_tag=default_tag,
@@ -1688,7 +1887,7 @@ def update_std_txt2():
 @std.route('/attach_gt_to_std/<int:std_id>/<int:gt_id>', methods=['GET', 'POST'])
 def attach_gt_to_std(std_id, gt_id):
         
-    #############import pdb; pdb.set_trace()
+    ###import pdb; pdb.set_trace()
     
     std_gt = Std_general_txt.query.filter(Std_general_txt.student_id==std_id).filter(Std_general_txt.general_txt_id==gt_id).first()
     if std_gt == None:
@@ -1702,14 +1901,18 @@ def attach_gt_to_std(std_id, gt_id):
         
         sts = Status.query.filter(Status.default==True).first()
         if sts == None:
-            flash ("please create a default status first")
-            return edit_gts() 
+            if sts == None:
+                sts = Status('עדין לא הושג', 'Not acieved yet', get_author_id())
+                sts.default=True
         std_gt.status_id = sts.id 
      
         who = Accupation.query.filter(Accupation.default==True).first()
         if who == None:
-            flash ("please create a default accupation first")
-            return edit_gts()           
+            if who == None:
+                who = Accupation('מחנכת', 'Teacher', get_author_id())
+                who.default=True
+        std_gt.who = who.id 
+     
         std_gt.acc_id = who.id 
 
         std = Student.query.filter(Student.id==std_id).first()

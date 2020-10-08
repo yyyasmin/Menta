@@ -1,0 +1,31 @@
+{% block std_title %}
+
+<style>
+
+</style>
+
+</br>
+
+	<center><table class="std_table">
+		<tr>			
+			<th>מטרה</th>
+			<th>מספר היעד</th>
+			<th>יעד</th>
+			<th>תאור</th> 
+			<th>פעולות עריכה</th>
+		</tr>
+			
+		<tr>
+			<td>{{ dst.title }}</td>
+			<td>{{ goal.id }}</td>
+			<td>{{ goal.title }}</td>
+			<td>{{ goal.body }}</td> 
+			<td>
+				{% include "goal_actions.html" %}
+			</td>
+		</tr>
+			
+	</table></center>
+	
+
+{% endblock std_title %}

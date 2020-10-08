@@ -1,0 +1,42 @@
+			
+			<!--- METHODS --->
+			<div class="collapse" id="{{goal.id}}Content" aria-expanded="true" 
+								  style="table-layout: fixed;">
+				{% with gt=method, gt_obj=method_obj, gt_sub_obj=None %}
+					{% include "./destinations/gts_table/methods_table.html" %}
+				{% endwith %}
+			</div>  <!-- goal collapse -->
+			<!--- METHODS --->
+
+			<!--- METHODS NOT OF STD --->
+			<div class="collapse" id="not_of_std{{goal.id}}Content" aria-expanded="true">
+				{% set nt = namespace(exist_method=False) %}      
+				{% for method in methods_not_of_student if (goal.is_parent_of(method)) %}
+						{% set nt.exist_method = True %}
+						{% break %}
+				{% endfor %}
+				
+				{% if nt.exist_method == False %}
+				
+					<div style="background:#ffe066">
+						אין בבנק יותר שיטות ליעד זה {{goal.id}}.
+						<br>
+						ליצירת שיטה חדשה גש ללשוהית מטרות בסרגל הירוק שלמעלה
+					</div>	
+					
+				{% else %}
+				
+					<table class="gray_table" >
+						{% for method in methods_not_of_student if (goal.is_parent_of(method)) %}
+							<tr>
+								{% with gt=method, gt_obj=method_obj, gt_sub_obj=None %}
+									{% include "./destinations/gts_table/method_line_not_of_std.html" %}
+								{% endwith %}
+							</tr>
+						{% endfor %}
+					</table>
+					
+				{% endif %}
+				
+			</div>		
+			<!--- METHODS NOT OF STD --->

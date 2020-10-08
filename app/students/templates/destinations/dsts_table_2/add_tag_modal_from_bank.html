@@ -1,0 +1,69 @@
+<!-- FROM https://codeloop.org/flask-crud-application-with-sqlalchemy/ -->
+{% block add_tag_prf_from_bank %}
+
+<style>
+.global_table span {
+  table-layout: inherit;
+}
+</style>
+
+				<!-- Modal Add Part From Bank -->
+	<div id="bank_{{tag.id}}_{{part.class_name}}" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+				
+					<div class="modal-body" id="{{tag.id}}">
+						<p>נושא:    {{tag.title}}</p>
+					</div>	
+					
+
+							<!--------- DEBUG ----------------------->
+
+							<!--------- DEBUG ----------------------->
+							
+					<form method="post" 
+						  action="{{ url_for('students.std_part_to_prf_add_tag_only2',       
+										   	  tag_id=tag.id, dsply_direction=1) }}"> 
+							
+						{% set ns = namespace(exist_part=False) %}
+						{% for gt in parts_not_of_prf
+							   if ( gt.is_parent_of(tag) and gt.title != 'New' ) %}
+									{% set ns.exist_part = True %}
+									{% break %}
+
+						{% endfor %}
+														
+						<table class="table_color">
+							
+							{% if ns.exist_part == False %}
+
+								<div class="alert" style="background:{{part.odd_color}}">
+									אין יותר {{part.h_name}} בנושא {{tag.title}}\{{tag.title}} בבנק.
+								</div>
+							
+							{% else %}
+							
+								{% for gt in parts_not_of_prf
+									   if ( gt.is_parent_of(tag) and gt.title != 'New' ) %}
+										{% include "profile/std_prf_parts_tables.html" %}
+								{% endfor %}
+								
+							{% endif %}
+
+						</table>
+						
+					</form>
+					
+				</div>
+					
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">ביטול</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+
+{% endblock add_tag_prf_from_bank %}

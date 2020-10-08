@@ -1,0 +1,157 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts %}
+
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set stp_ns = namespace(sub_tag_printed=False) %}
+	{% set g_ns = namespace(goal_printed=False) %}
+	{% set d_ns = namespace(dst_printed=False) %}
+	{% set g_ns = namespace(goal_printed=False) %}
+	{% set t_ns = namespace(todo_printed=False) %}
+	{% set w_ns = namespace(who_printed=False) %}
+	
+	{% for tag in tags %}
+		{% set tp_ns.tag_printed = False %}
+
+		{% for sub_tag in sub_tags if tag.is_parent_of(sub_tag) %}
+			{% set stp_ns.sub_tag_printed = False %}
+			
+			{% for dst in student_dsts if dst.is_parent_of(tag) and dst.is_parent_of(sub_tag) %}	
+				{% set d_ns.dst_printed = False %}
+
+					
+				{% for goal in student_goals if dst.is_parent_of(goal) %}
+
+<!-- DEBUG -->
+
+<!-- DEBUG -->
+
+					{% set g_ns.goal_printed = False %}
+
+					{% for who in whos if( goal.is_parent_of(who) ) %}
+						{% set w_ns.who_printed = False %}
+						
+						{% for todo in student_todos if( goal.is_parent_of(todo) and todo.is_parent_of(who) ) %}  <!-- TODOS COLUMN -->
+							{% set t_ns.todo_printed = False %}
+						
+						<tr>
+							{% if tp_ns.tag_printed == False %}  <!-- TAGS -->
+								<td>
+									{{ tag.title|replace("-", "\n") }}
+								</td>
+								{% set tp_ns.tag_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END TAGS -->
+							
+							
+							{% if stp_ns.sub_tag_printed == False %}  <!-- SUB_TAGS -->
+								<td>
+									{{ sub_tag.title }}
+								</td>
+								{% set stp_ns.sub_tag_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}   <!-- END SUB_TAGS -->
+							
+							
+							{% if d_ns.dst_printed == False %}  <!-- DSTS -->
+								<td>
+									<div type="button" style="color:black;" id="green_title" 
+													   onclick="myFunction('{{dst.id}}')">
+										מטרה: {{ dst.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==dst.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black; background:'#e6ffe6'" 
+													   id="{{dst.id}}" class="w3-hide  w3-center green_body">
+										{{dst.body}}
+									</div>
+								</td>
+								{% set d_ns.dst_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END DSTS -->
+ 							
+							{% if g_ns.goal_printed == False %}  <!-- GOALS -->
+								<td>									
+									<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+										יעד: {{ goal.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==goal.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+										{{goal.body}}
+									</div>
+								</td>
+								{% set g_ns.goal_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END GOALS -->
+							
+							<td>  <!-- TODOS -->
+								{% if w_ns.who_printed == False %}
+									<strong>{{ who.title }}</strong>
+									{% set w_ns.who_printed = True %}
+								{% endif %}	
+										
+								<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+									משימה: {{ todo.title }} 
+																										
+									{% for sts in statuss %}	
+										{% for st in std_txts %}
+											{% if st.general_txt_id==todo.id %}
+												{% if st.status_id==sts.id %}
+													<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									{% endfor %}				
+								</div>
+										
+								<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+									<div></div>{{todo.body}}
+								</div>
+								{% set t_ns.todo_printed = True %}
+							</td>
+							{% if t_ns.todo_printed == False %}
+								<td></td>
+							{% endif %}  <!-- END TODOS -->
+						</tr>
+						
+			
+						{% endfor %}  <!-- TODOS -->
+					{% endfor %}  <!-- WHOS -->	
+					{% if w_ns.who_printed == False %}  <!-- IN ASE NO GOALS DST DIDN'T ENTER DST LOOP --> 
+						{% include "plan_report/show_destinations/goal_with_no_todos.html" %}
+					{% endif %}  <!-- END DSTS -->
+					
+					{% endfor %}    <!-- GOALS -->
+					{% if g_ns.goal_printed == False %}  <!-- IN ASE NO GOALS DST DIDN'T ENTER DST LOOP --> 
+						{% include "plan_report/show_destinations/dst_with_no_goals.html" %}
+					{% endif %}  <!-- END DSTS -->
+				
+			{% endfor %}    <!-- DSTS -->
+		{% endfor %}    <!-- SUB-TAGS -->
+	{% endfor %}  <!-- TAGS -->
+	
+				
+{% endblock plan_report_show_std_dsts %}

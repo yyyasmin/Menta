@@ -232,6 +232,7 @@ def edit_destinations_by_scrt():
                                             tags=tags,
                                             scrts=scrts)															
 
+         
             
 @dst.route('/show_dst_tree', methods=['GET', 'POST'])
 @login_required
@@ -524,7 +525,7 @@ def dsply_dst_form(from_dst_sort_order):
     tag.set_parent(new_destination)
     sub_tag.set_parent(new_destination)
     
-    std_gt = attach_gt_to_std(0, new_destination.id)
+    std_gt = attach_gt_to_std(get_dummy_student().id, new_destination.id)
     db.session.commit()
     
     nd = Destination.query.filter(Destination.title== new_dst_title).first()

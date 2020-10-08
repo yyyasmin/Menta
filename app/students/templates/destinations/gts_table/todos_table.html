@@ -28,7 +28,7 @@
 					{% set ns.orange_even = False %}
 					{% endif %}	
 			
-					{% with gt = todo, gt_obj=todo_obj, gt_sub_obj=todo_obj %}
+					{% with gt = todo, gt_obj=todo_obj, gt_sub_obj1=todo_obj %}
 						{% include "./destinations/gts_table/todo_line.html" %}
 					{% endwith %}
 					
@@ -36,7 +36,7 @@
 				</table>
 			
 			<!--- FILES --->
-			<div class="collapse" id="{{todo.id}}Content" aria-expanded="true" 
+			<div class="collapse" id="{{todo.id}}Resource" aria-expanded="true" 
 								  style="table-layout: fixed;">
 				{% include "./destinations/gts_table/std_show_goal_files.html" %}
 			</div>  <!-- goal collapse -->

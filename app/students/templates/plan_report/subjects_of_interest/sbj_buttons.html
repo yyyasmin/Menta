@@ -1,0 +1,62 @@
+{% block sbj_buttons %}
+
+	
+	<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
+
+	<td>
+		
+		<button type="button" onclick="get_tag_id($(this))"
+				data-toggle="modal" data-target="#{{sbj.class_name}}"
+				id="add_button"
+				style="color:{{sbj.color}};
+					   margin-top:1em; align:center; float:none;">
+					הוסף {{sbj.h_name}} חדש
+		</button>
+		{% include "profile/subjects_of_interest/add_sbj_modal.html" %}
+
+		<button type="button"
+				data-toggle="modal" data-target="#bank_{{sbj.class_name}}" 
+				id="add_button"
+				style="color:{{sbj.color}}; 
+				       margin-bottom:3em; margin-top:1em; align:center; float:none;">
+					הוסף {{sbj.h_name}} מהבנק
+		</button>
+		{% include "profile/subjects_of_interest/add_sbj_from_bank.html" %}
+	
+	</td>
+	
+{% endblock sbj_buttons %}
+
+
+<!-- FROM https://codepen.io/dustinoverby/pen/NExXMb -->
+
+<script>
+"use strict";
+
+function gt_tag_val()  {
+	let d = $(this);
+	
+		console.log("START ****************");
+		
+		console.log("IN gt_tag_val");
+		console.log("$this");
+		console.log(d);
+
+		console.log("id");
+		console.log(d.id);
+	
+		console.log("innerHTML");
+		console.log(d.html());
+	
+		console.log("IN gt_tag_val");
+		
+		console.log("---START--- d.childNodes[0].nodeValue");
+		console.log(d.childNodes[0].nodeValue);
+		console.log("---END--- d.childNodes[0].nodeValue");
+		
+		console.log("END ****************");
+    }
+
+</script>
+
+		

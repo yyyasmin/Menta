@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% with from_dst_sort_order=3 %} 
+	{% include "goal_title.html" %} 
+{% endwith %} 
+
+<style>
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  #text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+	</br></br>
+	
+	<h3><strong>דרכי הוראה, שיטות, אמצעים ומשאבים להשגת היעד</strong></h3>
+	
+	</br></br>
+	
+	<button style="margin-bottom:1%;" class="btn btn-info btn-xs" id="add_button"><h5><strong>	
+		<a href="{{ url_for('goals.method_to_goal_add2', selected_general_txt_id=goal.id) }}">הוסף שיטת עבודה חדשה</a>
+	<strong></h5></button>
+	
+	</br></br>
+	
+
+	
+	</br></br>
+	
+
+	<div>	
+	
+	{% for method in goal.children if (method.type=='method') %}
+			
+			<button type="button" id="act_btn">
+				<a style="color: black" id="act_btn" 
+					href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=dst.id) }}">
+					חזרה ליעדים
+				</a>
+			</button>			
+			
+			<button type="button" id="act_btn"><a style="color: black" id="act_btn" 
+					href="{{ url_for('goals.goal_method_update2', selected_method_id=method.id) }}">ערוך</a></button>			
+			
+			<button type="button" id="act_btn"><a style="color: black" 
+					href="{{ url_for('destinations.show_dummy_student_tree2') }}">הצג עץ מטרות</a></button>
+
+			<button type="button" id="act_btn"><a style="color: black" 
+					href="{{ url_for('goals.method_from_goal_delete2', 
+							          selected_goal_id=goal.id, selected_method_id=method.id) }}">מחק</a></button>
+			
+		</br>
+		
+		<button class="accordion" id="act_btn">{{ method.title }}</button>			
+
+			<div class="panel">
+			
+				<li class="tab " id="tab-2"><span class="tab-title"> 
+					<div id="ar_div">					
+						{% for who in method.children if (who.type=='accupation') %}
+							<div class="white_ppp"> תפקיד האחראי על ביצוע השיטה: {{ who.title }} </div>
+							{{ break }}
+						{% endfor %}
+					</div>   <!-- ar_div -->
+				</li>
+				
+				<li class="tab " id="tab-2"><span class="tab-title"> 
+					<div id="ar_div">
+						<div class="white_ppp">תאור השיטה: {{ method.body }} </div>
+					</div>   <!-- ar_div -->
+				</li>
+
+			</div>
+				
+		</br>			
+
+	{% endfor %}
+	
+	</br>
+
+	</div>
+ 
+  		
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

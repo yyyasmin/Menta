@@ -1,0 +1,82 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts %}
+
+	{% set g_ns = namespace(goal_printed=False) %}
+	{% set t_ns = namespace(method_printed=False) %}
+	{% set w_ns = namespace(who_printed=False) %}
+
+					
+				{% for goal in student_goals if dst.is_parent_of(goal) %}
+
+<!-- DEBUG -->
+
+<!-- DEBUG -->
+
+					{% set g_ns.goal_printed = False %}
+
+
+					{% for method in student_methods if goal.is_parent_of(method) %}  <!-- TODOS COLUMN -->
+						{% set t_ns.method_printed = False %}
+						
+						<tr>
+
+							{% if g_ns.goal_printed == False %}  <!-- GOALS -->
+								<td>									
+									<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+										יעד: {{ goal.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==goal.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black;" id="{{goal.id}}" 
+													   class="w3-hide  w3-center blue_body">
+										{{goal.body}}
+									</div>
+								</td>
+								{% set g_ns.goal_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END GOALS -->
+							
+							<td>  <!-- TODOS -->
+				
+								<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{method.id}}')">
+									{{ method.title }} 
+																										
+									{% for sts in statuss %}	
+										{% for st in std_txts %}
+											{% if st.general_txt_id==method.id %}
+												{% if st.status_id==sts.id %}
+													<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+												{% endif %}
+											{% endif %}
+										{% endfor %}
+									{% endfor %}				
+								</div>
+										
+								<div type="button" style="color:black;" id="{{method.id}}" class="w3-hide  w3-center orange_body">
+									<div></div>{{method.body}}
+								</div>
+								{% set t_ns.method_printed = True %}
+							</td>
+							{% if t_ns.method_printed == False %}
+								<td></td>
+							{% endif %}  <!-- END TODOS -->
+						</tr>
+						
+			
+					{% endfor %}  <!-- TODOS -->
+				
+				{% endfor %}    <!-- GOALS -->
+			
+				
+{% endblock plan_report_show_std_dsts %}

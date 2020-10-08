@@ -1,0 +1,41 @@
+
+<style>
+
+
+</style>
+
+{% block dst_actions %}
+
+<footer>
+
+	<span style="align: center;">
+		
+		<button type="button" id="act_btn">
+			<a style="color:black" href="{{ url_for('goals.goal_update', selected_goal_id=goal.id) }}">
+				ערוך פרטים
+			</a>
+		</button>		
+		
+	
+		<button type="button" id="act_btn">
+			<a style="color:black" href="{{ url_for('destinations.edit_destinations_goals2', selected_destination_id=dst.id, from_dst_sort_order=from_dst_sort_order) }}">חזרה ליעדים
+			</a>
+		</button>
+		
+		<button type="button" id="act_btn">
+			<a style="color: black" id="act_btn" 
+				href="{{ url_for('goals.edit_goal_methods2', selected_goal_id=goal.id) }}">
+				דרכי הוראה, שיטות, אמצעים ומשאבים
+			</a>
+		</button>
+		
+		<button type="button" id="act_btn"><a style="color: black" href="{{ url_for('goals.edit_goal_files2', selected_goal_id=goal.id) }}">קבצים</a></button>
+
+		<button type="button" id="act_btn"><a style="color: black" href="{{ url_for('goals.edit_goal_todos2', selected_goal_id=goal.id) }}">משימות להשגת היעד</a></button>
+	
+
+	</span>
+	
+</footer>
+
+{% endblock dst_actions %}

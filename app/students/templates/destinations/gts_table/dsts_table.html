@@ -57,7 +57,7 @@
 					<table class="gray_table" >
 						{% for goal in goals_not_of_student if (dst.is_parent_of(goal)) %}
 							<tr>
-								{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+								{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=method_obj %}
 									{% include "./destinations/gts_table/goal_line_not_of_std.html" %}
 								{% endwith %}
 							</tr>

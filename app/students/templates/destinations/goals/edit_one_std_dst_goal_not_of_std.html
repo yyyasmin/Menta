@@ -54,9 +54,9 @@
 		</tr>
 	
 	<tr>				
-		{% for todo in goal.children.all() %}
-			{% if todo in todos_not_of_student %}
-				{% include "./destinations/goals/todos/goal_todos_table_line_not_of_std.html" %}
+		{% for method in goal.children.all() %}
+			{% if method in methods_not_of_student %}
+				{% include "./destinations/goals/methods/goal_methods_table_line_not_of_std.html" %}
 			{% endif %}
 		{% endfor %}
 	</tr>

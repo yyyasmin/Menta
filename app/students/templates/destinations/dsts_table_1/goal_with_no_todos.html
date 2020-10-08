@@ -1,0 +1,80 @@
+{% block goal_with_no_todos %}
+
+<tr>
+						
+						<tr>
+							{% if tp_ns.tag_printed == False %}  <!-- TAGS -->
+								<td>
+									{{ tag.title|replace("-", "\n") }}
+								</td>
+								{% set tp_ns.tag_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END TAGS -->
+							
+							
+							{% if stp_ns.sub_tag_printed == False %}  <!-- SUB_TAGS -->
+								<td>
+									{{ sub_tag.title }}
+								</td>
+								{% set stp_ns.sub_tag_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}   <!-- END SUB_TAGS -->
+							
+							
+							{% if d_ns.dst_printed == False %}  <!-- DSTS -->
+								<td>
+									<div type="button" style="color:black;" id="green_title" onclick="myFunction('{{dst.id}}')">
+										מטרה: {{ dst.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==dst.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black;" id="{{dst.id}}" class="w3-hide  w3-center green_body">
+										{{dst.body}}
+									</div>
+								</td>
+								{% set d_ns.dst_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END DSTS -->
+ 							
+							{% if g_ns.goal_printed == False %}  <!-- GOALS -->
+								<td>									
+									<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+										יעד: {{ goal.title }} 
+																										
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==goal.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+									
+									<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+										{{goal.body}}
+									</div>
+								</td>
+								{% set g_ns.goal_printed = True %}
+							{% else %}
+								<td></td>
+							{% endif %}  <!-- END GOALS -->
+							
+<td></td>  <!-- TODOS COL -->
+
+</tr>
+				
+{% endblock goal_with_no_todos %}

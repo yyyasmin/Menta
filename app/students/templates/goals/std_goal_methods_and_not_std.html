@@ -1,0 +1,79 @@
+{% block dst_goals_table_line %}		
+
+	<tr>
+	
+		<td>{{ std_goal.goal_id }}</td>
+		
+		<td>{{ std_goal.goal_title }}</td>
+		
+		<td>{{ std_goal.goal_body }}</td> 
+		
+		<td>
+			<div id="ar_div">
+				<input type="date" style="text-align:center" class="form-control" id="due_date" name="due_date" value="{{ std_goal.due_date }}">
+			</div>   <!-- ar_div -->
+		</td>	
+		
+		<td>סטאטוס:
+			<select style="color:{{ std_goal.status_color }}" name="selected_status" id="color_me">						
+				{% for sts in statuss %}
+					{% if sts.id == std_goal.status_id %}
+						<option style="color:{{ sts.color }}" value="{{ sts.title }}" selected>{{ sts.title }}</option>
+					{% else %}
+						<option style="color:{{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>						
+		</td>
+		
+		<td>
+			<button class="btn btn-success btn-xs" type="submit" value="Save">שמור</button>
+		</td>
+	
+	</tr>
+	
+	<tr>
+		<th style="background:#ffffff" colspan="5"></th>
+	</tr>
+
+
+	
+	<tr>
+		<th style="background:#ffffb3; color:black; text-align:right" colspan="6"> 
+			<button class="btn btn-info btn-xs" id="add_button"><h6><strong>
+				<a href="{{ url_for('students.try_method_to_student_add') }}">הוסף שיתטת עבודה מתוך רשימת שיטות של יעד זה</a>
+			<strong></h6></button>
+		</th>
+	</tr>
+	
+	<tr style="width:100%">
+		<th style="background:#ffffb3; color:black" colspan="6"> שיטות להשגת היעד </th>
+	</tr>
+	
+	<tr>
+		{% for method in std_goal.goal.methods %}
+			{% include "./goals/methods/edit_one_std_goal_method.html" %}
+		{% endfor %}
+	</tr>
+	
+	<tr style="width:100%">
+		<th style="background:#ffffb3; color:black" colspan="6">בחר שיטה והוסף אותה לתלמיד</th>
+	</tr>
+		
+	<tr>
+		{% for method in std_goal.goal.methods %}
+			{% include "./goals/methods/edit_one_std_goal_methods.html" %}
+		{% endfor %}
+	</tr>
+
+		
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+</script>
+
+
+{% endblock dst_goals_table_line %}

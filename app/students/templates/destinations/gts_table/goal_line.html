@@ -20,14 +20,26 @@
 	<td class="body_width">{{ gt.body }}</td> 
 
                   
-	<td class="sub_btn_width">
+	<td class="sub_btn1_width">
 	
-		<div id="add_sub" style="color:{{gt_sub_obj.color_txt}}" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Content">
-			הראה {{gt_sub_obj.h_plural_name}}
+		<div id="add_sub" style="color:{{gt_sub_obj1.color_txt}}" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Todo">
+			הראה {{gt_sub_obj1.h_plural_name}}
 		</div>
 					
-		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{gt.id}}Content">
-			הוסף {{gt_sub_obj.h_name}}
+		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{gt.id}}Todo">
+			הוסף {{gt_sub_obj1.h_name}}
+		</div>
+		
+	</td>
+	                  
+	<td class="sub_btn2_width">
+	
+		<div id="add_sub" style="color:{{gt_sub_obj2.color_txt}}" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#{{gt.id}}Method">
+			הראה {{gt_sub_obj2.h_plural_name}}
+		</div>
+					
+		<div id="add_sub" style="color:gray" dir="rtl" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{gt.id}}Method">
+			הוסף {{gt_sub_obj2.h_name}}
 		</div>
 		
 	</td>

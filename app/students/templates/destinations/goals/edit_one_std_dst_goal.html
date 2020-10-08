@@ -60,18 +60,18 @@
 		</tr>
 	
 	<tr>				
-		{% for todo in student_todos %}
-			{% if todo in goal.children.all() %}
-				{% if todo in student_todos %}
-					{% include "./destinations/goals/todos/goal_todos_table_line.html" %}
+		{% for method in student_methods %}
+			{% if method in goal.children.all() %}
+				{% if method in student_methods %}
+					{% include "./destinations/goals/methods/goal_methods_table_line.html" %}
 				{% endif %}
 			{% endif %}
 		{% endfor %}
 	</tr>
 	
 	<tr>				
-		{% for todo in todos_not_of_student %}
-			{% include "./destinations/goals/todos/goal_todos_table_line_not_of_std.html" %}
+		{% for method in methods_not_of_student %}
+			{% include "./destinations/goals/methods/goal_methods_table_line_not_of_std.html" %}
 		{% endfor %}
 	</tr>
 		

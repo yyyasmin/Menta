@@ -1,0 +1,52 @@
+
+
+{% extends "layout.html" %} 
+
+
+{% block content %}
+
+
+<style>
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<h3><strong><div>מטרות</div></strong></h3>
+	
+	<table class="gray_table profile_table">	
+	
+		<thead>
+			<tr>			
+				{% include "./destinations/dsts_table_2/show_std_tags_and_dsts.html" %} 
+			</tr>
+		</thead>
+		
+				
+	</table>
+
+
+	
+	<table class="gray_table profile_table">	
+	
+		<thead>
+			<tr>			
+				<th style="background-color:#357EC7; color:#ffffcc; width:32%;"><strong>יעדים</strong></th>
+				<th style="background-color:purple; color:#ffffcc; width:32%;">
+					<strong>
+						דרכי הוראה, שיטות, אמצעים ומשאבים להשגת המטרות והיעדים
+					</strong></th>
+				<th style="background-color:orange; color:#ffffcc; width:32%;"><strong>אמות מידה להערכה</strong></th> 
+			</tr>
+		</thead>
+	
+			{% include "./destinations/dsts_table_2/show_std_goals_and_methods.html" %} 
+		</tbody>
+	
+	</table>
+
+	
+{% endblock %}

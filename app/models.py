@@ -462,6 +462,29 @@ class Todo(General_txt):
         super(self.__class__, self).__init__(title, body, author_id)       
             
 
+    
+class Method(General_txt):
+    __tablename__ = 'method'
+    __mapper_args__ = {'polymorphic_identity': 'method'}
+    id = db.Column(db.ForeignKey(General_txt.id), primary_key=True)
+    
+    def __init__(self ,title, body, author_id):
+        
+        self.h_name = 'דרכי הוראה, שיטות, אמצעים ומשאבים'   
+        self.e_name = 'Mission'  
+        self.h_plural_name = 'דרכי הוראה, שיטות, אמצעים ומשאבים'
+        
+        self.class_name = 'Method'
+        
+        self.color_txt = 'purple'
+        self.color = '#660066' 
+        self.table_color = 'purple_table'
+        self.title_color = '#cc3399'
+          
+        self.editable = True
+        super(self.__class__, self).__init__(title, body, author_id)       
+            
+
 
 ############################################ Todo_form
 #FROM https://stackoverflow.com/questions/7979548/how-to-render-my-textarea-with-wtforms
