@@ -544,9 +544,7 @@ def method_to_goal_add():
         
         
     print ("POST -- In method_to_goal_add -- POST   ")
-    
-    import pdb;pdb.set_trace()
-                   
+                       
     author_id = current_user._get_current_object().id  
 
     method = Method(request.form['title'], request.form['body'], author_id)        
