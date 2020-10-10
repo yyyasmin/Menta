@@ -45,6 +45,7 @@
 
 .e {
 	grid-area: e;
+	overflow: hidden;  /* NEW  FROM https://stackoverflow.com/questions/43311943/prevent-content-from-expanding-grid-items*/
 }
 
 </style>
@@ -69,15 +70,18 @@
 						{% include "./destinations/dsts_table_2/goals_table.html" %}			
 				</div>
 				
-					<div class="box d">CLASS DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD TEST </div>
-				
 					<div class="box d">
 						{% include "./destinations/dsts_table_2/method_title.html" %}
 						{% include "./destinations/dsts_table_2/iner_method_title.html" %}
 						
 						{% for method_type in method_types %}  <!-- METHOD-TYPES -->
 							{% include "./destinations/dsts_table_2/method_type_table.html" %}			
-						{% endfor %}  <!-- METHOD-TYPES -->
+
+							{% for method in student_methods if goal.is_parent_of(method) and
+																method.is_parent_of(method_type) %}  
+								{% include "./destinations/dsts_table_2/methods_table.html" %}			
+							{% endfor %}  <!-- METHODS -->
+						{% endfor %}  <!-- METHODS -->
 					</div>
 						
 			
