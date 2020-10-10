@@ -78,7 +78,7 @@ def goal_update(selected_goal_id):
         return render_template('update_goal.html', dst=dst, goal=goal)
         
     #get data from form and insert to destinationgress db
-    ###########################import pdb;;pdb.set_trace()
+    #############################import pdb;;pdb.set_trace()
  	
     goal.title = request.form.get('title')	
     goal.body = request.form.get('description')
@@ -122,7 +122,7 @@ def goal_delete_for_good2(selected_general_txt_id):
 @goal.route('/edit_goal_todos', methods=['GET', 'POST'])
 def edit_goal_todos():
 
-    ###import pdb; pdb.set_trace()
+    #####import pdb; pdb.set_trace()
     dst = Destination.query.filter(Destination.selected==True).first()
     if dst == None:
         flash("Please select a destination first ")
@@ -208,7 +208,7 @@ def goal_todo_update():
         return render_template('dsply_todo_form.html', form=form)
         
     ##################  Fill todo fields 
-    #######################import pdb;;pdb.set_trace()
+    #########################import pdb;;pdb.set_trace()
 
     todo.title = request.form['title'] 
     todo.body =  request.form['body']
@@ -283,7 +283,7 @@ def todo_to_goal_add():
         flash("יש לבחור קטגוריה")
         return render_template('todo_to_goal_add.html', form=form)
         
-    ########################import pdb;;pdb.set_trace()
+    ##########################import pdb;;pdb.set_trace()
                    
     author_id = current_user._get_current_object().id  
 
@@ -310,7 +310,7 @@ def todo_to_goal_add():
     db.session.commit()  
     db.session.refresh(todo)
     
-    ########import pdb;; pdb.set_trace()
+    ##########import pdb;; pdb.set_trace()
 
 
     return redirect(url_for('goals.edit_goal_todos'))		
@@ -368,7 +368,7 @@ def todo_from_goal_delete2(selected_goal_id, selected_todo_id):
 @goal.route('/edit_goal_methods', methods=['GET', 'POST'])
 def edit_goal_methods():
 
-    ###import pdb; pdb.set_trace()
+    #####import pdb; pdb.set_trace()
     dst = Destination.query.filter(Destination.selected==True).first()
     if dst == None:
         flash("Please select a destination first ")
@@ -460,7 +460,7 @@ def goal_method_update():
         return render_template('dsply_method_form.html', form=form)
         
     ##################  Fill method fields 
-    #######################import pdb;;pdb.set_trace()
+    #########################import pdb;;pdb.set_trace()
 
     method.title = request.form['title'] 
     method.body =  request.form['body']
@@ -568,12 +568,11 @@ def method_to_goal_add():
     method.set_parent(who)
     method.set_parent(method_type)
     
-    import pdb; pdb.set_trace()
             
     db.session.commit()  
     db.session.refresh(method)
     
-    ########import pdb;; pdb.set_trace()
+    ##########import pdb;; pdb.set_trace()
 
 
     return redirect(url_for('goals.edit_goal_methods'))		
@@ -716,7 +715,7 @@ def download_goal_file():
     
     author_id = current_user._get_current_object().id
     
-    #########import pdb; pdb.set_trace()
+    ###########import pdb; pdb.set_trace()
 
     downloaded_file = Ufile.query.filter(Ufile.selected==True).first() 
     if downloaded_file == None:
@@ -729,7 +728,7 @@ def download_goal_file():
         flash("Please select a resource first ")
         return redirect(url_for('goals.edit_goal_files'))	
     '''
-    ######import pdb; pdb.set_trace()
+    ########import pdb; pdb.set_trace()
     
     downloaded_file =  send_file(BytesIO(downloaded_file.data), attachment_filename=downloaded_file.name, as_attachment=True)
     return downloaded_file
@@ -737,7 +736,7 @@ def download_goal_file():
         
 @goal.route('/download_goal_file2/<int:selected_file_id>', methods=['GET', 'POST'])
 def download_goal_file2(selected_file_id):
-    ######import pdb; pdb.set_trace()
+    ########import pdb; pdb.set_trace()
     print("IN download_goal_file2 selected_file_id: ", selected_file_id)
     print("")
     print("")
@@ -779,7 +778,7 @@ def uploaded_file_from_goal_remove2(selected_file_id):
 @goal.route('/upload_new_file', methods=['GET', 'POST'])
 def upload_new_file():
 
-    ######import pdb; pdb.set_trace()
+    ########import pdb; pdb.set_trace()
     
     author_id = current_user._get_current_object().id
 
@@ -788,7 +787,7 @@ def upload_new_file():
         flash("Please select a goal first ")
         return redirect(url_for('goals.edit_goal_files'))	
             
-    #####import pdb; pdb.set_trace()
+    #######import pdb; pdb.set_trace()
     
     uploaded_file = Ufile.query.filter(Ufile.selected==True).first()
     if uploaded_file == None:
