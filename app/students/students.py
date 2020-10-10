@@ -1542,7 +1542,17 @@ def edit_std_destinations_by_ssharon():
     print("body", default_status.body)
     print("")
     print("")
-  
+    for tag in tags:
+        print("TAG: ", tag.id, tag.body)
+    print("")
+    print("")
+    
+	for dst in student_dsts:
+        if tag.is_parent_of(dst):
+            print("DST:" dst.id, dst.body)
+    print("")
+    print("")
+    print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
     std_txts = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).all()
 
