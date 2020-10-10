@@ -1,0 +1,115 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block tags_level %}
+
+
+<style>
+
+.wrapper {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: repeat(6, 1fr);
+
+	grid-template-areas:   'a b b b b b'
+						   'c c d d e e;
+							
+}
+	
+.box {
+        border-radius: 5px;
+        padding: 14px;
+        font-size: 100%;
+		background-color: red;
+}
+
+.box .box {
+	background-color: #ccc;
+	color: #444;
+}
+
+
+.a {
+	grid-area: a;
+
+}
+
+.b {
+	grid-area: b;
+}
+
+.c {
+	grid-area: c;
+}
+
+.d {
+	grid-area: d
+
+.e {
+	grid-area: e;
+}
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+<div class="wrapper">	
+		
+		<div class="box a">A</div>
+		<div class="box b">B</div>
+		<div class="box c">C</div>
+		<div class="box d">D</div>
+		<div class="box e">E</div>
+		
+</div>  <!-- WRAPPER -->
+<!------------- DEBUG ----------------------------->
+
+</br>
+
+<div class="wrapper">
+	{% for tag in tags %}   <!-- TAGS -->
+	
+		</br>
+		
+		<div class="box a">
+		
+			<div type="button" style="color:black;" id="gray_title"
+							   onclick="myFunction('{{tag.id}}')">
+				תחום: {{ tag.title }}    <!-- {{ tag.title|replace("-", "\n") }} -->				
+			</div>
+			
+			<div type="button" style="color:black;" 
+							   id="{{tag.id}}" class="w3-hide  w3-center gray_body">
+				{{tag.body}}
+			</div>
+		</div>
+			
+		{% include "./destinations/dsts_table_2/dsts_list.html" %}			
+		
+	{% endfor %}  <!-- TAGS -->
+</div>  <!-- WRAPPER -->
+
+	
+<!--- DEBUG -------------------------
+<div class="wrapper">
+		
+		<div class="box a">A</div>
+		<div class="box b">B</div>
+		<div class="box c">C</div>
+		<div class="box d">D</div>
+		<div class="box e">E</div>
+		
+</div> 
+--- DEBUG ------------------------->
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+				
+{% endblock tags_level %}

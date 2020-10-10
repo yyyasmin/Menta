@@ -99,22 +99,22 @@ input {
 
 </style>
 
+	</br>
 
 	<!-- FROM https://www.tutorialspoint.com/flask/flask_wtf.htm -->		
 	<!-- <div style = "font-size:20px; font-weight:bold;  float:right; text-align:center; width:100%"> -->
 	<div style = "text-align:center; width:100%">
 		<fieldset>
-			<form role="form" method="POST" destination='' enctype="multipart/form-data" style="margin:5%;">
+			<form method="post" action="{{ url_for('destinations.dsply_dst_form', from_dst_sort_order=from_dst_sort_order) }}">
 				
 				<div>
-					<legend>אמצעי הוראה\ שיטה \ משאב חדש</legend>
+					<legend>מטרה חדשה:</legend>
 					{{ form.hidden_tag() }}
 				</div>
 					
 				{{ form.csrf_token }}
 
-				</br>
-				
+
 				<ul class="tabs">
 				
 
@@ -137,7 +137,7 @@ input {
 					<li class="tab " id="tab-2"><span class="tab-title">
 						<div id="tag_div">
 							<div> {{form.who.label}}: {{form.who}}</div>
-							{% if form.who.errors %}
+							{% if form.tag.errors %}
 								<ul class=errors>
 									{% for error in form.who.errors %}
 										<li>{{ error }}</li>
@@ -151,9 +151,7 @@ input {
 				</ul>
 
 				<br><br>
-			
-			<center>
-			
+				
 				<div class="form-group">				
 					<label for="title">דרך הוראה, שיטות, אמצעים ומשאבים </label>
 					<input type="title" class="form-control" name="title">			
@@ -175,8 +173,6 @@ input {
 				<div id="submit_button"> {{form.submit}} </div>
 				
 				<br>
-				
-			</center>
 				
 			</form>
 		</fieldset>

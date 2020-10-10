@@ -500,12 +500,13 @@ class Todo_form(FlaskForm):
     
     who = SelectField('תפקיד מבצע המשימה', choices=[], validators=[validators.Required(message=('יש לבחור מבצע למשימה'))])
     status = SelectField('סטאטוס ביצוע', choices=[],   validators=[validators.Required(message=('יש לבחור סטאטוס ביצוע'))])
+    method_type = SelectField('מדיית הוראה', choices=[], validators=[validators.Required(message=('יש לבחור מדיית הוראה'))])
     due_date =  DateField('due_date')
 
     selected = db.Column(db.Boolean)
     hide =     db.Column(db.Boolean)
     
-    submit = SubmitField("שמור משימה")	
+    submit = SubmitField("שמור")	
     
 ############################################ Todo_form
 
@@ -756,6 +757,27 @@ class Accupation(General_txt):
             
         self.class_name = 'Accupation'
         self.gt_type = 'Accupation'
+        
+        self.color_txt = 'black'
+        self.color = '#00284d'
+        self.editable = True     
+        super(self.__class__, self).__init__(title, body, author_id)
+    
+    
+class Method_type(General_txt):
+
+    __tablename__ = 'method_type'
+    __mapper_args__ = {'polymorphic_identity': 'method_type'}
+       
+    id = db.Column(db.ForeignKey(General_txt.id), primary_key=True)
+    
+    def __init__(self, title, body, author_id):
+    
+        self.h_name = 'סוג\מדיית הוראה'   
+        self.e_name = 'Method media or type'  
+            
+        self.class_name = 'Method_type'
+        self.gt_type = 'Method_type'
         
         self.color_txt = 'black'
         self.color = '#00284d'

@@ -1,0 +1,15 @@
+{% block tag_lable %}
+		
+		
+	<div type="button" style="color:black;" id="gray_title"
+					   onclick="myFunction('{{tag.id}}')">
+		תחום: {{ tag.title }}    <!-- {{ tag.title|replace("-", "\n") }} -->				
+	</div>
+	
+	<div type="button" style="color:black;" 
+					   id="{{tag.id}}" class="w3-hide  w3-center gray_body">
+		{{tag.body}}
+	</div>
+			
+		
+{% endblock tag_lable %}		

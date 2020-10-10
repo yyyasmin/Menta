@@ -501,9 +501,13 @@ def method_to_goal_add():
         return redirect(url_for('destinations.edit_destinations_goals'))		
 
     form = Todo_form()
-
+    
+    form.method_type.choices=[]
     form.who.choices=[]
     form.status.choices=[]
+
+    form.method_type.choices = [(mt.id, mt.title) for mt in Method_type.query.all()]
+    form.process()
 
     form.who.choices = [(acc.id, acc.title) for acc in Accupation.query.all()]
     form.process()
@@ -529,7 +533,10 @@ def method_to_goal_add():
         flash("יש לבחור קטגוריה")
         return render_template('method_to_goal_add.html', form=form)
         
-    ########################import pdb;;pdb.set_trace()
+        
+    print ("POST -- In method_to_goal_add -- POST   ")
+    
+    import pdb;pdb.set_trace()
                    
     author_id = current_user._get_current_object().id  
 
@@ -545,13 +552,16 @@ def method_to_goal_add():
     default_sts = Status.query.filter(Status.default==True).first()    
     method.set_parent(default_sts)    
     std_gt.status_id = default_sts.id
-    
+        
     who = Accupation.query.filter(Accupation.id==request.form.get('who')).first()    
-    #who=set_gt_category(method.id, 'Accupation', who.title, "יש לבחור תפקיד אחראי")  
+    method_type = Method_type.query.filter(Method_type.id==request.form.get('method_type')).first()    
                        
     goal.set_parent(method)
     goal.set_parent(who)
     method.set_parent(who)
+    method.set_parent(method_type)
+    
+    import pdb; pdb.set_trace()
             
     db.session.commit()  
     db.session.refresh(method)

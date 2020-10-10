@@ -1,0 +1,127 @@
+{% block tbl_1 %}
+
+<table class="gray_table">
+{% for tag in tags %}   <!-- TAGS -->
+	<tr>
+		
+		<td style="width:10%">
+			{{ tag.title|replace("-", "\n") }}
+		</td>
+		
+		<td style="width:25%">
+			{% for dst in student_dsts if dst.is_parent_of(tag) %}  <!-- DSTS -->
+				<tr>
+					<div type="button" style="color:black;" id="green_title" 
+									   onclick="myFunction('{{dst.id}}')">
+						מטרה: {{ dst.title }} 
+																						
+						{% for sts in statuss %}	
+							{% for st in std_txts %}
+								{% if st.general_txt_id==dst.id %}
+									{% if st.status_id==sts.id %}
+										<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}				
+					</div>
+					
+					<div type="button" style="color:black; background:'#e6ffe6'" 
+									   id="{{dst.id}}" class="w3-hide  w3-center green_body">
+						{{dst.body}}
+					</div>
+				</tr>
+			{% endfor %}  <!-- DSTS -->
+		</td>
+		
+		<td style="width:25%">
+			{% for goal in student_goals if dst.is_parent_of(goal) %}  <!-- GOALS -->
+				<tr>
+					<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+						יעד: {{ goal.title }} 
+																						
+						{% for sts in statuss %}	
+							{% for st in std_txts %}
+								{% if st.general_txt_id==goal.id %}
+									{% if st.status_id==sts.id %}
+										<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}				
+					</div>
+					
+					<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+						{{goal.body}}
+					</div>
+				</tr>
+			{% endfor %}  <!-- GOALS -->
+		</td>
+		
+		<td style="width:40%">
+		<table class="purple_table">
+			{% for method in student_methods if goal.is_parent_of(method)  %}  <!-- METHODS -->	
+				<tr> 
+				
+					<td>
+						<div type="button" style="color:black;" id="purple_title" 
+										   onclick="myFunction('{{method.id}}')">
+							{{ method.title }}   
+
+						</div>
+								
+						<div type="button" style="color:black;" id="{{method.id}}" 
+										   class="w3-hide  w3-center purple_body">
+							{{method.body}}
+						</div>
+					</td>
+					
+					<td>
+						{% for method_type in method_types if method.is_parent_of(method_type)  %}  <!-- METHOD-TYPES -->
+							<td>
+								<div type="button" style="color:black;" id="purple_title" 
+												   onclick="myFunction('{{method_type.id}}')">
+									סוג: {{ method_type.title }} 			
+								</div>
+								
+								<div type="button" id="{{method_type.id}}" class="w3-hide  w3-center purple_body">
+									{{method_type.body}}
+								</div>
+							</td>
+						{% endfor %}  <!-- METHODS-TYPES -->					
+					</td>
+					
+					<td>					
+						{% for who in whos if method.is_parent_of(who)  %}  <!-- WHOS -->
+							<td>  
+								<div type="button" style="color:black;" id="purple_title" 
+												   onclick="myFunction('{{method.id}}')">
+									{{ who.title }}   
+
+								</div>
+										
+								<div type="button" style="color:black;" id="{{method.id}}" 
+												   class="w3-hide  w3-center purple_body">
+									{{who.body}}
+								</div>
+								{% set m_ns.method_printed = True %}
+							</td>  
+						{% endfor %}  <!-- WHOS -->					
+					</td>
+					
+					
+				</tr>
+			{% endfor %}  <!-- METHODS -->		
+		</table>
+		</td>
+		
+	</tr>
+{% endfor %}  <!-- TAGS -->
+</table>
+
+
+
+
+
+
+{% endblock tbl_1 %}

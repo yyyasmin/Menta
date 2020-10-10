@@ -1,0 +1,20 @@
+{% block tests_table %}
+			
+	<table class="orange_table">
+	
+			<tr>
+				<td>
+					<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{test.id}}')">
+						{{ test.title }} 
+					</div>
+					
+					<div type="button" style="color:black;" id="{{test.id}}" class="w3-hide  w3-center orange_body">
+						{{test.body}}
+					</div>
+				</td>
+			</tr>
+
+	</table>
+			
+{% endblock tests_table %}
+			

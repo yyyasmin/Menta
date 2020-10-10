@@ -1,0 +1,30 @@
+{% block methods_type_table %}
+		
+		<table class="iner_purple_table">
+		
+				<td>
+					<div type="button" style="color:black;" id="iner_purple_title" 
+									   onclick="myFunction('{{method_type.id}}')">
+						סוג: {{ method_type.title }} 			
+					</div>
+					
+					<div type="button" id="{{method_type.id}}" class="w3-hide w3-center iner_purple_body">
+						{{method_type.body}}
+					</div>
+				</td>
+		<table>
+
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+		
+{% endblock methods_type_table %}

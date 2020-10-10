@@ -1,0 +1,106 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+<!-- GRID -->
+
+.titleAre {
+	grid-area: titleAre;
+	grid-template-areas:
+	'titleDstArea titleGoalArea titleMethodArea titleMethodArea titleTestArea';
+
+}
+
+.titleDstArea {
+  grid-area: titleDstArea;
+}
+
+.titleGoalArea {
+  grid-area: titleGoalArea;
+}
+
+.titleMethodArea {
+  grid-area: titleMethodArea;
+}
+
+.titleTestArea {
+  grid-area: titleTestArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+
+.tagArea {
+  grid-area: tagArea;
+}
+
+.dstArea {
+  grid-area: dstArea;
+}
+
+.goalArea {
+  grid-area: goalArea;
+}
+
+.methodArea {
+  grid-area: methodArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'tagArea dstArea dstArea dstArea dstArea'
+	'titleArea titleArea titleArea titleArea titleArea'
+    'goalArea methodArea methodArea methodArea testArea';
+	
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-container > .methodArea {
+  display: grid;
+  grid-template-areas:
+    'method_typeArea method_descroptionArea method_whoArea';
+	
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+</style>
+
+
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<div class="grid-container">
+		<div class="titleArea">
+					<div class="tagArea"><strong>תחום</strong></div>
+					<div class="dstArea" style="background-color:mediumseagreen; color:#ffffcc;"><strong>מטרות</strong></div>
+					<div class="goalTitleArea" style="background-color:#0089b3; color:#ffffcc;"><strong>יעדים</strong></div>
+					
+					<div class="methodTitleArea" style="background-color:#7650a1; color:#ffffcc;">
+						<strong>דרכי הוראה, שיטות, אמצעים ומשאבים </strong>
+					</div> 
+					
+					<div class="testTitleArea" style="background-color:orange; color:#ffffcc;">
+						<strong>אמות מידה להערכה</strong>
+					</div> 
+		</div>
+		
+		{% include "./destinations/dsts_table_2/backup/tbl_1.html" %} 
+	</div>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

@@ -1446,7 +1446,16 @@ def edit_std_destinations_by_ssharon():
     default_tag = Tag.query.filter(Tag.selected==True).first()
     if default_tag == None:
         default_tag = Tag.query.filter(Tag.default==True).first()
-   
+        if default_tag == None:
+            default_tag = Tag.query.filter(Tag.body=='general').first()
+            if default_tag == None:
+                default_tag = Tag('כללי', 'general', get_suthor_id())
+                db.session.add(default_tag)
+                db.session.commit()
+         
+    method_types = Method_type.query.all() 
+ 
+    
     sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
     default_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
     if default_sub_tag == None:
@@ -1455,14 +1464,22 @@ def edit_std_destinations_by_ssharon():
     age_ranges = Age_range.query.order_by(Age_range.from_age).all()     
     default_ar = Age_range.query.filter(Age_range.selected==True).first()
     if default_ar == None:
-        default_ar = Tag.query.filter(Age_range.default==True).first()
-        
+        default_ar = Age_range.query.filter(Age_range.default==True).first()
+        if default_ar == None:
+            default_ar = Age_range.query.filter(Age_range.body=='elemantry').first()
+            if default_ar == None:
+                default_ar = Age_range('יסןדי א-ו', 'elemantry', get_suthor_id())
+                db.session.add(default_ar)
+                db.session.commit()
+                
     std_gts = General_txt.query.join(Std_general_txt).filter(Std_general_txt.student_id==std.id).filter(Std_general_txt.general_txt_id==General_txt.id).all()
- 
+
     student_dsts = []
     dsts_not_of_student = [] 
-    all_dsts = Destination.query.filter(Destination.hide==False).all()  
+    all_dsts = Destination.query.filter(Destination.hide==False).all() 
+        
     for d in all_dsts:
+                
         if d.is_parent_of(default_tag) and d.is_parent_of(default_ar):
             std_dst = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).filter(Std_general_txt.general_txt_id==d.id).first()
             if std_dst != None:
@@ -1500,34 +1517,6 @@ def edit_std_destinations_by_ssharon():
     if dst_obj == None:
         dst_obj = Destination("Data Object", "ex", author_id)
 
-    '''
-    #DEBUG ONLY
-    #print("")
-    #print("")    
-    for d in student_dsts:
-        print("D", d.title, d.id)
-        for g in student_goals: 
-            if d.is_parent_of(g):
-                print("   G", g.title, g.id)
-            for t in student_todos:
-                if g.is_parent_of(t):
-                    print("       T", t.title, t.id)
-    #print("")
-    #print("")  
-          
-    for d in dsts_not_of_student:
-        print("D  NOT_OF_STD ", d.title, d.id)
-        for g in goals_not_of_student:
-            if d.is_parent_of(g):
-                print("   G  NOT_OF_STD", g.title, g.id)
-            for t in todos_not_of_student:
-                if g.is_parent_of(t):
-                    print("       T  NOT_OF_STD", t.title, t.id)
-    #print("")
-    #print("")
-    #DEBUG ONLY
-    '''
-    
     #print("1111111111111111111111111111111")
 
     whos = Accupation.query.all()
@@ -1585,6 +1574,7 @@ def edit_std_destinations_by_ssharon():
                                                         all_goals=all_goals, student_goals=student_goals, goals_not_of_student=goals_not_of_student, files=files,
                                                         
                                                         all_methods=all_methods, student_methods=student_methods, methods_not_of_student=methods_not_of_student,
+                                                        method_types=method_types,
                                                         
                                                         std_txts=std_txts,
                                                         

@@ -1,0 +1,139 @@
+<!-- FROM https://codepen.io/brusky/pen/poJvzRj -->
+
+<style>
+body {
+  text-align: center;
+  background-color: #222;
+  color: #fff;
+  margin-top: 50px;
+}
+body .dropdown-menu {
+  border-radius: 0;
+}
+body .multiselect-native-select {
+  position: relative;
+}
+body .multiselect-native-select select {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  height: 1px !important;
+  margin: -1px -1px -1px -3px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  left: 50%;
+  top: 30px;
+}
+body .multiselect-container {
+  position: absolute;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+body .multiselect-container .input-group {
+  margin: 5px;
+}
+body .multiselect-container li {
+  padding: 0;
+}
+body .multiselect-container li .multiselect-all label {
+  font-weight: 700;
+}
+body .multiselect-container li a {
+  padding: 0;
+}
+body .multiselect-container li a label {
+  margin: 0;
+  height: 100%;
+  cursor: pointer;
+  font-weight: 400;
+  padding: 3px 20px 3px 40px;
+}
+body .multiselect-container li a label input[type=checkbox] {
+  margin-bottom: 5px;
+}
+body .multiselect-container li a label.radio {
+  margin: 0;
+}
+body .multiselect-container li a label.checkbox {
+  margin: 0;
+}
+body .multiselect-container li.multiselect-group label {
+  margin: 0;
+  padding: 3px 20px 3px 20px;
+  height: 100%;
+  font-weight: 700;
+}
+body .multiselect-container li.multiselect-group-clickable label {
+  cursor: pointer;
+}
+body .btn-group .btn-group .multiselect.btn {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+body .form-inline .multiselect-container label.checkbox {
+  padding: 3px 20px 3px 40px;
+}
+body .form-inline .multiselect-container label.radio {
+  padding: 3px 20px 3px 40px;
+}
+body .form-inline .multiselect-container li a label.checkbox input[type=checkbox] {
+  margin-left: -20px;
+  margin-right: 0;
+}
+body .form-inline .multiselect-container li a label.radio input[type=radio] {
+  margin-left: -20px;
+  margin-right: 0;
+}
+body .btn {
+  border-radius: 0;
+  padding: 10px 0;
+}
+body .btn-primary {
+  background-color: #ff0000;
+  border: none;
+  border-radius: 0;
+  padding: 11px 15px;
+  text-transform: uppercase;
+}
+
+</style>
+
+
+
+
+
+
+<select id="multiselect" multiple="multiple">
+  <option value="http://ipv4.download.thinkbroadband.com/5MB.zip">Option 1</option>
+  <option value="http://ipv4.download.thinkbroadband.com/10MB.zip">Option 2</option>
+  <option value="http://ipv4.download.thinkbroadband.com/20MB.zip">Option 3</option>
+  <option value="http://ipv4.download.thinkbroadband.com/50MB.zip">Option 4</option>
+</select>
+<input type="submit" onclick="getSelectedValues()" class="btn btn-primary" value="Download">
+
+
+
+<script>
+$(document).ready(function() {
+  $('#multiselect').multiselect({
+    buttonWidth : '160px',
+    includeSelectAllOption : true,
+		nonSelectedText: 'Select an Option'
+  });
+});
+
+function getSelectedValues() {
+  var selectedVal = $("#multiselect").val();
+	for(var i=0; i<selectedVal.length; i++){
+		function innerFunc(i) {
+			setTimeout(function() {
+				location.href = selectedVal[i];
+			}, i*2000);
+		}
+		innerFunc(i);
+	}
+}
+
+</script>

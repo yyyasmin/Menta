@@ -1,0 +1,50 @@
+<style>
+
+.tagArea {
+  grid-area: tagArea;
+}
+
+.dstArea {
+  grid-area: dstArea;
+}
+
+.goalArea {
+  grid-area: goalArea;
+}
+
+.methodArea {
+  grid-area: methodArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-culumns: repeat(5, 1fr);
+  
+  
+ /*******************************
+	grid-template-areas:
+		'titleArea titleArea titleArea titleArea titleArea'
+		'tagArea dstArea dstArea dstArea dstArea'
+		'goalArea methodArea methodArea methodArea testArea';
+*********************************************/
+
+}
+
+</style>
+
+
+<div class = "grid-container">
+         <div class = "tagArea">tagArea</div>
+         <div class = "dstArea">dstArea</div>
+         <div class = "goalArea">goalArea</div>
+
+         <div class = "methodArea">
+                <div id = "method_typeArea">method_typeArea</div>
+                <div id = "method_descriptionArea">method_descriptionArea</div>
+                <div id = "method_whoArea">method_whoArea</div>
+         </div>
+</div>

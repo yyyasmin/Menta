@@ -1,0 +1,43 @@
+{% block goals_table %}
+			
+	<div class="box c">	
+	<table class="blue_table" style="max-width:100%">
+		<th style="background-color:#0089b3; color:#ffffcc;"><strong>יעדים</strong></th>
+
+		{% for goal in student_goals if dst.is_parent_of(goal) %}  <!-- GOALS -->
+			<tr>
+				<td>
+					<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+						יעד: {{ goal.title }} 
+																						
+						{% for sts in statuss %}	
+							{% for st in std_txts %}
+								{% if st.general_txt_id==goal.id %}
+									{% if st.status_id==sts.id %}
+										<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}				
+					</div>
+					
+					<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+						{{goal.body}}
+					</div>
+				</td>
+			</tr>
+			
+			<div class="box d"> BOX D דרכי הוראה </div>
+			
+			<!-- {% include "./destinations/dsts_table_2/methods_table.html" %} --> 
+						
+			<div class="box e" style="background-color:orange; color:#ffffcc;">
+				<strong>אמות מידה להערכה</strong>
+			</div> 
+
+		{% endfor %}  <!-- GOALS -->
+	</table>
+	</div>
+			
+{% endblock goals_table %}
+			

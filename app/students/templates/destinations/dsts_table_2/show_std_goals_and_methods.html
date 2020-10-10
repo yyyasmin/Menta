@@ -16,7 +16,7 @@
 					{% set g_ns.goal_printed = False %}
 
 
-					{% for method in student_methods if goal.is_parent_of(method) %}  <!-- TODOS COLUMN -->
+					{% for method in student_methods if goal.is_parent_of(method) %}  <!-- METHODS COLUMN -->
 						{% set t_ns.method_printed = False %}
 						
 						<tr>
@@ -47,9 +47,9 @@
 								<td></td>
 							{% endif %}  <!-- END GOALS -->
 							
-							<td>  <!-- TODOS -->
+							<td>  <!-- METHODS -->
 				
-								<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{method.id}}')">
+								<div type="button" style="color:black;" id="purple_title" onclick="myFunction('{{method.id}}')">
 									{{ method.title }} 
 																										
 									{% for sts in statuss %}	
@@ -63,18 +63,19 @@
 									{% endfor %}				
 								</div>
 										
-								<div type="button" style="color:black;" id="{{method.id}}" class="w3-hide  w3-center orange_body">
-									<div></div>{{method.body}}
+								<div type="button" style="color:black;" id="{{method.id}}" 
+									 class="w3-hide  w3-center purple_body">
+									{{method.body}}
 								</div>
 								{% set t_ns.method_printed = True %}
 							</td>
 							{% if t_ns.method_printed == False %}
 								<td></td>
-							{% endif %}  <!-- END TODOS -->
+							{% endif %}  <!-- END METHODS -->
 						</tr>
 						
 			
-					{% endfor %}  <!-- TODOS -->
+					{% endfor %}  <!-- METHODS -->
 				
 				{% endfor %}    <!-- GOALS -->
 			

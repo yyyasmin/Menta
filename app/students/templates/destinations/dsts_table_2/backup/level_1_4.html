@@ -1,0 +1,115 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+<!-- GRID -->
+
+
+.titleDstArea {
+  grid-area: titleDstArea;
+}
+
+.titleGoalArea {
+  grid-area: titleGoalArea;
+}
+
+.titleMethodArea {
+  grid-area: titleMethodArea;
+}
+
+.titleTestArea {
+  grid-area: titleTestArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+
+.tagArea {
+  grid-area: tagArea;
+}
+
+.dstArea {
+  grid-area: dstArea;
+}
+
+.goalArea {
+  grid-area: goalArea;
+}
+
+.methodArea {
+  grid-area: methodArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+.tagDstArea {
+  grid-area: tagDstArea;
+}
+
+.grid-container {
+  display: grid; 
+  grid-template-areas:
+    'tagDstArea'
+	'titleArea'
+    'goalArea methodArea methodArea methodArea testArea';
+}
+
+
+.titleAre {
+	grid-area: titleAre;
+	grid-template-areas:
+	'titleDstArea titleGoalArea titleMethodArea titleMethodArea titleTestArea';
+
+}
+
+.tagDstArea {
+  display: grid;
+  grid-template-areas:
+    'tagArea dstArea dstArea dstArea dstArea';
+}
+
+.methodArea {
+  display: grid;
+  grid-template-areas:
+ 'method_typeArea method_descroptionArea method_whoArea';
+}
+
+</style>
+
+
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<div class="grid-container">
+		<div class="tagDstArea">
+			<div class="tagArea"><strong>תחום</strong></div>
+			<div class="dstArea" style="background-color:mediumseagreen; color:#ffffcc;"><strong>מטרות</strong></div>
+		</div>
+		
+		<div class="titleArea">
+
+			<div class="titleGoalArea" style="background-color:#0089b3; color:#ffffcc;"><strong>יעדים</strong></div>
+			
+			<div class="titleMethodArea" style="background-color:#7650a1; color:#ffffcc;">
+				<strong>דרכי הוראה, שיטות, אמצעים ומשאבים </strong>
+			</div> 
+			
+			<div class="titleTestArea" style="background-color:orange; color:#ffffcc;">
+				<strong>אמות מידה להערכה</strong>
+			</div> 
+					
+		</div>
+
+		{% include "./destinations/dsts_table_2/backup/tbl_1.html" %} 
+	</div>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

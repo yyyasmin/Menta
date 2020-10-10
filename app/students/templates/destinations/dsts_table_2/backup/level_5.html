@@ -1,0 +1,98 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+<!-- GRID -->
+
+.grid-container  {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows:    auto;
+	grid-template-areas:   'tag dst dst fdt dst'
+					       'goal method method method  test';
+}
+
+.grid-method  {
+	grid-template-columns:  1fr 1fr 1fr;
+	grid-template-rows:     auto;
+	grid-template-areas:   'type description who';
+}
+
+.grid-description  {
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows:    auto;
+	grid-template-areas:   'title method_body';
+}
+
+.tag  {
+	grid-area: tag;
+}
+
+.dst  {
+	grid-area: dst;
+}
+
+.goal  {
+	grid-area: goal;
+}
+
+.method  {
+	grid-area: method;
+}
+
+.test  {
+	grid-area: test;
+}
+
+.type  {
+	grid-area: type;
+}
+
+.description  {
+	grid-area: description;
+}
+
+.who  {
+	grid-area: who;
+}
+
+.title  {
+	grid-area: title;
+}
+
+.method_body  {
+	grid-area: method_body;
+}
+
+
+
+</style>
+
+
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	<div class="grid-container">
+			<div class="tag"><strong>תחום</strong></div>
+			<div class="dst" style="background-color:mediumseagreen; color:#ffffcc;"><strong>מטרות</strong></div>
+		
+
+			<div class="goal" style="background-color:#0089b3; color:#ffffcc;"><strong>יעדים</strong></div>
+			
+			<div class="method-grid" style="background-color:#7650a1; color:#ffffcc;">
+				<strong>דרכי הוראה, שיטות, אמצעים ומשאבים </strong>
+			</div> 
+			
+			<div class="test" style="background-color:orange; color:#ffffcc;">
+				<strong>אמות מידה להערכה</strong>
+			</div> 
+		</div>
+
+		{% include "./destinations/dsts_table_2/backup/tbl_1.html" %} 
+	</div>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

@@ -1,0 +1,118 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+
+<style>
+
+    .wrapper {
+        display: grid;
+    grid-gap: 10px;
+        grid-template-columns: repeat(10, [col] auto ) ;
+        grid-template-rows:    repeat(2, [row] auto  );
+    }
+	
+ .box {
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 100%;
+
+    }
+
+    .box .box {
+        background-color: #ccc;
+        color: #444;
+    }
+
+
+    .a {
+        grid-column: col / span 2;
+        grid-row: row;
+    }
+
+    .b {
+        grid-column: col 3 / span 7;
+        grid-row: row;
+    }
+
+    .c {
+        grid-column: col  / span 3;
+    }
+
+    .d {
+        grid-column: col 4 / span 3;
+    }
+
+    .e {
+        grid-column: col 8 / span 3;
+    }
+
+
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+
+<div class="wrapper">
+	{% for tag in tags %}   <!-- TAGS -->
+
+		<div class="box a">
+		תחום: {{ tag.title|replace("-", "\n") }}
+		</div>	
+		
+		{% for dst in student_dsts if dst.is_parent_of(tag) %}  <!-- DSTS -->
+			<div class="box b">
+
+				<div type="button" style="color:black;" id="green_title" 
+								   onclick="myFunction('{{dst.id}}')">
+					מטרה: {{ dst.title }} 
+																					
+					{% for sts in statuss %}	
+						{% for st in std_txts %}
+							{% if st.general_txt_id==dst.id %}
+								{% if st.status_id==sts.id %}
+									<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}				
+				</div>
+				
+				<div type="button" style="color:black; background:'#e6ffe6'" 
+								   id="{{dst.id}}" class="w3-hide  w3-center green_body">
+					{{dst.body}}
+				</div>
+				
+			</div>
+		
+			<div class="box b" style="background-color:mediumseagreen; color:#ffffcc;"><strong>מטרה</strong></div>
+		
+
+			<div class="box c" style="background-color:#0089b3; color:#ffffcc;"><strong>יעדים</strong></div>
+			
+			<div class="box d" style="background-color:#7650a1; color:#ffffcc;">
+				<strong>דרכי הוראה, שיטות, אמצעים ומשאבים </strong>
+			</div> 
+			
+			<div class="box e" style="background-color:orange; color:#ffffcc;">
+				<strong>אמות מידה להערכה</strong>
+			</div> 
+		
+		{% endfor %}  <!-- DSTS -->
+		
+	{% endfor %}  <!-- TAGS -->
+</div>  <!-- WRAPPER -->
+
+	<div class="wrapper" dir="ltr">
+		<div class="box a">A</div>
+		<div class="box b">B</div>
+		<div class="box d1">D1</div>
+		<div class="box d2">D2</div>
+		<div class="box d3">D3</div>
+	</div>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

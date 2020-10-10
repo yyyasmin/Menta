@@ -78,6 +78,15 @@ ul.tabs>li.tab {
 			
 				<li class="tab " id="tab-2"><span class="tab-title"> 
 					<div id="ar_div">					
+						{% for method_type in method.children if (method_type.type=='method_type') %}
+							<div class="white_ppp">מדיית \ סוג שיטת ההוראה:  {{ method_type.title }}</div>
+							{{ break }}
+						{% endfor %}
+					</div>   <!-- ar_div -->
+				</li>
+			
+				<li class="tab " id="tab-2"><span class="tab-title"> 
+					<div id="ar_div">					
 						{% for who in method.children if (who.type=='accupation') %}
 							<div class="white_ppp"> תפקיד האחראי על ביצוע השיטה: {{ who.title }} </div>
 							{{ break }}

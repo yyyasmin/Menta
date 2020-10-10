@@ -10,16 +10,7 @@
 		<td></td>
 	{% endif %}  <!-- END TAGS -->
 	
-	
-	{% if stp_ns.sub_tag_printed == False %}  <!-- SUB_TAGS -->
-		<td>
-			{{ sub_tag.title }}
-		</td>
-		{% set stp_ns.sub_tag_printed = True %}
-	{% else %}
-		<td></td>
-	{% endif %}   <!-- END SUB_TAGS -->
-		
+
 							
 	<td>
 		<div type="button" style="color:black;" id="green_title" onclick="myFunction('{{dst.id}}')">

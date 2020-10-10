@@ -1,0 +1,113 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block tags_level %}
+
+
+<style>
+
+.wrapper {
+	display: grid;
+	grid-gap: 10px;
+
+	grid-template-areas:   'a b b b b b'
+						   'c c d d e e';
+							
+}
+	
+.box {
+        border-radius: 5px;
+        padding: 14px;
+        font-size: 100%;
+		background-color: red;
+}
+
+.box .box {
+	background-color: #ccc;
+	color: #444;
+}
+
+
+.a {
+	grid-area: a;
+}
+
+.b {
+	grid-area: b;
+}
+
+.c {
+	grid-area: c;
+}
+
+.d {
+	grid-area: d;
+}
+
+.e {
+	grid-area: e;
+}
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+<div class="wrapper">
+	
+	{% for tag in tags %}
+		<div class="box a">{{tag.id}} {{tag.title}}</div>
+		
+		{% for dst in student_dsts if tag.is_parent_of(dst) %}
+			<div class="box b">{{dst.id}} {{dst.title}}</div>
+			
+			{% for goal in student_goals if dst.is_parent_of(goal) %}
+				<div class="box c">{{goal.id}} {{goal.title}}</div>
+				
+					{% for method in student_methods if goal.is_parent_of(method) %}  
+					<div class="box d">
+					<table>
+						<tr>
+							<td colspan="3">
+								שיטה
+							</td>
+						</tr>
+						<tr>
+						
+							<td>
+								סוג שיטה
+							</td>
+									
+							<td>
+								תאור שיטה
+							</td>
+									
+							<td>
+								אחראים לביצוע
+							</td>
+							
+						</tr>
+					</table>
+					</div>
+				{% endfor %}  <!-- METHODS -->
+				
+				<div class="box e">אמות מידה</div>
+				
+			{% endfor %}  <!-- GOALS -->
+		{% endfor %}  <!-- DSTS -->
+	{% endfor %}  <!-- TAGS -->
+	
+</div>  <!-- WRAPPER -->
+<!------------- DEBUG ----------------------------->
+
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+				
+{% endblock tags_level %}
