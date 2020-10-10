@@ -29,7 +29,7 @@ from app.forms import LoginForm, EditForm
 
 from app.students.students import get_dummy_student, attach_gt_to_std, edit_std_gts, edit_std_gts2
 from app.gts.gts import gt_delete_for_good2, set_gt_category
-
+from app.select.select import method_select2
 from sqlalchemy import update
 
 from app.content_management import Content
@@ -416,6 +416,12 @@ def goal_method_update():
 
     dst = Destination.query.filter(Destination.selected==True).first()
     if dst == None:
+        flash("Please select a destination first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+    #DEBUG ONLY
+   
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
         flash("Please select a goal first ")
         return redirect(url_for('destinations.edit_destinations_goals'))	
     #DEBUG ONLY
@@ -427,7 +433,7 @@ def goal_method_update():
     form.body =  method.body
     
     form.who.choices=[]
-    form.status.choices=[]
+    form.method_type.choices=[]
     
     form.who.choices = [(acc.id, acc.title) for acc in Accupation.query.all()]
     for who in Accupation.query.all():
@@ -435,15 +441,15 @@ def goal_method_update():
             form.who.default = who.id
             break
     
-    form.status.choices = [(sts.id, sts.title) for sts in Status.query.all()]
-    for sts in Status.query.all():
-        if sts.is_parent_of(sts):
-            form.who.default = sts.id
+    form.method_type.choices = [(mt.id, mt.title) for mt in Method_type.query.all()]
+    for mt in Method_type.query.all():
+        if method.is_parent_of(mt):
+            form.method_type.default = mt.id
             break
-                     
+                    
     ### GET Case
     if request.method == 'GET': 
-        return render_template('update_method.html', form=form, dst=dst)  
+        return render_template('update_method.html', form=form, dst=dst, goal=goal)  
         
     ### POST Case
     ### FROM https://stackoverflow.com/questions/28209131/wtforms-post-with-selectfield-not-working
@@ -460,7 +466,10 @@ def goal_method_update():
     method.body =  request.form['body']
     
     who = Accupation.query.filter(Accupation.id==request.form.get('who')).first()
+    method_type = Method_type.query.filter(Method_type.id==request.form.get('method_type')).first()
+    
     method.set_parent(who)
+    method.set_parent(method_type)
     goal.set_parent(who)
     goal.set_parent(method)
     
@@ -471,7 +480,7 @@ def goal_method_update():
     db.session.commit()  
     db.session.refresh(method)
     
-    return redirect(url_for('goals.edit_goal_methods', dst=dst ))   
+    return redirect(url_for('goals.edit_goal_methods', dst=dst, goal=goal ))   
                                                         
 ################## START  Update method ################    
 
@@ -504,7 +513,7 @@ def method_to_goal_add():
     
     form.method_type.choices=[]
     form.who.choices=[]
-    form.status.choices=[]
+    form.method_type.choices=[]
 
     form.method_type.choices = [(mt.id, mt.title) for mt in Method_type.query.all()]
     form.process()
@@ -512,7 +521,7 @@ def method_to_goal_add():
     form.who.choices = [(acc.id, acc.title) for acc in Accupation.query.all()]
     form.process()
 
-    form.status.choices = [(sts.id, sts.title) for sts in Status.query.all()]
+    form.method_type.choices = [(mt.id, mt.title) for mt in Method_type.query.all()]
     form.process()
 
     form.due_date = datetime.today()

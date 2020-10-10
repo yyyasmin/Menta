@@ -164,7 +164,27 @@ def todo_select2(selected_todo_id):
     db.session.commit()
 
     return todo
-###Select a todo from a list 	
+###Select a todo from a list
+ 	
+###Select a accupation from a list 
+	
+@slct.route('/method_select2/<int:selected_method_id>', methods=['GET', 'POST'])
+def method_select2(selected_method_id):
+	
+    methods = Method.query.all()
+    for method in methods:
+        method.selected = False
+
+    method = Method.query.filter(Method.id == selected_method_id).first()
+    if method==None:
+        flash("Please select a method for thisstudent first")
+        redirect(url_for('students.edit_student_methods'))
+    
+    method.selected = True
+    db.session.commit()
+
+    return method
+###Select a method from a list 	
 
 ###Select a status from a list 	
 @slct.route('/status_select2/<int:selected_status_id>', methods=['GET', 'POST'])
