@@ -1442,7 +1442,7 @@ def edit_std_destinations_by_ssharon():
         std = get_dummy_student()
         
         
-    tags = Tag.query.order_by(Tag.title).all() 
+    #tags = Tag.query.order_by(Tag.title).all() 
     default_tag = Tag.query.filter(Tag.selected==True).first()
     if default_tag == None:
         default_tag = Tag.query.filter(Tag.default==True).first()
@@ -1477,17 +1477,19 @@ def edit_std_destinations_by_ssharon():
     student_dsts = []
     dsts_not_of_student = [] 
     all_dsts = Destination.query.filter(Destination.hide==False).all() 
-        
+    std_dsts_tags = [] 
+    
     for d in all_dsts:
-                
-        if d.is_parent_of(default_tag) and d.is_parent_of(default_ar):
-            std_dst = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).filter(Std_general_txt.general_txt_id==d.id).first()
-            if std_dst != None:
-               student_dsts.append(d)
-            else:
-                dsts_not_of_student.append(d)            
-            
-            
+        if d in std_gts:
+            student_dsts.append(d)
+            for t in d.children:
+                if t.type=='tag':
+                    if t not in std_dsts_tags:
+                        print("APPENDING TAG: ", t.body)
+                        std_dsts_tags.append(t)
+                else:
+                    dsts_not_of_student.append(d)
+
     student_goals = []    # Get all student's destinations
     all_goals = Goal.query.filter(Goal.hide==False).all()
     for g in std_gts:
@@ -1503,6 +1505,9 @@ def edit_std_destinations_by_ssharon():
             student_methods.append(t)
     methods_not_of_student = list(set(all_methods).difference(set(student_methods)))  #methods_not_of_student = all_destinations - std_destinations
 
+    tests = Test.query.all()
+
+    
     author_id = get_author_id()
     
     method_obj = Method.query.filter(Method.body=='ex').first()
@@ -1532,24 +1537,17 @@ def edit_std_destinations_by_ssharon():
             db.session.add(default_status)
             db.session.commit()
     #print("33333333333333333333333333")
-    
-    print("")
-    print("")
-    print("default_status", default_status)
-    print("color", default_status.color)
-    print("color_txt", default_status.color_txt)
-    print("title", default_status.title)
-    print("body", default_status.body)
-    print("")
-    print("")
-    for tag in tags:
-        print("TAG: ", tag.id, tag.body)
-    print("")
-    print("")
 
-    for dst in student_dsts:
-        if tag.is_parent_of(dst):
-            print("DST:", dst.id, dst.body)
+    print("")
+    print("")
+    
+    for tag in std_dsts_tags:
+        print("TAG: ", tag.id, tag.body)
+        for dst in student_dsts:
+            if tag.is_parent_of(dst):
+                print("TAG:", tag.id, tag.body)
+                print("DST:", dst.id, dst.body)
+
     print("")
     print("")
     print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
@@ -1575,7 +1573,8 @@ def edit_std_destinations_by_ssharon():
     print("IN END of SSHARON calling show_std_dsts_by_tag.html")
 
     
-    return render_template('./destinations/dsts_table_2/show_std_dsts_by_tag.html', std=std, due_date=due_date,
+    #return render_template('./destinations/dsts_table_2/show_std_dsts_by_tag.html', std=std, due_date=due_date,
+    return render_template('./destinations/dsts_table_1/show_std_dsts_by_tag.html', std=std, due_date=due_date,
     
                                                         dst_obj=dst_obj, goal_obj=goal_obj, method_obj=method_obj,
                                                         
@@ -1585,10 +1584,11 @@ def edit_std_destinations_by_ssharon():
                                                         
                                                         all_methods=all_methods, student_methods=student_methods, methods_not_of_student=methods_not_of_student,
                                                         method_types=method_types,
+                                                        tests=tests,
                                                         
                                                         std_txts=std_txts,
                                                         
-                                                        tags=tags, default_tag=default_tag,
+                                                        tags=std_dsts_tags, default_tag=default_tag,
                                                         sub_tags=sub_tags, default_sub_tag=default_sub_tag,                                                        
                                                         statuss=statuss, default_status=default_status,
                                                         whos=whos, default_who=default_who,
@@ -1920,7 +1920,7 @@ def attach_gt_to_std(std_id, gt_id):
             gt.students.append(std_gt)
         if std_gt not in std.general_txts:
             std.general_txts.append(std_gt)
-        
+            
     db.session.commit()
     return std_gt    
 

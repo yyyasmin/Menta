@@ -1,0 +1,34 @@
+{% block tests_table %}
+			
+	<table class="orange_table">
+			{% if test.title != 'Dummy' %}
+				<tr>
+					<td>
+						<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{test.id}}')">
+							{{ test.title }} 
+						</div>
+						
+						<div type="button" style="color:black;" id="{{test.id}}" class="w3-hide  w3-center orange_body">
+							{{test.body}}
+						</div>
+					</td>
+				</tr>
+			{% endif %}
+	</table>
+
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+</script>
+
+			
+{% endblock tests_table %}
+			

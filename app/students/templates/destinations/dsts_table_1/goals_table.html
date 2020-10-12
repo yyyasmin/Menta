@@ -1,0 +1,32 @@
+{% block goals_table %}
+
+	<table class="blue_table">
+		{% if goal.title != 'Dummy' %}
+
+			<tr>
+				<td>
+					<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+						יעד: {{ goal.title }} 
+																						
+						{% for sts in statuss %}	
+							{% for st in std_txts %}
+								{% if st.general_txt_id==goal.id %}
+									{% if st.status_id==sts.id %}
+										<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}				
+					</div>
+					
+					<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+						{{goal.body}}
+					</div>
+				</td>
+			</tr>
+			
+		{% endif %}
+	</table>
+									
+{% endblock goals_table %}
+									

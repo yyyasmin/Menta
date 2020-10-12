@@ -1,7 +1,7 @@
 {% block methods_type_table %}
 		
 		<table class="iner_purple_table">
-		
+		{% if method_type.title != 'Dummy' %}
 			<tr>
 				<td colspan="2">
 					<div type="button" style="color:black;" id="iner_purple_title" 
@@ -17,7 +17,7 @@
 			
 		
 			{% for method in student_methods if goal.is_parent_of(method) and
-												method.is_parent_of(method_type) %}  
+												method_type.is_parent_of(method) %}  
 				<tr>
 					
 					<td style="width:60%">
@@ -49,6 +49,7 @@
 				</tr>			
 			{% endfor %}  <!-- METHODS -->
 			
+		{% endif %}
 		</table>
 
 		

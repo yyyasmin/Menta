@@ -16,14 +16,12 @@
 
 	<!-- DEBUG -->
 	
-
 	{% for tag in tags %}  <!-- TAGS -->
 	{% set t_ns.tag_printed = False %}
 				
 		{% for dst in student_dsts if tag.is_parent_of(dst) %}  <!-- DSTS -->
 		{% set d_ns.dst_printed = False %}
-			
-			<table class="gray_table profile_table" dir="rtl">
+
 			<tr>
 									
 				{% if t_ns.tag_printed == False %}  <!-- TAGS -->
@@ -38,15 +36,13 @@
 				{% if d_ns.dst_printed == False %}  <!-- DSTS -->
 					<td style="width:80%">
 						{% include "destinations/dsts_table_1/dsts_table.html" %}								
-					</td style="width:80%">
+					</td>
 					{% set d_ns.dst_printed = True %}
 				{% else %}
-					<td></td>
+					<td style="width:80%"></td>
 				{% endif %}  <!-- END DSTS -->
 				
 			</tr>	
-			</table>
-			
 			
 			<tr>  <!-- GOALS -->
 				{% include "destinations/dsts_table_1/show_goals_methods_tests.html" %}

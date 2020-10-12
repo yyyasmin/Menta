@@ -500,3 +500,14 @@ def set_child_by_type(gt_id, child_type, new_gt_child):
     db.session.commit()
     
     return new_gt_child 
+    
+    
+###get default child gt	
+@gt.route('/get_dummy_gt', methods=['GET', 'POST'])
+def get_dummy_gt(gt_type):
+    gt = eval(gt_type).query.filter(eval(gt_type).title=='Dummy').first()
+    if gt == None or gt ==[]:
+        gt = eval(gt_type)('Dummy', 'Dummy', get_author_id())
+        db.session.add(gt)
+        db.session.commit()
+    return gt

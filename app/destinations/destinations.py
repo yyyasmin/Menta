@@ -1035,6 +1035,20 @@ def goal_to_destination_add(title, body):
     
     dst.set_parent(goal)
     
+    method_type = Method_type.query.filter(Method_type.title=='Dummy').first()
+    if method_type == None or method_type ==[]:
+        method_type = Test('Dummy', 'Dummy', get_author_id())
+        db.session.add(method_type)
+        db.session.commit()        
+    goal.set_parent(method_type)
+        
+    dummy_test = Test.query.filter(Test.title=='Dummy').first()
+    if dummy_test == None or dummy_test ==[]:
+        dummy_test = Test('Dummy', 'Dummy', get_author_id())
+        db.session.add(dummy_test)
+        db.session.commit()
+    goal.set_parent(dummy_test)
+    
     db.session.commit()  
     url = url_for('destinations.edit_destinations_goals' )
     return redirect(url)   

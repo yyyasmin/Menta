@@ -1,0 +1,26 @@
+<!-- FROM https://stackoverflow.com/questions/7979548/how-to-render-my-textarea-with-wtforms  -->
+{% extends "layout.html" %}
+
+{% block content %} הגדר ממד הערכה ליעד {% endblock %}
+
+{% block content %}
+<H3> הגדר \ עדכן מדד הערכה ליעד {{goal.title }}</H3>
+
+<form action="" method=post>
+{{form.hidden_tag()}}
+	<dl>
+		<dt>כותרת:
+		<dd>{{ form.totdo.title }}
+		
+		<br>
+		
+		<dt>תאור אמת המידה
+		<dd>{{ form.test.body(cols="35", rows="20") }}}
+		
+		<br>
+				
+	</dl>
+	<p>
+		<input type=submit value="שמור">
+</form>
+{% endblock %}

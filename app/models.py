@@ -463,6 +463,29 @@ class Todo(General_txt):
             
 
     
+class Test(General_txt):
+    __tablename__ = 'test'
+    __mapper_args__ = {'polymorphic_identity': 'test'}
+    id = db.Column(db.ForeignKey(General_txt.id), primary_key=True)
+    
+    def __init__(self ,title, body, author_id):
+        
+        self.h_name = 'אמות מידה להערכה'   
+        self.e_name = 'Evaluation indices'  
+        self.h_plural_name = 'אמות מידה להערכה'
+        
+        self.class_name = 'Test'
+        
+        self.color_txt = 'orange'
+        self.color = '#ffcc00' 
+        self.table_color = 'orange_table'
+        self.title_color = '#ffff99'
+          
+        self.editable = True
+        super(self.__class__, self).__init__(title, body, author_id)       
+            
+
+    
 class Method(General_txt):
     __tablename__ = 'method'
     __mapper_args__ = {'polymorphic_identity': 'method'}
@@ -501,6 +524,7 @@ class Todo_form(FlaskForm):
     who = SelectField('תפקיד מבצע המשימה', choices=[], validators=[validators.Required(message=('יש לבחור מבצע למשימה'))])
     status = SelectField('סטאטוס ביצוע', choices=[],   validators=[validators.Required(message=('יש לבחור סטאטוס ביצוע'))])
     method_type = SelectField('מדיית הוראה', choices=[], validators=[validators.Required(message=('יש לבחור מדיית הוראה'))])
+    
     due_date =  DateField('due_date')
 
     selected = db.Column(db.Boolean)

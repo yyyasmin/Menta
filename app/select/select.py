@@ -15,7 +15,7 @@ from app.models import User, Student, Teacher, Role, School
 from app.models import Profile, Strength, Weakness, Subject
 from app.models import Accupation, Tag, Scrt, Age_range, Status
 from app.models import Resource, Document, Ufile
-from app.models import Destination, Goal, Todo 
+from app.models import Destination, Goal, Todo, Method, Method_type, Test
 from app.models import Std_general_txt
 
 from app.forms import LoginForm, EditForm
@@ -177,14 +177,36 @@ def method_select2(selected_method_id):
 
     method = Method.query.filter(Method.id == selected_method_id).first()
     if method==None:
-        flash("Please select a method for thisstudent first")
-        redirect(url_for('students.edit_student_methods'))
+        flash("Please select a method for this student first")
+        redirect(url_for('students.edit_student_goals'))
     
     method.selected = True
     db.session.commit()
 
     return method
 ###Select a method from a list 	
+
+
+	
+@slct.route('/test_select2/<int:selected_test_id>', methods=['GET', 'POST'])
+def test_select2(selected_test_id):
+	
+    tests = Test.query.all()
+    for test in tests:
+        test.selected = False
+
+    test = Test.query.filter(Test.id == selected_test_id).first()
+    if test==None:
+        flash("Please select a test for this student first")
+        redirect(url_for('students.edit_student_goals'))
+    
+    test.selected = True
+    db.session.commit()
+
+    return test
+###Select a test from a list 	
+
+
 
 ###Select a status from a list 	
 @slct.route('/status_select2/<int:selected_status_id>', methods=['GET', 'POST'])

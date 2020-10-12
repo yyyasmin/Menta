@@ -29,7 +29,7 @@ from app.forms import LoginForm, EditForm
 
 from app.students.students import get_dummy_student, attach_gt_to_std, edit_std_gts, edit_std_gts2
 from app.gts.gts import gt_delete_for_good2, set_gt_category
-from app.select.select import method_select2
+from app.select.select import method_select2, test_select2
 from sqlalchemy import update
 
 from app.content_management import Content
@@ -49,7 +49,7 @@ goal = Blueprint(
     template_folder='templates'
 )   
 #FROM https://github.com/realpython/discover-flask/blob/master/project/users/views.py
-from app.select.select import profile_select2, strength_select2, destination_select2, goal_select2 
+from app.select.select import profile_select2, strength_select2, destination_select2, goal_select2
 from app.select.select import resource_select2, todo_select2, status_select2, file_select2, specific_gt_type_select2
 from app import *
 
@@ -515,9 +515,6 @@ def method_to_goal_add():
     form.who.choices=[]
     form.method_type.choices=[]
 
-    form.method_type.choices = [(mt.id, mt.title) for mt in Method_type.query.all()]
-    form.process()
-
     form.who.choices = [(acc.id, acc.title) for acc in Accupation.query.all()]
     form.process()
 
@@ -564,6 +561,8 @@ def method_to_goal_add():
     method_type = Method_type.query.filter(Method_type.id==request.form.get('method_type')).first()    
                        
     goal.set_parent(method)
+    goal.set_parent(method_type)
+    method_type.set_parent(method)
     goal.set_parent(who)
     method.set_parent(who)
     method.set_parent(method_type)
@@ -623,6 +622,223 @@ def method_from_goal_delete2(selected_goal_id, selected_method_id):
 
 
 
+
+##############START goal's tests###############	
+
+@goal.route('/edit_goal_tests', methods=['GET', 'POST'])
+def edit_goal_tests():
+
+    #####import pdb; pdb.set_trace()
+    dst = Destination.query.filter(Destination.selected==True).first()
+    if dst == None:
+        flash("Please select a destination first ")
+        return redirect(url_for('destinations.edit_destinations', from_dst_sort_order=3))	
+
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+
+    std = get_dummy_student()
+    print("In edit_goal_tests dummy_std   goal id : ", std.id, goal.id )
+    return render_template('./tests/edit_goal_tests.html', dst=dst, goal=goal)                                             
+                                                                
+														  		
+@goal.route('/edit_goal_tests2/<int:selected_goal_id>', methods=['GET', 'POST'])
+def edit_goal_tests2(selected_goal_id):
+    print("In edit_goal_tests2 Request is :", request)
+    goal = goal_select2(selected_goal_id)
+    return redirect(url_for('goals.edit_goal_tests'))		
+
+
+################## START  Update test ################    
+@goal.route('/goal_test_update', methods=['GET', 'POST'])
+def goal_test_update():
+
+    dst = Destination.query.filter(Destination.selected==True).first()
+    if dst == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+             
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+        
+    test = Test.query.filter(Test.selected==True).first()
+    if test == None:
+        flash("Please select a test first ")
+        return redirect(url_for('goals.edit_goal_tests'))		
+ 
+    print ("In  goal_test_update goal: ", dst, goal, test )
+
+    #DEBUG ONLY
+
+    dst = Destination.query.filter(Destination.selected==True).first()
+    if dst == None:
+        flash("Please select a destination first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+    #DEBUG ONLY
+   
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))	
+    #DEBUG ONLY
+         
+    
+    form = Todo_form()
+
+    form.title = test.title
+    form.body =  test.body
+    
+         
+    ### GET Case
+    if request.method == 'GET': 
+        return render_template('./tests/update_test.html', form=form, dst=dst, goal=goal)  
+        
+    ### POST Case
+    ### FROM https://stackoverflow.com/questions/28209131/wtforms-post-with-selectfield-not-working
+    print ("form.validate_on_submit", form.validate_on_submit)
+
+    if not form.validate_on_submit:
+        flash("יש לבחור קטגוריה")
+        return render_template('dsply_test_form.html', form=form)
+        
+    ##################  Fill test fields 
+    #########################import pdb;;pdb.set_trace()
+
+    test.title = request.form['title'] 
+    test.body =  request.form['body']
+        
+    goal.set_parent(test)
+    
+    ##################  Fill test fields   
+                
+    db.session.commit()  
+    db.session.refresh(test)
+    
+    return redirect(url_for('goals.edit_goal_tests', dst=dst, goal=goal ))   
+                                                        
+################## START  Update test ################    
+
+
+@goal.route('/goal_test_update2/<int:selected_test_id>', methods=['GET', 'POST'])
+def goal_test_update2(selected_test_id):
+
+    print("In UUUUUUUUUU 222222222222 goal_test_update2 selected_test_id ", selected_test_id)
+    
+    test = test_select2(selected_test_id)
+    return redirect(url_for('goals.goal_test_update'))			
+
+
+################## START  Add test ################      
+@goal.route('/test_to_goal_add', methods=['GET', 'POST'])
+def test_to_goal_add():
+    print ("In test_to_goal_add  ")
+    
+    dst = Destination.query.filter(Destination.selected==True).first()
+    if dst == None:
+        flash("Please select a destination first ")
+        return redirect(url_for('destinations.edit_destinations', from_dst_sort_order=3))		
+
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('destinations.edit_destinations_goals'))		
+
+    form = Todo_form()
+    
+    form.due_date = datetime.today()
+    form.process()
+
+    first_sts = Status.query.first()
+
+    ### GET Case
+    if request.method == 'GET':
+        return render_template('./tests/test_to_goal_add.html', dst=dst, goal=goal, form=form)
+   
+
+    ### POST Case
+    ### FROM https://stackoverflow.com/questions/28209131/wtforms-post-with-selectfield-not-working
+    print ("form.validate_on_submit", form.validate_on_submit)
+
+    if not form.validate_on_submit:
+        flash("יש לבחור קטגוריה")
+        return render_template('./tests/test_to_goal_add.html', form=form)
+        
+        
+    print ("POST -- In test_to_goal_add -- POST   ")
+                       
+    author_id = current_user._get_current_object().id  
+
+    test = Test(request.form['title'], request.form['body'], author_id)        
+    db.session.add(test)
+        
+    print("test.children ", goal.children )
+    
+    ### asign TO  HUMPTY DUMPTY THE NEW TODO
+    hd = get_dummy_student()
+    std_gt = attach_gt_to_std(hd.id, test.id) 
+   
+    default_sts = Status.query.filter(Status.default==True).first()    
+    test.set_parent(default_sts)    
+    std_gt.status_id = default_sts.id
+                               
+    goal.set_parent(test)
+    
+            
+    db.session.commit()  
+    db.session.refresh(test)
+    
+    ##########import pdb;; pdb.set_trace()
+
+
+    return redirect(url_for('goals.edit_goal_tests'))		
+
+                                                    
+################## START  Add test ################    
+
+
+@goal.route('/test_to_goal_add2/<int:selected_general_txt_id>', methods=['GET', 'POST'])
+def test_to_goal_add2(selected_general_txt_id):
+	print(selected_general_txt_id)
+	goal = goal_select2(selected_general_txt_id)
+	return redirect(url_for('goals.test_to_goal_add'))			
+
+	
+@goal.route('/test_from_goal_delete', methods=['GET', 'POST'])
+def test_from_goal_delete():
+	
+    goal = Goal.query.filter(Goal.selected==True).first()
+    if goal == None:
+        flash("Please select a goal first ")
+        return redirect(url_for('select.goal_select'))		
+
+    test = Test.query.filter(Test.selected==True).first()
+    if test == None:
+        flash("Please select a test to delete first ")
+        return redirect(url_for('goals.edit_goal_tests'))
+            
+    print ("delete selected test is " + test.title + " from slected goal " + goal.title )
+
+    goal.children.remove(test)
+    db.session.commit()  
+
+    return redirect(url_for('goals.edit_goal_tests')) 
+ 
+ 
+@goal.route('/test_from_goal_delete2/<int:selected_goal_id>/<int:selected_test_id>', methods=['GET', 'POST'])
+def test_from_goal_delete2(selected_goal_id, selected_test_id):
+
+    print("totdo id: ", selected_test_id)
+    test = test_select2(selected_test_id)
+      
+    goal = goal_select2(selected_goal_id)
+              
+    return redirect(url_for('goals.test_from_goal_delete')) 	
+
+##############goal's tests ###############	
 
 
 

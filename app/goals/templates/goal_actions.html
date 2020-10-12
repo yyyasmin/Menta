@@ -28,6 +28,13 @@
 				דרכי הוראה, שיטות, אמצעים ומשאבים
 			</a>
 		</button>
+			
+		<button type="button" id="act_btn">
+			<a style="color: black" id="act_btn" 
+				href="{{ url_for('goals.edit_goal_tests2', selected_goal_id=goal.id) }}">
+				אמות מידה להערכת היעד
+			</a>
+		</button>
 		
 		<button type="button" id="act_btn"><a style="color: black" href="{{ url_for('goals.edit_goal_files2', selected_goal_id=goal.id) }}">קבצים</a></button>
 
