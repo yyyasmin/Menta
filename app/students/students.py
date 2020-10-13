@@ -1436,6 +1436,7 @@ def edit_std_destinations_by_ssharon():
     print("")
     print("IN edit_std_destinations_by_ssharon")
     
+    author_id = get_author_id()
     
     std = Student.query.filter(Student.selected==True).first()
     if std == None:
@@ -1455,14 +1456,14 @@ def edit_std_destinations_by_ssharon():
          
     method_types = Method_type.query.all()
     if method_types==[] or method_types==None:
-        method_type = Method_type('Dummy', 'Dummy', get_author_id())
+        method_type = Method_type('Dummy', 'Dummy', author_id)
         db.session.add(method_type)
         db.session.commit()
         method_types.append(method_type)
           
     tests = Test.query.all()
     if tests==[] or tests==None:
-        test = Test('Dummy', 'Dummy', get_author_id())
+        test = Test('Dummy', 'Dummy', author_id)
         db.session.add(test)
         db.session.commit()
         tests.append(test)
@@ -1504,7 +1505,6 @@ def edit_std_destinations_by_ssharon():
             for t in d.children:
                 if t.type=='tag':
                     if t not in std_dsts_tags:
-                        print("APPENDING TAG: ", t.body)
                         std_dsts_tags.append(t)
                 else:
                     dsts_not_of_student.append(d)
@@ -1514,11 +1514,9 @@ def edit_std_destinations_by_ssharon():
     
     print("")
     print("")
-    print("ALL GOALS: ", all_goals)
    
     for g in std_gts:
         if g in all_goals:
-            print("APPENDING Goal: ", g.body, g.id)
             student_goals.append(g)
     goals_not_of_student = list(set(all_goals).difference(set(student_goals)))  #goals_not_of_student = all_destinations - std_destinations
     
@@ -1529,13 +1527,6 @@ def edit_std_destinations_by_ssharon():
         if t in all_methods:
             student_methods.append(t)
     methods_not_of_student = list(set(all_methods).difference(set(student_methods)))  #methods_not_of_student = all_destinations - std_destinations
-
-    tests = Test.query.all()
-    if tests==[] or tests==None:
-        tests = Test('Dummy', 'Dummy', get_author_id())
-
-    
-    author_id = get_author_id()
     
     method_obj = Method.query.filter(Method.body=='ex').first()
     if method_obj == None:
@@ -1544,7 +1535,7 @@ def edit_std_destinations_by_ssharon():
     goal_obj = Goal.query.filter(Goal.body=='ex').first()
     if goal_obj == None:
         goal_obj = Goal("Data Object", "ex", author_id)
-    
+
     dst_obj = Destination.query.filter(Destination.body=='ex').first()
     if dst_obj == None:
         dst_obj = Destination("Data Object", "ex", author_id)
@@ -1567,16 +1558,7 @@ def edit_std_destinations_by_ssharon():
 
     print("")
     print("")
-    
-    for tag in std_dsts_tags:
-        print("TAG: ", tag.id, tag.body)
-        for dst in student_dsts:
-            if tag.is_parent_of(dst):
-                print("TAG:", tag.id, tag.body)
-                print("DST:", dst.id, dst.body)
 
-    print("")
-    print("")
     print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
     std_txts = Std_general_txt.query.filter(Std_general_txt.student_id==std.id).all()
