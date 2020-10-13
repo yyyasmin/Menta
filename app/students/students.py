@@ -1453,7 +1453,26 @@ def edit_std_destinations_by_ssharon():
                 db.session.add(default_tag)
                 db.session.commit()
          
-    method_types = Method_type.query.all() 
+    method_types = Method_type.query.all()
+    if method_types==[] or method_types==None:
+        method_type = Method_type('Dummy', 'Dummy', get_author_id())
+        db.session.add(method_type)
+        db.session.commit()
+        method_types.append(method_type)
+          
+    tests = Test.query.all()
+    if tests==[] or tests==None:
+        test = Test('Dummy', 'Dummy', get_author_id())
+        db.session.add(test)
+        db.session.commit()
+        tests.append(test)
+
+    print("")
+    print("")
+    print("METHOD_TYPES: ", method_types)
+    print("TESTS: ", tests)
+    print("")
+    print("")
  
     
     sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
@@ -1492,8 +1511,14 @@ def edit_std_destinations_by_ssharon():
 
     student_goals = []    # Get all student's destinations
     all_goals = Goal.query.filter(Goal.hide==False).all()
+    
+    print("")
+    print("")
+    print("ALL GOALS: ", all_goals)
+   
     for g in std_gts:
         if g in all_goals:
+            print("APPENDING Goal: ", g.body, g.id)
             student_goals.append(g)
     goals_not_of_student = list(set(all_goals).difference(set(student_goals)))  #goals_not_of_student = all_destinations - std_destinations
     
@@ -1506,6 +1531,8 @@ def edit_std_destinations_by_ssharon():
     methods_not_of_student = list(set(all_methods).difference(set(student_methods)))  #methods_not_of_student = all_destinations - std_destinations
 
     tests = Test.query.all()
+    if tests==[] or tests==None:
+        tests = Test('Dummy', 'Dummy', get_author_id())
 
     
     author_id = get_author_id()
@@ -1783,38 +1810,38 @@ def update_std_txt():
     
     gt_who_name = "who"+ str(std_txt.general_txt_id)
            
-    #####################import pdb;; #pdb.set_trace()
-
-    #print("")
-    #print("")
-     
     #print("")
     #print("")
     
-    #####import pdb; pdb.set_trace()
-    
-    print("")
-    print("")
-    print("IN update_std_txt request.form[gt_sts_name]" , request.form[gt_sts_name])
-    print("")
-    print("")
-    
-    selected_gt_status = Status.query.filter(Status.title==request.form[gt_sts_name]).first()    
-    if selected_gt_status != None:
-        std_txt.status_id = selected_gt_status.id     
-    sts = set_gt_category(gt.id, 'Status', selected_gt_status.title, 'יש לבחוק סטאטוס לטקסט')  , 
-    
+    if gt_sts_name in request.form:
+        print("")
+        print("")
+        print("IN update_std_txt request.form[gt_sts_name]" , request.form[gt_sts_name])
+        print("")
+        print("")
+        
+        selected_gt_status = Status.query.filter(Status.title==request.form[gt_sts_name]).first()    
+        if selected_gt_status != None:
+            std_txt.status_id = selected_gt_status.id     
+        sts = set_gt_category(gt.id, 'Status', selected_gt_status.title, 'יש לבחוק סטאטוס לטקסט')  , 
+        
     if gt_who_name in request.form:   # Only in case of todo there is a who button
         selected_gt_who = Accupation.query.filter(Accupation.title==request.form[gt_who_name]).first()    
         if selected_gt_who != None:
             std_txt.who_id = selected_gt_who.id     
         who = set_gt_category(gt.id, 'Accupation', selected_gt_who.title, 'יש לבחור תפקיד האחראי על המשימה')  , 
     
-    gt_due_date = request.form[gt_due_date_name]                
-    if gt_due_date != None:
-        std_txt.due_date = gt_due_date
-    #gt.due_date = gt_due_date
-     
+    if gt_due_date_name in request.form:
+        print("")
+        print("")
+        print("IN update_std_txt request.form[gt_sts_name]" , request.form[gt_sts_name])
+        print("")
+        print("")
+        gt_due_date = request.form[gt_due_date_name]                
+        if gt_due_date != None:
+            std_txt.due_date = gt_due_date
+        #gt.due_date = gt_due_date
+         
     std_txt.selected = False
         
     db.session.commit()

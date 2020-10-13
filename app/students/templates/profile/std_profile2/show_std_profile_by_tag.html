@@ -1,0 +1,130 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block std_profile2_line %}
+
+<style>
+
+#blue_title  {
+	background:'#e6e6ff';
+	border:thick solid #0089b3;
+	color:black;
+	marging: 1%;
+
+}
+
+#green_title  {
+	background:'#66ff99';
+	border:thick solid #4CAF50;
+	color:black;
+}
+
+#red_title  {
+	background:'#red';
+	border:thick solid red;
+	color:black;
+	dir:rtl;
+}
+
+.blue_body  {
+	background-color:'#0089b3';
+	border:thin solid #e6e6ff;
+	color:white;
+	dir:rtl;
+	marging: 1%;
+
+}
+
+.green_body  {
+	background-color:'#green';
+	border:thin solid #66ff99;
+	color:white;
+	dir:rtl;
+
+}
+
+.red_body  {
+	background-color:'#ff9999';
+	border:thin solid #ff9999;
+	color:white;
+	dir:rtl;
+
+}
+
+</style>
+
+</br>
+	<h3><strong><div>פרופיל</div></strong></h3>
+	
+	<table style="table-layout:fixed;" class="gray_table">	
+	
+		<thead>
+			<tr>			
+				<th style="width:12%"><strong>נושא</strong></th>
+				<th style="width:12%"><strong>קטגוריה</strong></th>
+				<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>תחומי עיניין</strong></th>
+				<th style="background-color:#4CAF50; color:#ffffcc; width:32%;"><strong>מוקדי כח</strong></th>
+				<th style="background-color:#ff5c33; color:#ffffcc; width:32%;"><strong>מוקדים לחיזוק</strong></th> 
+			</tr>
+		</thead>
+	
+	
+	<tbody>	
+
+	{% for tag in tags if tag.body != 'all' %}
+		
+		{% set tp_ns = namespace(tag_printed=False) %} 
+
+		{% for sub_tag in sub_tags if sub_tag.body != 'all' %}
+					
+			<tr>
+			
+				{% set ns = namespace(exist_part=False) %}
+				
+				{% for gt in profile.children if ( (gt.is_parent_of(tag))     and
+												   (gt.is_parent_of(sub_tag)) and 
+												   (tag.body != 'all') and
+												   (sub_tag.body != 'all') )  %}
+										
+					{% if tp_ns.tag_printed == False %}
+						<td>{{ tag.title|replace("-", "\n") }}</td>
+						{% set tp_ns.tag_printed = True %}
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					<td>{{sub_tag.title}}</td>
+					{% set ns.exist_part = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_part == True %}			
+					<td>
+						{% with part=sbj, prf_parts_list=prf_subjects, title_box="blue_title", body_box="blue_body" %}
+							{% include "./profile/std_profile2/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					<td>
+						{% with part=strn, prf_parts_list=prf_strengths, title_box="green_title", body_box="green_body" %}
+							{% include "./profile/std_profile2/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					<td>
+						{% with part=weak, prf_parts_list=prf_weaknesses, title_box="red_title", body_box="red_body"  %}
+							{% include "./profile/std_profile2/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+				{% endif %}	
+				
+			</tr>
+				
+		{% endfor %}
+	{% endfor %}
+	
+	</tbody>
+	
+	</table>
+				
+{% endblock std_profile2_line %}

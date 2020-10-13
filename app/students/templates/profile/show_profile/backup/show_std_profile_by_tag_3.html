@@ -1,0 +1,215 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+</br>
+	
+<table class="gray_table profile_table">	
+	
+		<thead>
+			<tr>	
+				<th style="width:12%"><strong>נושא</strong></th>
+				<th style="width:12%"><strong>קטגוריה</strong></th>
+				<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>תחומי עיניין</strong></th>
+				<th style="background-color:#4CAF50; color:#ffffcc; width:32%;"><strong>מוקדי כח</strong></th>
+				<th style="background-color:#ff5c33; color:#ffffcc; width:32%;"><strong>מוקדים לחיזוק</strong></th> 
+			</tr>
+		</thead>
+	
+	
+	<tbody>
+	
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set ns = namespace(exist_part=False) %}
+	
+	{% for tag in tags if profile.is_parent_of(tag) and tag.body != 'all' %}
+		
+		{% set tp_ns.tag_printed = False %}
+		
+		{% for sub_tag in sub_tags if profile.is_parent_of(sub_tag) and sub_tag.body != 'all' %}
+					
+			<tr>
+			
+				{% set ns.exist_part = False %}
+				
+				{% for gt in profile.children if gt.is_parent_of(tag) and
+												 gt.is_parent_of(sub_tag) %} 
+										
+					{% if tp_ns.tag_printed == False %}
+						<td>{{ tag.title|replace("-", "\n") }}</td>
+						{% set tp_ns.tag_printed = True %}
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					<td>{{sub_tag.title}}</td>
+					{% set ns.exist_part = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_part == True %}			
+					<td>
+						{% with tag_id=tag.id, sub_tag_id=sub_tag.id, part=sbj, prf_parts_list=prf_subjects, title_box="blue_title", body_box="blue_body" %}
+							{% include "./profile/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					<td>
+						{% with tag_id=tag.id, sub_tag_id=sub_tag.id, part=strn, prf_parts_list=prf_strengths, title_box="green_title", body_box="green_body" %}
+							{% include "./profile/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+					
+					<td>
+						{% with tag_id=tag.id, sub_tag_id=sub_tag.id, part=weak, prf_parts_list=prf_weaknesses, title_box="red_title", body_box="red_body"  %}
+							{% include "./profile/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+					
+				{% endif %}	
+				
+			</tr>
+			
+			
+		{% endfor %}
+	{% endfor %}
+	
+	{% include "./profile/show_profile/add_tag_line.html" %} 
+	
+	</tbody>
+	
+</table>
+
+
+
+<script>
+
+// FROM https://youtu.be/I2dJuNwlIH0?t=717	
+	let tag_select = document.getElementById('tag');
+	let sub_tag_select = document.getElementById('sub_tag');
+	
+	console.log("tag_select");
+	console.log(tag_select);
+	console.log("sub_tag_select");
+	console.log(sub_tag_select);
+
+
+	tag_select.onchange = function(){
+		tag_id = tag_select.value;
+		console.log("tag_id");
+		console.log(tag_id);
+
+		let tag_for_add = document.getElementById('gt_tag_for_new_part');
+		let sub_tag_for_add = document.getElementById('gt_sub_tag_for_new_part');
+		tag_for_add.value = tag_id;
+		sub_tag_for_add.value = sub_tag_select.id;
+		console.log("sub_tag_for_add.value");
+		console.log(sub_tag_for_add.value);
+		
+			fetch('/sub_tag/' + tag_id).then(function(response)  {
+			response.json().then(function(data) {
+				
+				// FROM https://stackoverflow.com/questions/2738254/javascript-innerhtml-not-working-with-html-select-menus
+				while ( sub_tag_select.childNodes.length >= 1 )   {
+					sub_tag_select.removeChild(sub_tag_select.firstChild);       
+				}
+
+				for(let sub_tag of data.sub_tags)  {
+					newOption = document.createElement('option');
+					newOption.value=sub_tag.id;
+					newOption.text=sub_tag.title;
+					sub_tag_select.appendChild(newOption);
+				}	
+
+			console.log("sub_tag_select");
+			console.log(sub_tag_select);
+			})
+		});
+	}
+
+
+	sub_tag_select.onclick = function()  {
+
+		tag_id = tag_select.value;
+		console.log("IN sub_tag_select.onchange TAG_ID:");
+		console.log(tag_id);
+	
+		sub_tag_id = sub_tag_select.value;
+		console.log("SUB_TAG_ID:");
+		console.log(sub_tag_id);
+		
+		fetch('/tag_sub_tag_to_profile_add/' + tag_id + '/' + sub_tag_id);
+
+	}
+</script>
+
+
+<!-- FROM https://codepen.io/coderivyn/pen/NNqgGK  -->
+<script>
+
+	function addRow(tableID) {
+
+		var table = document.getElementById(tableID);
+
+		console.log("table");	
+		console.log(table);	
+
+		var rowCount = table.rows.length;
+		if (rowCount >= 21) { // +1 for header row.
+			alert("There can be no more than 20 participants per session.");
+			return;
+		}
+		var row = table.insertRow(rowCount);
+
+		var cell1 = row.insertCell(0);
+		var element1 = document.createElement("input");
+		element1.type = "checkbox";
+		element1.name = "chkbox[]";
+		cell1.appendChild(element1);
+
+		var cell2 = row.insertCell(1);
+		cell2.innerHTML = rowCount;
+
+		var cell3 = row.insertCell(2);
+		var element2 = document.createElement("input");
+		element2.type = "text";
+		element2.name = "txtbox[]";
+		cell3.appendChild(element2);
+
+	}
+
+        function deleteRow(tableID) {
+			try {
+			
+				var table = document.getElementById(tableID);
+				var rowCount = table.rows.length;
+
+				for (var i = 0; i < rowCount; i++) {
+					var row = table.rows[i];
+					var chkbox = row.cells[0].childNodes[0];
+					if (null != chkbox && true == chkbox.checked) {
+						table.deleteRow(i);
+						rowCount--;
+						i--;
+					}
+
+				}
+			} 
+			
+			catch (e) {
+				alert(e);
+			}
+        }
+
+</script>
+
+
+
+
+				
+{% endblock show_std_profile_by_tag %}

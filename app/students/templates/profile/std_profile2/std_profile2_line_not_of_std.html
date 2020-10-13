@@ -1,0 +1,66 @@
+{% block profile2_line %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+
+	lang: "he";
+	dir: "rtl";
+	marging: 2%;
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+</style>
+
+	
+	<p></p>
+	<div class="collapse" id="not_of_std{{tag.id}}{{gt_type}}Content">
+		{% with gt_type='Subject', type=3, gt_single_type_txt='תחום עיניין', gt_some_type_txt='תחומי עיניין', color='blue', table_color='blue_table', title_color='#e6e6ff', prf_parts_list=prf_subjects_not_of_std %}
+			{% include "./profile/std_profile2/gt/edit_prf_gt_parts.html" %}
+		{% endwith %}
+	</div>
+	
+	<p></p>
+	<div class="collapse" data-toggle="collapse" id="not_of_std{{tag.id}}{{gt_type}}Content">	
+		{% with gt_type='Strength', type=2, gt_single_type_txt='חוזקה', gt_some_type_txt='חוזקות', color='green', table_color='green_table', title_color='#66ff99', prf_parts_list=prf_weaknesses_not_of_std %}
+			{% include "./profile/std_profile2/gt/edit_prf_gt_parts.html" %}
+		{% endwith %}
+	</div>
+	
+	<p></p>
+	<div class="collapse" data-toggle="collapse" id="not_of_std{{tag.id}}{{gt_type}}Content">	
+		{% with gt_type='Weakness',type=1, gt_single_type_txt='חולשה', gt_some_type_txt='חולשות', color='red', table_color='red_table', title_color='#ff9999', prf_parts_list=prf_strengths_not_of_std %}	
+			{% include "./profile/std_profile2/gt/edit_prf_gt_parts.html" %}
+		{% endwith %}
+	</div>
+	
+	<p></p>	
+	<!--
+	</br></br>
+	-->	
+
+{% endblock profile2_line %}

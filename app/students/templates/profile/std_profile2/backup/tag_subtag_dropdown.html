@@ -1,0 +1,22 @@
+            
+    ################## UPDATE PROFILE TAG ##################
+    if 'selected_tag' in request.form:
+        print("request.form['selected_tag']", request.form['selected_tag'])
+        tag = Tag.query.filter(Tag.title==request.form['selected_tag']).first()
+        if tag != None:
+            selected_tag = tag
+            selected_tag = tag_select2(selected_tag.id)
+        print("")
+        print("IN set_profile_tag tag = ", tag)
+        print("IN set_profile_tag selected_tag = ", selected_tag)
+        selected_tag = tag_select2(selected_tag.id)
+        print(selected_tag.id)
+        print("")
+        
+        db.session.commit()
+        return edit_std_profile()
+            
+    db.session.commit()                 
+    return edit_std_profile()
+      
+    

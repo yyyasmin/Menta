@@ -1,0 +1,17 @@
+	<tr>
+		<td>
+		<label for="tag">הוסף נושא</label>
+			<select id="tag" style="max-width:100%;">	
+				{% for tag in tags %}
+					<option value="{{ tag.id }}">
+						{{ tag.title|replace("-", "\n") }}  {{tag.id}}
+					</option>
+				{% endfor %}
+			</select>
+		</td>
+		
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>	

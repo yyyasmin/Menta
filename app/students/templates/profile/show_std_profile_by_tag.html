@@ -1,0 +1,210 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_profile_by_tag %}
+
+<style>
+
+</style>
+
+</br>
+	
+<table class="profile_table gray_table">	
+	
+		<thead>
+			<tr>	
+				<th style="width:12%"><strong>נושא</strong></th>
+				<th style="width:12%"><strong>קטגוריה</strong></th>
+				<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>תחומי עיניין</strong></th>
+				<th style="background-color:#4CAF50; color:#ffffcc; width:32%;"><strong>מוקדי כח</strong></th>
+				<th style="background-color:#ff5c33; color:#ffffcc; width:32%;"><strong>מוקדים לחיזוק</strong></th> 
+			</tr>
+		</thead>
+	
+	
+	<tbody>
+	
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set lc_ns = namespace(line_color='#E8E8E8') %}
+	{% set ns = namespace(exist_part=False) %}
+	
+	{% for tag in tags if tag.body != 'all' %}
+		{% set tp_ns.tag_printed = False %}
+		
+		{% if lc_ns.line_color == '#F8F8F8' %}    <!-- CHANGE TAG LINE COLOR -->
+			{% set lc_ns.line_color = '#E8E8E8' %} 
+		{% else %}
+			{% set lc_ns.line_color = '#F8F8F8' %}
+		{% endif %}		
+			
+		{% for sub_tag in sub_tags if sub_tag.body != 'all' %}
+
+			<tr style="background-color:{{lc_ns.line_color}};">
+
+				{% set ns.exist_part = False %}
+				
+				{% for gt in profile.children if gt.is_parent_of(tag) and
+												 gt.is_parent_of(sub_tag) %}
+
+				
+					{% if tp_ns.tag_printed == False %}
+						<td>{{ tag.title|replace("-", "\n") }}</td>
+						{% set tp_ns.tag_printed = True %}
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					<td>{{sub_tag.title}}</td>
+					{% set ns.exist_part = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_part == True %}			
+				
+						<td>
+							{% with part=sbj, 
+									prf_parts_list=prf_subjects, parts_not_of_prf=subjects_not_of_prf,
+									title_box="blue_title", body_box="blue_body" %}
+								{% include "./profile/show_std_profile.html" %} 
+							{% endwith %}
+						</td>
+						
+						<td>
+							{% with part=strn,
+									prf_parts_list=prf_strengths, parts_not_of_prf=strengths_not_of_prf,
+									title_box="green_title", body_box="green_body" %}
+								{% include "./profile/show_std_profile.html" %} 
+							{% endwith %}
+						</td>
+						
+						
+						<td>
+							{% with part=weak, 
+									prf_parts_list=prf_weaknesses, parts_not_of_prf=weaknesses_not_of_prf,
+									title_box="red_title", body_box="red_body"  %}
+								{% include "./profile/show_std_profile.html" %} 
+							{% endwith %}
+						</td>
+
+				{% endif %}	
+				
+			</tr>
+			
+		{% endfor %}
+	{% endfor %}
+	
+	
+	<!-- DEBUG --
+
+	<!-- DEBUG -->
+
+	{% include "./profile/add_tag_line.html" %} 
+	
+	</tbody>
+	
+</table>
+
+
+
+<script>
+
+// FROM https://youtu.be/I2dJuNwlIH0?t=717	
+	let tag_select = document.getElementById('tag');
+	let sub_tag_select = document.getElementById('sub_tag');
+	
+	tag_select.onchange = function()  {
+		
+		console.log("In TAG CHANGE FUNCTION");
+		
+		tag_id = tag_select.value;
+		console.log("tag_id");
+		console.log(tag_id);
+		
+		sub_tag_id = sub_tag_select.value;
+		console.log("sub_tag_id");
+		console.log(sub_tag_id);
+
+
+			fetch('/sub_tag/' + tag_id).then(function(response)  {
+			response.json().then(function(data) {
+				
+				// FROM https://stackoverflow.com/questions/2738254/javascript-innerhtml-not-working-with-html-select-menus
+				while ( sub_tag_select.childNodes.length >= 1 )   {
+					
+					console.log("REMOVING sub_tag_select.firstChild from SUB_TAG_SELECT ");
+					console.log(sub_tag_select.firstChild);
+
+					sub_tag_select.removeChild(sub_tag_select.firstChild);       
+				}
+
+				for(let sub_tag of data.sub_tags)  {
+					
+					console.log("IN let sub_tag of data.sub_tags");
+					console.log("sub_tag");
+					console.log(sub_tag);
+					console.log(sub_tag.id);
+					console.log(sub_tag.title);
+					
+					newOption = document.createElement('option');
+					newOption.value=sub_tag.id;
+					newOption.text=sub_tag.title;
+					sub_tag_select.appendChild(newOption);
+				}	
+				
+				sub_tag_select.disabled = false;
+				console.log("sub_tag_select.disabled");
+				console.log(sub_tag_select.disabled);
+				
+			});
+		});
+	}
+
+
+
+	sub_tag_select.onclick = function()  {
+
+		tag_id = tag_select.value;
+		console.log("IN sub_tag_select.onchange TAG_ID:");
+		console.log(tag_id);
+	
+		sub_tag_id = sub_tag_select.value;
+		console.log("SUB_TAG_ID:");
+		console.log(sub_tag_id);
+		
+	
+	//fetch('/tag_sub_tag_to_profile_add/' + tag_id + '/' + sub_tag_id);
+
+		var data = {
+			'tag_id': tag_id,
+			'sub_tag_id': sub_tag_id
+			}
+			
+			console.log("data");
+			console.log(data);
+			console.log($.ajax);
+			
+		$.ajax( {
+			url: '/tag_sub_tag_to_profile_add',
+			type: 'POST',
+			data: data, 
+			success: function(response) {
+				location.reload(response);
+			}
+		
+		} ); 
+		
+	}  // END sub_tag_select.onclick 
+	
+</script>
+
+
+
+<!-- FROM https://codepen.io/coderivyn/pen/NNqgGK  -->
+<script>
+
+</script>
+
+
+
+
+				
+{% endblock show_std_profile_by_tag %}

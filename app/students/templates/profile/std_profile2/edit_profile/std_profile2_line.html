@@ -1,0 +1,61 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block std_profile2_line %}
+
+<style>
+
+
+#blue_title  {
+	background:title_color='#e6e6ff';
+	color:blue;
+}
+
+#green_title  {
+	background: title_color='#66ff99';
+	color:green;
+}
+
+#red_title  {
+	background: title_color='#ff9999';
+	color:red;
+}
+
+</style>
+
+</br>
+
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+	
+				{% with part=sbj, prf_parts_list=prf_subjects, gray=0 %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+ 
+				{% with part=gray, prf_parts_list=subjects_not_of_prf, gray=1 %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+				
+
+				{% with part=strn, prf_parts_list=prf_strengths, gray=0 %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+
+				{% with part=gray, prf_parts_list=strengths_not_of_prf, gray=1 %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+				
+	
+				{% with part=weak, prf_parts_list=prf_weaknesses, gray=0  %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+			
+				{% with part=gray, prf_parts_list=weaknesses_not_of_prf, gray=1  %}
+					{% include "./profile/std_profile2/edit_profile/edit_prf.html" %} 
+				{% endwith %}
+
+			</div>
+        </div>
+    </div>	
+				
+{% endblock std_profile2_line %}

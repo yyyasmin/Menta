@@ -1,0 +1,144 @@
+{% block ex_7 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'הראה מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'הסתר מטרות - ';
+}
+
+.collapsed .goals-icon-class:before {
+    content: 'הראה יעדים קיימים+';
+	dir: rtl;
+	margin:0px;
+	padding:0px;
+}
+.goals-icon-class:before {
+	content: 'הסתר יעדים קיימים-';
+}
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעדים חדשים+';
+}
+.add-goals-icon-class:before {
+	content: 'הסתר יעדים חדשים-';
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+
+<body>
+
+			
+<div id="dsts_not_of_std" class="list-group-item">
+
+    <div class="collapsed" data-toggle="collapse" data-target="#dsts_not_of_stdContent" data-role="expander" data-group-id="dsts_not_of_std">
+      <ul class="list-inline" style="color:green">
+            <li class="dsts-icon-class"></li>
+        </ul>
+    </div>
+
+	
+	
+	<div class="collapse" id="dsts_not_of_stdContent" aria-expanded="true">
+
+		<table class="gray_table">
+		
+			{% include "./destinations/table_destinations/dst_header_6.html" %}
+			
+		
+			<tbody>
+				{% for std_dst in dsts_not_of_student %}
+				
+					<tr class="collapsed" data-toggle="collapse" data-target=".{{std_dst.id}}Content">											
+																	
+						{% include "./destinations/table_destinations/dst_line_7.html" %}
+						
+						<tr></tr>
+						
+						<tr class="collapse" id="{{std_dst.id}}Content" aria-expanded="true">
+							<td colspan="6">
+								{% include "./destinations/table_destinations/example_8.html" %}								
+							</td>
+						</tr>
+						
+						<tr></tr>
+						
+						<tr class="collapse" id="not_of_std{{std_dst.id}}Content" aria-expanded="true">
+							<td colspan="6">
+								{% include "./destinations/table_destinations/example_12.html" %}								
+							</td>
+						</tr>
+						
+					</tr>					
+				{% endfor %}  
+			</tbody>
+		</table>
+	</div>
+	
+	
+</div>
+
+</body>
+
+</html>
+
+{% endblock ex_7 %}

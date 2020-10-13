@@ -1,0 +1,55 @@
+	
+@std.route('/edit_student_goals', methods=['GET', 'POST'])
+@login_required
+def edit_student_goals():
+	
+    std = Student.query.filter(Student.selected==True).first()
+    if std == None:
+        flash("Please select a student first ")
+        return redirect(url_for('students.edit_students'))
+
+    dst = Destination.query.filter(Destination.selected==True).first()
+    #print("IN edit_student_goals dst is: ", dst)
+    if dst == None:
+        flash("Please select a destination first ")
+        return redirect(url_for('students.edit_student_destinations'))
+    ############impor pdb;pdb.set_trace()
+    student_goals = Std_goal.query.filter(Std_goal.student_id==std.id).filter(Std_goal.dst_id==dst.id).all()
+
+    std_goals_forms = []
+    
+    for g in student_goals:
+    
+        form = Std_goal_form()
+
+        form.status.choices=[]
+        form.status.choices = [(status.id, status.title) for status in Status.query.all()]
+        form.status.default = g.status_id
+        form.process()
+                
+        form.goal_id.data = int(g.goal_id)
+        #print("ONE FORM BEFORE peoccess(): ",  form, form.goal_id.data)
+                       
+        form.goal_title.data = g.goal_title
+        form.goal_body.data =  g.goal_body
+       
+        form.due_date = g.due_date
+        #print("ONE FORM date:  date.data",  form, form.due_date)
+       
+        std_goals_forms.append(form)
+               
+    #return render_template('./goals/edit_student_goals.html', std=std, dst=dst, std_goals_forms=std_goals_forms)
+    return render_template('./goals/backup/edit_std_dst_goals_3.html', std=std, dst=dst, std_goals=student_goals, std_goals_forms=std_goals_forms)
+                                                                
+														  		
+@std.route('/edit_student_goals2/<int:selected_student_id>/<int:selected_destination_id>', methods=['GET', 'POST'])
+@login_required
+def edit_student_goals2(selected_student_id, selected_destination_id):
+
+    std = student_select2(selected_student_id)
+    dst = destination_select2(selected_destination_id)
+    #print("In edit_student_goals2 std dst :", std, dst.id)
+
+    return edit_student_goals()
+    
+		

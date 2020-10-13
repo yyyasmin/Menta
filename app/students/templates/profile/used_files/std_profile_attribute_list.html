@@ -1,0 +1,42 @@
+{% block profile_attribute_list %}
+
+	<table id="attributes_table" style="wdth:100%">
+		<td>
+			{% for att in profile.attributes %}	
+			
+				<button class="btn btn-warning btn-xs" ><a style="background-color:green; color:white" href="{{ url_for('students.match_attribute_to_std_profile2', selected_attribute_id=att.id) }}">הוסף לתלמיד</a></button>			
+				<button class="btn btn-warning btn-xs" ><a style="background-color:orange; color: black" href="{{ url_for('attributes.{attribute_update', selected_attribute_id=att.id) }}">ערוך</a></button>			
+				
+				<button class="accordion">כותרת חולשה:  att.title </button>
+				<div class="panel">
+				  <button>תאור חולשה:  att.body </button>				
+				</div>
+				<br>
+				
+			{% endfor %}
+			
+			<center><button class="btn btn-info btn-xs><a style="background-color:bcolor; color:black" href="{{ url_for('students.attribute_to_std_profile_add') }}">הוסף חולשה </a></button>										
+			{% include "./profile/edit_attributes_not_of_std_profile.html" %}	
+			
+		</td>
+	</table>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

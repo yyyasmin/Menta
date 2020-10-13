@@ -470,8 +470,10 @@ def goal_method_update():
     
     method.set_parent(who)
     method.set_parent(method_type)
+    method_type.set_parent(method)
     goal.set_parent(who)
     goal.set_parent(method)
+    goal.set_parent(method_type)
     
     who=set_gt_category(method.id, 'Accupation', who.title, "יש לבחור תפקיד אחראי")  
 

@@ -1,0 +1,36 @@
+<!-- FROM https://stackoverflow.com/questions/25978879/how-to-create-chained-selectfield-in-flask-without-refreshing-the-page -->
+{% block std_edit_profile2_by_tag %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+	color: black;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .subjects_of_interest-icon-class:before {
+    content: 'תחומי עיניין + ';
+}
+.subjects_of_interest-icon-class:before {
+	content: 'תחומי עיניין - ';
+}
+
+</style>
+
+	</br></br>
+	
+	<h3><strong><div>ערוך פרופיל</div></strong></h3>
+	
+	{% include "./profile/edit_profile/std_tag_and_sub_tag_dropdown.html" %}
+	
+	{% include "./profile/edit_profile/std_profile_line.html" %}
+	
+{% endblock std_edit_profile2_by_tag %}

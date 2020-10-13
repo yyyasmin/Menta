@@ -1,0 +1,38 @@
+<!-- FROM https://stackoverflow.com/questions/2738254/javascript-innerhtml-not-working-with-html-select-menus -->
+function showOutboundDays(month, year)
+{
+    var days=null;
+
+    if(month==4 || month==6 || month==9 || month==11)
+        days=30;
+    else if(month==2)
+    {
+        //Do not forget leap years!!!
+        if(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) //Provided by Justin Gregoire
+        {
+            days=29;
+        }
+        else
+        {
+            days=28;
+        }
+    }
+    else 
+        days=31;
+
+
+    var select = document.getElementById('days');
+
+    while ( select.childNodes.length >= 1 )
+    {
+        select.removeChild(select.firstChild);       
+    }
+
+    for(var i=1;i<=days;i++)
+    {
+        newOption = document.createElement('option');
+        newOption.value=i;
+        newOption.text=i;
+        select.appendChild(newOption);
+    }
+}

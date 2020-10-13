@@ -1,0 +1,170 @@
+{% block std_edit_profile2_by_tag %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .Subject-icon-class:before {
+    content: 'תחומי עיניין + ';
+}
+.Subject-icon-class:before {
+	content: 'תחומי עיניין - ';
+}
+
+
+.collapsed .Subject_not_of_std-icon-class:before {
+    content: 'הוסף תחום עיניין + ';
+	dir: rtl;
+	margin: 0%;
+}
+.Subject_not_of_std-icon-class:before {
+	content: 'הוסף תחום עיניין - ';
+}
+
+
+.collapsed .Strength-icon-class:before {
+    content: 'חוזקות + ';
+}
+.Strength-icon-class:before {
+	content: 'חוזקות - ';
+}
+
+.collapsed .Strength_not_of_std-icon-class:before {
+    content: 'הוסף חוזקה + ';
+}
+.Strength_not_of_std-icon-class:before {
+	content: 'הוסף חוזקה - ';
+}
+
+
+.collapsed .Weakness-icon-class:before {
+    content: 'נקודות לחיזוק + ';
+}
+.Weakness-icon-class:before {
+	content: 'נקודות לחיזוק - ';
+}
+
+.collapsed .Weakness_not_of_std-icon-class:before {
+    content: 'הוסף נקודות לחיזוק + ';
+}
+.Weakness_not_of_std-icon-class:before {
+	content: 'הוסף נקודות לחיזוק - ';
+}
+
+
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+<body>
+
+<div> IN profile\std_profile2\std_edit_profile2_by_tag.html  </div> 
+
+
+	</br></br>
+	
+	{% include "./profile/std_profile2/std_tag_dropdown2.html" %}
+		
+	{% for tag in tags if tag==default_tag %}
+
+		{% with gt_type='Weakness',type=1, gt_single_type_txt='נקודה לחיזוק', gt_some_type_txt='נקודות לחיזוק', color='red', table_color='red_table', title_color='#ff9999', 
+									prf_parts_list=prf_weaknesses, prf_parts_list_not_of_std=prf_weaknesses_not_of_std %}
+			{% include "./profile/std_profile2/backup/editable_td3.html" %}
+		{% endwith %}	
+		
+		
+		
+					<div> tag  {{tag}}</div>
+
+					{% for f in prf_weaknesses %}
+					<div> f: {{f.id}} {{f.title}} {{f.type }}{{f.is_parent_of(tag)}}</div>
+					{%endfor%}	
+
+						
+					{% for f in prf_subjects %}
+					<div> f: {{f.id}} {{f.title}} {{f.type }}   {{f.is_parent_of(tag)}}</div>
+					{%endfor%}	
+
+			
+		{% with gt_type='Subject', type=3, gt_single_type_txt='תחום עיניין', gt_some_type_txt='תחומי עיניין', color='blue', table_color='blue_table', title_color='#e6e6ff', 
+								   prf_parts_list=prf_subjects, prf_parts_list_not_of_std=prf_subjects_not_of_std %}
+				{% include "./profile/std_profile2/std_profile2_parts_list.html" %}
+		{% endwith %}	
+			
+		{% with gt_type='Strength', type=2, gt_single_type_txt='חוזקה', gt_some_type_txt='חוזקות', color='green', table_color='green_table', title_color='#66ff99', 
+									prf_parts_list=prf_strengths, prf_parts_list_not_of_std=prf_strengths_not_of_std %}
+
+				{% include "./profile/std_profile2/std_profile2_parts_list.html" %}
+		{% endwith %}	
+		
+
+
+		{% with gt_type='Weakness',type=1, gt_single_type_txt='נקודה לחיזוק', gt_some_type_txt='נקודות לחיזוק', color='red', table_color='red_table', title_color='#ff9999', 
+									prf_parts_list=prf_weaknesses, prf_parts_list_not_of_std=prf_weaknesses_not_of_std %}
+				{% include "./profile/std_profile2/std_profile2_parts_list.html" %}
+		{% endwith %}	
+									
+	{% endfor %}
+	
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+{% endblock std_edit_profile2_by_tag %}

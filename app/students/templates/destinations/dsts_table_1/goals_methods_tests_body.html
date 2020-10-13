@@ -5,14 +5,13 @@
 <!-- DEBUG -->
 
 <!-- DEBUG -->
-
+		
 	{% for goal in student_goals if dst.is_parent_of(goal) %}  <!-- TAGS -->
 	{% set g_ns.goal_printed = False %}
-		
+				
 		{% for method_type in method_types if goal.is_parent_of(method_type) %}  <!-- METHODS -->
 		{% set mt_ns.method_type_printed = False %}
-									
-			
+				
 			{% for test in tests if goal.is_parent_of(test) %}  <!-- GOALS -->
 			{% set t_ns.test_printed = False %}
 										
@@ -31,7 +30,7 @@
 					</td>
 					{% set mt_ns.method_type_printed = True %}
 				{% else %}
-					<td></td>
+					<td>TEST IS True</td>
 				{% endif %}  <!-- END MEYHOD-TYPE -->
 
 							

@@ -1,0 +1,27 @@
+
+{% block edit_prf_gt %}
+	
+	<button class="btn btn-default btn-xs"><a style="color: black" href="{{ url_for('profile.dsply_gt_form_for_update2', selected_profile_id=profile.id, selected_gt_id=gt.id) }}">ערוך</a></button>			
+					
+	<button class="btn btn-danger btn-xs"  id="delete_id"><a style="color: black" href="{{ url_for('profile.gt_from_profile_delete2', selected_profile_id=profile.id, selected_gt_id=gt.id) }}">מחק</a></button>		
+		
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock edit_prf_gt %}

@@ -1,0 +1,38 @@
+{% block std_subjec_of_interest_2 %}
+
+
+	<td>						
+		<button dir="rtl" class="btn btn-info" type="button" class="collapsed" data-toggle="collapse" data-target="#{{std_subjec_of_interest.id}}Content" data-role="expander" data-group-id="{{std_subjec_of_interest.id}}">
+			<ul class="list-inline">
+				<li> Here was goals list></li>
+			</ul>
+		</button>
+		
+		</br>
+		
+	</td>
+		
+	
+	<td>{{ std_subjec_of_interest.id }}</td>
+			
+	<td>{{ std_subjec_of_interest.title }}</td>
+	
+	<td>{{ std_subjec_of_interest.body }}</td> 
+	
+
+	<td>
+		<button class="btn btn-success btn-xs" type="submit" name="profile_button_name" value="{{ std_subjec_of_interest.id }}">שמור</button>
+	</td>
+				
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>
+				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+
+</script>
+
+
+{% endblock std_subjec_of_interest_2 %}

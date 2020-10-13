@@ -1,0 +1,140 @@
+<!-- FROM https://stackoverflow.com/questions/25978879/how-to-create-chained-selectfield-in-flask-without-refreshing-the-page  -->
+
+{% block tst %} 
+
+<style>
+
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+input {
+	width: 100%;
+}
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+
+<!----------------------------------------------------------------->
+
+.container {
+  background: black;
+  padding: 25px;
+  margin: 0 auto;
+  width: 500px;
+  color: white;
+}
+
+.select2-container {
+  width: 150px;
+}
+
+select {
+  width: 150px;
+}
+
+.select2-selection__rendered {
+  display: none;
+}
+
+</style>
+		
+		<!-- DEBUG -->
+		<div> IN backup\std_tag_and_sub_tag_dropdown.html </div>
+		<!-- DEBUG -->
+		
+<form action="{{ url_for('students.get_sub_tag_profile') }}" method="POST">
+
+	<input type="hidden" id="save_st" name="save_st">
+	
+	<div style = "text-align:center; width:100%">
+				
+		<ul class="tabs">
+	
+		<li class="tab " id="tab-3"><span class="tab-title">
+			<label for="selected_tag">תחום לימוד</label>
+			
+			<select class="form-control" name="selected_tag" id="selected_tag">
+				{% for tag in tags %}
+					{% if tag == default_tag %}
+						<option value="{{ tag.id }}" selected>{{ tag.title }}{{ tag.id }}</option>
+					{% else %}
+						<option value="{{ tag.id }}">{{ tag.title }}{{ tag.id }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		
+		</li>
+		
+		
+
+		<li class="tab " id="tab-3"><span class="tab-title">
+			<label for="selected_sub_tag">קטגוריה</label>				
+			
+			<select class="form-control" name="selected_sub_tag" id="selected_sub_tag" onClick="saveSt(this);">
+				{% for sub_tag in sub_tags %}
+					{% for tag in tags if (tag.is_parent_of(sub_tag)) %}
+						{% if sub_tag == default_sub_tag %}
+							<option value="{{ tag.id }}" selected>{{sub_tag.title}}{{sub_tag.id}}</option>
+						{% else %}
+							<option value="{{ tag.id }}">{{sub_tag.title}}{{sub_tag.id}}</option>
+						{% endif %}
+					{% endfor %}  <!-- tags -->
+				{% endfor %}  <!-- sub_tags of tag -->
+			</select>					
+		
+		</li>
+
+		<li class="tab " id="tab-3"><span class="tab-title">
+			<button class="btn btn-success btn-xs" type="submit" name="get_sub_tag_profile" value="get_sub_tag_profile">הצג פרופיל מקטגוריה זו</button>				
+		</li>
+														
+											
+		</ul>
+												
+	</div>
+	
+</form>
+
+<!--  FROM https://codepen.io/bahiirwa/pen/OjNYZb  -->
+<script>
+//Reference: https://jsfiddle.net/fwv18zo1/
+var $selected_tag = $("#selected_tag"),
+  $selected_sub_tag = $("#selected_sub_tag"),
+  $options = $selected_sub_tag.find("option");
+
+$selected_tag.on("change", function () {
+    $selected_sub_tag.html($options.filter('[value="' + this.value + '"]'));
+ }).trigger("change");
+</script>
+
+
+<script>
+// FROM  http://jsfiddle.net/6dkun/1/	
+function saveSt(element) {
+    var text = element.options[element.selectedIndex].text;
+    document.getElementById("save_st").innerHTML = text;
+    document.getElementById("save_st").value = text;
+	
+	console.log("IN saveSt");
+	console.log(document.getElementById("save_st").value);
+}
+</script>
+{% endblock tst %}

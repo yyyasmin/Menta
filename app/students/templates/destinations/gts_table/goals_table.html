@@ -32,7 +32,7 @@
 			<!--- TODOS --->
 			<div class="collapse" id="{{goal.id}}Todo" aria-expanded="true" 
 								  style="table-layout: fixed;">
-				{% with gt=todo, gt_obj=todo_obj, gt_sub_obj=None %}
+				{% with gt=todo, gt_obj=todo_obj, gt_sub_obj1=None, gt_sub_obj2=None %}
 					{% include "./destinations/gts_table/todos_table.html" %}
 				{% endwith %}
 			</div>  <!-- goal collapse -->
@@ -59,7 +59,7 @@
 					<table class="gray_table" >
 						{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}
 							<tr>
-								{% with gt=todo, gt_obj=todo_obj, gt_sub_obj=None %}
+								{% with gt=todo, gt_obj=todo_obj, gt_sub_obj1=None, gt_sub_obj2=None %}
 									{% include "./destinations/gts_table/todo_line_not_of_std.html" %}
 								{% endwith %}
 							</tr>
@@ -76,7 +76,7 @@
 			<!--- METHODS --->
 			<div class="collapse" id="{{goal.id}}Method" aria-expanded="true" 
 								  style="table-layout: fixed;">
-				{% with gt=method, gt_obj=method_obj, gt_sub_obj=None %}
+				{% with gt=method, gt_obj=method_obj, gt_sub_obj1=None, gt_sub_obj2=None %}
 					{% include "./destinations/gts_table/methods_table.html" %}
 				{% endwith %}
 			</div>  <!-- goal collapse -->

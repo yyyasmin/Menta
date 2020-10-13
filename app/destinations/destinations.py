@@ -29,7 +29,7 @@ from sqlalchemy import update
 
 from app.content_management import Content
 
-from app.students.students import get_dummy_student, attach_gt_to_std
+from app.students.students import get_dummy_student, attach_gt_to_std, get_author_id
 
 ### For cascade dropdown FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript
 from flask import jsonify

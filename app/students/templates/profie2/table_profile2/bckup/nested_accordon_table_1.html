@@ -1,0 +1,162 @@
+<!-- FROM https://www.codeply.com/go/bp/oxKYaxmDYF -->
+
+{% block nt %}
+
+<style>
+    .card {
+            border: 0;
+            margin-top:5em;
+            box-shadow: none;
+        }
+        
+        .card .card-heading {
+            background-color: #f5f5f5;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        
+        .card .card-heading .card-title a,
+        .card .card-heading .card-title a:hover {
+            text-decoration: none;
+        }
+        
+        .card .card-heading>.card-title>a>span.caret {
+            border-top: 6px solid black;
+        }
+        
+        .card .card-heading>.card-title>a.dropup>span.caret {
+            border-bottom: 6px solid black;
+            border-top: none;
+        }
+        
+        .card .card-body {
+            background-color: transparent;
+            border: 0 !important;
+            padding: 0.5rem 0 0.3rem 3rem;
+        }
+ 
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+<script>
+ 
+$(document).ready(function(){
+
+	$('.card-title a').on('click',function(){
+  
+   $(this).toggleClass('dropup')
+  
+  })
+
+})
+
+</script>
+
+
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card-group my-accordion" id="role-accordion" role="tablist" aria-multiselectable="true">
+	  
+        <div class="card">
+          <div class="card-heading border-br-3rem" role="tab" id="heading-role-1">
+			<h4 class="card-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#role-accordion" href="#collapse-role-1" aria-expanded="true" aria-controls="collapse-role-1">
+			   <span class="caret caret-mr"></span>
+              </a>Role 1 <a href="#" class="text-success text-underline">Edit</a>
+              <div class="action pull-right">
+                <a href="#" class="add-sub-role"><span class="glyphicon glyphicon-plus icon-w" aria-hidden="true"></span>Add Sub Role</a>
+                <a href="#" class="add-sub-role text-danger"><span class="glyphicon glyphicon-trash icon-w" aria-hidden="true"></span>Delete Role</a>
+              </div>
+            </h4>
+          </div>
+          <div id="collapse-role-1" class="card-collapse collapse" role="tabcard" aria-labelledby="heading-role-1">
+            <div class="card-body">
+              <div class="card-group my-accordion" id="sub-role-1-accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                  <div class="card-heading border-br-3rem" role="tab" id="heading-sub-role-1">
+                    <h4 class="card-title">
+                      <a class="collapsed" role="button" data-toggle="collapse" data-parent="#sub-role-1-accordion" href="#collapse-sub-role-1" aria-expanded="true" aria-controls="collapse-sub-role-1">
+                        <span class="caret"></span>
+                      </a>Sub Role 1 <a href="#" class="text-success text-underline">Edit</a>
+                      <div class="action pull-right">
+                        <a href="#" class="add-sub-role"><span class="glyphicon glyphicon-plus icon-w" aria-hidden="true"></span>Add Sub Role</a>
+                        <a href="#" class="add-sub-role text-danger"><span class="glyphicon glyphicon-trash icon-w" aria-hidden="true"></span>Delete Role</a>
+                      </div>
+                    </h4>
+                  </div>
+                  <div id="collapse-sub-role-1" class="card-collapse collapse" role="tabcard" aria-labelledby="heading-sub-role-1">
+                    <div class="card-body">
+                      <div class="card-group my-accordion" id="sub-role-1_sub-role-1-accordion" role="tablist" aria-multiselectable="true">
+                        <div class="card">
+                          <div class="card-heading border-br-3rem" role="tab" id="heading-sub-role-1_sub-role-1">
+                            <h4 class="card-title">
+                              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#sub-role-1_sub-role-1-accordion" href="#collapse-sub-role-1_sub-role-1" aria-expanded="true" aria-controls="collapse-sub-role-1_sub-role-1">
+                                <span class="caret"></span>
+                              </a>Sub Role 1 <a href="#" class="text-success text-underline">Edit</a>
+                              <div class="action pull-right">
+                                <a href="#" class="add-sub-role"><span class="glyphicon glyphicon-plus icon-w" aria-hidden="true"></span>Add Sub Role</a>
+                                <a href="#" class="add-sub-role text-danger"><span class="glyphicon glyphicon-trash icon-w" aria-hidden="true"></span>Delete Role</a>
+                              </div>
+                            </h4>
+                          </div>
+                          <div id="collapse-sub-role-1_sub-role-1" class="card-collapse collapse" role="tabcard" aria-labelledby="heading-sub-role-1_sub-role-1">
+                            <div class="card-body">
+                              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                              on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                              vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+		
+		
+        <div class="card">
+          <div class="card-heading border-br-3rem" role="tab" id="heading-role-2">
+            <h4 class="card-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#role-accordion" href="#collapse-role-2" aria-expanded="true" aria-controls="collapse-role-2">
+                <span class="caret caret-mr"></span>
+              </a>Role 2 <a href="#" class="text-success text-underline">Edit</a>
+              <div class="action pull-right">
+                <a href="#" class="add-sub-role"><span class="glyphicon glyphicon-plus icon-w" aria-hidden="true"></span>Add Sub Role</a>
+                <a href="#" class="add-sub-role text-danger"><span class="glyphicon glyphicon-trash icon-w" aria-hidden="true"></span>Delete Role</a>
+              </div>
+            </h4>
+          </div>
+          <div id="collapse-role-2" class="card-collapse collapse" role="tabcard" aria-labelledby="heading-role-2">
+            <div class="card-body">
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+              on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
+              beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+          </div>
+        </div>
+		
+		
+		
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+{% endblock nt %}

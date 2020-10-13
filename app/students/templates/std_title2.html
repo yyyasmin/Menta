@@ -1,0 +1,74 @@
+<!-- FROM https://codepen.io/Nosenation/pen/pGoDc -->
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  background-image: url(http://subtlepatterns.subtlepatterns.netdna-cdn.com/patterns/retina_wood.png);
+}
+
+.button {
+  display: block;
+  font-size: 22px;
+  text-align: center;
+  line-height: 44px;
+  text-decoration: none;
+  color: white;
+  background-color: #cc4331;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124px;
+  height: 44px;
+  margin-top: -22px;
+  margin-left: -62px;
+  text-shadow: 0 -1px -1px #af3a2a;
+  -moz-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.button:hover {
+  background-color: #d25544;
+  text-shadow: 0 -1px -1px #c4402f;
+  -moz-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+}
+.button:active {
+  margin-top: -18px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+</style>
+
+{% block std_title %}
+
+<footer>
+
+	<span style="align: left;">
+		
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.student_update',  selected_student_id=student.id) }}">ערוך פרטים</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_std_profile2', selected_student_id=student.id, selected_profile_id=0) }}">פרופיל</a></button>							
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_teachers2', selected_student_id=student.id, selected_teacher_id=0) }}">צוות חינוכי</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_documents2', selected_student_id=student.id) }}">דוחות</a></button>							
+		
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.edit_student_destinations2', selected_student_id=student.id, selected_destination_id=0) }}">מטרות</a></button>										
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.show_student_tree2',selected_student_id=student.id) }}">הצג עץ מטרות</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.plan_report2',    selected_student_id=student.id) }}">תוכנית אישית</a></button>
+		<button class="w3-button w3-small" ><a style="color:black;" href="{{ url_for('students.student_delete2', selected_student_id=student.id) }}">מחק</a></button>
+
+	</span>
+	
+</footer>
+
+{% endblock std_title %}
