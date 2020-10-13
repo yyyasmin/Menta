@@ -4,44 +4,37 @@
 
 <!-- DEBUG -->
 
-<!-- DEBUG -->
+<!-- DEBUG --> 
+
+		<td>
+			{% if g_ns.goal_printed == False %} 
+				{% include "destinations/dsts_table_1/goals_table.html" %} 							
+				{% set g_ns.goal_printed = True %}
+			{% endif %}  <!-- END GOALS -->
+		</td>
 		
-	{% for goal in student_goals if dst.is_parent_of(goal) %}  <!-- TAGS -->
-	{% set g_ns.goal_printed = False %}
-				
-		{% for method_type in method_types if goal.is_parent_of(method_type) %}  <!-- METHODS -->
-		{% set mt_ns.method_type_printed = False %}
-				
-			{% for test in tests if goal.is_parent_of(test) %}  <!-- GOALS -->
-			{% set t_ns.test_printed = False %}
-										
-				{% if g_ns.goal_printed == False %}  
-					<td>
-						{% include "destinations/dsts_table_1/goals_table.html" %} 							
-					</td>
-					{% set g_ns.goal_printed = True %}
-				{% endif %}  <!-- END GOALS -->
+		<td>	
+			{% for method_type in method_types if goal.is_parent_of(method_type) %}  <!-- METHODS -->
+				{% set mt_ns.method_type_printed = False %}
+					
 
 				{% if mt_ns.method_type_printed == False %}  <!-- MEYHOD-TYPE -->
-					<td>
-						{% include "destinations/dsts_table_1/method_type_table.html" %} 							
-					</td>
+					{% include "destinations/dsts_table_1/method_type_table.html" %} 							
 					{% set mt_ns.method_type_printed = True %}
 				{% endif %}  <!-- END MEYHOD-TYPE -->
 
-							
+			{% endfor %}  <!-- METHOD-TYPES -->	
+		</td>
+		
+		<td>						
+			{% for test in tests if goal.is_parent_of(test) %}  <!-- GOALS -->
+				{% set t_ns.test_printed = False %}
+											
 				{% if t_ns.test_printed == False %}  <!-- TESTS -->
-					<td>
-						{% include "destinations/dsts_table_1/tests_table.html" %} 							
-					</td>
+					{% include "destinations/dsts_table_1/tests_table.html" %} 							
 					{% set t_ns.test_printed = True %}
 				{% endif %}  <!-- END TESTS -->
-
 			{% endfor %}  <!-- TESTS -->
-			
-		{% endfor %}  <!-- METHOD-TYPES -->	
-		
-	{% endfor %}  <!-- GOALS -->	
-			
+		</td>
 
 {% endblock goals_methods_tests_body %}

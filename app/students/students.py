@@ -1468,18 +1468,29 @@ def edit_std_destinations_by_ssharon():
         db.session.commit()
         tests.append(test)
 
+    whos = Accupation.query.all()
+    if whos==[] or whos==None:
+        who = Accupation('Dummy', 'Dummy', author_id)
+        db.session.add(who)
+        db.session.commit()
+        whos.append(who)
+    
+    default_who = Accupation.query.filter(Accupation.default==True).first()
+    #print("2222222222222222222222222222222")
+
     print("")
     print("")
     print("METHOD_TYPES: ", method_types)
     print("TESTS: ", tests)
+    print("WHOS: ", whos)
     print("")
     print("")
  
     
-    sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
-    default_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
-    if default_sub_tag == None:
-        default_sub_tag = Sub_tag.query.filter(Sub_tag.default==True).first()
+    #sub_tags = Sub_tag.query.order_by(Sub_tag.title).all() 
+    #default_sub_tag = Sub_tag.query.filter(Sub_tag.selected==True).first()
+    #if default_sub_tag == None:
+    #    default_sub_tag = Sub_tag.query.filter(Sub_tag.default==True).first()
 
     age_ranges = Age_range.query.order_by(Age_range.from_age).all()     
     default_ar = Age_range.query.filter(Age_range.selected==True).first()
@@ -1542,10 +1553,6 @@ def edit_std_destinations_by_ssharon():
 
     #print("1111111111111111111111111111111")
 
-    whos = Accupation.query.all()
-    default_who = Accupation.query.filter(Status.default==True).first()
-    #print("2222222222222222222222222222222")
-
     statuss = Status.query.all()
     default_status = Status.query.filter(Status.default==True).first()
     if default_status == None:
@@ -1598,7 +1605,7 @@ def edit_std_destinations_by_ssharon():
                                                         std_txts=std_txts,
                                                         
                                                         tags=std_dsts_tags, default_tag=default_tag,
-                                                        sub_tags=sub_tags, default_sub_tag=default_sub_tag,                                                        
+                                                        #sub_tags=sub_tags, default_sub_tag=default_sub_tag,                                                        
                                                         statuss=statuss, default_status=default_status,
                                                         whos=whos, default_who=default_who,
                                                         age_ranges=age_ranges, default_ar=default_ar)

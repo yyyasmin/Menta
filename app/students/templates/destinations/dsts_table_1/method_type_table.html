@@ -18,8 +18,7 @@
 		
 			{% for method in student_methods if goal.is_parent_of(method) and
 												method_type.is_parent_of(method) %}  
-				<tr>
-					
+				<tr>					
 					<td style="width:60%">
 							<div  class="title" type="button" style="color:black;" id="iner_purple_title" 
 												onclick="myFunction('{{method.id}}')">
@@ -32,20 +31,19 @@
 							</div>
 					</td>
 
-					
-					<td style="width:40%">
-						{% for who in whos if method.is_parent_of(who)  %}  <!-- WHOS -->
-								<div type="button" style="color:black;" id="iner_purple_title" 
-												   onclick="myFunction('{{who.id}}')">
-									{{ who.title }}   
-								</div>
-										
-								<div type="button" id="{{who.id}}" class="w3-hide w3-center iner_purple_body">
-									{{who.body}}
-								</div>
-						{% endfor %}  <!-- WHOS -->					
-					</td>
-				
+					{% for who in whos if (method.is_parent_of(who)) and (who.title != 'Dummy')  %}  <!-- WHOS -->
+						<td style="width:40%">
+							
+									<div type="button" style="color:black;" id="iner_purple_title" 
+													   onclick="myFunction('{{who.id}}')">
+										{{ who.title }}   
+									</div>
+											
+									<div type="button" id="{{who.id}}" class="w3-hide w3-center iner_purple_body">
+										{{who.body}}
+									</div>
+						</td>
+					{% endfor %}  <!-- WHOS -->					
 				</tr>			
 			{% endfor %}  <!-- METHODS -->
 			
