@@ -29,19 +29,14 @@
 						{% include "destinations/dsts_table_1/method_type_table.html" %} 							
 					</td>
 					{% set mt_ns.method_type_printed = True %}
-				{% else %}
-					<td>TEST IS True</td>
 				{% endif %}  <!-- END MEYHOD-TYPE -->
 
 							
-
 				{% if t_ns.test_printed == False %}  <!-- TESTS -->
 					<td>
 						{% include "destinations/dsts_table_1/tests_table.html" %} 							
 					</td>
 					{% set t_ns.test_printed = True %}
-				{% else %}
-					<td></td>
 				{% endif %}  <!-- END TESTS -->
 
 			{% endfor %}  <!-- TESTS -->
