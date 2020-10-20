@@ -29,6 +29,9 @@ from wtforms.fields.html5 import DateField
 ### For Inheritance
 from sqlalchemy.ext.declarative import declared_attr, has_inherited_table
 
+import json
+from time import time
+   
 
 #FROM https://hackersandslackers.com/forms-in-flask-wtforms/
 from wtforms import (StringField,
@@ -43,7 +46,7 @@ from wtforms import (StringField,
 ### FROM https://stackoverflow.com/questions/46036966/flask-wtform-validation-failing-for-selectfield-why
 
 
-#FROM https://stackoverflow.com/questions/7979548/how-to-render-my-textarea-with-wtforms
+#FROM https://stackoverflow.com/questions/7979548/how-to-render-my-titlearea-with-wtforms
 from wtforms.fields import StringField
 from wtforms.widgets import TextArea
 
@@ -109,22 +112,20 @@ class User(db.Model):
   
     ####################################### User
 
-import json
-from time import time
-            
 
-#FROM https://github.com/miguelgrinberg/microblog/blob/v0.8/app/models.py
+class Star(db.Model):
+   
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    body =  db.Column(db.String(500))
+    
+    selected = db.Column(db.Boolean)
+    hide =     db.Column(db.Boolean)
 
-from datetime import datetime
-from flask_login import UserMixin
-
-#FROM https://github.com/miguelgrinberg/microblog/blob/v0.8/app/models.py
-
-
-#FROM  Inheritance https://github.com/pallets/flask-sqlalchemy/issues/479
-
-#FROM  Inheritance https://github.com/pallets/flask-sqlalchemy/issues/479
-
+    def __init__(self, title):
+        self.title=title
+        self.selected=False
+        self.hide=False
 
 
 ########################################## Std_general_txt 			   
@@ -510,7 +511,7 @@ class Method(General_txt):
 
 
 ############################################ Todo_form
-#FROM https://stackoverflow.com/questions/7979548/how-to-render-my-textarea-with-wtforms
+#FROM https://stackoverflow.com/questions/7979548/how-to-render-my-titlearea-with-wtforms
 ########################################## Todo     
 class Todo_form(FlaskForm):
     id = db.Column(db.Integer, primary_key=True)

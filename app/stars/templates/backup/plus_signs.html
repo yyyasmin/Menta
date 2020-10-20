@@ -1,0 +1,71 @@
+<!-- FROM http://jsfiddle.net/webtiki/2gG6d/67/  -->
+
+<style>
+.container, .container2, .container3 {
+    text-align: center;
+}
+.triangle{
+    margin:0 0.1em;
+}
+.container .triangle {
+    font-size: 30px;
+}
+.container2 .triangle {
+    font-size: 50px;
+}
+.container3 .triangle {
+    font-size: 100px;
+}
+
+.triangle {
+    position: relative;
+    border: none;
+    display: inline-block;
+    color: #68aaa9;
+    line-height:1em;
+}
+.triangle:after {
+    content:" ";
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: 0.18em solid transparent;
+}
+.triangle.triangle-bottom:after {
+    top: 90%;
+    right:0.268em;
+    border-top-color: currentColor;
+}
+.triangle.triangle-top:after {
+    bottom: 0.95em;
+    left:0.268em;
+    border-bottom-color: currentColor;
+}
+.triangle.triangle-left:after {
+    right: 100%;
+    top: 0.268em;
+    border-right-color: currentColor;
+}
+.triangle.triangle-right:after {
+    left: 100%;
+    top: 0.268em;
+    border-left-color: currentColor;
+}
+</style>
+
+
+
+<div class="container">
+    <div class="triangle triangle-top"> 
+        <i class="fa fa-plus-square"></i>
+    </div>
+    <div class="triangle triangle-right">
+        <i class="fa fa-plus-square"></i>
+    </div>
+    <div class="triangle triangle-bottom"> 
+        <i class="fa fa-plus-square"></i>
+    </div>
+    <div class="triangle triangle-left">
+        <i class="fa fa-plus-square"></i>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+
+{% extends "act_layout.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<script id="code">
+			
+			function init() {
+
+			console.log("BEFORE INIT");
+
+
+			var styles = ["animate4", "animate1", "animate2", "animate3"];
+			var scales = ["scale1", "scale2", "scale3"];
+			var opacities = [
+				"opacity1",
+				"opacity1",
+				"opacity1",
+				"opacity2",
+				"opacity2",
+				"opacity3"
+			];
+
+			function rand(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			var stars = "";
+			var count = 300;
+			var widthWindow = window.innerWidth;
+			var heightWindow = window.innerHeight;
+
+			for (var i = 0; i < count; i++) {
+				stars +=
+				"<span class='star " +
+				styles[rand(0, 4)] +
+				" " +
+				opacities[rand(0, 6)] +
+				" " +
+				scales[rand(0, 3)] +
+				"' style='animation-delay: ." +
+				rand(0, 9) +
+				"s; left: " +
+				rand(0, widthWindow) +
+				"px; top: " +
+				rand(0, heightWindow) +
+				"px;'></span>";
+			}
+
+			document.querySelector(".sky").innerHTML = stars;
+			}
+
+		</script>
+
+	</head>
+		
+	
+	{% include "stars_style.html" %}
+		
+	{% include "dsply_stars_style.html" %}
+		
+	<body onload="init()">
+		
+		<div class="sky"></div>
+		<div class="asteroid"></div>
+		
+		
+	
+<div class="star3-container">
+
+	<!-- FROM http://jsfiddle.net/q40h1ngf/ -->
+	
+	
+	{% for star in stars %}
+
+	<button type="button" style="background: transparent; boreder:5px solid transparent; color:transparent" >
+	<!-- FROM https://github.com/FortAwesome/react-fontawesome/issues/225 -->
+	<!--  FROM http://jsfiddle.net/iandonahue/M3jxT/1409/ -->
+		
+		<a href="{{ url_for('destinations.edit_star_destinations', selected_star_id=star.id ) }}">
+		{% include "./backup/star_1.html" %}
+		</a>
+	</button>
+		
+		
+
+<!-- FROM https://stackoverflow.com/questions/14793367/how-to-add-a-spinner-icon-to-button-when-its-in-the-loading-state -->
+
+		
+	{% endfor %}		
+
+
+</div>					
+					
+	</body>
+
+
+<!-- FROM https://codepen.io/velopert/pen/PzoWpE -->
+<script>
+
+
+function animateStar(e){
+	e.preventDefault;
+
+	element = document.getElementById(e);
+	
+	console.log(e);
+	
+	// -> removing the class
+	element.classList.remove("animate_star1");
+
+	// -> triggering reflow /* The actual magic */
+	// without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+	element.offsetWidth = element.offsetWidth;
+
+	// -> and re-adding the class
+	element.classList.add("animate_star1");
+}
+
+
+</script>
+
+
+
+	
+{% endblock %}

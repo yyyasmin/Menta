@@ -42,6 +42,8 @@ def create_app(config_class=Config):
     app.jinja_env.add_extension('jinja2.ext.loopcontrols')
        
     from app.users.users import usr
+    
+    
     from app.schools.schools import scl
     from app.students.students import std
     from app.teachers.teachers import tchr
@@ -66,8 +68,11 @@ def create_app(config_class=Config):
     from app.resources.resources import rsrc
     from app.documents.documents import doc
 
+    from app.stars.stars import star1
+
     # register our blueprints
     app.register_blueprint(usr)
+    
     app.register_blueprint(scl)
     app.register_blueprint(std)
     app.register_blueprint(tchr)
@@ -90,6 +95,8 @@ def create_app(config_class=Config):
     
     app.register_blueprint(rsrc)
     app.register_blueprint(doc)
+
+    app.register_blueprint(star1)
 
     return app
 

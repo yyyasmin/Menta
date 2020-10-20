@@ -1,0 +1,150 @@
+<style>
+
+* {
+	.box-sizing: border-box;
+}
+
+html {
+	min-height: 100vh;
+}
+
+.star3-container {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows:    repeat(3, auto);
+	margin: 50px;
+	column-gap: 10%;
+	grid-row-gap: 10%;
+	fint_size: 4em;
+	justify-content: center;
+	
+	justify-content: center;
+	align-items: center;
+	
+}
+
+.star3 {
+	width: 125px;
+	height: 125px;
+	color: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+	color: lightyellow;
+}
+
+<!-- FROM https://stackoverflow.com/questions/12732663/text-gradient-with-font-awesome -->
+.fa-gradient {
+	background: -webkit-gradient(linear, left top, left bottom, from(#f00), to(#333));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+
+.star1 { 
+	height: 100%; 
+	width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;   <!-- X AXIS LEFT and RIGHT -->
+	background: purple;
+	
+	position: static;
+
+
+}
+
+.animate_star1 { 
+
+  -webkit-animation-name: star3Animation1;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 3;
+  -webkit-animation-timing-function: ease;
+
+}
+
+@-webkit-keyframes star3Animation1 {
+  
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+
+	20% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	40% {
+		opacity: 1;
+		-webkit-transform: scale(3);
+	}
+
+	60% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+  
+}
+
+
+
+@-webkit-keyframes star3Animation2 {
+  0% {
+    opacity: 0;
+    transform:  scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform:  scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform:  scale(1);
+  }
+}
+
+
+.star2 {   <!-- STAR SHAPE -->
+	min-height: 100%; 
+	min-width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;  <!-- X AXIS LEFT and RIGHT -->
+	background: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+	color: #ffffb3;
+	margin: 0;
+	
+	position: static;
+	
+		
+}
+
+	
+.star4 { 
+	background-color: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+	color: lightyellow;
+	color: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+
+}
+
+
+<!-- FROM http://blog.fontawesome.io/2014/05/19/stacking-text-and-icons/ -->
+
+.calendar-text { margin-top: .3em; }
+.file-text { margin-top: .2em; }
+
+.fa-stack { font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.stacked-icons {
+  margin-top: 20px;
+  text-align: center;
+}
+.fa-stack + .fa-stack { margin-left: .3em; }
+.fa-stack { margin-bottom: 20px; }
+
+<!-- FROM http://jsfiddle.net/q40h1ngf/ -->
+
+	
+</style>
+
+
+

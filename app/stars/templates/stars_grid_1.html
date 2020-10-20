@@ -1,0 +1,216 @@
+{% extends "act_layout.html" %}
+
+{% block content %}
+
+
+<style>
+	
+.star3 {
+	//background: red;
+	width: 125px;
+	height: 125px;
+	border: 10px solid red;	
+	
+}
+
+
+.star1 { 
+	height: 100%; 
+	width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;   <!-- X AXIS LEFT and RIGHT -->
+	background: purple;
+
+}
+
+.animate_star1 { 
+	height: 100%; 
+	width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;   <!-- X AXIS LEFT and RIGHT -->
+	background: purple;
+	//border: 10px solid gold;
+	
+  -webkit-animation-name: star3Animation1;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 3;
+  -webkit-animation-timing-function: ease;
+
+}
+
+@-webkit-keyframes star3Animation1 {
+  
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+
+	20% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	40% {
+		opacity: 1;
+		-webkit-transform: scale(3);
+	}
+
+	60% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+  
+}
+
+
+
+@-webkit-keyframes star3Animation2 {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+.star2 {   <!-- STAR SHAPE -->
+	height: 100%; 
+	min-width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;  <!-- X AXIS LEFT and RIGHT -->
+	background: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+	color: #ffffb3;
+	//border: 5px solid green;
+}
+
+	
+.star4 { 
+	height: 100%; 
+	min-width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;  <!-- X AXIS LEFT and RIGHT -->
+	color: black;
+}
+	
+	
+div.gallery {
+	margin: 5px;
+	border: 1px solid #ccc;
+	width: 100px;
+	height: 120px;
+	float: right;
+	text-align: center;
+	/******** TRY ***********/
+	margin:2%;
+	margin-right:7%;
+	grid-template-columns: auto auto auto auto;
+	grid-template-rows: auto auto auto;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+</style>
+
+{% include "stars_style.html" %}
+	
+{% include "dsply_stars_style.html" %}
+	
+
+	<body onload="init()">
+		
+		<div class="sky"></div>
+		<div class="asteroid"></div>
+
+				
+			{% for star in stars %}
+			
+				<div class="star3">
+				
+					<div class = "gallery"><p>
+					
+							<i class="fa fa-star star2"></i>
+							
+							<a href="{{ url_for('schools.edit_schools') }}">
+							<img src="{{ url_for('static', filename='img/act.png') }}">ACT</a>
+					</div></p>
+						
+
+				</div>			
+			
+			{% endfor %}
+
+
+		
+
+	</body>
+		
+
+		<script id="code">
+			
+			function init() {
+
+			console.log("BEFORE INIT");
+
+
+			var styles = ["animate4", "animate1", "animate2", "animate3"];
+			var scales = ["scale1", "scale2", "scale3"];
+			var opacities = [
+				"opacity1",
+				"opacity1",
+				"opacity1",
+				"opacity2",
+				"opacity2",
+				"opacity3"
+			];
+
+			function rand(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			var stars = "";
+			var count = 300;
+			var widthWindow = window.innerWidth;
+			var heightWindow = window.innerHeight;
+
+			for (var i = 0; i < count; i++) {
+				stars +=
+				"<span class='star " +
+				styles[rand(0, 4)] +
+				" " +
+				opacities[rand(0, 6)] +
+				" " +
+				scales[rand(0, 3)] +
+				"' style='animation-delay: ." +
+				rand(0, 9) +
+				"s; left: " +
+				rand(0, widthWindow) +
+				"px; top: " +
+				rand(0, heightWindow) +
+				"px;'></span>";
+			}
+
+			document.querySelector(".sky").innerHTML = stars;
+			}
+
+		</script>
+
+
+{% endblock %}

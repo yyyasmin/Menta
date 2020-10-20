@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+
+</style>
+
+</br>
+
+<h2><div id="page_title">בתי ספר</center></div></h2>
+
+</br>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('stars.star_add') }}">הוסף כוכב חדש</a>
+<strong></h5></button>
+
+	<table class="std_table">
+		<tr id="header_row">			
+			<th>שם</th>
+			<th>תאור</th> 
+		</tr>
+			
+		{% for star in stars %}			
+			<tr>
+				<td>{{ star.title }}</td>
+				<td>{{ star.body }}</td> 
+				
+				<td>
+										
+					<button class="btn btn-default">
+						<strong><a style="color:black;" 
+							   href="{{ url_for('stars.star_update', selected_star_id=star.id) }}">
+							ערוך</a>
+						</strong>
+					</button>
+
+				</td>
+			</tr>
+			
+		{% endfor %}
+	</table>
+	
+{% endblock %}

@@ -1,0 +1,25 @@
+{% block star_1 %}
+
+	<span class="fa-layers fa-fw star3" 
+			 style="display: flex;"
+			 id="{{star.id}}" onclick="animateStar( {{star.id}} )"> 
+						
+					
+				<i class="fas fa-star star3"
+				   style="font-size:100px;">
+				</i> 
+				
+				<!-- FROM https://stackoverflow.com/questions/43642283/text-inside-fa-icon -->
+				<i class="fas fa-text fa-fw fa-1x">
+				</i>
+							
+				<span class="fa-layers-text fa-inverse" 
+					  data-fa-transform="shrink-8 down-3" 
+					  style="color:darkblue; font-size:40px;">
+						{{star.title}} {{star.id}} {{star.body}}
+				</span>
+
+		
+	</span>
+	
+{% endblock star_1 %}

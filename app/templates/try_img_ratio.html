@@ -7,7 +7,6 @@
 div.gallery {
 	margin: 5px;
 	border: 1px solid #ccc;
-	float: left;
 	width: 100px;
 	height: 120px;
 	float: right;
@@ -83,6 +82,14 @@ div.gallery img {
 			<div class = "gallery"><p>			
 			<a href="{{ url_for('students.edit_students') }}">
 			<img src="{{ url_for('static', filename='img/form.png') }}">תוכנית טיפול אישית לתלמיד</a>						
+			</div></p>
+		</div>
+
+					
+		<div class = "grid-item">								
+			<div class = "gallery"><p>			
+			<a href="{{ url_for('stars.star') }}">
+			<img src="{{ url_for('static', filename='img/act.png') }}">ACT</a>						
 			</div></p>
 		</div>
 

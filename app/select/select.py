@@ -16,6 +16,7 @@ from app.models import Profile, Strength, Weakness, Subject
 from app.models import Accupation, Tag, Scrt, Age_range, Status
 from app.models import Resource, Document, Ufile
 from app.models import Destination, Goal, Todo, Method, Method_type, Test
+from app.models import Star
 from app.models import Std_general_txt
 
 from app.forms import LoginForm, EditForm
@@ -48,6 +49,25 @@ slct = Blueprint(
     template_folder='templates'
 ) 
 from app import *
+
+
+
+@slct.route('/star_select2/<int:selected_subject_id>', methods=['GET', 'POST'])
+def star_select2(selected_star_id):
+
+    stars = Star.query.all()		
+    for star in stars:
+        star.selected = False
+
+    star = Star.query.filter(Star.id==selected_star_id).first()
+    if star == None:
+        flash("Please select a star plese ")
+        return redirect(url_for("profile.edit_profile_by_tag"))
+
+    star.selected = True
+    db.session.commit()
+
+    return star	
 
 
 #Select a teacher from a list 

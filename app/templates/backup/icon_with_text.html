@@ -1,0 +1,89 @@
+<!-- FROM https://codepen.io/fontawesome/pen/oNvxjde  -->
+<style>
+/* demo styling */
+* {
+  /* resetting the box model for all elements */
+  box-sizing: border-box;
+}
+
+.demo-frame {
+  /* making a nice frame/layout for examples */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  min-height: 100vh;
+  color: rgb(52, 58, 64);
+}
+
+.demo-example {
+  /* individual demo example styling */
+  margin-bottom: -2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  margin-bottom: 2rem;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  line-height: 1;
+  color: WhiteSmoke;
+}
+
+.button-complete {
+  background: MediumSeaGreen;
+}
+
+.button-unassign {
+  background: OrangeRed;
+}
+
+.button-certificate {
+  background: DarkGray;
+}
+
+.button .svg-inline--fa {
+  margin-right: 0.5rem;
+}
+
+
+
+</style>
+
+
+<html>
+  <head>
+    <title>Aligning Font Awesome Icons in Elements (SVG + JS)</title>
+    
+    <script defer src="https://pro.fontawesome.com/releases/v5.10.1/js/all.js"></script>
+  </head>
+
+  <body>
+    <main class="demo-frame">
+      <section class="demo-example">
+        
+        <!-- We set a fixed-width on all icons so they take up the same amount of width and thus are visually lined up when vertically scanning the icons and the text next to them -->
+        <button type="button" class="button button-complete">
+          <i class="fas fa-check fa-fw"></i>
+          Mark Completed
+        </button>
+
+        <button type="button" class="button button-unassign">
+          <i class="fas fa-user-times fa-fw"></i>
+          Unassign 
+        </button>
+        
+        <!-- we needed to power-transform the badge icon down a smidge to visually align things with the text in this case -->
+        <button type="button" class="button button-certificate">
+          <i class="fas fa-badge fa-fw" data-fa-transform="down-0.5"></i>
+          Grant Certificate
+        </button>
+      </section>
+    </main>
+  </body>
+</html>

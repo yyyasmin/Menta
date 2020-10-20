@@ -5,16 +5,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-    'postgresql://postgres:tomererezor1@localhost:5432/menta4_from_heroku'
+    'postgresql://postgres:tomererezor1@localhost:5432/stars'
     #'postgresql://postgres:tomererezor1@localhost:5432/menta'
     #SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:tomererezor1@localhost:5432/menta'       #menta db
 
     #FROM https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xxii-background-jobs
-    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'   
+    #REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'   
     
     
     
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    #SQLALCHEMY_TRACK_MODIFICATIONS = True
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     #SQLALCHAMY_ECHO = True
 

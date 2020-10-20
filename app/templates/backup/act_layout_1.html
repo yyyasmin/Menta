@@ -1,0 +1,53 @@
+
+<!doctype html>
+
+<html>
+
+	<head>
+	
+	{% include "layout_header.html" %}
+
+		<title>ACT</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">  
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	</head>
+	
+	
+	<body style="font-size:14pt; font-family:Arial;">
+		
+	<div> IN templates\act_layout.html  </div>
+			
+	<table class="no_border" style="width:80%; margin-right:3%;">
+		<tr style="height:25px;">
+		
+			<td style="padding:0; marging:0; width:20%;" class="no_border">
+				<h3 style="color:blue">
+					{% if current_user.is_authenticated %}
+						 שלום {{ current_user.username }}!
+					{% endif %}				
+				</h3>
+			</td>
+			
+			<td style="padding:0; marging:0; width:60%;" class="no_border">
+				<h2 style="color:green">
+					<center><strong>מנט"א - מערכת ניהול טיפול אישי</strong></center>
+				</h2>
+			</td>
+
+		</tr>
+	</table>
+			
+
+		{% include 'flash_err.html' %}
+		
+				
+		{% block content %}{% endblock %}
+				
+		
+	</body>
+	
+</html>

@@ -1,0 +1,27 @@
+{% block act_title %}
+		
+		<table style="width:80%; margin-right:3%;">
+
+			<tr style="height:25px;">
+				
+	
+				<td style="padding:0; marging:0; width:20%;">
+					<h3 style="color:blue">
+						{% if current_user.is_authenticated %}
+							 שלום {{ current_user.username }}!
+						{% endif %}				
+					</h3>
+				</td>
+
+				<td class="page_title" style="padding:0; marging:0; width:60%;">
+					<h2 style="color:#ffffb3">
+						<center><strong>ACT</strong></center>
+					</h2>
+				</td>
+
+
+			</tr>
+			
+		</table>
+		
+{% endblock act_title %}
