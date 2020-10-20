@@ -1,0 +1,29 @@
+{% block tag_table %}
+
+
+	<div type="button" style="color:black;" id="gray_title"
+					   onclick="myFunction('{{tag.id}}')">
+		תחום: {{ tag.title }}    <!-- {{ tag.title|replace("-", "\n") }} -->				
+	</div>
+	
+	<div type="button" style="color:black;" 
+					   id="{{tag.id}}" class="w3-hide  w3-center gray_body">
+		{{tag.body}}
+	</div>	
+
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+		
+{% endblock tag_table %}		
+
+
+

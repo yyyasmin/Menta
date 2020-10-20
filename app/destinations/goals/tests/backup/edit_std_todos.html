@@ -1,0 +1,36 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container" id="container_id">	
+
+
+	<h2><strong><center><div>תלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>מטרה:  {{ dst.title }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div>יעד:  {{ std_goal.goal_title }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div> רשימת משימות: </div></center></strong></h2>
+	<p></p>	
+
+	</br>
+	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.try_todo_to_student_add') }}">הוסף משימה</a>
+	<strong></h5></button>
+
+	</br>
+		
+	{% for std_todo in std_todos %}
+		<br><br><br>
+		{% include "./goals/todos/edit_one_std_todo_form.html" %}
+	{% endfor %}
+	</br>
+
+</div>   <!-- container -->
+
+{% endblock %}

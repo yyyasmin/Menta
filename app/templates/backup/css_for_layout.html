@@ -1,0 +1,312 @@
+{% block css_for_layout %}
+
+<style>
+
+body {
+	//background-color: #ffffff;
+	//font-size:14pt; font-family:Arial;
+	font-size: 1em;
+} 
+
+.mentaNavbar  {
+
+	//overflow-x: scroll;	
+	width: 90%;
+	lang: he;
+	
+	font-size: 20px;
+	font-family:David;
+	
+	background-color: skyblue; 
+	display: inline-block;
+	justify-content: center;
+}
+
+#mentaNavbar  {
+	//overflow-x: scroll;	
+	width: 90%;
+	text-align: center;	
+	margin-bottom: 2%;
+	lang: he;
+	font-size: 20px;
+	background: yellow;
+	float: center;
+	display:flex;
+}
+
+#dropdown_id  {
+	lang: he;
+	dir: rtl;
+	align: center;
+	float: right;
+}
+
+#container_id  {
+
+	//overflow-x: scroll;	
+	align: center;
+	width: 90%;
+	text-align: center;	
+	margin-bottom: 2%;
+	lang: he;
+	dir: rtl; 
+	
+	font-size: 1em;
+	font-family:David;
+	
+	background-color: #f9ffe5; 				
+}
+
+input[type="text"]
+{
+	font-size: 1em;
+	font-family:David;
+}
+
+input[type="date"]
+{
+	font-size: 0.9em;
+	font-family:David;}
+
+input[type="title"]
+{
+	font-size: 1em;
+	font-family:David;
+}
+
+
+
+#container_dst_add_id  {
+
+	align: center;
+	width: 85%;
+	text-align: right;	
+	margin-right: 10%;
+	margin-top:2%;
+	
+	lang: he;
+	dir: rtl; 	
+	
+	background-color: #e6e6ff;  	
+			
+}
+
+.w3-container  {
+	lang: he;
+	dir: rtl; 	
+	
+	align: center;
+	width: 85%;
+	text-align: right;	
+	align: right;
+	margin-right: 10%;
+	
+}
+
+div.panel {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+
+.ppp {
+	//border: none;
+	padding: 0 30px;
+	text-align:right;	
+}
+
+#ppp {
+	border: solid 1px #EEEEEE;
+	text-align:right;
+	width: 100%;
+}
+
+.header_panel.accordion {
+	text-decoration:underline; 
+	font-weight: bold;
+}
+
+#header_panel.accordion {
+	text-decoration:underline; 
+	font-weight: bold;
+}
+
+/*** WHITE ***/
+.white_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #f2f2f2;
+	
+	width: 100%;
+		
+}
+#white_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #f2f2f2;
+	
+	width: 100%;
+		
+}
+/*** WHITE ***/
+
+
+/**** GREEN ***/
+.green_header.accordion {
+	color: #fff;
+	background-color: #346767;
+	border-color: #EEEEEE;
+	
+	text-decoration:underline; 
+	font-weight: bold;
+}
+#green_header.accordion {
+	color: #fff;
+	background-color: #346767;
+	border-color: #EEEEEE;
+	
+	text-decoration:underline; 
+	font-weight: bold;
+}
+
+.green_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	text-align:right;
+	
+	width: 100%;
+		
+}
+#green_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	
+	width: 100%;
+		
+}
+/**** GREEN ***/
+
+
+/*** BLUE ***/
+#blue_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+}
+.blue_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+}
+
+.blue_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+}
+#blue_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+}
+/*** BLUE ***/
+
+
+/*** YELLOW ***/
+#yellow_header.accordion {
+	color: #000d1a;
+	background-color: #ffff66;
+	border-color: #EEEEEE;
+}
+.yellow_header.accordion {
+	color: #000d1a;
+	background-color: #ffff66;
+	border-color: #EEEEEE;
+}
+
+
+#light_yellow_header.accordion {
+	color: #000d1a;
+	background-color: #ffffcc;
+	border-color: #EEEEEE;
+}
+.light_yellow_header.accordion {
+	color: #000d1a;
+	background-color: #ffffcc;
+	border-color: #EEEEEE;
+}
+
+.yellow_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #ffffb3;
+	color: #000000;
+}
+#yellow_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #ffffb3;
+	color: #000000;
+}
+/*** YELLOW ***/
+
+
+/*** PINK ***/
+#pink_header.accordion {
+	color: #000d1a;
+	background-color: #ff99ff;
+	border-color: #EEEEEE;
+}
+.pink_header.accordion {
+	color: #000d1a;
+	background-color: #ff99ff;
+	border-color: #EEEEEE;
+}
+
+.pink_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #ffe6ff;
+	color: #000000;
+}
+#pink_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #ffe6ff;
+	color: #000000;
+}
+/*** PINK ***/
+
+
+#edit_list_id  {
+	background-color: #ffcc66;
+}
+
+#show_tree_id  {
+ background-color: plum;
+}
+
+#edit_sub_list_id {
+	background-color: #00ffcc;
+}
+
+#save_id {
+	background-color: #99ccff;
+}
+
+#delete_id  {
+	background-color: #ff9999;
+}
+
+a:  {
+color: black;
+}
+
+#header_row  {
+background-color: #ffff4d;
+}
+
+#actions {
+color: black;
+}
+
+</style>
+
+{% endblock css_for_layout %}

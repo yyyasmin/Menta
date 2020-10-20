@@ -1,0 +1,28 @@
+<!-- FROM https://stackoverflow.com/questions/32260184/svg-scale-animation-from-center-point-instead-of-upper-left-corner 
+-->
+
+<svg viewBox="0 0 650 500" class="svgStar" width="640" height="480" style="postion:absolute" 
+							 xmlns="http://www.w3.org/2000/svg" 
+							 xmlns:svg="http://www.w3.org/2000/svg">
+    <defs>
+		<g id="g_star">
+			<polygon id="def-polygon" fill="#ffffb3"  id="svg_3" points="461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 551.9192504882812,227.22152709960938 497.37005615234375,268.5777893066406 517.1926879882812,334.09893798828125 461.00390625,294.99932861328125 404.81512451171875,334.09893798828125 424.63775634765625,268.5777893066406 370.08856201171875,227.22152709960938 438.52838134765625,225.8268280029297 461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 " stroke-width="5"/>
+			
+			<text fill="#000000" font-family="David" font-size="24" id="svg_4" stroke-width="0" text-anchor="middle" x="467.003905" xml:space="preserve" y="256.761714">עצמאות</text>
+		</g>
+	
+	</defs>
+
+    <use xlink:href="#g_star">
+	
+        <animateTransform attributeName="transform" 
+        type="scale"
+		transform-origin="center"
+        from="-1"
+        to="1"  
+        dur="1s"
+		begin="click"
+        repeatCount="5" />
+		
+    </use>   
+</svg>

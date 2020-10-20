@@ -1,0 +1,20 @@
+{% block std_dst_goal_due_date %} 
+  
+   <label for="due_date">תאריך יעד</label>
+   In std_dst_goal_due_date.html now is {{ now }}
+	<input type="date" class="form-control" id="due_date" name="due_date" value="{{ now }}">  <!-- new goal for student -->
+
+	{% if std.goals != [] %}
+			<div>in std.goals = {{ std.goals }}</div>
+		{% for std_goal in std.goals %}
+				std_goal.goal_id {{ std_goal.goal_id }}  goal_id: {{ goal.id }}
+			{% if std_goal.goal_id == goal.id %}
+			in std_goal.goal_id == goal.id 
+				{% if std_goal.due_date != None %}				
+					<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ std_goal.due_date.strftime('%Y-%m-%d') }}">				
+				{% endif %}
+			{% endif %}
+		{% endfor %}					
+	{% endif %}	
+	
+{% endblock std_dst_goal_due_date %}	

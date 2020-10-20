@@ -1,0 +1,30 @@
+		<table class="table">
+		
+			<tr>
+			
+				<th> מספר היעד </th>			
+				<th> כותרת היעד </th>
+				<th> תאור היעד </th>
+				<th> סטאטוס היעד </th>
+				<th> תאריך יעד </th>
+			
+			{% for std_goal in form.std_goals %}
+			<form method="POST" action="{{ url_for('students.post_goal_to_student_add2', selected_goal_id=std_goal.goal_id, selected_student_id=std.id) }}", destination='' enctype="multipart/form-data">	
+								
+				<tr>
+					<td>{{ std_goal.goal_id }}</td>
+					<td>{{ std_goal.goal_title }}</td>
+					<td>{{ std_goal.goal_body }}</td> 
+					<td>{{ std_goal.due_date.data }}</td>
+					<td>{{ std_goal.status.data }}</td>
+					
+					<td>
+						<button class="btn btn-success btn-xs" type="submit" value="הוסף יעד זה לתלמיד"></button>
+					</td>
+					
+				</tr>
+				
+			{% endfor %}
+			</form>
+		</table>
+		

@@ -1,0 +1,95 @@
+
+{% block one_goal_todo_form %}
+	
+	<table class="green_table">
+	
+		<tr>			
+				<th> מספר המשימה </th>	
+				<th> כותרת המשימה </th>
+				<th> תאור המשימה </th>
+				<th> תאריך ביצוע המשימה </th>
+				<th> סטאטוס המשימה </th>
+				<th> תפקיד האחראי על ביצוע המשימה </th>
+		</tr>
+						
+		<tr>
+		
+			<td>{{ todo.id }}</td>
+			<td>{{ todo.title }}</td>
+			<td>{{ todo.body }}</td> 
+			
+			
+			<td>
+				<div id="ar_div">
+					<input type="date" style="text-align:center" class="form-control" id="due_date" name="due_date" value="{{ todo.due_date }}">
+				</div>   <!-- ar_div -->
+			</td>	
+					
+			<td>סטאטוס:
+				<select style="color:{{ todo.status_color }}" name="selected_status" id="color_me">						
+					{% for sts in statuss %}
+						{% if sts in todo.children %}
+							<option style="color:{{ todo.status_color }}" value="{{ todo.status_title }}" selected>{{ todo.status_title }}</option>
+						{% else %}
+							<option style="color:{{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>						
+			</td>	
+			
+			<td>
+				<select class="select" name="selected_who" id="selected_who">	
+					{% for who in whos %}	
+						{% if who == todo.children %}
+							<option value="{{ who.id }}" selected="selected">{{ who.id }}</option>
+						{% else %}
+							<option value="{{ who.title }}">{{ who.title }}</option>
+						{% endif %}
+					{% endfor %}
+				</select>					
+			</td>
+
+			<td>								
+				{% set todo_num = todo.id * 2 + 1 %}
+				{{ todo_num }}									
+				<button class="btn btn-success btn-xs" type="submit" name="goal_and_todo_form_button_name" value="{{ todo_num }}">שמור</button>
+			</td>
+									
+		</tr>
+			
+	</table>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+<!-- call match_todo function for save todo details when submit button is pushed by the user -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.getJSON('/match_todo_to_std2',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+{% endblock one_goal_todo_form %}

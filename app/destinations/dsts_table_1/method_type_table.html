@@ -1,0 +1,66 @@
+{% block methods_type_table %}
+		
+		<table class="iner_purple_table">
+		{% if method_type.title != 'Dummy' %}
+			<tr>
+				<td colspan="2">
+					<div type="button" style="color:black;" id="iner_purple_title" 
+									   onclick="myFunction('{{method_type.id}}')">
+						סוג: {{ method_type.title }} 			
+					</div>
+					
+					<div type="button" id="{{method_type.id}}" class="w3-hide w3-center iner_purple_body">
+						{{method_type.body}}
+					</div>
+				</td>
+			</tr>
+			
+		
+			{% for method in student_methods if goal.is_parent_of(method) and
+												method_type.is_parent_of(method) %}  
+				<tr>					
+					<td style="width:60%">
+							<div  class="title" type="button" style="color:black;" id="iner_purple_title" 
+												onclick="myFunction('{{method.id}}')">
+								{{ method.title }}   
+
+							</div>
+									
+							<div type="button" id="{{method.id}}" class="w3-hide w3-center iner_purple_body">
+								{{method.body}}
+							</div>
+					</td>
+
+					{% for who in whos if (method.is_parent_of(who)) and (who.title != 'Dummy')  %}  <!-- WHOS -->
+						<td style="width:40%">
+							
+									<div type="button" style="color:black;" id="iner_purple_title" 
+													   onclick="myFunction('{{who.id}}')">
+										{{ who.title }}   
+									</div>
+											
+									<div type="button" id="{{who.id}}" class="w3-hide w3-center iner_purple_body">
+										{{who.body}}
+									</div>
+						</td>
+					{% endfor %}  <!-- WHOS -->					
+				</tr>			
+			{% endfor %}  <!-- METHODS -->
+			
+		{% endif %}
+		</table>
+
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+		
+{% endblock methods_type_table %}

@@ -1,0 +1,39 @@
+{% block dst_with_no_goals %}
+
+<tr>
+	{% if tp_ns.tag_printed == False %}  <!-- TAGS -->
+		<td>
+			{{ tag.title|replace("-", "\n") }}
+		</td>
+		{% set tp_ns.tag_printed = True %}
+	{% else %}
+		<td></td>
+	{% endif %}  <!-- END TAGS -->
+	
+
+							
+	<td>
+		<div type="button" style="color:black;" id="green_title" onclick="myFunction('{{dst.id}}')">
+			מטרה: {{ dst.title }} 
+																			
+			{% for sts in statuss %}	
+				{% for st in std_txts %}
+					{% if st.general_txt_id==dst.id %}
+						{% if st.status_id==sts.id %}
+							<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% endfor %}				
+		</div>
+		
+		<div type="button" style="color:black;" id="{{dst.id}}" class="w3-hide  w3-center green_body">
+			{{dst.body}}
+		</div>
+	</td>
+	{% set d_ns.dst_printed = True %}
+	<td></td>   <!-- GOALS COL -->
+	<td></td>   <!-- TODOS COL -->
+</tr>
+				
+{% endblock dst_with_no_goals %}

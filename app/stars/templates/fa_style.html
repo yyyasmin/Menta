@@ -1,0 +1,199 @@
+
+<style>
+
+.star1 { 
+	color: #ffffb3;
+	background: pink;
+}
+
+<!-- FROM https://codepen.io/gooseofmusic/pen/ZpXQxO -->
+
+.fa-star:hover {
+  -webkit-animation: star1 0.5s cubic-bezier(0.36, 0.07, 0.57, 0.99) infinite;
+          animation: star1 0.5s cubic-bezier(0.36, 0.07, 0.57, 0.99) infinite;
+		  grid-area: star1;
+}
+
+
+@star_animation {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes star1 {
+  0% {
+    -webkit-transform: scale(1.5);
+            transform: scale(1.5);
+  }
+  20% {
+    -webkit-transform: scale(2);
+            transform: scale(2);
+  }
+  30% {
+    -webkit-transform: scale(1.5);
+            transform: scale(1.5);
+  }
+  40% {
+    -webkit-transform: scale(2);
+            transform: scale(2);
+  }
+  100% {
+    -webkit-transform: scale(1.5);
+            transform: scale(1.5);
+  }
+}
+
+<!-- FROM https://codepen.io/gooseofmusic/pen/ZpXQxO -->
+
+
+
+
+<!-- FROM https://codepen.io/Pikaguru/pen/mjMPZM -->
+@keyframes star2 {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+<!-- FROM https://codepen.io/simoneas02/pen/gmREyQ  -->
+
+body {
+  padding: 10px;
+}
+
+.fa-star {
+  cursor: pointer;
+  font-size: 5em;
+  color: #FFEB3B;
+}
+
+.container-box {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr; 
+  grid-template-rows:    1fr 1fr 1fr;
+  grid-template-areas:
+    '. . .'
+    '. star1 .'
+    '. . .';
+}
+
+/* @media() */
+
+.box {
+  //background-color: #9009A0;
+  border-radius: 5px;
+}
+
+
+.a {
+  grid-area: a;
+}
+
+.b {
+  grid-area: b;
+}
+
+.c {
+  grid-area: c;
+}
+
+.d {
+  grid-area: d;
+}
+
+.e {
+  grid-area: e;
+}
+
+.f {
+  grid-area: f;
+}
+
+.g {
+  grid-area: g;
+}
+
+.h {
+  grid-area: h;
+}
+
+
+
+.i {
+  grid-area: i;
+}
+
+.j {
+  grid-area: j;
+}
+
+.k {
+  grid-area: k;
+}
+
+.l {
+  grid-area: l;
+}
+
+.m {
+  grid-area: m;
+}
+
+.n {
+  grid-area: n;
+}
+
+.o {
+  grid-area: o;
+}
+
+.p {
+  grid-area: p;
+}
+
+.q {
+  grid-area: q;
+}
+
+.r {
+  grid-area: r;
+}
+
+.s {
+  grid-area: s;
+}
+
+.t {
+  grid-area: t;
+}
+
+.u {
+  grid-area: u;
+}
+
+.fa-star {
+  grid-area: star1;
+}
+
+</style>

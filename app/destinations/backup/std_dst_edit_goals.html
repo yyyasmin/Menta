@@ -1,0 +1,140 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+{% block std_dst_edit_goals %} 
+
+<style>
+
+</style>
+
+
+
+<div class="container" id="container_id">	
+
+	<div>DEBUG:C:\Users\yasmi\Documents\מנטא\app\students\templates\destinations\std_dst_edit_goals.html</div>
+	
+	<h3><strong><center><div><u> רשימת יעדים של התלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+	
+	</br>
+	
+	<h4>
+		<button class="accordion" id="green_header" ><strong> רשימת יעדים למטרה  {{ dst.title }}</strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">{{ dst.body }}</p>
+		</div>
+	</h4>
+
+	</br>	
+	
+	{% for goal in std_dd_goals %}   <!-- std existing goals -->
+	
+		<form action="{{ url_for('students.goal_to_student_add2', selected_student_id=std.id, selected_goal_id=goal.goal_id)}}" method="POST"> 			
+	
+			</br></br>
+			
+			<h4>
+				<button class="accordion"<strong> יעד:   {{ goal.goal.title }}</strong></button>				
+				<div class="panel">
+				  <button>תאור היעד: {{ goal.goal.body }}</button>
+				</div>				
+			</h4>
+			
+			</br>
+			
+			<div class="form-group">
+				<input type="date" class="form-control" id="due_date" name="due_date" value="{{ goal.due_date.strftime('%Y-%m-%d') }}">
+			</div>
+			
+			</br>
+								
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div style="color:{{ form.status.color }}"> {{form.status.label}}: {{form.status}} </div>
+							{% if form.status.errors %}
+								<ul class=errors>
+									{% for error in form.status.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- ar_div -->
+					</li>
+		
+			</br>
+			</br>
+			
+			<button type="submit" class="btn btn-default" id="save_id">שמור</button>
+			
+			</br></br>		 
+
+		</form>
+
+	{% endfor %}    <!-- std existing goals -->
+
+
+{% for goal in std_no_dd %}  <!-- goals that student doesnt have yet -->
+	
+		<form action="{{ url_for('students.goal_to_student_add', selected_student_id=std.id, selected_destination_id=dst.id, selected_goal_id=goal.goal_id)}}" method="POST"> 			
+	
+			</br></br>
+			
+			<h4>
+				<button class="accordion"<strong> יעד:   {{ goal.goal.title }}</strong></button>				
+				<div class="panel">
+				  <button>תאור היעד: {{ goal.goal.body }}</button>
+				</div>				
+			</h4>
+
+			<div class="form-group">		
+				<input type="date" class="form-control" id="due_date" name="due_date" value="{{ now }}">
+			</div>
+
+			</br>
+					
+					<li class="tab " id="tab-2"><span class="tab-title"> 
+						<div id="ar_div">
+							<div style="color:{{ sts_color }}"> {{form.status.label}}: {{form.status}} </div>
+							{% if form.status.errors %}
+								<ul class=errors>
+									{% for error in form.status.errors %}
+										<li>{{ error }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</div>   <!-- ar_div -->
+					</li>
+			</br>
+			</br>
+						
+			<button type="submit" class="btn btn-default" id="save_id">שמור</button>
+			
+			</br></br>		 
+
+		</form>
+
+	{% endfor %}  <!-- goals that student doesnt have yet -->
+	
+</div>  <!-- class="container -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock std_dst_edit_goals %}
+
+{% endblock %}

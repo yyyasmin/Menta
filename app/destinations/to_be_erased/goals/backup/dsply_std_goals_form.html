@@ -1,0 +1,73 @@
+
+################## START  Update destination_update ################    
+@dst.route('/dsply_dst_form_for_update/<int:from_dst_sort_order>', methods=['GET', 'POST'])
+def dsply_dst_form_for_update(from_dst_sort_order):
+
+    print ("In dsply_dst_form_for_update from_dst_sort_order=: ", from_dst_sort_order)
+    
+    updated_dst = Destination.query.filter(Destination.selected==True).first()
+    if updated_dst == None:
+        flash("Please select a destination to update")
+        return redirect(url_for('destinations.edit_destinations', from_dst_sort_order=from_dst_sort_order))
+        
+
+    form = Dst_form()
+
+    form.dst_title.data = updated_dst.title
+    form.dst_body.data =  updated_dst.body
+
+    form.ar.choices=[]
+    form.tag.choices=[]
+    form.scrt.choices=[]
+
+    ### FROM https://github.com/wtforms/wtforms/issues/106
+    ### myform.select.default = 2
+    ### myform.process() // <-- you missed this :)
+    ### FROM https://github.com/wtforms/wtforms/issues/106
+
+    form.ar.choices = [(ar.id, ar.title) for ar in Age_range.query.all()]
+    form.ar.default = updated_dst.age_range_id
+    form.process()
+    
+    form.tag.choices = [(tag.id, tag.title) for tag in Tag.query.all()]
+    form.tag.default = updated_dst.tags[0].tag_id
+    form.process()
+
+    form.scrt.choices = [(scrt.id, scrt.title) for scrt in Scrt.query.all()]
+    form.scrt.default = updated_dst.scrt_id
+    form.process()
+
+    ### GET Case
+    if request.method == 'GET':
+        return render_template('dsply_dst_form_for_update.html', dst=updated_dst, form=form, from_dst_sort_order=from_dst_sort_order)
+
+    ### POST Case
+    ### FROM https://stackoverflow.com/questions/28209131/wtforms-post-with-selectfield-not-working
+    print ("form.validate_on_submit", form.validate_on_submit)
+
+    if not form.validate_on_submit:
+        flash("יש לבחור קטגוריה")
+        return render_template('dsply_dst_form_for_update.html', form=form)
+
+    ##import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
+    ar = Age_range.query.filter_by(id=request.form['ar']).first()
+    tag = Tag.query.filter_by(id=request.form['tag']).first()
+    scrt = Scrt.query.filter_by(id=request.form['scrt']).first()
+
+    #####import pdb; pdb.set_trace()
+    new_updated_dst_title = request.form['title']      #Current Description  selection
+    new_updated_dst_body =  request.form['body']
+    
+    return destination_add(from_dst_sort_order, ar.title, tag.title, scrt.title, new_updated_dst_title, new_updated_dst_body)
+
+
+@dst.route('/dsply_dst_form_for_update2/<int:selected_destination_id>/<int:from_dst_sort_order>', methods=['GET', 'POST'])
+def dsply_dst_form_for_update2(selected_destination_id, from_dst_sort_order):
+
+    print("In UUUUUUUUUU dsply_dst_form_for_update2 selected_dst_id ", selected_destination_id)
+    dst = destination_select2(selected_destination_id)
+    return redirect(url_for('destinations.dsply_dst_form_for_update', from_dst_sort_order=from_dst_sort_order))			
+
+############################### END DST Update
+                                            

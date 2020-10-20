@@ -1,0 +1,69 @@
+{% block goal_files %}
+
+
+<style>
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  #text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+<!--------- DEBUG ---------------->
+
+<!--------- DEBUG ---------------->
+
+	<table class="purple_table" style="table-layout: fixed;">
+
+		{% for rsrc in goal.children if rsrc.type=='resource' %}
+			{% for file in files if file.id==rsrc.ufile_id %}
+				<tr>
+					{% include "./destinations/gts_table/file_line.html" %}
+				</tr>
+				{% break %}
+			{% endfor %}
+		{% endfor %}
+		
+	</table>
+	
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock goal_files %}

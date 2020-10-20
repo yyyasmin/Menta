@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+
+
+</style>
+
+<div class="w3-container" id="container_id">
+<!---
+<button class="btn btn-info btn-xs" id="add_button">
+<h5><strong>
+	<a href="{{ url_for('goals.goal_add', from_goal_sort_order=10) }}">צור מטרה חדשה</a>
+<strong></h5></button>
+--->
+</br>
+
+<center><h3><div><h4><strong><u>בחר יעד להוסיף לתלמיד {{std.first_name }} {{ std.last_name }}</u></strong></h4></div></h3></center>
+<center><h3><div><h4><strong><u>עבור המטרה: {{dst.title }}</u></strong></h4></div></h3></center>
+	
+	<div>
+	
+	
+		{% for goal in goals %}	
+			<button class="btn btn-danger btn-xs" id="edit_list_id"><a href="{{ url_for('students.match_goal_to_student2', selected_goal_id=goal.id) }}">הוסף יעד זה לתלמיד</a></button>
+	
+			<button class="accordion">Goals's title: {{ goal.title }}</button>
+			<div class="panel">
+				<button>Goals's description: {{ goal.body }}.</button>				
+			</div>	
+		{% endfor %}  <!-- goal in goals -->
+		
+	</div>   <!-- container -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

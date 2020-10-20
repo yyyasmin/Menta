@@ -1,0 +1,105 @@
+<!-- FROM https://www.codeply.com/go/bp/oxKYaxmDYF -->
+
+{% block std_dsts_6 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+
+/* CSS used here will be applied after bootstrap.css */
+.collapsed .icon-class:before {
+    content: '>';
+}
+.icon-class:before {
+	content: 'v';
+}
+
+
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+<body>
+	
+
+{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}   <!-- GOALS LIST TTTTTEEEESSSTTT -->
+			
+	<div id="{{std_dst.id}}" class="list-group-item">
+	   
+		<!-- Move to be a button in std_dst line -->
+		<div class="collapsed" data-toggle="collapse" data-target="#{{std_dst.id}}Content" data-role="expander" data-group-id="{{std_dst.id}}">
+			<ul class="list-inline">
+				<li class="icon-class"></li>
+				<li style="color: blue; size:20px" >יעדים</li>				 
+			</ul>
+		</div>
+		<!---- Move to be a button in std_dst line -->
+
+		<div class="collapse" id="{{std_dst.id}}Content" aria-expanded="true">
+		
+			<table class="table blue_table">
+			
+				{% include "./destinations/table_destinations/goals_header_6.html" %}
+			
+				<tbody>
+				
+					
+					{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}   <!-- GOALS LIST -->																				
+						
+						<tr class="collapsed" data-toggle="collapse" data-target=".{{goal.id}}Content">
+							
+							{% include "./destinations/table_destinations/goal_line_6.html" %}
+						
+														
+								{% for todo in student_todos if (goal.is_parent_of(todo)) %}   <!-- GOALS LIST -->											
+									
+									<tr class="collapse {{goal.id}}Content">
+										{% include "./destinations/table_destinations/todo_line_6.html" %}
+									</tr>
+									
+								{% endfor %}  <!-- GOALS LIST -->
+								
+						
+						</tr>
+						
+					{% endfor %}
+
+					
+																																
+				</tbody>
+				
+				
+			</table>  <!-- DSTS GREEN -->
+
+		</div>
+	</div>
+
+	{% break %}  <!-- put dst header only once foreach tag-ar pair -->
+{% endfor %} 
+
+
+	</br></br>	
+
+</body>
+</html>
+
+{% endblock std_dsts_6 %}

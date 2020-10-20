@@ -1,0 +1,81 @@
+<!-- FROM https://codepen.io/Pikaguru/pen/mjMPZM -->
+
+<style>
+
+
+
+/*18px*/
+/*14px*/
+/*12px*/
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  //display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+body::before {
+  display: block;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all ease-out .6s;
+  color: #FFEB3B;
+  font-size: 40em;
+  opacity: 0;
+  animation: ease-out .8s;
+  content: '\2605';
+}
+body.star::before {
+  animation-name: star;
+}
+
+main {
+  position: relative;
+}
+
+@keyframes star {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+</style>
+
+<script>
+
+let button = document.querySelectorAll('.fa')[0];
+let body   = document.querySelectorAll('body')[0];
+
+button.addEventListener('click', goldStar, false);
+
+body.addEventListener('webkitAnimationEnd', disableStar, false);
+body.addEventListener('animationend', disableStar, false);
+
+function goldStar() {
+	body.classList.add('star');
+}
+
+function disableStar() {
+  body.classList.remove('star');
+}
+
+
+</script>

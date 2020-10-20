@@ -1,0 +1,47 @@
+
+{% block edit_std_dst_by_ABC %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+	
+}
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left: 10%;
+}
+
+</style>
+
+<h2><center>רשימת מטרות לפי סדר מילוני</center></h2>	
+	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('destinations.destination_add', from_dst_sort_order=10) }}">Add a new Destination</a>
+	<strong></h5></button>
+	</br></br>
+	
+	{% for dst in destinations %}
+		{% include "./sub_forms/edit_one_dst_form.html" %}
+	{% endfor %}  <!-- destinations -->
+
+{% endblock %}

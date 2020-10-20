@@ -1,0 +1,111 @@
+{% block goals_not_of_std_6 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+.collapsed .add-todos-icon-class:before {
+    content: 'משימות חדשות +';
+}
+.add-todos-icon-class:before {
+	content: 'משימות חדשות -';
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+	<table class="table gray_table">
+
+		<thead>
+			<tr>
+				<th></th>
+				<th>מספר יעד</th>
+				<th>שם היעד</th>
+				<th>כותרת היעד</th>
+			</tr>
+		</thead>
+		
+
+		<tbody>
+			{% for goal in goals_not_of_student if (std_dst.is_parent_of(goal)) %}
+				<tr class="collapsed" data-toggle="collapse" data-target=".{{goal.id}}Content">
+					
+					<td style="color:orange">						
+						<div class="collapsed" data-toggle="collapse" data-target="#{{goal.id}}Content" data-role="expander" data-group-id="{{goal.id}}">
+						  <ul class="list-inline" style="color:gray">
+								<li class="add-todos-icon-class"></li>
+							</ul>
+						</div>
+					</td>
+											
+					<td>{{goal.id}}</td>
+					<td>{{goal.title}}</td>
+					<td>{{goal.body}}</td>
+					
+					<tr></tr>
+
+					<tr class="collapse" id="{{goal.id}}Content" aria-expanded="true">
+						<td colspan="6">
+							{% include "./destinations/table_destinations/example_13.html" %}								
+						</td>
+					</tr>
+					
+				</tr>
+			{% endfor %}
+			
+
+			
+		</tbody>
+
+	</table>
+
+{% endblock goals_not_of_std_6 %}

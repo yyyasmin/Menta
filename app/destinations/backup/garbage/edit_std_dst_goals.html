@@ -1,0 +1,50 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<div class="container" id="container_id">	
+
+	<h2><strong><center><div>יעדי התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div> עבור המטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+	
+	</br>
+	
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.try_goal_to_student_add') }}">עדכן יעדים להשגת המטרה:</a>
+	<strong></h5></button>
+
+	</br><br>
+	
+	{% for std_goal in std_goals %}	
+	
+		</br>
+		</br>
+		
+		<table class="blue_table">	
+		
+			<tr>	
+				<th> מספר היעד </th>
+				<th> מספר המטרה </th>				
+				<th> כותרת היעד </th>
+				<th> תאור היעד </th>
+				<th> תאריך יעד </th>				
+				<th> סטאטוס היעד </th>
+
+			</tr>
+						
+			<form method="POST" action="{{ url_for('students.match_todo_to_std2', selected_goal_id=std_goal.id) }}">					
+				{% include "./goals/dst_goals_table_line.html" %}
+			</form>
+							
+	
+					
+		</table>
+	
+	{% endfor %}
+	
+</div>   <!-- container -->
+
+{% endblock %}

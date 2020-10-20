@@ -1,0 +1,140 @@
+{% block std_todos %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+<body>
+
+<div> INN destinations\gts_table\std_todos.html  </div>
+	
+
+	<div class="collapse in" id="{{gt.id}}Content">
+	
+		<table class="{{gt_obj.table_color}}" >
+			<thead>
+
+				<tr>
+					<th>מספר</th>				
+					<th>נושא</th>				
+					<th>תת נושא</th>				
+					<th>{{gt_obj.h_name}}</th>
+					<th>תאור</th>
+					<th>{{gt_obj.h_plural_name}}</th>
+					<th>תאריך השלמת ה {{gt_obj.h_name}}</th>
+					<th>סטאטוס</th>
+					<th>שמירה</th>		
+				</tr>
+			
+			</thead>
+			
+			<tbody>
+				{% for gt in gts_list %}
+					<tr>
+					
+						<tr>
+							{% include "./destinations/gts_table/gt_line.html" %}
+						</tr>
+						
+					</tr>
+				{% endfor %}  
+			</tbody>
+		</table>
+	</div>
+			
+	
+	<div class="collapse in" id="not_of_std{{gt.id}}Content">
+		<table class="gray_table">
+			<thead>
+
+				<tr>
+					<th>מספר</th>				
+					<th>נושא</th>				
+					<th>תת נושא</th>				
+					<th>{{gt_obj.h_name}}</th>
+					<th>תאור</th>
+					<th>{{gt_obj.h_plural_name}}</th>
+					<th>תאריך השלמת ה {{gt_obj.h_name}}</th>
+					<th>סטאטוס</th>
+					<th>שמירה</th>		
+				</tr>
+				
+			</thead>
+			
+			<tbody>						
+				{% for gt in gts_not_of_std if (gt.is_parent_of(tag)) and (gt.is_parent_of(ar)) %}
+
+					<tr>
+						{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+					</tr>
+					
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+{% endblock std_todos %}

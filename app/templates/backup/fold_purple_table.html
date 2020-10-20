@@ -1,0 +1,124 @@
+{% block fold_purple_table_style %}
+
+<style>
+
+.fold_purple_table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+	
+table.fold_purple_table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.fold_purple_table td {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+.fold_purple_table th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+	background-color: #730099;
+	color: #ffffcc;
+}
+
+
+.fold_purple_table tr:nth-child(even) {
+    background-color: #d966ff;
+}
+
+.fold_purple_table tr:nth-child(odd) {
+    background-color: #ecb3ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: .2em 2em;
+}
+
+table {
+  width: 100%;
+}
+
+/*****************
+table th {
+  text-align: right;
+  border-bottom: 1px solid #000;
+}
+table th, table td {
+  padding: .4em;
+}
+**********************/
+
+table.fold-table > tbody > tr.view td, table.fold-table > tbody > tr.view th {
+  cursor: pointer;
+}
+table.fold-table > tbody > tr.view td:first-child,
+table.fold-table > tbody > tr.view th:first-child {
+  position: relative;
+  //padding-left: 20px;
+}
+table.fold-table > tbody > tr.view td:first-child:before,
+table.fold-table > tbody > tr.view th:first-child:before {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 9px;
+  height: 16px;
+  margin-top: -8px;
+  font: 16px fontawesome;
+  color: #000;
+  content: "\f0d7";
+  transition: all .3s ease;
+}
+table.fold-table > tbody > tr.view:nth-child(4n-1) {
+  background: #eee;
+}
+table.fold-table > tbody > tr.view:hover {
+   background: #ddd;
+}
+table.fold-table > tbody > tr.view.open {
+  background: tomato;
+  color: white;
+}
+table.fold-table > tbody > tr.view.open td:first-child:before, table.fold-table > tbody > tr.view.open th:first-child:before {
+  transform: rotate(-180deg);
+  color: #000;
+}
+table.fold-table > tbody > tr.fold {
+  display: none;
+}
+table.fold-table > tbody > tr.fold.open {
+  display: table-row;
+}
+
+.fold-content {
+  padding: .5em;
+}
+.fold-content h3 {
+  margin-top: 0;
+}
+.fold-content > table {
+  border: 2px solid #ccc;
+}
+
+.fold-content > table > tbody tr:nth-child(even) {
+  background-color: #d966ff;
+}
+
+.fold-content > table > tbody tr:nth-child(odd) {
+    background-color: #ecb3ff;
+}
+
+</style>
+
+{% endblock fold_purple_table_style %}

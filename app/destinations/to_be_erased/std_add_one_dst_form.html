@@ -1,0 +1,41 @@
+
+{% block std_add_one_dst_form %}
+
+<style>
+
+</style>
+
+
+<form action="{{ url_for('students.create_new_dst_for_std')}}" method="POST"> 			
+	<div class="form-group">
+		<label for="title">כותרת מטרה</label>
+		<input type="title" class="form-control" name="title">
+	</div>
+	 
+	<div class="form-group">
+		<label for="text">תאור מטרה</label>
+		<input type="text" class="form-control" name="description">
+	</div>
+	
+	</br>							 
+	<input type="submit" value="submit_description" name="submit">			
+</form>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_add_one_dst_form %}

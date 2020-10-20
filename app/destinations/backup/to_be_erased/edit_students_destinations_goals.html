@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="container" id="ccontainer_id">
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.goal_to_destination_of_student_add2', selected_student_id=std.id, selected_goal_id=dst.id, selected_student_id=std.id=0) }}">הוסף יעד</a>
+	<strong></h5></button>
+
+	</br>
+			
+		<div>DEBUG: In std/dst/edit_students_destinations_goals std ag std ag std ag</div>
+		
+		<h3><strong><center><div><u> רשימת יעדים של התלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+		
+		</br>
+		
+		<h4>
+			<button class="accordion" id="green_header" ><strong> :רשימת יעדים למטרה  {{ dst.title }}</strong></button>
+			<div class="panel">
+				<p class="ppp">{{ dst.body }}</p>
+			</div>
+		</h4>
+
+	</br>
+		
+		{% for goal in dst.goals %}
+		
+				<button class="btn btn-warning btn-xs" style="background-color:plum;"><a href="{{ url_for('students.show_student_tree2', selected_student_id=std.id) }}">הצג עץ מטרות</a></button>
+				<button class="btn btn-danger btn-xs" style="background-color:lightgreen"><a href="{{ url_for('students.goal_to_destination_of_student_add2', selected_student_id=std.id, selected_destination_id=dst.id, selected_goal_id=goal.id) }}">הוסף יעד זה לתלמיד</a></button>		
+				<button class="btn btn-danger btn-xs" style="background-color:#ff4d4d"><a href="{{ url_for('students.goal_from_destination_of_student_delete2', selected_student_id=std.id, selected_destination_id=dst.id, selected_goal_id=goal.id) }}">מחק</a></button>		
+				
+				<button class="accordion" id="blue_header" >{{ goal.title }}</button>				
+				<div class="panel">
+				  <p class="ppp" id="blue_ppp">{{ goal.body }}</p>
+				</div>
+					
+				</br>				
+				
+			<strong>:סטאטוס</strong>		
+			<select class="select" name="selected_status" id="selected_status">	
+				{% if std.goals != None %}
+					{% for std_goal in std.goals %}
+						{% if std_goal.goal_id == goal.id %}
+							<option value="{{ goal.goal.status }}" selected="selected">{{ goal.goal.status }}</option>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+				<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+				<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+			</select>
+		
+		</br>
+				
+		   <label for="due_date">תאריך יעד</label>
+
+			{% if std.goals != [] %}
+					<div>in std.goals = {{ std.goals }}</div>
+				{% for std_goal in std.goals %}
+						std_goal.goal_id {{ std_goal.goal_id }}
+					{% if std_goal.goal_id == goal.id %}
+					in std_goal.goal_id == goal.id 
+						<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ std_goal.due_date.strftime('%Y-%m-%d') }}">
+					{% else %}
+						<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ now }}">
+					{% endif %}
+				{% endfor %}					
+			{% else %}
+				<input type="date" class="form-control" id="due_date"  name="due_date" value="{{ now }}">
+			{% endif %}				
+
+		</br>
+		</br>
+		
+		{% endfor %}   <!-- std.goals -->
+		
+		<br><br>
+			
+</div>   <!-- container -->
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

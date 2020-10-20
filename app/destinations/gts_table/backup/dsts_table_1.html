@@ -1,0 +1,56 @@
+{% block dsts_table %}
+	
+		<table class="green_table">
+				<tr>
+					{% with gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+						{% include "./destinations/gts_table/std_gt_header.html" %}
+					{% endwith %}
+				</tr>
+		</table>
+		
+		{% set ns = namespace(green_even=False) %}      				
+
+		{% for dst in student_dsts %}  <!-- DSTS -->
+
+			<table class="green_table" >
+				{% if ns.green_even==False %}
+					<tr style="background-color: #ccffcc;">
+				{% set ns.green_even = True %}
+				{% else %}
+					<tr style="background-color: #99ff99;">
+				{% set ns.green_even = False %}
+				{% endif %}	
+			
+					{% with gt = dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+						{% include "./destinations/gts_table/dst_line.html" %}
+					{% endwith %}
+				</tr>
+			</table>
+			
+			<!--- GOALS --->
+			<div class="collapse" id="{{dst.id}}Content" aria-expanded="true" style="table-layout: fixed;">
+				{% with gt=dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+					{% include "./destinations/gts_table/goals_table.html" %}
+				{% endwith %}
+
+			</div>  <!-- goal collapse -->
+			<!--- GOALS --->
+
+
+			<!--- GOALS NOT OF STD --->
+			<div class="collapse" id="not_of_std{{dst.id}}Content" aria-expanded="true">
+				<table class="gray_table" >
+					{% for goal in gals_not_of_student %}
+						<tr>
+							{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+								{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+							{% endwith %}
+						</tr>
+					{% endfor %}
+				</table>
+			</div>		
+			<!--- GOALS NOT OF STD --->
+		
+		{% endfor %}  <!-- DSTS -->
+	
+{% endblock dsts_table %}

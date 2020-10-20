@@ -1,0 +1,93 @@
+<!-- FROM https://codepen.io/fxm90/pen/yOBWVe  -->
+<!-- STAR SHAPES -->
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*:before, *:after {
+  box-sizing: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  padding: 24px 32px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+}
+
+h1 {
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  font-size: 32px;
+  font-weight: 100;
+  color: #626262;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+a {
+  color: #2196f3;
+}
+
+input:focus {
+  box-shadow: none;
+  outline: 0;
+}
+input[type="text"] {
+  width: 400px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.north_star {
+  position: relative;
+  display: inline-block;
+  
+  width: 0;
+  height: 0;
+  
+  width: auto;
+  height: auto;
+  
+  margin-left: 0.9em;
+  margin-right: 0.9em;
+  margin-bottom: 1.2em;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.7em solid #fc0;
+  border-left: 0.3em solid transparent;
+  /* Controlls the size of the north_stars. */
+  font-size: 24px;
+}
+.north_star:before, .north_star:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0.6em;
+  left: -1em;
+  border-right: 1em solid transparent;
+  border-bottom: 0.7em solid #fc0;
+  border-left: 1em solid transparent;
+  -webkit-transform: rotate(-35deg);
+          transform: rotate(-35deg);
+}
+.north_star:after {
+  -webkit-transform: rotate(35deg);
+          transform: rotate(35deg);
+}
+
+</style>
+
+<!-- FROM https://codepen.io/fxm90/pen/yOBWVe  -->
+

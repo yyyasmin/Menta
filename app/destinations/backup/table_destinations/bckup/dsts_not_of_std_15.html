@@ -1,0 +1,62 @@
+{% block edit_std_dsts_not_of_std %}		
+																		
+		<table class="gray_table">   <!-- DESTINATIONS -->
+		
+			{% for std_dst in dsts_not_of_student if (std_dst.is_parent_of(ar) and std_dst.is_parent_of(tag)) %}						
+				{% include "./destinations/table_destinations/dst_header.html" %}
+				{% break %}
+			{% endfor %}
+			
+			{% for std_dst in dsts_not_of_student if (std_dst.is_parent_of(ar) and std_dst.is_parent_of(tag)) %}			
+				<tr>
+					{% include "./destinations/table_destinations/not_of_std/edit_std_dst_line_not_of_std.html" %}
+				</tr>
+				
+					<tr>  <!-- GOALS NOT_OF_STD IN DESTINATION NOT_OF_STD  -->
+					<td colspan="6">  
+					<table class="gray_table">
+									
+						{% for goal in goals_not_of_student if (std_dst.is_parent_of(goal)) %}	
+							<tr>
+							{% include "./destinations/table_destinations/goals/goal_header.html" %}
+							</tr>
+							{% break %}
+						{% endfor %}							
+						
+						{% for goal in goals_not_of_student if (std_dst.is_parent_of(goal)) %}		
+							<tr>
+								{% include "./destinations/table_destinations/not_of_std/goals/edit_std_goal_line_not_of_std.html" %}
+							</tr>
+																			
+							<tr>	<!-- TODOS -->								
+								<td colspan="6">
+									<table class="gray_table">
+									
+										{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}
+											<tr>
+											{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}														
+											</tr>
+											{% break %}
+										{% endfor %}
+										
+										{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}			
+											<tr>
+												{% include "./destinations/table_destinations/not_of_std/goals/todos/edit_std_todo_line_not_of_std.html" %}
+											</tr>
+										{% endfor %}					
+									</table>
+								</td>
+							</tr>  <!-- TODOS -->
+							
+							
+						{% endfor %}					
+					</table>
+					</td>
+					</tr> <!-- GOALS NOT_OF_STD IN DESTINATION NOT_OF_STD  -->		
+					
+			{% endfor %}											
+
+		</table>	
+
+							
+{% endblock edit_std_dsts_not_of_std %}		

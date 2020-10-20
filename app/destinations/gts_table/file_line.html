@@ -1,0 +1,36 @@
+{% block file_line %}
+
+<style>
+
+
+</style>
+
+	
+	<td>קובץ ליעד {{goal.id}}</td>
+	
+	<td>שם הקובץ: {{ file.name }}</td>
+	
+	<td>תאור הקובץ: {{ file.body }}</td> 
+					
+	<td>
+		<div id="add_sub">
+			<a href="{{ url_for('goals.download_goal_file2', selected_file_id=file.id) }}">
+			הורד קובץ</a>
+		</div>	
+	</td>
+	
+
+	
+	
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+
+<script>
+				
+$("#color_me").change(function(){
+    $("#color_me").attr("color") = $("option:selected", this).attr("color");
+});
+
+</script>
+
+
+{% endblock file_line %}

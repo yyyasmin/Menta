@@ -1,0 +1,66 @@
+
+{% block edit_dst_in_tbl %}
+
+<style>
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+</style>
+
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('destinations.destination_add', from_dst_sort_order=0) }}">Add a new Destination</a>
+<strong></h5></button>
+</br></br>
+
+<h2><center>Destinations list:</center></h2>	
+
+		{% for ar in age_ranges %}
+			</br></br>
+			<th><h4><strong>Age Category: {{ ar.title }}</strong></h4></th>
+
+			<table style="width:100%">
+
+			<tr>			
+				<th>Age Category</th>
+				<th>Subject</th>
+				<th>Destination</th> 
+				<th>Actions</th>
+			</tr>
+			{% for tag in tags %}
+
+				
+				{% for dst in ar.destinations if tag in dst.tags %}	
+						
+					<tr>
+						<td>{{ ar.title }}</td>
+						<td>{{ tag.title }}</td>
+						<td>{{ dst.title }}</td> 				
+						<td>
+							{% include "./sub_forms/edit_actions.html" %}				
+						</td>
+					</tr>
+					
+				{% endfor %}								
+			{% endfor %}  <!-- tags -->
+			</table>
+		{% endfor %}  <!-- ar -->
+		
+{% endblock %}

@@ -1,0 +1,133 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts %}
+
+	{% set tp_ns = namespace(tag_printed=False) %}
+	{% set d_ns = namespace(dst_printed=False) %}
+	
+	{% for tag in tags %}
+		{% set tp_ns.tag_printed = False %}
+		
+<!-- DEBUG ----------------------------------------
+		<div> TAG: {{tag.id}} {{tag.body}} </div>
+		<div> student_dsts: {{student_dsts}}</div>
+----- DEBUG --------------------------------------->
+
+			{% for dst in student_dsts if dst.is_parent_of(tag) %}	
+				{% set d_ns.dst_printed = False %}
+
+
+				
+				<tr>
+					{% if tp_ns.tag_printed == False %}  <!-- TAGS -->
+						<td>
+							תחום: {{ tag.title|replace("-", "\n") }}
+						</td>
+						{% set tp_ns.tag_printed = True %}
+					{% else %}
+						<td></td>
+					{% endif %}  <!-- END TAGS -->
+					
+					
+					{% if d_ns.dst_printed == False %}  <!-- DSTS -->
+						<td>
+							<div type="button" style="color:black;" id="green_title" 
+											   onclick="myFunction('{{dst.id}}')">
+								מטרה: {{ dst.title }} 
+																								
+								{% for sts in statuss %}	
+									{% for st in std_txts %}
+										{% if st.general_txt_id==dst.id %}
+											{% if st.status_id==sts.id %}
+												<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+								{% endfor %}				
+							</div>
+							
+							<div type="button" style="color:black; background:'#e6ffe6'" 
+											   id="{{dst.id}}" class="w3-hide  w3-center green_body">
+								{{dst.body}}
+							</div>
+						</td>
+						{% set d_ns.dst_printed = True %}
+					{% else %}
+						<td></td>
+					{% endif %}  <!-- END DSTS -->
+				</tr>
+			
+			
+				<tr>		
+						<table class="gray_table profile_table">	
+						
+							<thead>
+							
+								<tr>			
+									<th style="background-color:#357EC7; color:#ffffcc; width:32%;"><strong>יעדים</strong></th>
+									
+									<th style="background-color:#730099; color:#ffffcc; width:32%;">
+										<strong>
+											דרכי הוראה, שיטות, אמצעים ומשאבים להשגת המטרות והיעדים
+										</strong>
+									</th>
+										
+									<th style="background-color:orange; color:#ffffcc; width:32%;">
+										<strong>אמות מידה להערכה</strong>
+									</th> 
+								</tr>
+								
+							</thead>
+							
+							<tbody>
+							
+								<table class="purple_table profile_table">
+						
+									<thead>
+										<tr>			
+											<th>
+												<strong>מדית \ סוג שיטת ההורה</strong>
+											</th>
+											
+											<th>
+												<strong>
+													אחראים על הפעלת הכלים להשגת היעד
+												</strong>
+											</th>
+											
+										</tr>
+									</thead>
+												
+									<tbody>
+										{% include "./destinations/dsts_table_2/show_std_goals_and_methods.html" %} 
+									</tbody>
+								
+								
+								
+								</table>			
+
+							</tbody>
+						
+						</table>			
+			
+				</tr>
+			
+			
+			{% endfor %}    <!-- DSTS -->
+	{% endfor %}  <!-- TAGS -->
+
+
+
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+						
+{% endblock plan_report_show_std_dsts %}

@@ -1,0 +1,83 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_dsts %}
+
+	{% set t_ns = namespace(tag_printed=False) %}
+	{% set d_ns = namespace(dst_printed=False) %}
+	{% set g_ns = namespace(goal_printed=False) %}
+
+	{% set w_ns = namespace(who_printed=False) %}
+	{% set mt_ns = namespace(method_type_printed=False) %}
+	{% set m = namespace(method_printed=False) %}
+	{% set t_ns = namespace(test_printed=False) %}
+		
+
+	<!-- DEBUG -->
+
+	<!-- DEBUG -->
+	
+
+{% for tag in tags %}  <!-- TAGS -->
+{% set t_ns.tag_printed = False %}
+	
+{% for dst in student_dsts if tag.is_parent_of(dst) %}  <!-- DSTS -->
+{% set d_ns.dst_printed = False %}
+
+	{% for goal in goals if dst.is_parent_of(goal) %}  <!-- GOALS -->
+	{% set g_ns.goal_printed = False %}
+
+		{% for method_type in method_types if goal.is_parent_of(method_type) %}  <!-- METHOD_TYPES -->
+		{% set mt_ns.method_type_printed = False %}
+		
+			<!-- METHOD -->
+			{% for method in student_methods if( goal.is_parent_of(method) and
+												 method_type.is_parent_of(method) ) %}  
+			{% set m_ns.method_printed = False %}
+
+				{% for test in tests if goal.is_parent_of(test) %}  <!-- TESTS COLUMN -->
+				{% set t_ns.test_printed = False %}
+
+				<tr>
+										
+					{% if t_ns.tag_printed == False %}  <!-- TAGS -->
+						<td>
+							{% include "destinations/dsts_table_1/tags_table.html%} 							
+						</td>
+						{% set t_ns.tag_printed = True %}
+					{% else %}
+						<td></td>
+					{% endif %}  <!-- END TAGS -->
+												
+					{% if d_ns.dst_printed == False %}  <!-- DSTS -->
+						<td>
+							{% include "destinations/dsts_table_1/dsts_table.html" %}								
+						</td>
+						{% set d_ns.dst_printed = True %}
+					{% else %}
+						<td></td>
+					{% endif %}  <!-- END DSTS -->
+					
+				</tr>	
+				
+				<tr>  <!-- GOALS -->
+					{% include "destinations/dsts_table_1/show_goals_methods_tests.html" %}
+				</tr>
+					
+				
+					
+				{% endfor %}  <!-- TESTS -->
+				
+			{% endfor %}  <!-- METHODS -->
+			
+		{% endfor %}  <!-- METHOD-TYPES -->	
+		
+	{% endfor %}  <!-- GOALS-->	
+				
+				
+			
+{% endfor %}  <!-- DSTS -->	
+	
+{% endfor %}  <!-- TAGS -->	
+		
+
+{% endblock show_std_dsts %}

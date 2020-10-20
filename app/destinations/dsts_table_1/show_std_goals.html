@@ -1,0 +1,84 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	
+	<table class="profile_table" dir="rtl">
+	
+
+	
+	
+	<tbody>
+	
+	{% set dp_ns = namespace(dst_printed=False) %}
+	{% set ns =    namespace(exist_goal=False) %}
+	
+	{% for todo in student_todos if goal.is_parent_of(todo) %}	
+	
+		
+		{% set gp_ns.goal_printed = False %}
+		
+		{% for todo in student_goals if  goal.is_parent_of(todo)  %}
+		
+			<tr>
+							
+				{% for todo in student_goals  goal.is_parent_of(todo) %}
+		
+					{% if dp_ns.dst_printed == False %}
+					
+						<td>
+							<div type="button" id="{{title_box}}" style="color:black; background-color:{{part.odd_color}}; marging:1%;" onclick="myFunction('{{gt.id}}')">
+								מטרה: {{ gt.title }} 
+																								
+								{% for sts in statuss %}	
+									{% for st in std_txts %}
+										{% if st.general_txt_id==gt.id %}
+											{% if st.status_id==sts.id %}
+												<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+								{% endfor %}				
+							</div>
+						</td>
+								
+						{% set dp_ns.dst_printed = True %}
+						
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+					
+					<td>{{todo.title}}</td>
+					{% set ns.exist_goal = True %}
+					{% break %}
+				{% endfor %}
+				
+				{% if ns.exist_goal == True %}			
+
+					<td>
+						{% with part=strn, prf_parts_list=student_goals, title_box="blue_title", body_box="blue_body" %}
+							{% include "./plan_report/show_destinations/show_std_goals.html" %} 
+						{% endwith %}
+					</td>
+								
+				{% endif %}	
+				
+			</tr>
+				
+		{% endfor %}
+	{% endfor %}
+	
+	</tbody>
+	
+	</table>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

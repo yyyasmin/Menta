@@ -1,0 +1,57 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_dsts %}
+
+	{% set t_ns = namespace(tag_printed=False) %}
+	{% set d_ns = namespace(dst_printed=False) %}
+	{% set g_ns = namespace(goal_printed=False) %}
+
+	{% set w_ns = namespace(who_printed=False) %}
+	{% set mt_ns = namespace(method_type_printed=False) %}
+	{% set m = namespace(method_printed=False) %}
+	{% set t_ns = namespace(test_printed=False) %}
+		
+
+	<!-- DEBUG -->
+
+	<!-- DEBUG -->
+	
+
+	{% for tag in tags %}  <!-- TAGS -->
+	{% set t_ns.tag_printed = False %}
+				
+		{% for dst in student_dsts if tag.is_parent_of(dst) %}  <!-- DSTS -->
+		{% set d_ns.dst_printed = False %}
+
+			<tr>
+									
+				{% if t_ns.tag_printed == False %}  <!-- TAGS -->
+					<td style="width:20%">
+						{% include "destinations/dsts_table_1/tags_table.html" %} 							
+					</td>
+					{% set t_ns.tag_printed = True %}
+				{% else %}
+					<td style="width:20%"></td>
+				{% endif %}  <!-- END TAGS -->
+											
+				{% if d_ns.dst_printed == False %}  <!-- DSTS -->
+					<td style="width:80%">
+						{% include "destinations/dsts_table_1/dsts_table.html" %}								
+					</td>
+					{% set d_ns.dst_printed = True %}
+				{% else %}
+					<td style="width:80%"></td>
+				{% endif %}  <!-- END DSTS -->
+				
+			</tr>	
+			
+			<tr>  <!-- GOALS -->
+				{% include "destinations/dsts_table_1/show_goals_methods_tests.html" %}
+			</tr>
+		
+		{% endfor %}  <!-- DSTS -->	
+		
+	{% endfor %}  <!-- TAGS -->	
+			
+
+{% endblock show_std_dsts %}

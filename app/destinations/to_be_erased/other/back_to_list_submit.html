@@ -1,0 +1,30 @@
+
+{% block save_and_back_to_list %}
+
+<style>
+
+</style>
+
+<form action="{{ url_for('students.goal_to_destination_of_student_add')}}" method="POST"> 			
+	</br>							 
+	<input style="background-color:#ff8533" type="submit" value="Save and Back to list" name="submit">			
+</form>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock save_and_back_to_list %}

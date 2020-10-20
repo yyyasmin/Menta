@@ -1,0 +1,37 @@
+<!-- FROM https://www.w3schools.com/graphics/svg_polygon.asp  -->
+<!-- FROM https://codepen.io/BruceBC/pen/PPPNQV -->
+
+<div id="star-five">STAR-FIVE</div>
+
+<svg width="200" height="200">
+
+	<g>
+
+<!-- FROM https://stackoverflow.com/questions/32260184/svg-scale-animation-from-center-point-instead-of-upper-left-corner/32260987  -->
+	<g>	
+	
+		
+		<polygon 
+			points="100,10 40,198 190,78 10,78 160,198"
+			style="fill:#ffffb3;stroke:#ffffb3;stroke-width:5;fill-rule:nonzero; transform:scale(0.5);">
+		  
+			<animateTransform attributeName="transform"
+				 type="scale"
+				 additive="sum" 
+				 from="0 0"
+				 to="1 1"
+				 begin="0s"
+				 dur="1s"
+				 repeatCount="3"/>
+
+		</polygon> 
+			
+		<text x="50%" y="50%" text-anchor="middle" fill="black" 
+				font-size="1em" font-family="Arial" font-weight="bold" style="transform:scale(0.5);">
+			XXX
+		</text>
+		
+	</g>
+	
+</svg>
+

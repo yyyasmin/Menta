@@ -1,0 +1,38 @@
+{% block dsts_list_6 %}				
+
+		
+		<td>{{ std_dst.id }}</td>
+		
+		<td>{{ std_dst.title }}</td>
+		
+		<td>{{ std_dst.body }}</td>
+		
+		<td>
+			<div id="ar_div">			
+				{% for st in std_txts %}
+					{% if st.general_txt_id==std_dst.id %}
+						<input type="date" style="text-align:center" id="due_date" name="due_date{{ std_dst.id }}" value="{{ st.due_date }}">					
+					{% endif %}
+				{% endfor %}
+			</div>   
+		</td>	
+		
+		<td>
+			<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ std_dst.id }}" id="selected_status">	
+				{% for sts in statuss %}
+					{% if std_dst.is_parent_of(sts) %}
+						<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+					{% else %}
+						<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>					
+		</td>
+		
+		
+		<td>
+			{% set dst_num = std_dst.id * 3 %}	
+			<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ dst_num }}">שמור</button>
+		</td>
+																			
+{% endblock dsts_list_6 %}						

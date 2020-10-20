@@ -1,0 +1,109 @@
+
+{% block edit_one_std_dst_goal_not_of_std %}
+
+	<table class="gray_table">
+	
+		<tr>			
+			<th> מספר היעד </th>	
+			<th> כותרת היעד </th>
+			<th> תאור היעד </th>
+			<th> תאריך השלמת היעד </th>
+			<th> סטאטוס היעד </th>
+		</tr>
+						
+		<tr>
+		
+			<td>{{ goal.id }}</td>
+			<td>{{ goal.title }}</td>
+			<td>{{ goal.body }}</td> 
+
+		<td>
+			<div id="ar_div">
+			
+				{% for st in std_txts %}
+					{% if st.general_txt_id==goal.id %}
+						{% set due_date =  st.due_date  %}
+					{% endif %}	
+				{% endfor %}
+				
+				<input type="date" style="text-align:center" id="due_date" name="due_date" value="{{ due_date }}">
+
+			</div>   <!-- ar_div -->
+		</td>	
+
+		<td>סטאטוס:
+			<select class="select" name="selected_status" id="selected_status"  id="color_me">	
+				{% for sts in statuss %}	
+					{% for st in std_txts %}
+						{% if (st.general_txt_id==goal.id) and (st.status_id==sts.id) %}
+							<option value="{{ sts.id }}" selected="selected">{{ sts.title }}</option>
+						{% else %}
+							<option value="{{ sts.id }}">{{ sts.title }}</option>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			</select>					
+		</td>
+	
+
+			<td>								
+				{% set goal_num = goal.id * 3 + 1 %}
+				<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ goal_num }}">שמור</button>
+			</td>
+									
+		</tr>
+	
+	<tr>
+		<th style="background:#ffffff" colspan="5"></th>
+	</tr>
+
+	<tr style="width:100%">
+		<th style="background:#a1e3ae; color:#13361a" colspan="6"> בחר משימות חדשות להשגת היעד </th>
+	</tr>
+		
+	<tr>				
+		{% for todo in goal.children.all() %}
+			{% if todo not in student_todos %}
+				{% include "./destinations/goals/todos/goal_todos_table_not_of_std_line.html" %}
+			{% endif %}
+		{% endfor %}
+	</tr>
+		
+<!-- FROM https://stackoverflow.com/questions/18091866/background-color-of-selected-option -->
+			
+	</table>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+<!-- call match_goal function for save goal details when submit button is pushed by the user -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').bind('click', function() {
+            $.getJSON('/match_goal_to_std2',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+{% endblock edit_one_std_dst_goal_not_of_std %}

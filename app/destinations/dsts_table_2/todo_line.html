@@ -1,0 +1,21 @@
+{% block todo %}		
+
+	<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+		משימה: {{ todo.title }}
+																			
+		{% for sts in statuss %}	
+			{% for st in std_txts %}
+				{% if st.general_txt_id==todo.id %}
+					{% if st.status_id==sts.id %}
+						<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% endfor %}				
+	</div>
+			
+	<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+		<div></div>{{todo.body}}
+	</div>
+
+{% endblock todo %}		

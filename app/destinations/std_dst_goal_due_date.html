@@ -1,0 +1,23 @@
+{% block std_dst_goal_due_date %} 
+  
+<label for="due_date">תאריך יעד</label>
+      
+{% set dd_value = now -%}
+
+{% if std.goals != None %}	
+
+ hd.goals: {{ hd.goals }} std.goals: {{ std_dd_goals }}     goal.due_date: {{ goal.due_date }} std id is {{ std.id }}
+ 
+	{% if goal.goal_id==std_dd_goals %}	
+		{{ goal in std_dd_goals }}
+		{% set dd_value = goal.due_date.strftime('%Y-%m-%d') -%}
+		<div> IIIIIIIIIif dd_value: {{ dd_value }} </div>
+		<input type="date" class="form-control" id="due_date" name="due_date" value="{{ dd_value }}">
+	{% else %}
+		<div> EEEEEEEEEEelse dd_value: {{ dd_value }} </div>
+		<input type="date" class="form-control" id="due_date" name="due_date" value="{{ dd_value }}">
+	{% endif %}
+
+{% endif %}	
+	
+{% endblock std_dst_goal_due_date %}	

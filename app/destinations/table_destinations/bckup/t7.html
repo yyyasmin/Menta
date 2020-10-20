@@ -1,0 +1,24 @@
+						<div type="button" class="accordion" style="color:gray; width:auto"
+							 onclick="myFunction('{{ tag.id }}{{ar.id}}')">הוסף מטרה +
+						</div>
+						
+						<div style="width:auto; height: auto;" class="panel">
+						<p> 
+						
+							<table class="gray_table">	
+								<thead>
+									{% include "./destinations/table_destinations/dst_header_7.html" %}
+								</thead>
+
+								<tbody>
+									{% for std_dst in dsts_not_of_student if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+										<tr>
+											{% include "./destinations/table_destinations/dst_line_6.html" %}
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+																		
+						 </p>								 
+						</div>
+							

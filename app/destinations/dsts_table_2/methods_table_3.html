@@ -1,0 +1,50 @@
+{% block methods_table %}
+	
+
+			<tr>
+		
+				<td style="width:60%">
+						<div  class="title" type="button" style="color:black;" id="iner_purple_title" 
+										    onclick="myFunction('{{method.id}}')">
+							{{ method.title }}   
+
+						</div>
+								
+						<div type="button" id="{{method.id}}" class="w3-hide w3-center iner_purple_body">
+							{{method.body}}
+						</div>
+				</td>
+
+					
+				<td style="width:40%">
+					{% for who in whos if method.is_parent_of(who)  %}  <!-- WHOS -->
+							<div type="button" style="color:black;" id="iner_purple_title" 
+											   onclick="myFunction('{{who.id}}')">
+								{{ who.title }}   
+							</div>
+									
+							<div type="button" id="{{who.id}}" class="w3-hide w3-center iner_purple_body">
+								{{who.body}}
+							</div>
+					{% endfor %}  <!-- WHOS -->					
+				</td>
+			
+			</tr>		
+		
+
+
+
+		
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+{% endblock methods_table %}

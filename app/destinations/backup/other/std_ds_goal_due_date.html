@@ -1,0 +1,31 @@
+
+{% block std_dst_goal_due_date %}
+
+<style>
+
+</style>
+
+	<div class="form-group">
+		<label for="tag_age">קבוצת גיל</label>
+			{% include "./destinations/std_dst_goal_due_date.html" %}
+		<input type="submit" value="submit_age_range" name="submit">			
+	</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_dst_goal_due_date %}

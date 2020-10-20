@@ -1,0 +1,174 @@
+{% block std_dsts_6 %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'מטרות - ';
+}
+
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרה +';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הוסף מטרה - ';
+}
+
+
+
+.collapsed .goals-icon-class:before {
+    content: 'יעדים +';
+}
+.goals-icon-class:before {
+    content: 'יעדים -';
+}
+
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעד +';
+
+}
+.add-goals-icon-class:before {
+	content: 'הוסף יעד -';
+	layout: fixed;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+
+</script>
+
+
+</head>
+
+<body>
+	
+	</br></br>
+			
+	{% include "destinations/table_destinations/tag_and_ar_dropdown.html" %}
+
+		
+	{% for tag in tags %}
+		{% for ar in age_ranges %}  <!-- ars -->
+						
+			{% if (tag.id == default_tag.id) and (ar.id == default_ar.id) %}  <!-- Open content only the part that was updated by the user -->
+								
+					</br> 
+								
+						<div type="button" class="accordion" style="color:green; width:auto"
+							 onclick="dstFunction('{{ tag.id }}{{ar.id}}')">מטרות +
+						</div>
+						
+						<div style="width:auto; height:auto; margin-top:0;" class="panel">
+						
+							<table class="green_table">
+							
+								<thead>
+									<tr>
+										{% include "./destinations/table_destinations/dst_header_7.html" %}
+									</tr>
+								</thead>
+
+								<tbody>
+																
+									{% for std_dst in student_dsts if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+										{% include "./destinations/table_destinations/dst_line_7.html" %}
+														
+										<div style="width:auto; height:auto;" class="panel">  <!-- GAOLS -->
+											
+											<tr>
+												{% include "./destinations/table_destinations/goal_header_7.html" %}
+											</tr>
+											
+											{% for goal in student_golas if (std_dst.is_parent_of(std_dst)) %}
+												<tr>
+													{% include "./destinations/table_destinations/goal_line_7.html" %}
+												</tr>
+											{% endfor %}
+																					
+										</div>
+									{% endfor %}																	
+								
+							</table>
+																		
+						</div>
+						
+						<div type="button" class="accordion" style="color:gray; width:auto"
+							 onclick="dstFunction('{{ tag.id }}{{ar.id}}not_of_std')">הוסף מטרה +
+						</div>
+						
+						<div style="width:auto; height: auto;" class="panel">
+							<p> 						
+								<table class="gray_table">	
+									<tbody>
+										{% include "./destinations/table_destinations/dst_header_7.html" %}
+
+										{% for std_dst in dsts_not_of_student if (std_dst.is_parent_of(tag)) and (std_dst.is_parent_of(ar)) %}
+											<tr>
+												{% include "./destinations/table_destinations/dst_line_7_not_of_std.html" %}
+											</tr>
+										{% endfor %}																		
+									</tbody>																
+								</table>																		
+							 </p>								 
+						</div>
+							
+							</tbody>
+																		
+			{% endif %}
+						
+		{% endfor %}
+	{% endfor %}
+	
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_dsts_6 %}

@@ -1,0 +1,47 @@
+{% block tests_table %}
+	
+		
+		{% set ns = namespace(blue_even=False) %}      				
+
+		{% for test in student_tests if (goal.is_parent_of(test)) %}  <!-- testS -->
+		
+				{% if ns.green_even==False %}
+					{% set ns.green_even = True %}
+				{% else %}
+					{% set ns.green_even = False %}
+				{% endif %}				
+				
+				{% if ns.blue_even==False %}
+					{% set ns.blue_even = True %}
+				{% else %}
+					{% set ns.blue_even = False %}
+				{% endif %}				
+				
+				<table class="orange" style="table-layout: fixed; color:black;">
+					{% if ns.orange_even==False %}
+						<tr style="background-color: #fffae6;">
+						
+					{% set ns.orange_even = True %}
+					{% else %}
+						<tr style="background-color: #ffe066;">
+						
+					{% set ns.orange_even = False %}
+					{% endif %}	
+			
+					{% with gt = test, gt_obj=test_obj, gt_sub_obj1=test_obj %}
+						{% include "./destinations/gts_table/test_line.html" %}
+					{% endwith %}
+					
+						</tr>
+				</table>
+			
+			<!--- FILES --->
+			<div class="collapse" id="{{test.id}}Resource" aria-expanded="true" 
+								  style="table-layout: fixed;">
+				{% include "./destinations/gts_table/std_show_goal_files.html" %}
+			</div>  <!-- goal collapse -->
+			<!--- FILES --->
+			
+		{% endfor %}  <!-- testS -->
+	
+{% endblock tests_table %}

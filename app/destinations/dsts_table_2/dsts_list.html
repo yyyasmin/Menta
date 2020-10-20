@@ -1,0 +1,31 @@
+{% block dsts_list %}
+
+
+		
+						
+			<div type="button" style="color:black;" id="green_title" 
+							   onclick="myFunction('{{dst.id}}')">
+				מטרה: {{ dst.title }} 
+																				
+				{% for sts in statuss %}	
+					{% for st in std_txts %}
+						{% if st.general_txt_id==dst.id %}
+							{% if st.status_id==sts.id %}
+								<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endfor %}				
+			</div>
+			
+			<div type="button" style="color:black; background:#e6ffe6" 
+							   id="{{dst.id}}" class="w3-hide  w3-center green_body">
+				{{dst.body}}
+			</div>
+			
+
+	
+	
+		
+{% endblock dsts_list %}
+			

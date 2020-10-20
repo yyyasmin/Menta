@@ -1,0 +1,55 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+
+<style>
+
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='red']    {color:red;}
+select[data-chosen='green']  {color:green;}
+select[data-chosen='orange'] {color:orange;}
+select[data-chosen='lred']  {color:#ff9999;}    // light-red
+
+select[data-chosen='Not assigned yet'] {color:#ff9999;}   // light red
+select[data-chosen='Not achieved yet'] {color:red;}
+select[data-chosen='Partially achieved'] {color:orange;}
+select[data-chosen='Achieved'] {color:green;}
+
+
+</style>
+
+{% with student = std %} 
+	{% include "std_title.html" %} 
+{% endwith %} 
+
+<h2><strong><center>
+	<div>
+		<span style="color:black"> בנק </span>
+		<span style="color:green"> מטרות </span> 
+		<span style="color:blue">יעדים </span>
+		<span style="color:purple">אמצעי הוראה</span>
+		<span style="color:black"> ו </span>	 
+		<span style="color:orange"> משימות </span>
+	</div>
+</center></strong></h2>
+
+	</br>
+	
+	<form method="POST" action="{{ url_for('students.update_std_txt2') }}">
+
+		</br></br>
+				
+		{% include "destinations/gts_table/tag_and_ar_dropdown.html" %}
+
+		</br></br>
+				
+		{% with tag=default_tag, ar=default_ar %}			
+			{% include "./destinations/gts_table/std_dsts.html" %}
+		{% endwith %}
+
+		</br></br>
+
+	</form>
+
+{% endblock %}

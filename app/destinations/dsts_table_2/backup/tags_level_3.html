@@ -1,0 +1,115 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block tags_level %}
+
+
+<style>
+
+.wrapper {
+	display: grid;
+	grid-gap: 10px;
+
+	grid-template-areas:   'a b b b b b'
+						   'c c d d e e';
+							
+}
+	
+.box {
+        border-radius: 5px;
+        padding: 14px;
+        font-size: 100%;
+		background-color: #DCDCDC;
+}
+
+.box .box {
+	background-color: #ccc;
+	color: #444;
+}
+
+
+.a {
+	grid-area: a;
+}
+
+.b {
+	grid-area: b;
+}
+
+.c {
+	grid-area: c;
+}
+
+.d {
+	grid-area: d;
+}
+
+.e {
+	grid-area: e;
+	overflow: hidden;  /* NEW  FROM https://stackoverflow.com/questions/43311943/prevent-content-from-expanding-grid-items*/
+}
+
+</style>
+
+<!------------- DEBUG ----------------------------->
+<div class="wrapper">
+	
+	{% for tag in tags %}
+		<div class="box a">
+			{% include "./destinations/dsts_table_2/tag_lable.html" %}			
+		</div>
+		
+		{% for dst in student_dsts if tag.is_parent_of(dst) %}
+			<div class="box b">
+				{% include "./destinations/dsts_table_2/dsts_list.html" %}			
+			</div>
+
+			
+				<div class="box c">
+					{% include "./destinations/dsts_table_2/goal_title.html" %}
+					{% for goal in student_goals if dst.is_parent_of(goal) %}
+						{% include "./destinations/dsts_table_2/goals_table.html" %}			
+				</div>
+				
+					<div class="box d">
+						{% include "./destinations/dsts_table_2/method_title.html" %}
+						{% include "./destinations/dsts_table_2/iner_method_title.html" %}
+						
+						{% for method_type in method_types %}  <!-- METHOD-TYPES -->
+							{% include "./destinations/dsts_table_2/method_type_table.html" %}			
+
+							{% for method in student_methods if goal.is_parent_of(method) and
+																method.is_parent_of(method_type) %}  
+								{% include "./destinations/dsts_table_2/methods_table.html" %}			
+							{% endfor %}  <!-- METHODS -->
+						{% endfor %}  <!-- METHODS -->
+					</div>
+						
+			
+					<div class="box e">
+						{% include "./destinations/dsts_table_2/test_title.html" %}
+						{% for test in tests if goal.is_parent_of(test) %}
+							{% include "./destinations/dsts_table_2/tests_table.html" %}			
+						{% endfor %}  <!-- TESTS -->
+					</div>
+				
+				{% endfor %}  <!-- GOALS -->
+		{% endfor %}  <!-- DSTS -->
+	{% endfor %}  <!-- TAGS -->
+	
+</div>  <!-- WRAPPER -->
+<!------------- DEBUG ----------------------------->
+
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+				
+{% endblock tags_level %}

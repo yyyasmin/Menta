@@ -1,0 +1,140 @@
+{% block student_destinations_for_plan_report %}
+
+
+<style>
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.actions {
+  padding: 10px 0;
+}
+
+.glyphicon-euro {
+  font-size: 12px;
+}
+
+<!-- from https://www.w3schools.com/css/tryit.asp?filename=trycss_inline-block -->
+
+.after-box {
+    border: 3px solid red; 
+}
+
+</style>
+
+
+	<button onclick="myFunction('Std_destinations')" class="w3-button w3-block w3-right-align">
+		<h3><strong>מטרות:</strong></h3>
+	</button>		
+	
+			{% for dst in student_dsts if dst.is_parent_of(tag) and dst.is_parent_of(sub_tag) %}	
+					<td>  <!-- DST COLUMN-->
+					<div type="button" style="color:black;" id="green_title" onclick="myFunction('{{dst.id}}')">
+						מטרה: {{ dst.title }} 
+																						
+						{% for sts in statuss %}	
+							{% for st in std_txts %}
+								{% if st.general_txt_id==dst.id %}
+									{% if st.status_id==sts.id %}
+										<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}				
+					</div>
+					</td>  <!-- DST COLUMN-->
+
+					<!-- DSTS -->
+					<div type="button" style="color:black;" id="{{dst.id}}" class="w3-hide  w3-center green_body">
+						{{dst.body}}
+					</div>
+					
+					<td>  <!-- GOALS COLUMN-->
+					{% for goal in student_goals if dst.is_parent_of(goal) %}
+							<div type="button" style="color:black;" id="blue_title" onclick="myFunction('{{goal.id}}')">
+								יעד: {{ goal.title }} 
+																								
+								{% for sts in statuss %}	
+									{% for st in std_txts %}
+										{% if st.general_txt_id==goal.id %}
+											{% if st.status_id==sts.id %}
+												<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+											{% endif %}
+										{% endif %}
+									{% endfor %}
+								{% endfor %}				
+							</div>
+									
+							<div type="button" style="color:black;" id="{{goal.id}}" class="w3-hide  w3-center blue_body">
+								{{goal.body}}
+							</div>			
+										
+							{% for todo in student_todos if( goal.is_parent_of(todo) and todo.is_parent_of(who) ) %}  <!-- TODOS COLUMN -->
+								<td> <!-- TODO COL -->												<button class="accordion"> שם משימה: {{ todo.title }} </button>
+									<div type="button" style="color:black;" id="orange_title" onclick="myFunction('{{todo.id}}')">
+										משימה: {{ todo.title }} 
+																											
+										{% for sts in statuss %}	
+											{% for st in std_txts %}
+												{% if st.general_txt_id==todo.id %}
+													{% if st.status_id==sts.id %}
+														<span style="background-color:{{ sts.color }}">{{ sts.title }}</span>
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+										{% endfor %}				
+									</div>
+										
+									<div type="button" style="color:black;" id="{{todo.id}}" class="w3-hide  w3-center orange_body">
+										<div></div>{{todo.body}}
+									</div>
+								</td> <!-- TODO COL -->												<button class="accordion"> שם משימה: {{ todo.title }} </button>
+							{% endfor %}  <!-- TODOS LOOP -->
+									
+									
+								</li>
+							{% endfor %}  <!-- Tag Destinations -->
+						</td>  <!-- GOALS COLUMN-->
+			{% endfor %}  <!-- Tags -->	
+
+
+<!-- FROM https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_accordion_lists   -->
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

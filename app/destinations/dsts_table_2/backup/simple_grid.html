@@ -1,0 +1,23 @@
+<!-- FROM https://stackoverflow.com/questions/60544300/how-to-repeat-a-grid-template-areas -->
+
+<style>
+
+
+.grid {
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+}
+
+.grid > .item:nth-child(7n) {
+  /* this will create 3 columns layout and force each 7th element to span all of them */
+  grid-column:span 3; 
+}
+
+.item, a,b, c, d, e {
+  background: red;
+  border: 4px solid black;
+  height: 20px;
+}
+
+</style>

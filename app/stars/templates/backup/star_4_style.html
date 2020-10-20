@@ -1,0 +1,123 @@
+<style>
+
+* {
+	.box-sizing: border-box;
+}
+
+html {
+	min-height: 100vh;
+}
+
+.star3-container {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	margin: 50px;
+	column-gap: 10%;
+	grid-row-gap: 10%;
+	color: red;
+	fint_size: 4em;
+	justify-content: center;
+}
+
+.star3 {
+	//background: red;
+	width: 125px;
+	height: 125px;
+	//border: 10px solid blue;	
+	
+}
+
+
+.star1 { 
+	height: 100%; 
+	width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;   <!-- X AXIS LEFT and RIGHT -->
+	background: purple;
+
+}
+
+.animate_star1 { 
+	height: 100%; 
+	width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;   <!-- X AXIS LEFT and RIGHT -->
+	background: purple;
+	//border: 10px solid gold;
+	
+  -webkit-animation-name: star3Animation1;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 3;
+  -webkit-animation-timing-function: ease;
+
+}
+
+@-webkit-keyframes star3Animation1 {
+  
+	0% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+
+	20% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	40% {
+		opacity: 1;
+		-webkit-transform: scale(3);
+	}
+
+	60% {
+		opacity: 0.5;
+		-webkit-transform: scale(2);
+	}
+	
+	100% {
+		opacity: 0;
+		-webkit-transform: scale(1);
+	}
+  
+}
+
+
+
+@-webkit-keyframes star3Animation2 {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+
+.star2 {   <!-- STAR SHAPE -->
+	height: 100%; 
+	min-width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;  <!-- X AXIS LEFT and RIGHT -->
+	background: radial-gradient(circle farthest-side, #ffffff, #ffff00);
+	color: #ffffb3;
+	//border: 5px solid green;
+}
+
+	
+.star4 { 
+	height: 100%; 
+	min-width: 100%; 
+	justify-content: center;  <!-- Y AXIS UP AND DOWN -->
+	text-align: center;  <!-- X AXIS LEFT and RIGHT -->
+	color: black;
+}
+	
+</style>
+
+
+

@@ -1,0 +1,93 @@
+<!-- FROM  https://greensock.com/forums/topic/18250-trigger-animation-only-on-clicked-element-using-class-selector/ 
+-->
+<svg class="svgStar" width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+	<!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+	<g>
+
+		<polygon fill="#ffffb3" id="svg_3" points="461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 551.9192504882812,227.22152709960938 497.37005615234375,268.5777893066406 517.1926879882812,334.09893798828125 461.00390625,294.99932861328125 404.81512451171875,334.09893798828125 424.63775634765625,268.5777893066406 370.08856201171875,227.22152709960938 438.52838134765625,225.8268280029297 461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 " stroke-width="5">
+				
+			<animate
+				dur="0.3s" begin="startAnimation.begin" attributeName="r" values="100; 85; 100" fill="freeze"  keyTimes:"0; 0.5; 1"  />
+
+			<animate
+				dur="0.3s" begin="reverseAnimation.begin" attributeName="r" values="100; 85; 100" fill="freeze"  />
+			  
+		</polygon> 
+	  
+		<text fill="#000000" font-family="David" font-size="24" id="svg_4" stroke-width="0" text-anchor="middle" x="467.003905" xml:space="preserve" y="256.761714">עצמאות</text>
+	    <!-- vertical line -->
+    <path d="M100 50 l0 100" stroke="white" stroke-width="20" stroke-linecap="round" >
+      <animate
+        dur="0.3s" begin="startAnimation.begin" attributeName="d" values="M100 50 l0 100; M100 100 l0 0; M100 150 l50 -100" fill="freeze"   />
+      <animate
+        dur="0.3s" begin="reverseAnimation.begin" attributeName="d" values="M100 150 l50 -100; M100 100 l0 0; M100 50 l0 100" fill="freeze" />
+    </path>
+
+    <!-- horizontal line -->
+    <path d="M50 100 l100 0" stroke="white" stroke-width="20" stroke-linecap="round">
+      <animate
+        dur="0.3s" begin="startAnimation.begin" attributeName="d" values="M50 100 l100 0; M100 100 l0 0; M50 100 l50 50" fill="freeze" />
+        <animate
+        dur="0.3s" begin="reverseAnimation.begin" attributeName="d" values=" M50 100 l50 50; M100 100 l0 0; M50 100 l100 0" fill="freeze" />
+    </path>
+	
+		
+    <polygon fill="#ffffb3" id="svg_3" points="461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 551.9192504882812,227.22152709960938 497.37005615234375,268.5777893066406 517.1926879882812,334.09893798828125 461.00390625,294.99932861328125 404.81512451171875,334.09893798828125 424.63775634765625,268.5777893066406 370.08856201171875,227.22152709960938 438.52838134765625,225.8268280029297 461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 " stroke-width="5" fill-opacity="0">
+      <animate dur="0.01s" id="startAnimation" attributeName="r" values="100; 0" fill="freeze" begin="click" />
+      <animate dur="0.01s" attributeName="r" values="0; 100" fill="freeze" begin="reverseAnimation.end" />
+    </polygon>
+	
+    <polygon fill="#ffffb3" id="svg_3" points="461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 551.9192504882812,227.22152709960938 497.37005615234375,268.5777893066406 517.1926879882812,334.09893798828125 461.00390625,294.99932861328125 404.81512451171875,334.09893798828125 424.63775634765625,268.5777893066406 370.08856201171875,227.22152709960938 438.52838134765625,225.8268280029297 461.00390625,161.16766357421875 483.4794006347656,225.8268280029297 " stroke-width="5" fill-opacity="0">
+      <animate dur="0.001s" id="reverseAnimation" attributeName="r" values="100; 0" fill="freeze" begin="click" />
+      <animate dur="0.001s" attributeName="r" values="0; 100" begin="startAnimation.end"  fill="freeze"  />
+    </polygon>
+  
+	</g>
+</svg>
+
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" width="100" height="100" version="1.1">
+		    			
+	<circle  cx="100" cy="100" r="100" fill="#b2d4e5" >
+		
+      <animate
+      dur="0.3s" begin="startAnimation.begin" attributeName="r" values="100; 85; 100" fill="freeze"  keyTimes:"0; 0.5; 1"  />
+	  
+      <animate
+      dur="0.3s" begin="reverseAnimation.begin" attributeName="r" values="100; 85; 100" fill="freeze"  />
+	  
+    </circle>
+
+    <!-- vertical line -->
+    <path d="M100 50 l0 100" stroke="white" stroke-width="20" stroke-linecap="round" >
+      <animate
+        dur="0.3s" begin="startAnimation.begin" attributeName="d" values="M100 50 l0 100; M100 100 l0 0; M100 150 l50 -100" fill="freeze"   />
+      <animate
+        dur="0.3s" begin="reverseAnimation.begin" attributeName="d" values="M100 150 l50 -100; M100 100 l0 0; M100 50 l0 100" fill="freeze" />
+    </path>
+
+    <!-- horizontal line -->
+    <path d="M50 100 l100 0" stroke="white" stroke-width="20" stroke-linecap="round">
+      <animate
+        dur="0.3s" begin="startAnimation.begin" attributeName="d" values="M50 100 l100 0; M100 100 l0 0; M50 100 l50 50" fill="freeze" />
+        <animate
+        dur="0.3s" begin="reverseAnimation.begin" attributeName="d" values=" M50 100 l50 50; M100 100 l0 0; M50 100 l100 0" fill="freeze" />
+    </path>
+  
+    <!--  controls -->
+    <!-- these are on top of the visible circle.  Their radius changes depending on which is active
+    Opacity is set to 0 so you can't see them-->
+	
+    <circle cx="100" cy="100" r="100" fill-opacity="0">
+      <animate dur="0.01s" id="startAnimation" attributeName="r" values="100; 0" fill="freeze" begin="click" />
+      <animate dur="0.01s" attributeName="r" values="0; 100" fill="freeze" begin="reverseAnimation.end" />
+    </circle>
+	
+    <circle cx="100" cy="100" r="0" fill-opacity="0">
+      <animate dur="0.001s" id="reverseAnimation" attributeName="r" values="100; 0" fill="freeze" begin="click" />
+      <animate dur="0.001s" attributeName="r" values="0; 100" begin="startAnimation.end"  fill="freeze"  />
+    </circle>
+  </svg>
+

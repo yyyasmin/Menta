@@ -1,0 +1,16 @@
+<td>סטאטוס:
+						
+						<select style="color:{{ std_goal.status_color }}" id="mySelect" class="stsClass" onSelect="do()" name="selected_status">
+							{% for sts in statuss %}
+								<div style="color:{{ sts.color }}">sts.title: {{ sts.title }} </div>
+
+								{% if sts.id == std_goal.status_id %}
+									<option style="color:{{ sts.color }}" value="{{ sts.title }}" selected>{{ sts.title }}</option>
+								{% else %}
+									<option style="color:{{ sts.color }}" value="{{ sts.title }}">{{ sts.title }}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+						
+</td>
+					

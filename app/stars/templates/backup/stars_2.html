@@ -1,0 +1,99 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<script id="code">
+			
+			function init() {
+
+			console.log("BEFORE INIT");
+
+
+			var styles = ["animate4", "animate1", "animate2", "animate3"];
+			var scales = ["scale1", "scale2", "scale3"];
+			var opacities = [
+				"opacity1",
+				"opacity1",
+				"opacity1",
+				"opacity2",
+				"opacity2",
+				"opacity3"
+			];
+
+			function rand(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			var stars = "";
+			var count = 300;
+			var widthWindow = window.innerWidth;
+			var heightWindow = window.innerHeight;
+
+			for (var i = 0; i < count; i++) {
+				stars +=
+				"<span class='star " +
+				styles[rand(0, 4)] +
+				" " +
+				opacities[rand(0, 6)] +
+				" " +
+				scales[rand(0, 3)] +
+				"' style='animation-delay: ." +
+				rand(0, 9) +
+				"s; left: " +
+				rand(0, widthWindow) +
+				"px; top: " +
+				rand(0, heightWindow) +
+				"px;'></span>";
+			}
+
+			document.querySelector(".sky").innerHTML = stars;
+			}
+
+		</script>
+
+	</head>
+		
+	{% include "css_for_layout.html" %}
+	{% include "logo_style.html" %}
+	{% include "color_layout_style.html" %}
+	
+	{% include "stars_style.html" %}
+	{% include "fa_style.html" %}
+	
+	{% include "lo.html" %}
+	{% include "act_title.html" %}
+	
+	<body onload="init()">
+
+		<div class="sky"></div>
+		<div class="moon"></div>
+		<div class="asteroid"></div>
+		
+		<div class="container-box">
+			
+			{% for star in stars %}			
+				<div class="box {{star.idx_letter}}">
+				
+					{% include "fa_star.html" %}
+					{% include "star_animation.html" %}
+					<div class="fa fa-star" aria-hidden="true" style="position:relative">
+						FA STAR-ANIMATION
+					</div>	
+				
+				</div>
+			{% endfor %}	
+			
+		</div>
+		
+
+	</body>
+	
+{% endblock %}

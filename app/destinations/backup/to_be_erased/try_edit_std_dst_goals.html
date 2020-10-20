@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 95%;
+    border: none;
+    text-align: right;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+	
+	lang:he;
+	dir: rtl;
+	text-align:right;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+
+button.accordion:after {
+    goaltent: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+   <!--  margin-left: 5px; -->
+}
+
+button.accordion.active:after {
+    goaltent: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+#destination_header.accordion {
+		color: #fff;
+		background-color: #346767;
+		border-color: #EEEEEE;
+		font-size: 18px;
+}
+
+#goal_header.accordion {
+	color: #000d1a;
+	background-color: #e0ebeb;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;
+}
+
+#goal_ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #85adad;
+	color: #000000;
+	font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+</style>
+
+<div class="container" id="ccontainer_id">
+
+	
+	<div class="form-group">
+
+		<div>DEBUG: In std.dst.edit_students_destinations_goals kkk</div>
+		<h3><strong><center><div><u> רשימת יעדים של התלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+		</br>
+		<h4>
+			<button class="accordion" id="destination_header" ><strong> רשימת יעדים למטרה  {{ dst.title }}</strong></button>
+			<div class="panel" id="destination_decription">
+			  <p class="ppp">{{ dst.body }}</p>
+			</div>
+		</h4>
+
+	</br>
+		
+    <form role="form" method="POST" action='' > 
+		{% for goal in dst.goals %}
+		
+			{% include "./destinations/backup/std_dst_edit_goal_actions.html" %}
+		
+		{% endfor %}   <!-- std.goals -->
+		
+		<br><br>
+			
+	</form>
+</div>   <!-- container -->
+  
+  
+  
+	
+	
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+
+{% endblock %}

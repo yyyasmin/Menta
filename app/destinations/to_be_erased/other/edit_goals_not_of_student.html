@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+</style>
+
+<div class="w3-container" id="container_id">
+
+</br>
+
+<center><h3><div><h4><strong><u>בחר יעד להוסיף לתלמיד {{std.first_name }} {{ std.last_name }}</u></strong></h4></div></h3></center>
+<center><h3><div><h4><strong><u>עבור המטרה: {{dst.title }}</u></strong></h4></div></h3></center>
+	
+	<div>
+		
+		{% for goal in goals %}	
+		
+			<button class="btn btn-danger btn-xs" id="edit_list_id"><a href="{{ url_for('students.goal_to_student_add2', selected_goal_id=goal.id) }}">הוסף יעד זה לתלמיד</a></button>
+	
+			<button class="accordion">Goals's title: {{ goal.title }}</button>
+			<div class="panel">
+				<button>Goals's description: {{ goal.body }}.</button>				
+			</div>	
+			
+			<ul class="tabs">
+				
+				<li class="tab " id="tab-2"><span class="tab-title"> 
+					<div id="ar_div">
+						<div style="color:{{ sts_color }}"> {{form.status.label}}: {{form.status}} </div>
+						{% if form.status.errors %}
+							<ul class=errors>
+								{% for error in form.status.errors %}
+									<li>{{ error }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</div>   <!-- ar_div -->
+				</li>
+				
+				<li class="tab " id="tab-2"><span class="tab-title">
+					<div id="ar_div">
+						<input type="date" class="form-control" id="due_date" name="due_date" value="{{ form.due_date.data }}">
+					</div>   <!-- ar_div -->
+				</li>
+
+			</ul>
+			
+			<br>				
+				
+		{% endfor %}  <!-- goal in goals -->
+		
+	</div>   <!-- container -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

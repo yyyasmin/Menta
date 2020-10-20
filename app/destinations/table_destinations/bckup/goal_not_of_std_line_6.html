@@ -1,0 +1,44 @@
+
+{% block goal_not_of_std_line_6 %}		
+						
+	<td>								
+		<button  dir="rtl"  class="btn btn-default" type="button" class="collapsed" data-toggle="collapse" data-target="#not_of_std{{goal.id}}Content" data-role="expander" data-group-id="not_of_std{{std_dst.id}}">
+			<ul class="list-inline">
+				<li class="add-todos-icon-class"></li>
+			</ul>
+		</button>
+	</td>
+			
+	
+	<td>{{ goal.id }}</td>
+	<td>{{ goal.title }}</td>
+	<td>{{ goal.body }}</td> 
+
+	<td>
+		<div id="ar_div">				
+			{% for st in std_txts %}
+				{% if st.general_txt_id==goal.id %}
+					<input type="date" style="text-align:center" id="due_date" name="due_date{{ goal.id }}" value="{{ st.due_date }}">
+				{% endif %}	
+			{% endfor %}
+		</div>   <!-- ar_div -->
+	</td>	
+
+	<td>
+		<select class="select" onchange="this.dataset.chosen = this.value;" name="sts{{ goal.id }}" id="selected_status">	
+			{% for sts in statuss %}
+				{% if goal.is_parent_of(sts) %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}" selected="selected">{{ sts.title }}</option>
+				{% else %}
+					<option style="color: {{ sts.color }}" value="{{ sts.color_txt }}">{{ sts.title }}</option>
+				{% endif %}
+			{% endfor %}
+		</select>					
+	</td>
+
+	<td>								
+		{% set goal_num = goal.id * 3 + 1 %}
+		<button class="btn btn-success btn-xs" type="submit" name="txt_type_form_button_name" value="{{ goal_num }}">שמור</button>
+	</td>
+		
+{% endblock goal_not_of_std_line_6 %}		

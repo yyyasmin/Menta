@@ -1,0 +1,165 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {last_name
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}	
+	
+table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 5px;
+	align: center;
+}
+
+table, th, td {
+    border: 1px solid black;
+	text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.st_table tr:nth-child(even){
+        background: #dae5f4;
+    }
+
+</style>
+	
+<div class="container">	
+
+	<h3><strong><center><div><u>הוסף משימה לתלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+	
+	</br>
+	
+	<h4>
+		<button class="accordion" id="green_header" ><strong> עבור המטרה:  {{ dst.title }}</strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">{{ dst.body }}</p>
+		</div>
+	</h4> 
+
+	<br>
+	
+	<h4>
+		<button class="accordion" id="green_header" ><strong>עבוד היעד:  {{ std_goal.title }}</strong></button>
+		<div class="panel" id="green_ppp">
+		  <p class="ppp">{{ std_goal.body }}</p>
+		</div>
+	</h4> 
+
+	<br>
+	
+	
+	<table class="st_table" style="width:100%">
+		<tr>			
+				<th> מספר המשימה </th>	
+				<th> כותרת המשימה </th>
+				<th> תאור המשימה </th>
+				<th> תאריך ביצוע המשימה </th>
+				<th> סטאטוס המשימה </th>
+
+		</tr>
+		{% for std_todo in todos_not_of_student %}
+		<form method="POST" action="{{ url_for('students.match_todo_to_std2', selected_todo_id=std_todo.id) }}">	
+				
+			<tr>
+			
+				<td>{{ std_todo.id }}</td>
+				<td>{{ std_todo.title }}</td>
+				<td>{{ std_todo.body }}</td> 
+					
+				<td>
+					<div id="ar_div">
+						<input type="date" class="form-control" id="due_date" name="due_date" value="{{ due_date }}">
+					</div>   <!-- ar_div -->
+				</td>	
+					
+				<td>סטאטוס: 
+					<select class="select" name="selected_status" id="selected_status">	
+						{% for sts in statuss %}	
+							<option value="{{ sts.title }}" selected="selected">{{ sts.title }}</option>
+						{% endfor %}
+					</select>					
+				</td>
+				
+				<td>תפקיד האחראי על ביצוע המשימה:: 
+					<select class="select" name="selected_who" id="selected_who">	
+						{% for who in whos %}	
+							<option value="{{ who.title }}" selected="selected">{{ who.title }}</option>
+						{% endfor %}
+					</select>					
+				</td>
+									
+				<td>
+				<button class="btn btn-success btn-xs" type="submit" value="Save">הוסף משימה זו ליעד התלמיד</button>
+				</td>				
+			</tr>
+			
+		</form>	
+		{% endfor %}
+
+	</table>
+</div>		<!-- class="container -->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+
+{% endblock %}

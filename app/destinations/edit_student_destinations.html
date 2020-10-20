@@ -1,0 +1,53 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style>
+
+.logo {
+  width: 75px;
+  float: left;
+  margin-right: 15px;
+}
+
+.form-group {
+  max-width: 500px;
+}
+
+.destinations {
+  padding: 10px 0;
+}
+
+.glyphigoal-euro {
+  font-size: 12px;
+}
+
+</style>
+
+##################  I am In std/dst/edit_student_destinations.html
+<div class="container" id="container_id">	
+
+	<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+		<a href="{{ url_for('students.destination_to_student_add2', selected_student_id=std.id) }}">הוסף מטרה</a>
+	<strong></h5></button>
+
+	</br>
+	
+	<h2>
+		<button class="accordion" id="green_header">{{ std.first_name }} {{ std.last_name }} :רשימת מטרות של התלמיד  </button>
+		<div class="panel" >
+			<p class="ppp">students details: ID: {{ std.id }}  GRADE: {{ std.grade }} .</p>
+		</div>
+		</br>
+	</h2>
+	{% for dst in std.general_txts %}
+		{% include "./sub_forms/edit_one_dst_form.html" %}
+	{% endfor %}
+
+	</br>
+
+</div>   <!-- container -->
+
+{% endblock %}
+
+##################  EEEEEEEEEEE NN DDD std/dst/edit_student_destinations.html

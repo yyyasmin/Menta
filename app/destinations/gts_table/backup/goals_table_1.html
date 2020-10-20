@@ -1,0 +1,43 @@
+{% block goals_table %}
+
+			<!----------------------------------	
+			<table class="blue_table">
+				</tr>	
+					{% with gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+						{% include "./destinations/gts_table/std_gt_header.html" %}
+					{% endwith %}
+				</tr>
+			</table>
+			-------------------------------------->	
+			
+			{% set ns = namespace(blue_even=False) %}      				
+								
+			{% for goal in student_goals if (dst.is_parent_of(goal))  %}
+			
+				<table class="blue_table">
+					{% if ns.blue_even==False %}
+						<tr style="background-color: #b8d1f3;">
+						{% set ns.blue_even = True %}
+					{% else %}
+						<tr style="background-color: #dae5f4;">
+						{% set ns.green_even = False %}
+						{% set ns.blue_even = False %}
+					{% endif %}	
+						{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+							{% include "./destinations/gts_table/goal_line.html" %}
+						{% endwith %}
+						</tr>
+				</table>
+				
+								
+				<!--- TODOS --->							
+				<div class="collapse" id="{{goal.id}}Content" aria-expanded="true" style="table-layout: fixed;">
+					{% with gt = goal, gt_obj=todo_obj, gt_sub_obj=todo_obj %}
+						{% include "./destinations/gts_table/todos_table.html" %}
+					{% endwith %}
+				</div>  <!-- todos collapse -->
+				<!--- TODOS --->		
+			{% endfor %}
+
+		
+{% endblock goals_table %}

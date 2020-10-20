@@ -1,0 +1,32 @@
+{% block std_edit_one_dst %}
+
+
+<div>*************    DEBUG:  I am In std/dst/sdit_std_one_dst.html</div>
+
+	</br>			
+	{% include "./destinations/std_edit_dst_actions.html" %}
+	
+	<button class="accordion">מטרה: {{ dst.destination.title }}</button>
+	
+	<div class="panel">
+	  <button>{{ dst.destination.body }} תאור המטרה:</button>				
+	</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}

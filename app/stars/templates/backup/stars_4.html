@@ -1,0 +1,127 @@
+
+{% extends "act_layout.html" %}
+
+{% block content %}
+
+
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<script id="code">
+			
+			function init() {
+
+			console.log("BEFORE INIT");
+
+
+			var styles = ["animate4", "animate1", "animate2", "animate3"];
+			var scales = ["scale1", "scale2", "scale3"];
+			var opacities = [
+				"opacity1",
+				"opacity1",
+				"opacity1",
+				"opacity2",
+				"opacity2",
+				"opacity3"
+			];
+
+			function rand(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
+			}
+
+			var stars = "";
+			var count = 300;
+			var widthWindow = window.innerWidth;
+			var heightWindow = window.innerHeight;
+
+			for (var i = 0; i < count; i++) {
+				stars +=
+				"<span class='star " +
+				styles[rand(0, 4)] +
+				" " +
+				opacities[rand(0, 6)] +
+				" " +
+				scales[rand(0, 3)] +
+				"' style='animation-delay: ." +
+				rand(0, 9) +
+				"s; left: " +
+				rand(0, widthWindow) +
+				"px; top: " +
+				rand(0, heightWindow) +
+				"px;'></span>";
+			}
+
+			document.querySelector(".sky").innerHTML = stars;
+			}
+
+		</script>
+
+	</head>
+		
+	{% include "css_for_layout.html" %}
+	{% include "logo_style.html" %}
+	{% include "color_layout_style.html" %}
+	
+	{% include "stars_style.html" %}
+
+	{% include "lo.html" %}
+	{% include "act_title.html" %}
+	
+	
+	{% include "backup/star_4_style.html" %}
+		
+	<body onload="init()">
+		
+		<div class="sky"></div>
+		<div class="asteroid"></div>
+		
+		<div class="star3-container">
+		
+			{% for star in stars %}
+			
+			<div class="star3">
+				<!-- FROM https://github.com/FortAwesome/react-fontawesome/issues/225 -->
+				<li class="fa-layers fa-fw fa-5x star1" id="{{star.id}}" onclick="animateStar( {{star.id}} )"> 
+				      
+					<i class="fa fa-star star2"></i>
+					
+					<span class="fa-layers-text" 
+						  style="color:#660066" data-fa-transform="shrink-13 down-1">{{star.text}}</span>
+			</div>
+	
+			{% endfor %}		
+	</body>
+
+
+<!-- FROM https://codepen.io/velopert/pen/PzoWpE -->
+<script>
+
+
+function animateStar(e){
+	e.preventDefault;
+
+	element = document.getElementById(e);
+	
+	console.log(e);
+	
+	// -> removing the class
+	element.classList.remove("animate_star1");
+
+	// -> triggering reflow /* The actual magic */
+	// without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+	element.offsetWidth = element.offsetWidth;
+
+	// -> and re-adding the class
+	element.classList.add("animate_star1");
+}
+
+
+</script>
+
+
+
+	
+{% endblock %}

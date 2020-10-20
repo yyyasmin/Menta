@@ -1,0 +1,85 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block plan_report_show_std_dsts_by_tag %}
+
+<style>
+
+<!-- GRID -->
+
+.titleAre {
+  grid-area: titleAre;
+}
+
+.tagArea {
+  grid-area: tagArea;
+}
+
+.dstArea {
+  grid-area: dstArea;
+}
+
+.goalArea {
+  grid-area: goalArea;
+}
+
+.methodArea {
+  grid-area: methodArea;
+}
+
+.testArea {
+  grid-area: testArea;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'titleArea titleArea titleArea titleArea titleArea'
+    'tagArea dstArea dstArea dstArea dstArea'
+    'goalArea methodArea methodArea methodArea testArea';
+	
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-container > .methodArea {
+  display: grid;
+  grid-template-areas:
+    'method_typeArea method_descroptionArea method_whoArea';
+	
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+</style>
+
+
+
+<!------------- DEBUG ----------------------------->
+
+<!------------- DEBUG ----------------------------->
+
+</br>
+	
+	<table class="gray_table profile_table">	
+		<div class="titleArea">
+			<thead>
+				<tr>			
+					<th style="width:12%"><strong>תחום</strong></th>
+					<th style="background-color:mediumseagreen; color:#ffffcc; width:32%;"><strong>מטרות</strong></th>
+					<th style="background-color:#0089b3; color:#ffffcc; width:32%;"><strong>יעדים</strong></th>
+					<th style="background-color:#7650a1; color:#ffffcc; width:32%;">
+						<strong>דרכי הוראה, שיטות, אמצעים ומשאבים </strong>
+					</th> 
+				</tr>
+			</thead>
+		</div>
+		
+		<tbody>
+			{% include "./destinations/dsts_table_2/backup/tbl_1.html" %} 
+		</tbody>
+	
+	</table>
+				
+{% endblock plan_report_show_std_dsts_by_tag %}

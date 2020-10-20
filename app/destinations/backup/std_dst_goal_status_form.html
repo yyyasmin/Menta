@@ -1,0 +1,44 @@
+
+{% block std_dst_goal_status_form %}
+
+<style>
+
+</style>
+
+<form action="{{ url_for('destinations.destination_add', from_dst_sort_order=from_dst_sort_order)}}" method="POST"> 
+	<div class="form-group">
+		<strong>:סטאטוס</strong>		
+		<select class="select" name="selected_status" id="selected_status">	
+			{% if std.goals != None %}
+				{% for std_goal in std.goals %}
+					{% if std_goal.goal_id == goal.id %}
+						<option value="{{ goal.goal.status }}" selected="selected">{{ goal.goal.status }}</option>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+			<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+			<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+			<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+		</select>
+		<input type="submit" value="submit_staus" name="submit">			
+	</div>
+</form>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_dst_goal_status_form %}

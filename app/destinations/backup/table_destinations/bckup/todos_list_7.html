@@ -1,0 +1,46 @@
+									
+									<tr>	<!-- TODOS -->								
+										<td colspan="6">
+											<table class="orange_table">
+											
+												{% for todo in student_todos if (goal.is_parent_of(todo)) %}
+													<tr>
+													{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}														
+													</tr>
+													{% break %}
+												{% endfor %}
+												
+												{% for todo in student_todos if (goal.is_parent_of(todo)) %}			
+													<tr>
+														{% include "./destinations/table_destinations/goals/todos/edit_std_todo_line.html" %}
+													</tr>
+												{% endfor %}					
+											</table>
+										</td>
+									</tr>
+									<!-- TODOS -->
+									
+
+									<tr>   <!-- TODOS NOT_OF_STD -->
+										<td colspan="7">
+											<table class="gray_table">	
+																													
+												<tr>
+													{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}												
+														<tr>
+														{% include "./destinations/table_destinations/goals/todos/todo_header.html" %}
+														</tr>
+														{% break %}
+													{% endfor %}
+												</tr>		
+														
+												{% for todo in todos_not_of_student if (goal.is_parent_of(todo)) %}									
+													<tr>
+														{% include "./destinations/table_destinations/not_of_std/goals/todos/edit_std_todo_line_not_of_std.html" %}
+													</tr>
+												{% endfor %}					
+											</table>
+										</td>	
+									</tr>  
+									
+									

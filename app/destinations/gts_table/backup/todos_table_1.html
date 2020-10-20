@@ -1,0 +1,24 @@
+{% block goals_table %}
+
+		<table class="orange_table" style="table-layout: fixed;">
+			<!-----------------------------------------------		
+			<tr>
+				{% with gt_obj=todo_obj, gt_sub_obj=None %}
+					{% include "./destinations/gts_table/std_gt_header.html" %}
+				{% endwith %}
+			</tr>
+			----------------------------------------------->		
+													
+			{% for todo in student_todos if (goal.is_parent_of(todo))  %}
+				<tr>
+					{% with gt=todo, gt_obj=todo_obj, gt_sub_obj=None %}
+						{% include "./destinations/gts_table/todo_line.html" %}
+					{% endwith %}
+				</tr>
+			{% endfor %}
+		</table>
+					
+
+
+					
+{% endblock goals_table %}

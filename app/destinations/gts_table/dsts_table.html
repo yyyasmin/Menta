@@ -1,0 +1,74 @@
+{% block dsts_table %}
+	
+		<table class="green_table">
+				<tr>
+					{% with gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+						{% include "./destinations/gts_table/std_gt_header.html" %}
+					{% endwith %}
+				</tr>
+		</table>
+		
+		{% set ns = namespace(green_even=False) %}      				
+
+		{% for dst in student_dsts %}  <!-- DSTS -->
+
+			<table class="light_green_table" style="table-layout: fixed;">
+				{% if ns.green_even==False %}
+					<tr style="background-color: #ccffcc;">
+				{% set ns.green_even = True %}
+				{% else %}
+					<tr style="background-color: #99ff99;">
+				{% set ns.green_even = False %}
+				{% endif %}	
+			
+					{% with gt = dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+						{% include "./destinations/gts_table/dst_line.html" %}
+					{% endwith %}
+				</tr>
+			</table>
+			
+			<!--- GOALS --->
+			<div class="collapse" id="{{dst.id}}Content" aria-expanded="true" style="table-layout: fixed;">
+				{% with gt=dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+					{% include "./destinations/gts_table/goals_table.html" %}
+				{% endwith %}
+			</div>  <!-- goal collapse -->
+			<!--- GOALS --->
+
+
+			<!--- GOALS NOT OF STD --->
+			<div class="collapse" id="not_of_std{{dst.id}}Content" aria-expanded="true">
+				{% set ng = namespace(exist_goal=False) %}      
+				{% for goal in goals_not_of_student if (dst.is_parent_of(goal)) %}
+						{% set ng.exist_goal = True %}
+						{% break %}
+				{% endfor %}
+				
+				{% if ng.exist_goal == False %}
+				
+					<div style="background:#e6f2ff">
+						אין יותר יעדים למטרה {{dst.id}}.
+						<br>
+							להוספת יעד יש לגשת דרך לשונית מטרות בסרגל שלמעלה
+					</div>	
+					
+				{% else %}
+
+					<table class="gray_table" >
+						{% for goal in goals_not_of_student if (dst.is_parent_of(goal)) %}
+							<tr>
+								{% with gt=goal, gt_obj=goal_obj, gt_sub_obj=method_obj %}
+									{% include "./destinations/gts_table/goal_line_not_of_std.html" %}
+								{% endwith %}
+							</tr>
+						{% endfor %}
+					</table>
+				
+				{% endif %}
+
+			</div>		
+			<!--- GOALS NOT OF STD --->
+		
+		{% endfor %}  <!-- DSTS -->
+	
+{% endblock dsts_table %}

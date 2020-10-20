@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- from CodePen https://codepen.io/-a/full/amOYGp -->
+<style>
+
+
+</style>
+
+<div class="w3-container" id="container_id">
+
+</br>
+
+<center><h3><div><h4><strong><u>רשימת מטרות לתלמיד {{std.first_name }} {{ std.last_name }}</u></strong></h4></div></h3></center>
+	<div>	  
+	
+	{% for tag in tags %}
+		</br></br>
+		<th><h4><strong>קבוצת גיל:   {{ tag.title }}</strong></h4></th>
+
+		<table style="width:100%">
+
+		<tr id="header_row">			
+			<th>נושא</th>
+			<th>קבוצת גיל</th>
+			<th>מטרה</th> 
+			<th>פעולות עריכה</th>
+		</tr>
+		
+		{% for ar in ar_ranges %} 
+			{% for tag_dst in tag.general_txts %}  <!-- ar_dst -->
+				{% for ar_dst in ar.general_txts %}   <!-- tag_dst -->
+					{% for dst in destinations if (dst.id == tag_dst.general_txt_id) and (dst.id == ar_dst.general_txt_id) %}
+						
+						<tr>
+							<td>{{ tag.title }}</td>
+							<td>{{ ar.title }}</td>
+							<td>{{ dst.title }}</td>
+							
+							<td>	
+
+								<div><h4><strong><u> נושא: {{ tag.title }}</u></strong></h4></div>						
+									<button class="btn btn-danger btn-xs" id="edit_list_id"><a href="{{ url_for('students.match_destination_to_student2', selected_destination_id=dst.id) }}">הוסף מטרה זו לתלמיד</a></button>
+							
+									<button class="accordion">Destination's title: {{ dst.title }}</button>
+									<div class="panel">
+										<button>Destination's description: {{ dst.body }}.</button>				
+									</div>
+						
+							</td>
+							
+						</tr>
+						
+					{% endfor %} <!-- for.. if.. if  --> 
+				{% endfor %}	<!-- tag_dst -->
+			{% endfor %}  	<!-- ar_dst -->		
+		{% endfor %}   <!-- ars -->		
+		</table>  
+	{% endfor %}  <!-- all tags -->
+
+</div>   <!-- container -->
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/tree_list_plus.js') }}"></script>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock %}
+
+
+

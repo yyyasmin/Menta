@@ -1,0 +1,179 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+<style type="text/css">
+ul.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs>li.tab {
+  flex: 1;
+  text-align: center;
+  /* just adding visibility to the tabs */
+  border: 1px solid rgba(0,0,0,.12); 
+  padding: 10px;
+}
+
+
+input {
+	width: 100%;
+}
+
+#submit_button {
+	display: block;
+	margin: 0 auto;
+	width:fit-content;
+}
+
+</style>
+
+	
+<div class="container">
+	
+<button class="btn btn-info btn-xs" id="add_button"><h5><strong>
+	<a href="{{ url_for('students.try_goal_to_student_add') }}">הוסף יעד חדש לתלמיד</a>
+<strong></h5></button>
+</br></br>
+
+<div> IN C:\Users\yasmi\Documents\מנטא\app\students\templates\goals\backup\try_std_goal_for_update.html </div>
+
+	<h2><strong><center><div>יעדי התלמיד:  {{ std.first_name }} {{ std.last_name }} </div></center></strong></h2>
+	<p></p>
+	
+	<h2><strong><center><div> עבור המטרה:  {{ dst.title }}</div></center></strong></h2>
+	<p></p>
+		
+	<table class="st_table" style="width:100%">
+		
+	{% for std_goal_form in std_goals_forms %}
+	
+		{{ std_goal_form.csrf_token }}
+		<fieldset>
+		
+			<form method="post" action="{{ url_for('students.update_std_goal_form2') }}">
+				
+				<tr>
+						
+
+					<td>
+						<div class="form-group">
+							<label for="goal_id">goal id </label>
+							<input type="number" class="form-control" name="goal_id"  value="{{ std_goal_form.goal_id.data }}">
+						</div>
+					</td>
+
+
+				
+					<td>	
+						<div class="form-group">
+							<label for="title">כותרת יעד:  </label>
+							<input type="title" class="form-control" name="title" value="{{ std_goal_form.goal_title.data }}">
+						</div>
+					</td>
+					
+					<td>
+						<div class="form-group">
+							<label for="body">תאור יעד:  </label>
+							<input type="textarea" class="form-control" name="body" value="{{ std_goal_form.goal_body.data }}">
+						</div>
+					</td>
+					
+					<td>
+						<div id="ar_div">
+							<input type="date" class="form-control" id="due_date" name="due_date" value="{{ std_goal_form.due_date }}">
+						</div>
+					</td>
+						
+					<td>
+					<ul class="tabs">
+						<li class="tab " id="tab-2"><span class="tab-title"> 
+							<div id="ar_div">
+								<div> {{std_goal_form.status.label}}: {{std_goal_form.status}} </div>
+								{% if std_goal_form.status.errors %}
+									<ul class=errors>
+										{% for error in std_goal_form.status.errors %}
+											<li>{{ error }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</div>   
+						</li>
+					</td>
+											
+					<td>
+						<div id="submit_button"> {{ std_goal_form.submit }} </div>
+					</td>
+				
+				</tr>
+			
+			</form>
+			
+		</fieldset>
+		
+	{% endfor %}
+
+	</table>
+	
+	</br>
+	
+</div>  <!-- class="container -->
+
+
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+<script>
+	var ar_select = document.getElementById("ar");
+	var tag_select = document.getElementById("tag");
+
+	ar_select.onchange = function()  {
+		 
+		ar = ar_select.value;
+		
+		fetch('/tag/' + ar).then(function(response) {
+
+			response.json().then(function(data) {
+				var optionHTML = '';
+
+				for (var tag of data.tags) {
+					optionHTML += '<option value="' + tag.id + '">' + tag.title + '</option>';
+				}
+
+				tag_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+
+<script>
+	vtag tag_select = document.getElementById("tag");
+	vtag scrt_select = document.getElementById("scrt");
+
+	tag_select.onchange = function()  {
+		 
+		tag = tag_select.value;
+		
+		fetch('/scrt/' + tag).then(function(response) {
+
+			response.json().then(function(data) {
+				vtag optionHTML = '';
+
+				for (vtag scrt of data.scrts) {
+					optionHTML += '<option value="' + scrt.id + '">' + scrt.title + '</option>';
+				}
+
+				scrt_select.innerHTML = optionHTML;
+			})
+			
+		});
+	}
+</script>
+<!-- FROM https://github.com/PrettyPrinted/dynamic_select_flask_wtf_javascript -->
+
+
+{% endblock %}

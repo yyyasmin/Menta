@@ -1,0 +1,28 @@
+<!-- FROM https://codepen.io/Pikaguru/pen/mjMPZM  -->
+
+<style>
+/*18px*/
+/*14px*/
+/*12px*/
+
+
+body.star::before {
+  animation-name: star;
+}
+
+@keyframes star {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+</style>

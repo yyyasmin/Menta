@@ -1,0 +1,24 @@
+{% block goals_list_7 %}
+
+	<tr>  <!-- GOALS -->
+		<td colspan="6">  
+			<table class="blue_table">
+																																			
+					{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}	
+						<tr>
+						{% include "./destinations/table_destinations/goal_header_7.html" %}
+						</tr>
+						{% break %}
+					{% endfor %}							
+					
+					{% for goal in student_goals if (std_dst.is_parent_of(goal)) %}			
+						<tr>
+							{% include "./destinations/table_destinations/goal_line_7.html" %}
+						</tr>
+											
+					{% endfor %}					
+			</table>
+		</td>
+	</tr>  <!-- GOALS -->
+	
+{% endblock goals_list_7 %}

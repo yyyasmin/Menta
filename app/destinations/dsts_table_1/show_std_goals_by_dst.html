@@ -1,0 +1,48 @@
+	<!-- FROM https://www.youtube.com/watch?v=XTpLbBJTOM4 -->
+
+{% block show_std_dsts_by_tag %}
+
+<style>
+
+</style>
+
+	
+	{% set d_ns = namespace(dst_printed=False) %}
+	{% set ns = namespace(exist_goal=False) %}
+	
+	{% for goal in student_goals if dst.is_paret_of(goal) %}
+		
+		{% set d_ns.dst_printed = False %}
+		
+					
+			<tr>
+			
+				{% set ns.exist_goal = False %}
+				
+				{% for goal in student_goals if dst.is_parent_of(goal)  %} 
+										
+					{% if d_ns.dst_printed == False %}
+						<td>{{ dst.title }}</td>
+						{% set d_ns.dst_printed = True %}
+					{% else %}
+						<td style="border:0;"></td>
+					{% endif %}
+
+				{% endfor %}
+				
+				{% if ns.exist_goal == True %}			
+					<td>
+						{% with goal=sbj, prf_parts_list=dsts, title_box="green_title", body_box="green_body" %}
+							{% include "./profile/std_profile2/show_profile/show_std_profile.html" %} 
+						{% endwith %}
+					</td>
+
+				{% endif %}	
+				
+			</tr>
+				
+	{% endfor %}
+
+				
+{% endblock {% block show_std_dsts_by_tag %}
+ %}

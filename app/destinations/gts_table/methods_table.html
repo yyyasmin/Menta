@@ -1,0 +1,47 @@
+{% block methods_table %}
+	
+		
+		{% set ns = namespace(blue_even=False) %}      				
+
+		{% for method in student_methods if (goal.is_parent_of(method)) %}  <!-- methodS -->
+		
+				{% if ns.green_even==False %}
+					{% set ns.green_even = True %}
+				{% else %}
+					{% set ns.green_even = False %}
+				{% endif %}				
+				
+				{% if ns.blue_even==False %}
+					{% set ns.blue_even = True %}
+				{% else %}
+					{% set ns.blue_even = False %}
+				{% endif %}				
+				
+				<table class="purple" style="table-layout: fixed; color:black;">
+					{% if ns.purple_even==False %}
+						<tr style="background-color: #d966ff;">
+						
+					{% set ns.purple_even = True %}
+					{% else %}
+						<tr style="background-color: #ecb3ff;">
+						
+					{% set ns.purple_even = False %}
+					{% endif %}	
+			
+					{% with gt = method, gt_obj=method_obj, gt_sub_obj2=method_obj %}
+						{% include "./destinations/gts_table/method_line.html" %}
+					{% endwith %}
+					
+						</tr>
+				</table>
+			
+			<!--- FILES --->
+			<div class="collapse" id="{{method.id}}Method" aria-expanded="true" 
+								  style="table-layout: fixed;">
+				{% include "./destinations/gts_table/std_show_goal_files.html" %}
+			</div>  <!-- goal collapse -->
+			<!--- FILES --->
+			
+		{% endfor %}  <!-- methodS -->
+	
+{% endblock methods_table %}

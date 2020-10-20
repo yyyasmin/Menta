@@ -1,0 +1,247 @@
+{% block std_dsts %}
+
+<style>
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+	margin-left:10%;
+	margin-right:10%;
+}
+
+[data-toggle="toggle"] {
+	display: none;
+}
+
+
+.collapsed .dsts-icon-class:before {
+    content: 'מטרות + ';
+}
+.dsts-icon-class:before {
+	content: 'מטרות - ';
+}
+
+.collapsed .dsts_not_of_std-icon-class:before {
+    content: 'הוסף מטרה + ';
+}
+.dsts_not_of_std-icon-class:before {
+	content: 'הוסף מטרה - ';
+}
+
+
+
+.collapsed .goals-icon-class:before {
+    content: 'יעדים+';
+	dir: rtl;
+	text-align: center; 
+}
+.goals-icon-class:before {
+    content: 'יעדים-';
+	dir: rtl;
+}
+
+
+.collapsed .add-goals-icon-class:before {		
+    content: 'הוסף יעד-';
+	dir: rtl;
+}
+.add-goals-icon-class:before {
+	content: 'הוסף יעד-';
+	dir: rtl;
+}
+
+
+.collapsed .todos-icon-class:before {
+    content: 'משימות+';
+	dir: rtl;
+}
+.todos-icon-class:before {
+    content: 'משימות-';
+	dir: rtl;
+}
+
+
+.collapsed .add-todos-icon-class:before {		
+    content: 'הוסף משימה-';
+	dir: rtl;
+
+}
+.add-todos-icon-class:before {
+	content: 'הוסף משימה-';
+	dir: rtl;
+}
+
+
+
+
+.id_width  { 
+width: 3%;
+}
+
+.tag_width  { 
+width: 8%;
+}
+
+.sub_tag_width  { 
+width: 10%;
+}
+
+.title_width  { 
+width: 17%;
+}
+
+.body_width  { 
+width: 20%;
+}
+
+.sub_btn_width  { 
+width: 10%;
+}
+
+.date_width  { 
+width: 15%;
+}
+
+.status_width  { 
+width: 12%;
+}
+
+.save_width  { 
+width: 5%;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+$(document).ready(function(){
+	
+	$("#hide_dsts").click(function(){
+		$("table.green_table").hide(1000);
+	});
+
+	$("#show_dsts").click(function(){
+		$("table.green_table").show(1000);
+
+	});
+	
+	$("#hide_goals").click(function(){
+		$("table.blue_table").hide(1000);
+	});
+
+	$("#show_goals").click(function(){
+		$("table.blue_table").show(1000);
+
+	});
+	
+	$('[data-toggle="toggle"]').click(function () {
+		$(this).parents().next(".hide").toggle();
+  });
+		
+});
+
+
+$('[data-toggle="collapse"]').on('click', function() {
+  $(this).toggleClass('collapsed');
+});
+
+</script>
+
+
+</head>
+
+<body>
+
+<div> INNN destinations\gts_table\std_dsts.html  </div>
+	
+		
+		<div class="collapsed" data-toggle="collapse" data-target="#{{tag.id}}{{ar.id}}Content">
+			<ul class="list-inline" style="color:green">
+				<li class="dsts-icon-class"></li>
+			</ul>
+		</div>
+
+
+		<div class="collapsed" data-toggle="collapse" data-target="#not_of_std{{tag.id}}{{ar.id}}Content">
+			<ul class="list-inline" style="color:green">
+				<li class="dsts_not_of_std-icon-class"></li>
+			</ul>
+		</div>
+		
+		</br>
+	
+
+	<div class="collapse in" id="{{tag.id}}{{ar.id}}Content" aria-expanded="true">
+	
+		<table class="green_table" style="table-layout:fixed;" >
+			
+			<thead>
+				<tr>
+					{% with gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+						{% include "./destinations/gts_table/std_gt_header.html" %}
+					{% endwith %}
+				</tr>
+			</thead>
+			
+			<tbody>
+				
+				{% for dst in student_dsts %}
+					<tr>					
+						<tr>
+							{% with gt = dst, gt_obj=dst_obj, gt_sub_obj=goal_obj %}
+								{% include "./destinations/gts_table/gt_line.html" %}
+							{% endwith %}
+						</tr>
+
+						<div class="collapse" id="{{dst.id}}Content" aria-expanded="true">
+							<table class="blue_table">		
+								<tr>
+									{% with gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+										{% include "./destinations/gts_table/std_gt_header.html" %}
+									{% endwith %}
+								</tr>
+							
+								{% for goal in student_goals if (dst.is_parent_of(goal))  %}
+									<tr>
+										{% with gt = goal, gt_obj=goal_obj, gt_sub_obj=todo_obj %}
+											{% include "./destinations/gts_table/gt_line.html" %}
+										{% endwith %}
+									</tr>
+								{% endfor %}
+							</table>
+						</div>
+					</tr>
+				{% endfor %}
+							
+			</tbody>
+		</table>
+	</div>
+
+	<div class="collapse" id="not_of_std{{tag.id}}{{ar.id}}Content" aria-expanded="true">
+		<table class="gray_table" >
+			<tbody>
+				{% for gt in dsts_not_of_std %}
+					<tr>
+						{% include "./destinations/gts_table/gt_not_of_std_line.html" %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	
+				
+	<!-- FROM https://stackoverflow.com/questions/35499243/bootstrap-collapse-not-working-properly-hide-not-working  -->	
+	<script src="js/jquery-1.11.3.min.js"></script>
+
+
+</body>
+
+</html>
+
+{% endblock std_dsts %}

@@ -1,0 +1,76 @@
+
+{% block std_dst_goal_status %}
+
+<style>
+
+</style>
+
+	<strong>:סטאטוס</strong>
+	
+{% set std_status = "Not achieved" -%}
+     
+
+{% if std.goals != None %}	
+
+	{% if goal not in  std.goals %}
+		<select class="select" name="selected_status" id="selected_status" selected="{{ std_status }}">	
+					
+					<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+					<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+					<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+					
+		</select>
+			
+	{% endif %}	
+	
+	{%else %}
+	
+		{% for goal in std.goals %}
+		
+			{% if goal.goal_id == goal.id %}    
+				{% if goal.status != None %}					
+					{% set std_status = goal.status -%}
+						<select class="select" name="selected_status" id="selected_status" selected="{{ std_status }}">	
+									
+									<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+									<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+									<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+									
+						</select>
+			
+				{% else %}
+					<select class="select" name="selected_status" id="selected_status" selected="{{ std_status }}">	
+								
+								<option value="Not achieved" style="color:red"><strong>לא הושג</strong></option>
+								<option value="Partially achieved" style="color:orange"><strong>הושג חלקית</strong></option>
+								<option value="Achieved" style="color:green"><strong>הושג</strong></option>
+								
+					</select>
+	
+				{% endif %}			
+
+			{% endif %}
+		
+		{% endfor %}
+		
+	{% endif %}	
+	
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  }
+}
+</script>
+
+{% endblock std_dst_goal_status %}

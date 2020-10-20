@@ -1,0 +1,91 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+{% block edit_std_dst_by_tag %} 
+
+<style>
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    border: none;
+    outline: solid;
+    font-size: 15px;
+    transition: 0.4s;	
+	width: 90%;
+	
+    padding: 18px;
+    border: 5;
+    text-align: right;
+	
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.ppp {
+	border: solid 1px #EEEEEE;
+	background-color: #B7FFB7;
+	font-size: 16px;	
+}
+
+#student_header.accordion {
+	color: #fff;
+	background-color: #346767;
+	border-color: #EEEEEE;
+	font-size: 18px;
+}
+
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: left;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+ 
+
+#add_button  {
+	-webkit-font-smoothing:subpixel-antialiased;
+	background-color:#efeff5;
+}
+
+</style>
+
+<div class="w3-container" id="container_id">
+
+		<div>DEBUG: In std.dst.edit_students_destinations_goals kkk</div>
+		<h3><strong><center><div><u> רשימת יעדים של התלמיד {{ std.first_name }} {{ std.last_name }} </u></div></center></strong></h3>
+		</br>
+		<h4>
+			<button class="accordion" id="destination_header" ><strong> רשימת יעדים למטרה  {{ dst.title }}</strong></button>
+			<div class="panel" id="destination_decription">
+			  <p class="ppp">{{ dst.body }}</p>
+			</div>
+		</h4>
+
+	</br>
+	
+	{% for goal in dst.goals %}
+		{% include "./destinations/std_dst_edit_one_goal.html" %}
+		</br>			
+	{% endfor %}  <!-- goals -->
+		
+</div>   <!-- container -->
+
+{% endblock  edit_std_dst_by_tag %}
+{% endblock %}

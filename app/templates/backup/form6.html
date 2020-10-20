@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<style>
+
+.grid-container {
+  #display: grid;
+  display: inline-block;
+
+  padding: 50px;
+  grid-gap: 10px;
+  grid-template-columns: auto auto  ;
+  grid-template-rows: auto auto ;
+  #background-color: PapayaWhip;
+  text-align: center;  
+  margin: 0 auto;
+  #background-color: AliceBlue;
+  background-color: blue;
+
+}
+
+.grid-item {
+  display: inline-block;
+  #background-color: rgba(255, 255, 255, 0.8);
+  background-color: pink;
+
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+  text-align: center;
+}
+
+
+.header {
+	text-align: center;
+}
+</style>
+
+<!-- <div class="header"><h1>:בחר פעולה</h1></div> -->
+​
+<!--<div class=aboutimgcenter>-->
+
+	<div class="grid-container">
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('students.index') }}"><img src="{{ url_for('static', filename='img/school.png') }}">בתי ספר</a></div></p></div>		
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('teachers.edit_teachers') }}"><img src="{{ url_for('static', filename='img/teacher.png') }}" width="48%" height="48%">אנשי צוות</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/kid.png') }}" width="50%" height="50%">תלמידים</a></div></p></div>	
+		
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/form.png') }}" width="31%" height="31%">תוכנית טיפול אישית לתלמיד</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('students.edit_students') }}"><img src="{{ url_for('static', filename='img/profile.png') }}" width="47%" height="47%">פרופיל תלמיד</a></div></p></div>	
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('destinations.edit_destinations') }}"><img src="{{ url_for('static', filename='img/goal.png') }}" width="47%" height="47%">מטרות ויעדים</a></div></p></div>
+		
+		<div class = "grid-item"><p><div class="w3-col s3 w3-lightblue w3-center"><a href="{{ url_for('students.index') }}"><img src="{{ url_for('static', filename='img/statistics.png') }}" width="47%" height="47%">סטאטיסטיקה</a></div></p></div>	
+
+
+	</div>
+​<!--</div>-->
+
+{% endblock %}
